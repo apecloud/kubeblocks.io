@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'CloudDBaaS',
   tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://apecloud.github.io',
+  baseUrl: '/website/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/logo.png',
@@ -17,26 +17,26 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'apecloud', // Usually your GitHub org/user name.
-  projectName: 'docs', // Usually your repo name.
+  projectName: 'website', // Usually your repo name.
+  trailingSlash: false,
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'zh'],
     path: 'i18n',
     localeConfigs: {
       en: {
         label: 'English',
         htmlLang: 'en-US',
-        path: 'en',
       },
-      // zh: {
-      //   label: '简体中文',
-      //   htmlLang: 'zh-CN',
-      //   path: 'zh',
-      // },
+      zh: {
+        label: '简体中文',
+        htmlLang: 'zh-CN',
+        // path: 'zh',
+      },
     },
   },
 
@@ -58,7 +58,7 @@ const config = {
       }),
     ],
   ],
-
+  plugins: ['@docusaurus/theme-live-codeblock'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -114,10 +114,10 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
+              // {
+              //   label: 'Blog',
+              //   to: '/blog',
+              // },
               {
                 label: 'GitHub',
                 href: 'https://github.com/apecloud/',

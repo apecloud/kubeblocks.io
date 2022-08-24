@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "文档中心",
+    "description": "The title in the navbar"
+  },
+  "item.label.Overview": {
+    "message": "首页",
+    "description": "Navbar item with label Overview"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
