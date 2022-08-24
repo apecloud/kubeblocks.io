@@ -1,10 +1,10 @@
-# CloudApe writing style guide
+# ApeCloud writing style guide
 
 > Every word matters. When you are called upon to write about technology, you need a simple, straightforward style guide that everyone can use in your organization, regardless of your role.
 > 
 > The style guide is not a right-or-wrong criteria but a preference of your organization, the voice and style you choose to talk to your audiences, either it is warm and relaxed, crisp and clear, or showing that you are ready to lend a hand.
 
-## 1 CloudApe brand voice-simple and human
+## 1 ApeCloud brand voice-simple and human
 ### 1.1 What do we mean by voice
 
 The voice is how we talk to people. It’s the interplay of personality, substance, tone, and style.
@@ -225,3 +225,5 @@ Avoid modifier stacks. Long chains of modifying words are confusing even to nati
 Use active voice and indicative mood most of the time. Use imperative mood in procedures.
 
 Keep adjectives and adverbs close to the words they modify. Pay particular attention to the placement of _only_.
+
+Avoid linking more than three phrases or clauses by using coordinate conjunctions such as _and_, _or_, or _but_. Better yet, avoid linking more than two.
