@@ -1,12 +1,12 @@
 # The data base of next generation
 
-## 1 Exploding period of databases
+## 1. Exploding period of databases
 
-Databases are in an era of product explosion. Besides of the emerging database products, databases have expanded from the traditional TP databases to TP/AP/NewSQL and other databases. Databases also expand from general type to industry-specific refinement, such as Redis/MongoDB/InfluxDB. In such an era, we are ready to meet your requirements for more complex application scenarios, aiming to solving the technical and cost challenge you are faced with.
+Databases are in an era of product explosion. Besides of the increasing number of database products, databases have tranformed and expanded in all aspects. In such an era, we are ready to meet your requirements for more complex application scenarios, aiming to solving the technical and costs challenge you are faced with.
 
-## 2 Open source and neutral
+## 2. Open source and neutral
 
-Although current cloud vendors have public data management platforms, cloud platforms can only support a few mainstream databases, failing to cover for the long tail. The problem of third-party proprietary open source licenses, in essence, lies in that cloud vendors cannot achieve open source and be neutral.
+Although current cloud vendors have public data management platforms, they only support a few mainstream databases, failing to cover for the long tail. Meanwhile, the problem of supporting third-party proprietary open source licenses, in essence, lies in that cloud vendors cannot achieve open source and be neutral.
 
 ## 3. The requirement of multi-cloud and hybrid cloud management
 
