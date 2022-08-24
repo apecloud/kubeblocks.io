@@ -9,7 +9,7 @@ const config = {
   title: 'CloudDBaaS',
   tagline: 'Dinosaurs are cool',
   url: 'https://apecloud.github.io',
-  baseUrl: '/',
+  baseUrl: '/website/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/logo.png',
