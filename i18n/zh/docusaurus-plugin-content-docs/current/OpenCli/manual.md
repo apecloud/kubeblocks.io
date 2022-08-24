@@ -1,5 +1,5 @@
-# OpenCLI使用手册
-## 前置条件
+# 使用手册
+## 依赖
 在部署之前，必须完成以下准备工作以满足部署条件。
 - 下载Docker.dmg，执行如下命令在本地安装并启动 Docker。安装操作具体指引参见：[Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/)。
 
