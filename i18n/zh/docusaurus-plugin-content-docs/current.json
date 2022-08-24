@@ -3,7 +3,7 @@
     "message": "Next",
     "description": "The label for version current"
   },
-  "sidebar.tutorialSidebar.category.opencli": {
+  "sidebar.tutorialSidebar.category.OpenCli": {
     "message": "命令行工具",
     "description": "The label for category opencli in sidebar tutorialSidebar"
   }
