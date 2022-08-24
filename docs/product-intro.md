@@ -2,7 +2,7 @@
 
 ## 1. Exploding period of databases
 
-Databases are in an era of product explosion. Besides of the increasing number of database products, databases have tranformed and expanded in all aspects. In such an era, we are ready to meet your requirements for more complex application scenarios, aiming to solving the technical and costs challenge you are faced with.
+Databases are in an era of product explosion. Besides of the increasing number, databases have tranformed and expanded in all aspects. In such an era, we are ready to meet your requirements for more complex application scenarios, aiming to solving the technical and costs challenge you are faced with.
 
 ## 2. Open source and neutral
 
@@ -10,7 +10,7 @@ Although current cloud vendors have public data management platforms, they only 
 
 ## 3. The requirement of multi-cloud and hybrid cloud management
 
-You may use not single cloud platforms (aws, axure, Google cloud) and with self-built cloud platforms (hybrid cloud). And cloud vendors cannot be neutral about open source software; We provide a easy way for database management and long-term maintenance.
+You may use not single cloud platforms (aws, axure, Google cloud) and with self-built cloud platforms (hybrid cloud). And cloud vendors cannot be neutral about open source software. We provide an easy way for database management and long-term maintenance.
 
 ## 4. The chronic problem of data silo
 
