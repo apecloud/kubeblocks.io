@@ -5,14 +5,14 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Overview
+# 概要
 
 Let's discover in less than 5 minutes.
 
-## Getting Started
+## 开始
 
 
-### 1、Requirements
+### 1、安装依赖
 
 - *** Required ***: Install [Node.js](https://nodejs.org/en/download/) version 16.14 or above (which can be checked by running node -v). 
 
@@ -88,7 +88,8 @@ npm run build
 ```
 and the contents will be generated within the /build directory.
 
-### 6、build
+### checked result
+
 
 ## Special Grammar
 
