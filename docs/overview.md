@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Overview
 
-Let's discover in less than 5 minutes.
+Let's discover in less than 5 minutes.....
 
 ## Getting Started
 
