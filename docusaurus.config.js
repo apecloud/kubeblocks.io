@@ -1,135 +1,67 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const navbarConfig = require("./config/navbar");
+const footerConfig = require("./config/footer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'CloudDBaaS',
-  url: 'https://apecloud.github.io',
-  baseUrl: '/website/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/logo.png',
+  title: "CloudDBaaS",
+  url: "https://apecloud.github.io",
+  baseUrl: "/website/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/logo.png",
   noIndex: true,
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'apecloud', // Usually your GitHub org/user name.
-  projectName: 'website', // Usually your repo name.
+  organizationName: "apecloud",
+  projectName: "website",
   trailingSlash: false,
-
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'zh'],
-    path: 'i18n',
+    defaultLocale: "en",
+    locales: ["en", "zh"],
+    path: "i18n",
     localeConfigs: {
       en: {
-        label: 'English',
-        htmlLang: 'en-US',
+        label: "English",
+        htmlLang: "en-US",
       },
       zh: {
-        label: '简体中文',
-        htmlLang: 'zh-CN',
-        // path: 'zh',
+        label: "简体中文",
+        htmlLang: "zh-CN",
       },
     },
   },
-
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/apecloud/website/tree/master',
+          sidebarPath: require.resolve("./config/sidebars.js"),
+          editUrl: "https://github.com/apecloud/website/tree/master",
+        },
+        blog: {
+          editUrl: ({locale, blogDirPath, blogPath, permalink}) => `https://github.com/apecloud/website/tree/master/${blogDirPath}/${blogPath}`,
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/style/custom.less"),
         },
-      }),
+      },
     ],
   ],
-  plugins: ['@docusaurus/theme-live-codeblock'],
+  stylesheets: [],
+  plugins: ["@docusaurus/theme-live-codeblock", "docusaurus-plugin-less"],
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        logo: {
-          alt: 'CloudDBaaS',
-          src: 'img/logo.png',
-        },
-        items: [
-          {
-            type: 'doc',
-            docId: 'overview',
-            position: 'left',
-            label: 'Docs',
-          },
-          {
-            href: 'https://github.com/apecloud/',
-            label: 'GitHub',
-            position: 'left',
-          },
-          {
-            type: 'localeDropdown',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Overview',
-                to: '/docs/Overview',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: '/',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              // {
-              //   label: 'Blog',
-              //   to: '/blog',
-              // },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/apecloud/',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} InfraCreate, Inc. Built with Docusaurus.`,
-      },
+    {
+      navbar: navbarConfig,
+      footer: footerConfig,
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-    }),
+    },
 };
 
 module.exports = config;

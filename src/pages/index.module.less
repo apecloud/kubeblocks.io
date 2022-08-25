@@ -1,0 +1,58 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.banner {
+  color: #FFF;
+  background-image: radial-gradient(circle, #1B4FA1 0%,#162345 100%);
+  .inner {
+    height: 500px;
+    position: relative;
+    .left {
+      padding-top: 100px;
+      width: 50%;
+      h1 {
+        font-size: 50px;
+      }
+      h2 {
+        font-size: 25px;
+        line-height: 50px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: normal;
+      }
+      .actions {
+        position: absolute;
+        bottom: 80px;
+        left:0;
+        .actionItem {
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          padding: 10px 30px;
+          color: #FFF;
+          text-decoration: none;
+          border-radius: 100px;
+          transition: 0.3s;
+          margin-right: 30px;
+          color: rgba(255, 255, 255, 0.8);
+          &:hover {
+            background: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+    }
+    .right {
+      position: absolute;
+      top:0;
+      right: 0;
+      background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ');
+      background-size: 480px;
+      width: 500px;
+      height: 500px;
+    }
+  }
+}
+
+
+
+
+

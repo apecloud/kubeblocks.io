@@ -1,0 +1,32 @@
+:root {
+  --ifm-color-primary: #1B4FA1;
+  --ifm-code-font-size: 14px;
+  --ifm-global-radius: 2px;
+  --ifm-menu-link-padding-vertical: 8px;
+}
+
+
+.navbar__brand {
+  margin-right: 50px;
+  .navbar__logo {
+    background-image: url('../../static/img/logo.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    img {
+      visibility: hidden;
+    }
+  }
+  .navbar__item {
+    margin: 0 5px;
+  }
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #009FE7;
+  .navbar__brand {
+    .navbar__logo {
+      background-image: url('../../static//img/logo-dark.png');
+    }
+  }
+}
+
