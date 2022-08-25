@@ -7,7 +7,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'CloudDBaaS',
-  tagline: 'Dinosaurs are cool',
   url: 'https://apecloud.github.io',
   baseUrl: '/website/',
   onBrokenLinks: 'throw',
@@ -50,7 +49,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/apecloud/docs',
+            'https://github.com/apecloud/website/tree/master',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -63,7 +62,6 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'CloudDBaaS',
         logo: {
           alt: 'CloudDBaaS',
           src: 'img/logo.png',
@@ -73,7 +71,7 @@ const config = {
             type: 'doc',
             docId: 'overview',
             position: 'left',
-            label: 'Overview',
+            label: 'Docs',
           },
           {
             href: 'https://github.com/apecloud/',

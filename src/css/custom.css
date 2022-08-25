@@ -4,34 +4,37 @@
  * work well for content-centric websites.
  */
 
+
+.navbar__brand .navbar__logo {
+  background-image: url('../../static/img/logo.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+[data-theme='dark'] .navbar__brand .navbar__logo {
+  background-image: url('../../static//img/logo-dark.png');
+}
+.navbar__brand .navbar__logo img {
+  visibility: hidden;
+}
+
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #5AA3F0;
-  /* --ifm-color-primary: #2e8555;  */
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-
-  --ifm-font-size-base: 14px;
-  --ifm-code-font-size: 13px;
+  --ifm-color-primary: #1B4FA1;
+  --ifm-code-font-size: 14px;
   --ifm-global-radius: 2px;
   --ifm-menu-link-padding-vertical: 8px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #5AA3F0;
-  /* --ifm-color-primary: #25c2a0; */
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #009FE7;
+}
+
+.navbar__brand {
+  margin-right: 50px;
+}
+
+
+.navbar__item {
+  margin: 0 5px;
 }
