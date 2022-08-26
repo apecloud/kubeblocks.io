@@ -7,11 +7,10 @@
   color: #FFF;
   background-image: radial-gradient(circle, #1B4FA1 0%,#162345 100%);
   .inner {
-    height: 500px;
-    position: relative;
+    display: flex;
     .left {
-      padding-top: 100px;
-      width: 50%;
+      padding: 100px 0;
+      flex: 1;
       h1 {
         font-size: 50px;
       }
@@ -22,37 +21,115 @@
         font-weight: normal;
       }
       .actions {
-        position: absolute;
-        bottom: 80px;
-        left:0;
+        margin-top: 60px;
         .actionItem {
           border: 1px solid rgba(255, 255, 255, 0.8);
-          padding: 10px 30px;
+          padding: 7px 25px;
           color: #FFF;
           text-decoration: none;
           border-radius: 100px;
           transition: 0.3s;
           margin-right: 30px;
           color: rgba(255, 255, 255, 0.8);
+          display: inline-block;
+          font-weight: 400;
           &:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.05);
           }
         }
       }
     }
     .right {
-      position: absolute;
-      top:0;
-      right: 0;
-      background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ');
+      background: url('https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ') no-repeat;
       background-size: 480px;
-      width: 500px;
+      width: 600px;
       height: 500px;
+    }
+  }
+}
+
+.features {
+
+  .item {
+    border-radius: 8px;
+    position: relative;
+    padding: 80px;
+    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    box-sizing: content-box;
+    display: flex;
+    min-height: 225px;
+    margin-left: 40px;
+    .img {
+      border-radius: 10px;
+      transition-duration: 0.5s;
+      width: 300px;
+      height: 225px;
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .content {
+      flex:1;
+      padding-left: 80px;
+      h1 {
+        margin-top: 30px;
+      }
+      p {
+        font-size: 18px;
+      }
+    }
+    &:last-child {
+      border: none;
+    }
+    
+    &:nth-child(2n) {
+      flex-direction: row-reverse;
+      .content {
+        padding-left: 0;
+        padding-right: 80px;
+      }
     }
   }
 }
 
 
 
-
+@media(max-width:996px){
+  .banner {
+    .inner {
+      .left {
+        text-align: center;
+        padding: 40px;
+        .actions {
+          margin-top: 30px;
+        }
+      }
+      .right {
+        display: none;
+      }
+    }
+  }
+  .features {
+    .item {
+      left: 0;
+      padding: 20px 80px;
+      text-align: center;
+      min-height: auto;
+      .img{
+        display: none;
+      }
+      .content {
+        padding: 0;
+      }
+      &:nth-child(2n) {
+        .content {
+          padding: 0;
+        }
+      }
+    }
+  }
+}
 
