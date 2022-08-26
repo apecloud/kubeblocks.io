@@ -1,7 +1,7 @@
 # Manual
 ## Dependences
 Make sure the following dependences are installed before deploying OpenCLI.
-- Download Docker.dmg. 执行如下命令在本地安装并启动 Docker。安装操作具体指引参见：[Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/)。
+- Download Docker.dmg. 执行如下命令在本地安装并启动 Docker。安装操作具体指引参见：refer to [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/)。
 
   ``` bash title='本地安装并启动 Docker'
   sudo hdiutil attach Docker.dmg
