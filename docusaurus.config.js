@@ -40,10 +40,10 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve("./config/sidebars.js"),
-          editUrl: "https://github.com/apecloud/website/tree/master",
+          editUrl: "https://github.com/apecloud/website/tree/developer",
         },
         blog: {
-          editUrl: ({locale, blogDirPath, blogPath, permalink}) => `https://github.com/apecloud/website/tree/master/${blogDirPath}/${blogPath}`,
+          editUrl: ({locale, blogDirPath, blogPath, permalink}) => `https://github.com/apecloud/website/tree/developer/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
