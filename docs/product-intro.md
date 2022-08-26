@@ -2,7 +2,7 @@
 
 ## 1. Ready for more complex application scenarios
 
-Kubelego is ready to meet your requirements for more complex application scenarios, aiming to solving the technical and costs challenges you are faced with.
+Kubelego is ready to meet your requirements for more complex application scenarios, aiming to solve the technical and costs challenges you are faced with.
 
 ## 2. Open source and neutral
 
