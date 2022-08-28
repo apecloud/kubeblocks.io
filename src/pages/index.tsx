@@ -4,8 +4,9 @@ import ScrollAnim from 'rc-scroll-anim';
 import Layout from '../components/Layout';
 import QueueAnim from 'rc-queue-anim';
 import styles from './index.module.less';
-const ScrollParallax = ScrollAnim.Parallax;
+import Translate, { translate } from '@docusaurus/Translate';
 
+const ScrollParallax = ScrollAnim.Parallax;
 type FeatureItem = {
   title: string;
   img: string;
@@ -14,24 +15,48 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Ready for more complex application scenarios',
-    img: '230.png',
-    description: 'Kubelego is ready to meet your requirements for more complex application scenarios, aiming to solving the technical and costs challenges you are faced with.',
+    title: translate({
+      id: 'homepage.features.feature0.title',
+      message: 'Ready for more complex application scenarios'
+    }),
+    img: 'img/230.png',
+    description: translate({
+      id: 'homepage.features.feature0.description',
+      message: 'Kubelego is ready to meet your requirements for more complex application scenarios, aiming to solve the technical and costs challenges you are faced with.',
+    }),
   },
   {
-    title: 'Open source and neutral',
-    img: '231.png',
-    description: 'Although current cloud vendors have public data management platforms, they only support a few mainstream databases. Third-party proprietary open source licenses are never fully-supported, because in essence cloud vendors cannot achieve open source and be neutral.',
+    title: translate({
+      id: 'homepage.features.feature1.title',
+      message: 'Open source and neutral'
+    }),
+    img: 'img/231.png',
+    description: translate({
+      id: 'homepage.features.feature1.description',
+      message: 'Although current cloud vendors have public data management platforms, they only support a few mainstream databases. Third-party proprietary open source licenses are never fully-supported, because in essence cloud vendors cannot achieve open source and be neutral.',
+    }),
   },
   {
-    title: 'The requirement of multi-cloud and hybrid cloud management',
-    img: '232.png',
-    description: 'You may use not single cloud platforms (AWS, Axure, Google Cloud) and with self-built cloud platforms (hybrid cloud). And cloud vendors cannot be neutral about open source software. Kubelego provides an easy way for database management and long-term maintenance.',
+    title: translate({
+      id: 'homepage.features.feature2.title',
+      message: 'The requirement of multi-cloud and hybrid cloud management',
+    }),
+    img: 'img/232.png',
+    description: translate({
+      id: 'homepage.features.feature2.description',
+      message: 'You may use not single cloud platforms (AWS, Axure, Google Cloud) and with self-built cloud platforms (hybrid cloud). And cloud vendors cannot be neutral about open source software. Kubelego provides an easy way for database management and long-term maintenance.',
+    })
   },
   {
-    title: 'The chronic problem of data silo',
-    img: '233.png',
-    description: 'Kubelego is a unified data management interface. Under a unified management interface, effective unification can be achieved off-line. This is a problem that the current data lake and data warehouse products can not effectively solve, and the data lake itself is another relatively large data silo.',
+    title: translate({
+      id: 'homepage.features.feature3.title',
+      message: 'The chronic problem of data silo',
+    }),
+    img: 'img/233.png',
+    description: translate({
+      id: 'homepage.features.feature3.description',
+      message:'Kubelego is a unified data management interface. Under a unified management interface, effective unification can be achieved off-line. This is a problem that the current data lake and data warehouse products can not effectively solve, and the data lake itself is another relatively large data silo.',
+    }),
   },
 ];
 
@@ -42,8 +67,20 @@ export default function Home(): JSX.Element {
         <div className="container">
           <div className={styles.inner}>
             <QueueAnim className={styles.left} duration={500} type={['left', 'right']}>
-              <h1 key={1}>The Database of next generation</h1>
-              <h2 key={2}>Build your database as blocks</h2>
+              <h1 key={1}>
+                <Translate
+                  id="homepage.banner.title"
+                  description="The homepage banner title">
+                  The Database of next generation
+                </Translate>
+              </h1>
+              <h2 key={2}>
+                <Translate
+                  id="homepage.banner.subtitle"
+                  description="The homepage banner subtitle">
+                  Build your database as blocks
+                </Translate>
+              </h2>
               <div key={3} className={styles.actions}>
                 <Link
                   className={styles.actionItem}
@@ -67,7 +104,7 @@ export default function Home(): JSX.Element {
           <div className={styles.features}>
             {FeatureList.map(({ title, img, description }, idx) => (
               <ScrollParallax className={styles.item} key={idx} animation={{ left: -40 }}>
-                <div className={styles.img} ><img src={`img/${img}`} /></div>
+                <div className={styles.img} ><img src={img} /></div>
                 <div className={styles.content}>
                   <h1>{title}</h1>
                   <p>{description}</p>

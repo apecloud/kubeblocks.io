@@ -4,7 +4,7 @@
     "description": "Navbar item with label Docs"
   },
   "item.label.Blog": {
-    "message": "博文",
+    "message": "Blog",
     "description": "Navbar item with label Blog"
   },
   "item.label.GitHub": {

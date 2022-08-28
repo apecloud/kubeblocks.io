@@ -1,0 +1,14 @@
+project_id : '534618'
+api_token : eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ3UUVxdmhVM3ZMT2EyWGljbVV5VCIsImp0aSI6ImRkZGQzMTc5NzljOWMxMzIxOTBkMDAxOGIzNzYzNzUzY2NiZTAyMjU1NDlmYTYyMjFmYzQ1Y2I3MDlhN2FkNThiNDAzYjU3Y2E1M2YzZWRiIiwiaWF0IjoxNjYxNTA3MTQxLCJuYmYiOjE2NjE1MDcxNDEsImV4cCI6MTY2NDA5OTE0MSwic3ViIjoiMTU0MjExOTYiLCJkb21haW4iOm51bGwsInNjb3BlcyI6WyJwcm9qZWN0Il0sImFzc29jaWF0aW9ucyI6WyIqIl0sInNlc3Npb24iOjB9.aCGD1PLNe2G4CaIvE46t-aYodM4qaaEHCPly2ILlmGPVpgzmQNE6lgCdfheElwgk8TP3QSFGQVUvmj6REOyJmNiUBmOuzuodXMVkpgpm9Jtogs5dYFNSwEd6xQHhxJCHyy6mgFyuO1zg68Pc_FHMLnAAYXOd6S2TGmzKKtdUf4FAFbpFw_S1lCHi-gxBE7wyre2cRBfXSh-M1zDiqeYnHRwEaBYQPObGn0fGxKHTN-eNBjIW1dF815zau2yDawKr9Ie_8xwRr7nHow4H_Ix4N_2GdQDcFp8z66PxUQCgpN6BdBuCruX7QJishVx9abDXmRcHBI_jhpecdqdhUXnXGyPzVt77LF9Ke05FtdQZxn6bsPEbkEAaeHY1qLfEsiPcZdHEclRkNPYK9W31XTp2CExB60Qm4dsuZsTG2AdHoll5xxhbdQjlB-nYzzCB3vn0xt-48vOiptHULO64Pyr_7xPO7Dks5m0Gh3VYPoC_NxO66m0daRBk_UzonMzSF0OFhFYsTlrzH256PnS7e8Xd4ocz9xoCrEXQTlPyLuwA2-kE2WwWwOe1wYmnGJD28QSVc0dwhg5ABNDaxK4-JJWWok_3FzcUAhHicfine1rGIodm9Ip2fVS15p-MrQiUE2Oi7G6ko1IPNYdC7il0T5NIhqhY-gbgVkKtMzHp7Hfo2D4
+preserve_hierarchy: true
+
+files: 
+  # JSON translation files
+  - source: /i18n/en/**/*
+    translation: /i18n/%two_letters_code%/**/%original_file_name%
+  # Docs Markdown files
+  # - source: /docs/**/*
+  #   translation: /i18n/%two_letters_code%/docusaurus-plugin-content-docs/current/**/%original_file_name%
+  # Blog Markdown files
+  # - source: /blog/**/*
+  #   translation: /i18n/%two_letters_code%/docusaurus-plugin-content-blog/**/%original_file_name%

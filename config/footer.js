@@ -5,7 +5,7 @@ module.exports = {
       title: "Docs",
       items: [
         {
-          label: "Overview",
+          label: "Docs",
           to: "/docs/Overview",
         },
       ],
