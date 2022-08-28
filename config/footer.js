@@ -37,5 +37,5 @@ module.exports = {
       ],
     },
   ],
-  copyright: `Copyright © ${new Date().getFullYear()} InfraCreate, Inc. Built with Docusaurus.`,
+  copyright: `Copyright © ${new Date().getFullYear()} ApeCloud, Inc.`,
 }

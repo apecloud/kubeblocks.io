@@ -8,12 +8,12 @@ const footerConfig = require("./config/footer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "CloudDBaaS",
+  title: "ApeCloud",
   url: "https://apecloud.github.io",
   baseUrl: "/website/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/logo.png",
+  favicon: "img/favicon.png",
   noIndex: true,
   organizationName: "apecloud",
   projectName: "website",

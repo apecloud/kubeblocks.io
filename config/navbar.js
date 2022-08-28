@@ -1,6 +1,6 @@
 module.exports = {
   logo: {
-    alt: "CloudDBaaS",
+    alt: "Logo",
     src: "img/logo.png",
   },
   items: [

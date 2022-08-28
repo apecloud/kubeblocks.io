@@ -56,7 +56,7 @@
     border-radius: 8px;
     position: relative;
     padding: 80px 0;
-    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    border-bottom: 1px solid rgba(150, 150, 150, 0.15);
     box-sizing: content-box;
     display: flex;
     min-height: 225px;
@@ -80,6 +80,7 @@
       }
       p {
         font-size: 18px;
+        color: var(--ifm-font-color-secondary);
       }
     }
     &:last-child {
@@ -96,6 +97,13 @@
   }
 }
 
+
+[data-theme='dark'] {
+  .banner {
+    color: #FFF;
+    background-image: radial-gradient(circle, #162345 0%,#1B1B1D 100%);
+  }
+}
 
 
 @media(max-width:996px){
