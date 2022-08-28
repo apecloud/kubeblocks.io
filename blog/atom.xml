@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://apecloud.github.io/website/blog</id>
-    <title>CloudDBaaS Blog</title>
+    <title>ApeCloud Blog</title>
     <updated>2019-05-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://apecloud.github.io/website/blog"/>
-    <subtitle>CloudDBaaS Blog</subtitle>
-    <icon>https://apecloud.github.io/website/img/logo.png</icon>
+    <subtitle>ApeCloud Blog</subtitle>
+    <icon>https://apecloud.github.io/website/img/favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[First Blog Post]]></title>
         <id>first-blog-post</id>
