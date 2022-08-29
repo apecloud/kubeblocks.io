@@ -186,7 +186,6 @@ import TabItem from '@theme/TabItem';
 
 ### 4、Images
 
-
 ![Logo](./assets/logo.png)
 
 The img path is relatived to your markdown filepath.

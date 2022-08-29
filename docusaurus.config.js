@@ -40,28 +40,36 @@ const config = {
       {
         docs: {
           sidebarPath: require.resolve("./config/sidebars.js"),
-          editUrl: "https://github.com/apecloud/website/tree/developer",
+          editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
+            if(locale != 'en') {
+              return `https://github.com/apecloud/website/tree/developer/i18n/${locale}/docusaurus-plugin-content-docs/${version}/${docPath}`
+            }
+            return `https://github.com/apecloud/website/tree/developer/${versionDocsDirPath}/${docPath}`;
+          },
         },
         blog: {
-          editUrl: ({locale, blogDirPath, blogPath, permalink}) => `https://github.com/apecloud/website/tree/developer/${blogDirPath}/${blogPath}`,
+          editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
+            `https://github.com/apecloud/website/tree/developer/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
         },
       },
-    ],
+    ]
   ],
   stylesheets: [],
-  plugins: ["@docusaurus/theme-live-codeblock", "docusaurus-plugin-less"],
-  themeConfig:
-    {
-      navbar: navbarConfig,
-      footer: footerConfig,
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
+  plugins: [
+    "@docusaurus/theme-live-codeblock", 
+    "docusaurus-plugin-less",
+  ],
+  themeConfig: {
+    navbar: navbarConfig,
+    footer: footerConfig,
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
     },
+  },
 };
 
 module.exports = config;
