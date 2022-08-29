@@ -1,22 +1,19 @@
 # Overview
 
 Let's discover in less than 5 minutes.
-This line is added by test.
 
 ## Getting Started
-
 
 ### 1、Requirements
 
 * *Required*: Install [Node.js](https://nodejs.org/en/download/) version 16.14 or above (which can be checked by running node -v). 
 
-* *Optional* Install vscode plugin 'Markdown Snippets for MDX and Docusaurus'.
+* *Optional*: Install vscode plugin 'Markdown Snippets for MDX and Docusaurus'.
 
 ```
 https://marketplace.visualstudio.com/items?itemName=MisterMunchkin.simple-markdown-snippets
 ```
   
-
 ### 2、Running the development server
 
 ``` bash
