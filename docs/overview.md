@@ -14,27 +14,33 @@ Let's discover in less than 5 minutes.....
 
 ### 1、Requirements
 
-- *** Required ***: Install [Node.js](https://nodejs.org/en/download/) version 16.14 or above (which can be checked by running node -v). 
+- ***Required***: Install [Node.js](https://nodejs.org/en/download/) version 16.14 or above (which can be checked by running node -v). 
 
 <Tabs>
   <TabItem value="windows" label="Windows" default>
 
-    https://nodejs.org/dist/v16.17.0/node-v16.17.0-x86.msi
+```
+https://nodejs.org/dist/v16.17.0/node-v16.17.0-x86.msi
+```
 
   </TabItem>
   <TabItem value="mocos" label="MacOS">
 
-    https://nodejs.org/dist/v16.17.0/node-v16.17.0.pkg
+```
+https://nodejs.org/dist/v16.17.0/node-v16.17.0.pkg
+```
 
   </TabItem>
   <TabItem value="sourcecode" label="Source Code">
 
-    https://nodejs.org/dist/v16.17.0/node-v16.17.0.tar.gz
+```
+https://nodejs.org/dist/v16.17.0/node-v16.17.0.tar.gz
+```
 
   </TabItem>
 </Tabs>
 
-- *** Optional ***: Install vscode plugin 'Markdown Snippets for MDX and Docusaurus'.
+- ***Optional***: Install vscode plugin 'Markdown Snippets for MDX and Docusaurus'.
 
 ```
 https://marketplace.visualstudio.com/items?itemName=MisterMunchkin.simple-markdown-snippets
@@ -87,8 +93,6 @@ build your site to include all the locales at once:
 npm run build
 ```
 and the contents will be generated within the /build directory.
-
-### 6、build
 
 ## Special Grammar
 
@@ -155,12 +159,12 @@ Some content...
 <Tabs>
   <TabItem value="npm" label="npm" default>
 
-    npm example content.
+    npm install
 
   </TabItem>
   <TabItem value="yarn" label="yarn">
 
-    yarn example content.
+    yarn install
     
   </TabItem>
 </Tabs>
