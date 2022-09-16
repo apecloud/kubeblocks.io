@@ -12,11 +12,6 @@ module.exports = {
     },
     {to: '/blog', label: 'Blog', position: 'left'},
     {
-      href: "https://github.com/apecloud/",
-      label: "GitHub",
-      position: "left",
-    },
-    {
       type: "localeDropdown",
       position: "right",
     },
