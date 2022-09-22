@@ -1,34 +1,41 @@
 {
   "homepage.features.feature0.title": {
-    "message": "Ready for more complex application scenarios"
+    "message": "Cloud-prem database solutions"
   },
-  "homepage.features.feature0.description": {
-    "message": "Kubelego is ready to meet your requirements for more complex application scenarios, aiming to solve the technical and costs challenges you are faced with."
+  "homepage.features.feature0.description.description0": {
+    "message": "Cloud-prem means the optimized utilization of your own infrastructure and cloud assets, and enhanced security and compliance."
+  },
+  "homepage.features.feature0.description.description1": {
+    "message": "With our cloud-prem solutions, you can potentially fully integrate and control the application into your own account. As the data resides within your account, you can audit and manage it without the tedious and endless efforts of having to build and manage on-prem software yourselves, and thus carry out your data in compliance and get a better quality of service."
   },
   "homepage.features.feature1.title": {
-    "message": "Open source and neutral"
+    "message": "Built-in FinOps practice for database"
   },
-  "homepage.features.feature1.description": {
-    "message": "Although current cloud vendors have public data management platforms, they only support a few mainstream databases. Third-party proprietary open source licenses are never fully-supported, because in essence cloud vendors cannot achieve open source and be neutral."
+  "homepage.features.feature1.description.description0": {
+    "message": "Conventional infrastructure management is simply not effective when working within the cloud, and cloud financial management has always been a pain. KubeBlocks adopts the ideology and framework of FinOps to increase the CPU usage twice as much as its original rate by resource scheduling optimization and enables organizations to get maximum business value with data-driven spending decisions."
+  },
+  "homepage.features.feature1.description.description1": {
+    "message": "Also, you can leverage our know-how and features to avoid the human resource and competency costs that organizations otherwise have to obtain. Business opportunities can be addressed in a more robust and timely fashion."
   },
   "homepage.features.feature2.title": {
-    "message": "The requirement of multi-cloud and hybrid cloud management"
+    "message": "Infrastructure as Code"
   },
-  "homepage.features.feature2.description": {
-    "message": "You may use not single cloud platforms (AWS, Axure, Google Cloud) and with self-built cloud platforms (hybrid cloud). And cloud vendors cannot be neutral about open source software. Kubelego provides an easy way for database management and long-term maintenance."
+  "homepage.features.feature2.description.description0": {
+    "message": "IaC means managing and provisioning of infrastructure while also improving consistency and reducing errors by reusable and reviewable bits of code instead of with manual processes."
   },
-  "homepage.features.feature3.title": {
-    "message": "The chronic problem of data silo"
-  },
-  "homepage.features.feature3.description": {
-    "message": "Kubelego is a unified data management interface. Under a unified management interface, effective unification can be achieved off-line. This is a problem that the current data lake and data warehouse products can not effectively solve, and the data lake itself is another relatively large data silo."
-  },
+  "homepage.features.feature2.description.description1": {
+    "message": "With the ideology and process of IaC, KubeBlocks has made a high degree of abstraction for cluster topology and data synchronization, allowing users to customize cluster topology with YAML configuration, and describe the basic topology unit by replication dependency. Thus, any data product can seamlessly access KubeBlocks in the operatorless, declarative, and configurable manner. "
+  }, 
   "homepage.banner.title": {
-    "message": "The Database of next generation",
+    "message": "KubeBlocks",
     "description": "The homepage banner title"
   },
   "homepage.banner.subtitle": {
-    "message": "Build your database as blocks",
+    "message": "Improved productivity, cost-efficiency and business continuity with our open source and cloud-neutral database management system built with Kubernetes",
+    "description": "The homepage banner subtitle"
+  },
+  "homepage.banner.subtitle.description": {
+    "message": "Adopting the ideas of IaC (infrastructure as code) and FinOps, Kubeblocks mitigates the complexity and costs of data infrastructure management by leveraging our know-how to manage databases and increasing your cloud utilization rate.",
     "description": "The homepage banner subtitle"
   },
   "theme.ErrorPageContent.title": {
