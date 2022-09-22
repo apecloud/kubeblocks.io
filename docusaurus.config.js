@@ -37,6 +37,8 @@ const config = {
     [
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
+      // "docusaurus-preset-openapi",
+      // /** @type {import('docusaurus-preset-openapi').Options} */
       {
         docs: {
           sidebarPath: require.resolve("./config/sidebars.js"),
@@ -54,6 +56,16 @@ const config = {
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
         },
+        // api: {
+        //   path: 'openapi/api-spec.json',
+        //   routeBasePath: 'apis',
+        //   proxy: {
+        //     '/apis': {
+        //       target: 'http://54.223.93.54:32539',
+        //       changeOrigin: true,
+        //     },
+        //   }
+        // }
       },
     ]
   ],
