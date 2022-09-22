@@ -1,19 +1,18 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
-import ScrollAnim from 'rc-scroll-anim';
 import Layout from '../components/Layout';
 import QueueAnim from 'rc-queue-anim';
 import styles from './index.module.less';
 import Translate, { translate } from '@docusaurus/Translate';
 
-const ScrollParallax = ScrollAnim.Parallax;
-type FeatureItem = {
+
+type IntroductionItem = {
   title: string;
   img: string;
   description: string[];
 };
 
-const FeatureList: FeatureItem[] = [
+const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
@@ -67,6 +66,44 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
+const FeatureList = [{
+  title: 'MySQL supported',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Scale-Any-Size-Home-1.png'
+}, {
+  title: 'Instance lifecycle management',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Disaster-Recovery.png'
+}, {
+  title: 'Resource over-allocation',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Free-Backups-Icon.png'
+}, {
+  title: 'Multi-AZ deployment',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Super-User-Access-Control-S.png'
+}, {
+  title: 'Kubernetes native',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Free-24-7-Support-Icon.png'
+}, {
+  title: 'Easy to use CLI tool',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Slow-Query-Analysis-S.png'
+}, {
+  title: 'Automated task backup',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Virtual-Private-Cloud-Support-S.png'
+}, {
+  title: 'Built-in monitoring alerts',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Log-Rotations.png'
+}, {
+  title: 'Transmission encryption',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-One-Click-Restore.png'
+}, {
+  title: 'Encryption at rest',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-High-Performance-Clusters-Icon.png'
+}, {
+  title: 'Pricing calculator',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Enable-SSL.png'
+}, {
+  title: '?',
+  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Reserved-Instances-Icon.png'
+}]
+
 export default function Home(): JSX.Element {
   return (
     <Layout>
@@ -86,12 +123,7 @@ export default function Home(): JSX.Element {
                   Improved productivity, cost-efficiency and business continuity with our open source and cloud-neutral database management system built with Kubernetes
                 </Translate>
               </h2>
-              <p key={3}>
-                <Translate
-                  id="homepage.banner.description">
-                  Adopting the ideas of IaC (infrastructure as code) and FinOps, Kubeblocks mitigates the complexity and costs of data infrastructure management by leveraging our know-how to manage databases and increasing your cloud utilization rate. 
-                </Translate>
-              </p>
+              
               <div key={4} className={styles.actions}>
                 <Link
                   className={styles.actionItem}
@@ -100,6 +132,12 @@ export default function Home(): JSX.Element {
                 </Link>
                 <a target="_blank" className={styles.actionItem} href="https://github.com/apecloud/">Find us in GitHub <svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a>
               </div>
+              <p key={3} className={styles.description}>
+                <Translate
+                  id="homepage.banner.description">
+                  Adopting the ideas of IaC (infrastructure as code) and FinOps, Kubeblocks mitigates the complexity and costs of data infrastructure management by leveraging our know-how to manage databases and increasing your cloud utilization rate. 
+                </Translate>
+              </p>
             </QueueAnim>
 
             <QueueAnim duration={1000}>
@@ -112,18 +150,36 @@ export default function Home(): JSX.Element {
       </header>
       <main>
         <div className="container">
-          <div className={styles.features}>
-            {FeatureList.map(({ title, img, description }, idx) => (
-              <ScrollParallax className={styles.item} key={idx} animation={{ left: -40 }}>
+          <div className={styles.introductions}>
+            {IntroductionList.map(({ title, img, description }, index) => (
+              <div className={styles.item} key={index}>
                 <div className={styles.img} ><img src={img} /></div>
                 <div className={styles.content}>
                   <h1>{title}</h1>
                   {description.map(item => <p>{item}</p>)}
                 </div>
-              </ScrollParallax>
+              </div>
             ))}
           </div>
         </div>
+
+        <div className={styles.features}>
+          <div className="container">
+            <h1>Features</h1>
+            {/* <p>支持MySQL，实例生命周期管理，资源超额分配，多可用区部署，K8S原生，易用的CLI工具，自动备份任务，内置监控告警，传输加密，静态加密，成本计算器</p> */}
+            <ul className={styles.items}>
+              {FeatureList.map((item) => {
+                return (
+                  <li className={styles.item}>
+                    <img src={item.icon} />
+                    <div className={styles.title}>{item.title}</div>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+
       </main>
     </Layout>
   );

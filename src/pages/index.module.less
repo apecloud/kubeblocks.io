@@ -1,7 +1,7 @@
 .banner {
   color: #FFF;
   background-image: radial-gradient(circle, #1B4FA1 0%,#162345 100%);
-  min-height: 700px;
+  min-height: 600px;
   .inner {
     display: flex;
     .left {
@@ -12,16 +12,13 @@
         margin-bottom: 50px;
       }
       h2 {
-        font-size: 35px;
+        font-size: 25px;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.8);
         margin-bottom: 50px;
       }
-      p {
-        font-size: 18px;
-      }
       .actions {
-        margin-top: 80px;
+        margin-bottom: 50px;
         .actionItem {
           border: 1px solid rgba(255, 255, 255, 0.8);
           padding: 7px 25px;
@@ -32,7 +29,7 @@
           margin-right: 30px;
           color: rgba(255, 255, 255, 0.8);
           display: inline-block;
-          font-weight: 400;
+          font-weight: 500;
           &:hover {
             transform: scale(1.05);
           }
@@ -40,6 +37,11 @@
               margin-right: 0; 
           }
         }
+      }
+      .description {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.4);
+        margin: 0;
       }
     }
     .right {
@@ -55,7 +57,7 @@
   }
 }
 
-.features {
+.introductions {
   .item {
     border-radius: 8px;
     position: relative;
@@ -103,6 +105,51 @@
   }
 }
 
+.features {
+  background: rgba(150, 150, 150, 0.03);
+  padding: 60px 0 150px;
+  border-top: 1px solid rgba(150, 150, 150, 0.1);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.1);
+  h1 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .items {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    .item {
+      width: 25%;
+      border: 1px solid rgba(150, 150, 150, 0.1);
+      text-align: center;
+      padding: 20px 30px;
+      margin-left: -1px;
+      margin-top: -1px;
+      transition-duration: 0.3s;
+      cursor: pointer;
+      img {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        transition-duration: 0.3s;
+      }
+      .title {
+        font-weight: 500;
+      }
+      &:hover {
+        background: var(--ifm-navbar-background-color);
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
 
 [data-theme='dark'] {
   .banner {
@@ -120,10 +167,7 @@
         text-align: center;
         padding: 30px;
         h1 {
-          font-size: 55px;
-        }
-        h2 {
-          font-size: 30px;
+          font-size: 40px;
         }
         .actions {
           margin-top: 30px;
@@ -138,7 +182,7 @@
       }
     }
   }
-  .features {
+  .introductions {
     .item {
       left: 0;
       padding: 20px 0;
