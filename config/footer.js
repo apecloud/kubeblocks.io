@@ -37,5 +37,5 @@ module.exports = {
       ],
     },
   ],
-  copyright: `Copyright © ${new Date().getFullYear()} ApeCloud, Inc.`,
+  copyright: `Copyright © ${new Date().getFullYear()} ApeCloud Co., Ltd.`,
 }

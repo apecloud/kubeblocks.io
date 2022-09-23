@@ -27,10 +27,10 @@ const config = {
         label: "English",
         htmlLang: "en-US",
       },
-      zh: {
-        label: "简体中文",
-        htmlLang: "zh-CN",
-      },
+      // zh: {
+      //   label: "简体中文",
+      //   htmlLang: "zh-CN",
+      // },
     },
   },
   presets: [

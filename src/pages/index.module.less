@@ -1,7 +1,10 @@
 .banner {
   color: #FFF;
-  background-image: radial-gradient(circle, #1B4FA1 0%,#162345 100%);
+  background-color: #0e182b;
+  background-image: url("https://qcloudimg.tencent-cloud.cn/raw/c340f72d795d04b2b54eb503c3579691.jpg");
+  background-size: cover;
   min-height: 600px;
+  margin-bottom: 80px;
   .inner {
     display: flex;
     .left {
@@ -12,9 +15,12 @@
         margin-bottom: 50px;
       }
       h2 {
-        font-size: 25px;
+        font-size: 30px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.8);
+      }
+      h3 {
+        font-size: 20px;
+        font-weight: 500;
         margin-bottom: 50px;
       }
       .actions {
@@ -40,16 +46,17 @@
       }
       .description {
         font-size: 18px;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.8);
         margin: 0;
       }
     }
     .right {
       background-size: 480px;
-      width: 500px;
+      width: 400px;
       height: 500px;
       text-align: right;
       img {
+        display: none;
         margin-top: 50px;
         height: 100%;
       }
@@ -66,7 +73,6 @@
     box-sizing: content-box;
     display: flex;
     min-height: 225px;
-    margin-left: 40px;
     align-items: center;
     .img {
       border-radius: 10px;
@@ -74,15 +80,20 @@
       width: 300px;
       height: 225px;
       overflow: hidden;
-      
       img {
         width: 100%;
         height: 100%;
+        transition-duration: 0.7s;
+      }
+    }
+    &:hover {
+      .img img {
+        transform: scale(1.05);
       }
     }
     .content {
       flex:1;
-      padding-left: 80px;
+      padding-left: 60px;
       h1 {
         margin: 30px 0;
       }
@@ -154,7 +165,6 @@
 [data-theme='dark'] {
   .banner {
     color: #FFF;
-    background-image: radial-gradient(circle, #162345 0%,#1B1B1D 100%);
   }
 }
 
