@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://apecloud.github.io/website/zh/blog</id>
+    <id>https://apecloud.github.io/zh/blog</id>
     <title>ApeCloud Blog</title>
     <updated>2019-05-28T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://apecloud.github.io/website/zh/blog"/>
+    <link rel="alternate" href="https://apecloud.github.io/zh/blog"/>
     <subtitle>ApeCloud Blog</subtitle>
-    <icon>https://apecloud.github.io/website/zh/img/favicon.png</icon>
+    <icon>https://apecloud.github.io/zh/img/favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[First Blog Post]]></title>
         <id>first-blog-post</id>
-        <link href="https://apecloud.github.io/website/zh/blog/first-blog-post"/>
+        <link href="https://apecloud.github.io/zh/blog/first-blog-post"/>
         <updated>2019-05-28T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Lorem itest psum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet this is a test]]></summary>
         <content type="html"><![CDATA[<p>Lorem itest psum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet this is a test</p>]]></content>

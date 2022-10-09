@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkconsole_docs=self.webpackChunkconsole_docs||[]).push([[535],{5641:s=>{s.exports=JSON.parse('{"title":"\u8fd1\u671f\u535a\u6587","items":[{"title":"First Blog Post","permalink":"/website/zh/blog/first-blog-post"}]}')}}]);
