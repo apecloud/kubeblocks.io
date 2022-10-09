@@ -10,7 +10,7 @@ const footerConfig = require("./config/footer");
 const config = {
   title: "ApeCloud",
   url: "https://apecloud.github.io",
-  baseUrl: "/website/",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
