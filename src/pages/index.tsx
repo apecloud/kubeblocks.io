@@ -112,7 +112,7 @@ export default function Home(): JSX.Element {
               <h2 key={2}>
                 <Translate
                   id="homepage.banner.subtitle1">
-                  Open source and cloud-neutral DBMS built with Kubernetes
+                  An open-source and cloud-neutral DBaaS built with Kubernetes.
                 </Translate>
               </h2>
               <h3 key={3}>
