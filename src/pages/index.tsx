@@ -116,7 +116,7 @@ export default function Home(): JSX.Element {
                 </Translate>
               </h2>
               <h3 key={3}>
-                Improved <span style={{ fontSize: 35, color: "#FFF" }}>productivity</span>, cost-efficiency and business continuity 
+                Improved <span style={{color: "#FFF" }}>productivity</span>, cost-efficiency and business continuity 
                 {/* <Translate
                   id="homepage.banner.subtitle2">
                   Improved productivity, cost-efficiency and business continuity 
