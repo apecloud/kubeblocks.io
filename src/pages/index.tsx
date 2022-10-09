@@ -18,7 +18,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature0.title',
       message: 'Cloud-prem database solutions'
     }),
-    img: 'img/231.png',
+    img: 'img/230.png',
     description: [
       translate({
         id: 'homepage.features.feature0.description1',
