@@ -46,7 +46,6 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <img src="./img/icon_mail.png" />
                 <a href="/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Email
                 </a>
@@ -56,7 +55,6 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <img src="./img/icon_twitter.png" />
                 <a href="https://twitter.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Twitter
                 </a>
@@ -66,7 +64,6 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <img src="./img/icon_slack.png" />
                 <a href="https://slack.com/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Slack
                 </a>
@@ -76,7 +73,6 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <img src="./img/icon_linkedin.png" />
                 <a href="/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Linkedin
                 </a>

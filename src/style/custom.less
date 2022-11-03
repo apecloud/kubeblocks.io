@@ -1,5 +1,5 @@
 :root {
-  --ifm-color-primary: #3919A0FF;
+  --ifm-color-primary:  #3919A0FF;
 }
 
 .menu__list {
@@ -10,7 +10,8 @@
 }
 
 
-[data-theme='dark'] {
+html[data-theme='dark'] {
+  --ifm-color-primary:  #FFF;
   .navbar__brand {
     .navbar__logo {
       background-image: url('../../static/img/logo-dark.png');
@@ -57,6 +58,7 @@
 .navbar {
   background: linear-gradient(to right, #2D3187FF 50%, #542AB9FF 100%);
   height: var(--ifm-navbar-height);
+  padding: 0;
 }
 
 .navbar__inner {
@@ -67,10 +69,23 @@
 .navbar__link {
   color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
+  height: 100%;
+  line-height: 50px;
+  transition-duration: 0.5s;
   &:hover {
     color: #fff;
     text-decoration: none;
+    border-bottom: 1px solid;
+    border-image-source: linear-gradient(270deg, rgba(255,255,255,0) 0%, #FFFFFF 52%, rgba(255,255,255,0) 100%);
+    border-image-slice: 1;
   }
+}
+.navbar__link--active {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid;
+  border-image-source: linear-gradient(270deg, rgba(255,255,255,0) 0%, #FFFFFF 52%, rgba(255,255,255,0) 100%);
+  border-image-slice: 1;
 }
 
 .foot_cool{
@@ -80,23 +95,52 @@
 .footer {
   background-image: linear-gradient(to right, #2D3187FF 20%, #3C2A96FF 60%, #542AB9FF 100%);
   padding-bottom: 0;
-  .contact-span {
-    display: flex;
-    align-items: center;
-    img {
-      width: 18px;
-      height: 18px;
-    }
-    a {
-      font-family: PingFangSC-Regular, PingFang SC;
-      margin-left: 8px;
-      font-size: 16px;
-      color: rgba(255, 255, 255, 0.5);
-      &:hover {
-        color: #FFF;
+  .footer__items {
+    .footer__item{
+      .contact-span {
+        display: flex;
+        align-items: center;
+        a {
+          font-family: PingFangSC-Regular, PingFang SC;
+          margin-left: 25px;
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.5);
+          &:hover {
+            color: #FFF;
+          }
+        }
+      }
+      &:nth-child(1) {
+        .contact-span {
+          background: url('../../static/img/icon_mail.png') no-repeat;
+          background-position: 0px 4px;
+          background-size: 18px 18px;
+        }
+      }
+      &:nth-child(2) {
+        .contact-span {
+          background: url('../../static/img/icon_twitter.png')  no-repeat;
+          background-position: 0px 4px;
+          background-size: 18px 18px;
+        }
+      }
+      &:nth-child(3) {
+        .contact-span {
+          background: url('../../static/img/icon_slack.png')  no-repeat;
+          background-position: 0px 4px;
+          background-size: 18px 18px;
+        }
+      }
+      &:nth-child(4) {
+        .contact-span {
+          background: url('../../static/img/icon_linkedin.png')  no-repeat;
+          background-position: 0px 4px;
+          background-size: 18px 18px;
+        }
       }
     }
   }
+  
   .footer__link-item{
     font-family: PingFangSC-Regular, PingFang SC;
     color: rgba(255, 255, 255, 0.5);
