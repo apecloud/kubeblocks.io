@@ -1,115 +1,118 @@
+.page {
+  background: linear-gradient(to right, #2D3187FF, #542AB9FF);
+  background-image: url('../../static/img/bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 .banner {
-  color: #FFF;
-  background-color: #0e182b;
-  background-image: url("https://qcloudimg.tencent-cloud.cn/raw/c340f72d795d04b2b54eb503c3579691.jpg");
-  background-size: cover;
-  min-height: 600px;
-  margin-bottom: 80px;
+  height: 800px;
+  overflow: hidden;
+  position: relative;
   .inner {
-    display: flex;
-    .left {
-      padding: 60px 0;
-      flex: 1;
-      h1 {
-        font-size: 60px;
-        margin-bottom: 50px;
-      }
-      h2 {
-        font-size: 30px;
-        font-weight: 500;
-        margin-bottom: 20px;
-      }
-      h3 {
-        font-size: 20px;
-        font-weight: 500;
-        margin-bottom: 70px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-      .description {
-        font-size: 25px;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 30px;
-        font-weight: bold;
-      }
-      .actions {
-        margin-bottom: 50px;
-        .actionItem {
-          border: 1px solid rgba(255, 255, 255, 0.8);
-          padding: 7px 25px;
-          color: #FFF;
-          text-decoration: none;
-          border-radius: 100px;
-          transition: 0.3s;
-          margin-right: 30px;
-          color: rgba(255, 255, 255, 0.8);
-          display: inline-block;
-          font-weight: 500;
-          &:hover {
-            transform: scale(1.05);
-          }
-          &:last-child {
-              margin-right: 0; 
-          }
-        }
-      }
-     
+    margin: 0 auto;
+    padding-top: 170px;
+    h1 {
+      font-size: 60px;
+      margin-bottom: 50px;
+      font-family: AppleSystemUIFont;
+      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 25%, #DDD69A 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .right {
-      background-size: 480px;
-      width: 300px;
-      height: 500px;
-      text-align: right;
+    p {
+      font-size: 26px;
+      line-height: 26px;
+      color: rgba(255, 255, 255, 0.5);
+      font-family: AppleSystemUIFont;
+    }
+    span{
+      background: linear-gradient(to right, #4C84FF 50%, #59CCD5 80%, #DDD69A 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  .description {
+    font-size: 40px;
+    background: linear-gradient(225deg, #DDD69A 0%, #59CCD5 13%, #4C84FF 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 130px 0 40px 0;
+    text-align: center;
+  }
+  .img {
+    position: absolute;
+    top: -50px;
+    right: -183px;
+    width: 1230px;
+    height: 846px;
+    transform: scale(0.8);
+    z-index: 10;
+  }
+  .actions {
+    margin-bottom: 50px;
+    text-align: center;
+    position: relative;
+    z-index: 9999;
+    .actionItem {
+      padding: 7px 25px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: 0.3s;
+      margin: 0px 15px;
+      color: rgba(255, 255, 255, 0.5);
+      display: inline-block;
+      font-weight: 500;
+      border: 1px solid rgba(204, 204, 204, 0);
       img {
-        display: none;
-        margin-top: 50px;
-        height: 100%;
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+        position: relative;
+        top: 2px;
+      }
+      &:hover {
+        transform: scale(1.05);
+        border: 1px solid #ccc;
+        box-shadow: 0 0 5px 0 rgba(213, 213, 213, 0.642);
+      }
+      &:first-child {
+        background: #2C80FF;
+      }
+      &:last-child {
+        background: #3D4656;
       }
     }
   }
 }
-
 .introductions {
   .item {
     border-radius: 8px;
     position: relative;
-    padding: 80px 0;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.15);
-    box-sizing: content-box;
+    padding: 70px 0;
     display: flex;
     min-height: 225px;
     align-items: center;
     .img {
-      border-radius: 10px;
-      transition-duration: 0.5s;
-      width: 300px;
-      height: 225px;
-      overflow: hidden;
-      img {
-        width: 100%;
-        height: 100%;
-        transition-duration: 0.7s;
-      }
-    }
-    &:hover {
-      .img img {
-        transform: scale(1.05);
-      }
+      width: 600px;
+      height: 480px;
     }
     .content {
-      flex:1;
-      padding-left: 60px;
+      flex: 1;
+      padding-left: 80px;
       h1 {
-        margin: 30px 0;
+        color: #FFFFFF;
+        font-family: AppleSystemUIFont;
       }
       p {
-        font-size: 18px;
-        color: var(--ifm-font-color-secondary);
+        font-size: 22px;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: AppleSystemUIFont;
       }
     }
-    &:last-child {
-      border: none;
-    }
-    
     &:nth-child(2n) {
       flex-direction: row-reverse;
       .content {
@@ -121,15 +124,20 @@
 }
 
 .features {
-  background: rgba(150, 150, 150, 0.03);
   padding: 60px 0 150px;
   border-top: 1px solid rgba(150, 150, 150, 0.1);
   border-bottom: 1px solid rgba(150, 150, 150, 0.1);
   h1 {
     text-align: center;
     margin-bottom: 40px;
+    color: #fff;
+    font-family: AppleSystemUIFont;
   }
-
+  p{
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: AppleSystemUIFont;
+  }
   .items {
     display: flex;
     list-style: none;
@@ -138,77 +146,192 @@
     flex-wrap: wrap;
     .item {
       width: 25%;
-      border: 1px solid rgba(150, 150, 150, 0.1);
+      min-height: 250px;
       text-align: center;
-      padding: 20px 30px;
+      padding: 40px 30px;
       margin-left: -1px;
       margin-top: -1px;
       transition-duration: 0.3s;
+      border: 1px solid rgba(204, 204, 204, 0) !important;
       cursor: pointer;
       img {
         display: inline-block;
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
         transition-duration: 0.3s;
       }
       .title {
-        font-weight: 500;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+        width: 50%;
+        margin-left: 25%;
       }
       &:hover {
-        background: var(--ifm-navbar-background-color);
-        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #352ff183 !important;
+        box-shadow: 0 0 5px 0 rgba(151, 151, 151, 0.642);
+        border-radius: 5px;
         img {
           transform: scale(1.1);
+        }
+        .title {
+          font-weight: 600;
+          color: rgba(255, 255, 255, 0.7);
         }
       }
     }
   }
 }
 
-
-[data-theme='dark'] {
+@media(max-width:1680px){
   .banner {
-    color: #FFF;
-  }
-}
-
-
-@media(max-width:996px){
-  .banner {
-    min-height: 550px;
+    height: 720px;
     .inner {
-      .left {
-        text-align: center;
-        padding: 30px;
-        h1 {
-          font-size: 40px;
-        }
-        .actions {
-          margin-top: 30px;
-          .actionItem {
-            padding: 5px 15px;
-            font-size: 14px;
-          }
-        }
+      padding-top: 150px;
+      h1 {
+        font-size: 50px;
+        margin-bottom: 40px;
       }
-      .right {
-        display: none;
+      p {
+        font-size: 22px;
+        line-height: 22px;
+      }
+      .description {
+        font-size: 36px;
+        margin: 100px 0 40px 0;
+        text-align: center;
+      }
+    }
+    .img {
+      top: -50px;
+      right: -170px;
+      width: 1130px;  
+      height: 846px;
+    }
+    .actions {
+      margin-bottom: 30px;
+      .actionItem {
+        padding: 5px 15px;
+        font-size: 14px;
       }
     }
   }
   .introductions {
     .item {
-      left: 0;
-      padding: 20px 0;
+      padding: 30px 0;
+      .img {
+        width: 500px;
+        height: 400px;
+      }
+      .content {
+        padding-left: 60px;
+        h1 {
+          font-size: 28px;
+        }
+        p {
+          font-size: 20px;
+        }
+      }
+      &:nth-child(2n) {
+        .content {
+          padding-left: 0;
+          padding-right: 60px;
+        }
+      }
+    }
+  }
+  .features {
+    padding: 50px 0 130px;
+    h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media(max-width:996px){
+  .banner {
+    .inner {
+      padding-top: 120px;
+    }
+    .description {
+      margin: 100px 0 30px 0;
+    }
+    .img {
+      top: -25px;
+      right: -105px;
+      width: 760px;
+      height: 650px;
+    }
+  }
+  .introductions {
+    .item {
+      .img {
+        width: 400px;
+        height: 325px;
+      }
+    }
+  }
+  .features {
+    padding: 50px 0;
+    .items {
+      .item {
+        min-height: 200px;
+        width: 25%;
+        padding: 25px 10px;
+        img {
+          width: 80px;
+          height: 80px;
+        }
+        .title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media(max-width:800px){
+  .banner {
+    height: 500px;
+    .inner {
+      padding-top: 50px;
       text-align: center;
-      min-height: auto;
-      .img{
+      h1 {
+        font-size: 40px;
+        margin-bottom: 30px;
+      }
+      p {
+        font-size: 20px;
+        line-height: 20px;
+      }
+      .description {
+        font-size: 28px;
+        margin: 40px 0 30px 0;
+        text-align: center;
+      }
+    }
+    .img {
+      display: none;
+    }
+    .actions {
+      margin-bottom: 20px;
+      .actionItem {
+        padding: 5px 15px;
+        font-size: 14px;
+      }
+    }
+  }
+  .introductions {
+    .item {
+      padding: 20px 0;
+      .img {
         display: none;
       }
       .content {
-        padding: 0;
+        padding-left: 10px;
         h1 {
-          font-size: 25px;
+          font-size: 26px;
         }
         p {
           font-size: 18px;
@@ -216,10 +339,41 @@
       }
       &:nth-child(2n) {
         .content {
-          padding: 0;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+  .features {
+    padding: 20px 0;
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .items {
+      .item {
+        width: 25%;
+        padding: 25px 0;
+        img {
+          width: 60px;
+          height: 60px;
+        }
+        .title {
+          font-size: 14px;
         }
       }
     }
   }
 }
 
+@media(max-width: 576px){
+  .features {
+    .items {
+      .item {
+        min-height: 160px;
+        width: 50%;
+        padding: 15px 20px;
+      }
+    }
+  }
+}

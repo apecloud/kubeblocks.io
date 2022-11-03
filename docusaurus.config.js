@@ -77,6 +77,11 @@ const config = {
   themeConfig: {
     navbar: navbarConfig,
     footer: footerConfig,
+    // colorMode: {
+    //   defaultMode: 'light',
+    //   disableSwitch: true,
+    //   respectPrefersColorScheme: false,
+    // },
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
