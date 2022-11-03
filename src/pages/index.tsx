@@ -18,7 +18,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature0.title',
       message: 'Cloud-prem database solutions'
     }),
-    img: 'img/230.png',
+    img: 'img/pic_Cloud-prem.png',
     description: [
       translate({
         id: 'homepage.features.feature0.description1',
@@ -31,7 +31,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature1.title',
       message: 'Built-in FinOps practice for database'
     }),
-    img: 'img/231.png',
+    img: 'img/pic_FinOps.png',
     description: [
       translate({
         id: 'homepage.features.feature1.description1',
@@ -44,7 +44,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature2.title',
       message: 'Infrastructure as Code',
     }),
-    img: 'img/232.png',
+    img: 'img/pic_Infrastructure as Code.png',
     description: [
       translate({
         id: 'homepage.features.feature2.description1',
@@ -60,127 +60,134 @@ const IntroductionList: IntroductionItem[] = [
 
 const FeatureList = [{
   title: 'MySQL supported',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Scale-Any-Size-Home-1.png'
+  icon: 'img/icon_MySQL.png'
 }, {
   title: 'Instance lifecycle management',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Disaster-Recovery.png'
+  icon: 'img/icon_Instance.png'
 }, {
   title: 'Resource over-allocation',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Free-Backups-Icon.png'
+  icon: 'img/icon_Resource.png'
 }, {
   title: 'Multi-AZ deployment',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Super-User-Access-Control-S.png'
+  icon: 'img/icon_Multi-AZ.png'
 }, {
   title: 'Kubernetes native',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Free-24-7-Support-Icon.png'
+  icon: 'img/icon_Kubernetes.png'
 }, {
   title: 'Easy to use CLI tool',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Slow-Query-Analysis-S.png'
+  icon: 'img/icon_CLI.png'
 }, {
   title: 'Automated task backup',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Virtual-Private-Cloud-Support-S.png'
+  icon: 'img/icon_Automated.png'
 }, {
   title: 'Built-in monitoring alerts',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Log-Rotations.png'
+  icon: 'img/icon_Built-in.png'
 }, {
   title: 'Transmission encryption',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-One-Click-Restore.png'
+  icon: 'img/icon_TLS／SSL.png'
 }, {
   title: 'Encryption at rest',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-High-Performance-Clusters-Icon.png'
+  icon: 'img/icon_Encryption at rest.png'
 }, {
-  title: 'Pricing calculator',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Feature-Enable-SSL.png'
+  title: 'Cost calculator',
+  icon: 'img/icon_Cost calculator.png'
 }, {
-  title: 'More',
-  icon: 'https://scalegrid.io/wp-content/uploads/2022/04/DBaaS-Reserved-Instances-Icon.png'
+  title: 'Stateless block',
+  icon: 'img/icon_Stateless block.png'
+}, {
+  title: 'Stateful block',
+  icon: 'img/icon_Stateful block.png'
+}, {
+  title: 'Consensus block',
+  icon: 'img/icon_Consensus block.png'
+}, {
+  title: 'Replication block',
+  icon: 'img/icon_Replication block.png'
+}, {
+  title: 'Redis',
+  icon: 'img/icon_Redis.png'
+}, {
+  title: 'MongoDB',
+  icon: 'img/icon_MongoDB.png'
+}, {
+  title: 'PostgreSQL',
+  icon: 'img/icon_PostgreSQL.png'
+}, {
+  title: 'ElasticSearch',
+  icon: 'img/icon_ElasticSearch.png'
+}, {
+  title: 'Kafka',
+  icon: 'img/icon_Kafka.png'
 }]
 
 export default function Home(): JSX.Element {
   return (
     <Layout>
-      <header className={styles.banner}>
-        <div className="container">
-          <div className={styles.inner}>
-            <QueueAnim className={styles.left} duration={500} type={['left', 'right']}>
-              <h1 key={1}>
-                <Translate
-                  id="homepage.banner.title">
-                  KubeBlocks
-                </Translate>
-              </h1>
-              <h2 key={2}>
-                <Translate
-                  id="homepage.banner.subtitle1">
-                  An open-source and cloud-neutral DBaaS built with Kubernetes.
-                </Translate>
-              </h2>
-              <h3 key={3}>
-                Improved <span style={{color: "#FFF" }}>productivity</span>, cost-efficiency and business continuity 
-                {/* <Translate
-                  id="homepage.banner.subtitle2">
-                  Improved productivity, cost-efficiency and business continuity 
-                </Translate> */}
-              </h3>
-              <p key={5} className={styles.description}>
-                <Translate
-                  id="homepage.banner.description">
-                  Wanna build your database like playing Lego blocks? 
-                </Translate>
-              </p>
-              
-              <div key={4} className={styles.actions}>
-                <Link
-                  className={styles.actionItem}
-                  to="/docs/overview">
-                  Get a demo
-                </Link>
-                <a target="_blank" className={styles.actionItem} href="https://github.com/apecloud/">Find us in GitHub <svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a>
-              </div>
-              
-            </QueueAnim>
-
-            <QueueAnim duration={1000}>
-              <div key={1} className={styles.right}>
-                <img src="img/banner.png" />
-              </div>
-            </QueueAnim>
-          </div>
-        </div>
-      </header>
-      <main>
-        <div className="container">
-          <div className={styles.introductions}>
-            {IntroductionList.map(({ title, img, description }, index) => (
-              <div className={styles.item} key={index}>
-                <div className={styles.img} ><img src={img} /></div>
-                <div className={styles.content}>
-                  <h1>{title}</h1>
-                  {description.map(item => <p>{item}</p>)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.features}>
+      <div className={styles.page}>
+        <header className={styles.banner}>
           <div className="container">
-            <h1>Features</h1>
-            {/* <p>支持MySQL，实例生命周期管理，资源超额分配，多可用区部署，K8S原生，易用的CLI工具，自动备份任务，内置监控告警，传输加密，静态加密，成本计算器</p> */}
-            <ul className={styles.items}>
-              {FeatureList.map((item) => {
-                return (
-                  <li className={styles.item}>
-                    <img src={item.icon} />
-                    <div className={styles.title}>{item.title}</div>
-                  </li>
-                )
-              })}
-            </ul>
+            <div className={styles.inner}>
+              <QueueAnim duration={500} type={['left', 'right']}>
+                <h1 key='p1'>KubeBlocks</h1>
+                <p key='p2'>An open-source and cloud-neutral</p>
+                <p key='p3'>DBaaS with Kubernetes.</p>
+                <p key='p4'>Improved <span>productivity</span>, cost-efficiency</p>
+                <p key='p5'>and business continuity</p>
+                <div key='p6' className={styles.description}>
+                  Wanna build your database like playing building blocks?
+                </div>
+                <div key='p7' className={styles.actions}>
+                  <Link
+                    className={`${styles.actionItem}`}
+                    to="/docs/overview">
+                    Get a demo
+                  </Link>
+                  <Link
+                    className={`${styles.actionItem}`}
+                    to="/docs/overview">
+                    <img  src="img/icon_github.png"/>
+                    GitHub
+                  </Link>
+                </div>
+              </QueueAnim>
+            </div>
+            <QueueAnim duration={1000}>
+              <img key='img1' className={styles.img} src="img/pic_KubeBlocks.png" />
+            </QueueAnim>
           </div>
-        </div>
-
-      </main>
+        </header>
+        <main>
+          <div className="container">
+            <div className={styles.introductions}>
+              {IntroductionList.map(({ title, img, description }, index) => (
+                <div className={styles.item} key={`list_${index}`}>
+                  <div className={styles.img} ><img src={img} /></div>
+                  <div className={styles.content}>
+                    <h1>{title}</h1>
+                    {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.features}>
+            <div className="container">
+              <h1>Features</h1>
+              <p>Cloud-prem data service for developer and DBA</p>
+              <ul className={styles.items}>
+                {FeatureList.map((item, index) => {
+                  return (
+                    <li key={`li_${index}`} className={styles.item}>
+                      <img src={item.icon} />
+                      <div className={styles.title}>{item.title}</div>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </div>
+        </main>
+      </div>
     </Layout>
   );
 }

@@ -1,7 +1,7 @@
 module.exports = {
   logo: {
     alt: "Logo",
-    src: "img/logo.png",
+    src: "img/logo-dark.png",
   },
   items: [
     {
@@ -11,9 +11,5 @@ module.exports = {
       label: "Docs",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
-    // {
-    //   type: "localeDropdown",
-    //   position: "right",
-    // },
   ],
 }

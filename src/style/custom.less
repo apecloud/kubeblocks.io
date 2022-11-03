@@ -1,5 +1,5 @@
 :root {
-  --ifm-color-primary: #009FE7;
+  --ifm-color-primary: #3919A0FF;
 }
 
 .menu__list {
@@ -25,7 +25,7 @@
 .navbar__brand {
   margin-right: 50px;
   .navbar__logo {
-    background-image: url('../../static/img/logo.png');
+    background-image: url('../../static/img/logo-dark.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 120px;
@@ -37,6 +37,7 @@
   }
   .navbar__item {
     margin: 0 5px;
+    display: none;
   }
 }
 
@@ -53,3 +54,96 @@
 }
 
 
+.navbar {
+  background: linear-gradient(to right, #2D3187FF 50%, #542AB9FF 100%);
+  height: var(--ifm-navbar-height);
+}
+
+.navbar__inner {
+  max-width: var(--ifm-container-width-xl);
+  margin: 0 auto ;
+}
+
+.navbar__link {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  &:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+.foot_cool{
+  text-align: center !important;
+}
+
+.footer {
+  background-image: linear-gradient(to right, #2D3187FF 20%, #3C2A96FF 60%, #542AB9FF 100%);
+  padding-bottom: 0;
+  .contact-span {
+    display: flex;
+    align-items: center;
+    img {
+      width: 18px;
+      height: 18px;
+    }
+    a {
+      font-family: PingFangSC-Regular, PingFang SC;
+      margin-left: 8px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.5);
+      &:hover {
+        color: #FFF;
+      }
+    }
+  }
+  .footer__link-item{
+    font-family: PingFangSC-Regular, PingFang SC;
+    color: rgba(255, 255, 255, 0.5);
+    &:hover {
+      color: #FFF;
+    }
+  }
+  .footer__bottom {
+    font-family: PingFangSC-Regular, PingFang SC;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media(max-width:1680px){
+  .navbar__inner {
+    max-width: var(--ifm-container-width);
+  }
+  .container {
+    max-width: var(--ifm-container-width);
+  }
+}
+
+@media (max-width: 996px){
+  .navbar__toggle {
+    color: #fff;
+  }
+  .col {
+    flex-basis: 0;
+  }
+  .footer {
+    .footer__bottom {
+      margin-top: 0;
+      padding: 0 5px;
+    }
+    .footer__copyright{
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 576px){
+  .col {
+    flex-basis: 50%;
+  }
+}
