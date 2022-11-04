@@ -123,70 +123,72 @@ const FeatureList = [{
 export default function Home(): JSX.Element {
   return (
     <Layout>
-      <div className={styles.page}>
-        <header className={styles.banner}>
-          <div className="container">
-            <div className={styles.inner}>
-              <QueueAnim duration={500} type={['left', 'right']}>
-                <h1 key='p1'>KubeBlocks</h1>
-                <p key='p2'>An open-source and cloud-neutral</p>
-                <p key='p3'>DBaaS with Kubernetes.</p>
-                <p key='p4'>Improved <span>productivity</span>, cost-efficiency</p>
-                <p key='p5'>and business continuity</p>
-                <div key='p6' className={styles.description}>
-                  Wanna build your database like playing building blocks?
-                </div>
-                <div key='p7' className={styles.actions}>
-                  <Link
-                    className={`${styles.actionItem}`}
-                    to="/docs/overview">
-                    Get a demo
-                  </Link>
-                  <Link
-                    className={`${styles.actionItem}`}
-                    to="/docs/overview">
-                    <img  src="img/icon_github.png"/>
-                    GitHub
-                  </Link>
-                </div>
+      <div className={styles.bg}>
+        <div className={styles.page}>
+          <header className={styles.banner}>
+            <div className="container">
+              <div className={styles.inner}>
+                <QueueAnim duration={500} type={['left', 'right']}>
+                  <h1 key='p1'>KubeBlocks</h1>
+                  <p key='p2'>An open-source and cloud-neutral</p>
+                  <p key='p3'>DBaaS with Kubernetes.</p>
+                  <p key='p4'>Improved <span>productivity</span>, cost-efficiency</p>
+                  <p key='p5'>and business continuity</p>
+                  <div key='p6' className={styles.description}>
+                    Wanna build your database like playing building blocks?
+                  </div>
+                  <div key='p7' className={styles.actions}>
+                    <Link
+                      className={`${styles.actionItem}`}
+                      to="/docs/overview">
+                      Get a demo
+                    </Link>
+                    <Link
+                      className={`${styles.actionItem}`}
+                      to="/docs/overview">
+                      <img src="img/icon_github.png" />
+                      GitHub
+                    </Link>
+                  </div>
+                </QueueAnim>
+              </div>
+              <QueueAnim duration={1000}>
+                <img key='img1' className={styles.img} src="img/pic_KubeBlocks.png" />
               </QueueAnim>
             </div>
-            <QueueAnim duration={1000}>
-              <img key='img1' className={styles.img} src="img/pic_KubeBlocks.png" />
-            </QueueAnim>
-          </div>
-        </header>
-        <main>
-          <div className="container">
-            <div className={styles.introductions}>
-              {IntroductionList.map(({ title, img, description }, index) => (
-                <div className={styles.item} key={`list_${index}`}>
-                  <div className={styles.img} ><img src={img} /></div>
-                  <div className={styles.content}>
-                    <h1>{title}</h1>
-                    {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className={styles.features}>
+          </header>
+          <main>
             <div className="container">
-              <h1>Features</h1>
-              <p>Cloud-prem data service for developer and DBA</p>
-              <ul className={styles.items}>
-                {FeatureList.map((item, index) => {
-                  return (
-                    <li key={`li_${index}`} className={styles.item}>
-                      <img src={item.icon} />
-                      <div className={styles.title}>{item.title}</div>
-                    </li>
-                  )
-                })}
-              </ul>
+              <div className={styles.introductions}>
+                {IntroductionList.map(({ title, img, description }, index) => (
+                  <div className={styles.item} key={`list_${index}`}>
+                    <div className={styles.img} ><img src={img} /></div>
+                    <div className={styles.content}>
+                      <h1>{title}</h1>
+                      {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </main>
+            <div className={styles.features}>
+              <div className="container">
+                <h1>Features</h1>
+                <p>Cloud-prem data service for developer and DBA</p>
+                <ul className={styles.items}>
+                  {FeatureList.map((item, index) => {
+                    return (
+                      <li key={`li_${index}`} className={styles.item}>
+                        <img src={item.icon} />
+                        <div className={styles.title}>{item.title}</div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </Layout>
   );
