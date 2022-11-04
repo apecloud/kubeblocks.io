@@ -1,21 +1,22 @@
-.bg{
+.bg {
   background: linear-gradient(to right, #1D2483FF 0%, #1E1878FF 30%, #4519B3FF 100%);
 }
+
 .page {
-    background-image: url('../../static/img/bg.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+  background-image: url('../../static/img/bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .banner {
-  height: 800px;
+  height: 835px;
   overflow: hidden;
   position: relative;
   .inner {
     margin: 0 auto;
     padding-top: 170px;
     h1 {
-      font-size: 60px;
+      font-size: 78px;
       margin-bottom: 50px;
       font-family: AppleSystemUIFont;
       background: linear-gradient(to right, #4C84FF 0%, #59CCD5 25%, #DDD69A 100%);
@@ -24,20 +25,21 @@
       -webkit-text-fill-color: transparent;
     }
     p {
-      font-size: 26px;
-      line-height: 26px;
+      font-size: 28px;
+      line-height: 28px;
       color: rgba(255, 255, 255, 0.5);
       font-family: AppleSystemUIFont;
     }
-    span{
+    span {
       background: linear-gradient(to right, #4C84FF 50%, #59CCD5 80%, #DDD69A 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
   }
+
   .description {
-    font-size: 40px;
+    font-size: 44px;
     background: linear-gradient(225deg, #DDD69A 0%, #59CCD5 13%, #4C84FF 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -47,20 +49,18 @@
   }
   .img {
     position: absolute;
-    top: -50px;
-    right: -183px;
-    width: 1230px;
-    height: 846px;
-    transform: scale(0.8);
+    top: 95px;
+    right: -55px;
+    width: 1160px;
+    height: 660px;
     z-index: 10;
   }
   .actions {
-    margin-bottom: 50px;
     text-align: center;
     position: relative;
     z-index: 199;
     .actionItem {
-      padding: 7px 25px;
+      padding: 10px 30px;
       text-decoration: none;
       border-radius: 2px;
       transition: 0.3s;
@@ -69,6 +69,7 @@
       display: inline-block;
       font-weight: 500;
       border: 1px solid rgba(204, 204, 204, 0);
+      vertical-align: middle;
       img {
         width: 16px;
         height: 16px;
@@ -78,8 +79,8 @@
       }
       &:hover {
         transform: scale(1.05);
-        border: 1px solid #ccc;
-        box-shadow: 0 0 5px 0 rgba(213, 213, 213, 0.642);
+        color: #fff;
+        box-shadow: 0 0 5px 0 rgba(166, 166, 166, 0.642);
       }
       &:first-child {
         background: #2C80FF;
@@ -90,22 +91,24 @@
     }
   }
 }
+
 .introductions {
   .item {
     border-radius: 8px;
     position: relative;
-    padding: 70px 0;
+    padding: 50px 0;
     display: flex;
     min-height: 225px;
     align-items: center;
     .img {
-      width: 600px;
-      height: 480px;
+      width: 550px;
+      height: 450px;
     }
     .content {
       flex: 1;
-      padding-left: 80px;
+      padding-left: 60px;
       h1 {
+        font-size: 38px;
         color: #FFFFFF;
         font-family: AppleSystemUIFont;
       }
@@ -119,14 +122,14 @@
       flex-direction: row-reverse;
       .content {
         padding-left: 0;
-        padding-right: 80px;
+        padding-right: 60px;
       }
     }
   }
 }
 
 .features {
-  padding: 60px 0 150px;
+  padding: 60px 0 100px;
   border-top: 1px solid rgba(150, 150, 150, 0.1);
   border-bottom: 1px solid rgba(150, 150, 150, 0.1);
   h1 {
@@ -135,7 +138,8 @@
     color: #fff;
     font-family: AppleSystemUIFont;
   }
-  p{
+  p {
+    font-size: 20px;
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
     font-family: AppleSystemUIFont;
@@ -148,18 +152,15 @@
     flex-wrap: wrap;
     .item {
       width: 25%;
-      min-height: 250px;
       text-align: center;
-      padding: 40px 30px;
+      padding: 25px;
       margin-left: -1px;
       margin-top: -1px;
       transition-duration: 0.3s;
-      border: 1px solid rgba(204, 204, 204, 0) !important;
-      // cursor: pointer;
       img {
         display: inline-block;
-        width: 100px;
-        height: 100px;
+        width: 72px;
+        height: 72px;
         transition-duration: 0.3s;
         margin-bottom: 20px;
       }
@@ -169,9 +170,6 @@
         color: rgba(255, 255, 255, 0.5);
       }
       &:hover {
-        border: 1px solid #352ff183 !important;
-        box-shadow: 0 0 5px 0 rgba(151, 151, 151, 0.642);
-        border-radius: 5px;
         img {
           transform: scale(1.1);
         }
@@ -184,39 +182,40 @@
   }
 }
 
-@media(max-width:1680px){
+@media(max-width:1680px) {
   .banner {
-    height: 710px;
+    height: 720px;
     .inner {
       padding-top: 150px;
       h1 {
-        font-size: 50px;
+        font-size: 68px;
         margin-bottom: 40px;
       }
       p {
-        font-size: 22px;
-        line-height: 22px;
+        font-size: 24px;
+        line-height: 24px;
       }
       .description {
-        font-size: 36px;
-        margin: 100px 0 40px 0;
+        font-size: 42px;
+        margin: 110px 0 45px 0;
         text-align: center;
       }
     }
     .img {
-      top: -50px;
-      right: -170px;
-      width: 1130px;  
-      height: 846px;
+      top: 60px;
+      right: -48px;
+      width: 945px;
+      height: 625px;
     }
     .actions {
       margin-bottom: 30px;
       .actionItem {
-        padding: 5px 15px;
+        padding: 10px 30px;
         font-size: 14px;
       }
     }
   }
+
   .introductions {
     .item {
       padding: 65px 0;
@@ -227,7 +226,7 @@
       .content {
         padding-left: 60px;
         h1 {
-          font-size: 28px;
+          font-size: 36px;
         }
         p {
           font-size: 20px;
@@ -241,58 +240,90 @@
       }
     }
   }
+
   .features {
-    padding: 50px 0 130px;
+    padding: 50px 0 80px;
     h1 {
-      font-size: 28px;
+      font-size: 36px;
       margin-bottom: 30px;
     }
   }
 }
 
-@media(max-width:996px){
+@media(max-width:1100px) {
   .banner {
     height: 620px;
     .inner {
       padding-top: 120px;
-    }
-    .description {
-      margin: 100px 0 30px 0;
+      h1 {
+        font-size: 50px;
+      }
+      p {
+        font-size: 22px;
+        line-height: 22px;
+      }
+      .description {
+        font-size: 36px;
+        margin: 72px 0 30px 0;
+      }
     }
     .img {
-      top: -25px;
-      right: -105px;
-      width: 760px;
-      height: 650px;
+      top: 45px;
+      right: -32px;
+      width: 660px;
+      height: 500px;
+    }
+    .actions {
+      margin-bottom: 30px;
+      .actionItem {
+        padding: 8px 25px;
+        font-size: 14px;
+      }
     }
   }
+
   .introductions {
     .item {
-      padding: 60px 0;
-      .content {
-        padding-left: 20px;
-      }
+      padding: 55px 0;
       .img {
-        width: 400px;
-        height: 325px;
+        width: 380px;
+        height: 280px;
       }
       &:nth-child(2n) {
         .content {
           padding-right: 20px;
         }
       }
+      .content {
+        padding-left: 20px;
+        h1 {
+          font-size: 32px;
+        }
+        p {
+          font-size: 18px;
+        }
+      }
+      &:nth-child(2n) {
+        .content {
+          padding-left: 0;
+          padding-right: 20px;
+        }
+      }
     }
   }
+
   .features {
     padding: 50px 0;
+    p {
+      font-size: 18px;
+    }
     .items {
       .item {
-        min-height: 200px;
         width: 25%;
-        padding: 25px 10px;
+        padding: 20px 10px;
         img {
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
         }
         .title {
           font-size: 14px;
@@ -302,14 +333,14 @@
   }
 }
 
-@media(max-width:800px){
+@media(max-width:800px) {
   .banner {
     height: 500px;
     .inner {
       padding-top: 50px;
       text-align: center;
       h1 {
-        font-size: 40px;
+        font-size: 42px;
         margin-bottom: 30px;
       }
       p {
@@ -329,6 +360,7 @@
       margin-bottom: 20px;
     }
   }
+
   .introductions {
     .item {
       text-align: center;
@@ -341,9 +373,6 @@
         h1 {
           font-size: 26px;
         }
-        p {
-          font-size: 18px;
-        }
       }
       &:nth-child(2n) {
         .content {
@@ -352,6 +381,7 @@
       }
     }
   }
+
   .features {
     padding: 20px 0;
     h1 {
@@ -361,10 +391,10 @@
     .items {
       .item {
         width: 25%;
-        padding: 25px 0;
+        padding: 10px 0;
         img {
-          width: 60px;
-          height: 60px;
+          width: 45px;
+          height: 45px;
         }
         .title {
           font-size: 14px;
@@ -374,13 +404,11 @@
   }
 }
 
-@media(max-width: 576px){
+@media(max-width: 576px) {
   .features {
     .items {
       .item {
-        min-height: 160px;
-        width: 50%;
-        padding: 15px 20px;
+        width: 25%;
       }
     }
   }

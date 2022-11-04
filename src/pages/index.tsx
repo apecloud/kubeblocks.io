@@ -65,7 +65,7 @@ const FeatureList = [{
   title: 'Instance lifecycle management',
   icon: 'img/icon_Instance.png'
 }, {
-  title: 'Resource over-allocation',
+  title: 'Resource overcomitted',
   icon: 'img/icon_Resource.png'
 }, {
   title: 'Multi-AZ deployment',
@@ -77,10 +77,10 @@ const FeatureList = [{
   title: 'Easy to use CLI tool',
   icon: 'img/icon_CLI.png'
 }, {
-  title: 'Automated task backup',
+  title: 'Automated backup',
   icon: 'img/icon_Automated.png'
 }, {
-  title: 'Built-in monitoring alerts',
+  title: 'Built-in monitoring',
   icon: 'img/icon_Built-in.png'
 }, {
   title: 'Transmission encryption',
@@ -91,33 +91,6 @@ const FeatureList = [{
 }, {
   title: 'Cost calculator',
   icon: 'img/icon_Cost calculator.png'
-}, {
-  title: 'Stateless block',
-  icon: 'img/icon_Stateless block.png'
-}, {
-  title: 'Stateful block',
-  icon: 'img/icon_Stateful block.png'
-}, {
-  title: 'Consensus block',
-  icon: 'img/icon_Consensus block.png'
-}, {
-  title: 'Replication block',
-  icon: 'img/icon_Replication block.png'
-}, {
-  title: 'Redis',
-  icon: 'img/icon_Redis.png'
-}, {
-  title: 'MongoDB',
-  icon: 'img/icon_MongoDB.png'
-}, {
-  title: 'PostgreSQL',
-  icon: 'img/icon_PostgreSQL.png'
-}, {
-  title: 'ElasticSearch',
-  icon: 'img/icon_ElasticSearch.png'
-}, {
-  title: 'Kafka',
-  icon: 'img/icon_Kafka.png'
 }]
 
 export default function Home(): JSX.Element {
