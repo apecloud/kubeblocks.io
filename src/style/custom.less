@@ -9,7 +9,6 @@
   }
 }
 
-
 html[data-theme='dark'] {
   --ifm-color-primary:  #FFF;
   .navbar__brand {
@@ -17,6 +16,10 @@ html[data-theme='dark'] {
       background-image: url('../../static/img/logo-dark.png');
     }
   }
+}
+
+.main-wrapper {
+  background: linear-gradient(to right, #111967, #231b83, #441cb4);
 }
 
 .footer--dark {
@@ -56,15 +59,11 @@ html[data-theme='dark'] {
 
 
 .navbar {
-  background: linear-gradient(to right, #2D3187FF 50%, #542AB9FF 100%);
+  background: linear-gradient(to right, #2C3087FF 0%, #2C3087FF 50%, #512AB4FF 100%);
   height: var(--ifm-navbar-height);
-  padding: 0;
+  padding:0 20px;
 }
 
-.navbar__inner {
-  max-width: var(--ifm-container-width-xl);
-  margin: 0 auto ;
-}
 
 .navbar__link {
   color: rgba(255, 255, 255, 0.5);
@@ -155,9 +154,6 @@ html[data-theme='dark'] {
 }
 
 @media(max-width:1680px){
-  .navbar__inner {
-    max-width: var(--ifm-container-width);
-  }
   .container {
     max-width: var(--ifm-container-width);
   }

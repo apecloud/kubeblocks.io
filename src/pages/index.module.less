@@ -1,5 +1,4 @@
 .page {
-  background: linear-gradient(to right, #2D3187FF, #542AB9FF);
   background-image: url('../../static/img/bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -56,7 +55,7 @@
     margin-bottom: 50px;
     text-align: center;
     position: relative;
-    z-index: 9999;
+    z-index: 199;
     .actionItem {
       padding: 7px 25px;
       text-decoration: none;
@@ -153,19 +152,18 @@
       margin-top: -1px;
       transition-duration: 0.3s;
       border: 1px solid rgba(204, 204, 204, 0) !important;
-      cursor: pointer;
+      // cursor: pointer;
       img {
         display: inline-block;
         width: 100px;
         height: 100px;
         transition-duration: 0.3s;
+        margin-bottom: 20px;
       }
       .title {
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: rgba(255, 255, 255, 0.5);
-        width: 50%;
-        margin-left: 25%;
       }
       &:hover {
         border: 1px solid #352ff183 !important;
@@ -185,7 +183,7 @@
 
 @media(max-width:1680px){
   .banner {
-    height: 720px;
+    height: 710px;
     .inner {
       padding-top: 150px;
       h1 {
@@ -218,10 +216,10 @@
   }
   .introductions {
     .item {
-      padding: 30px 0;
+      padding: 65px 0;
       .img {
-        width: 500px;
-        height: 400px;
+        width: 430px;
+        height: 340px;
       }
       .content {
         padding-left: 60px;
@@ -251,6 +249,7 @@
 
 @media(max-width:996px){
   .banner {
+    height: 620px;
     .inner {
       padding-top: 120px;
     }
@@ -266,9 +265,18 @@
   }
   .introductions {
     .item {
+      padding: 60px 0;
+      .content {
+        padding-left: 20px;
+      }
       .img {
         width: 400px;
         height: 325px;
+      }
+      &:nth-child(2n) {
+        .content {
+          padding-right: 20px;
+        }
       }
     }
   }
@@ -316,20 +324,17 @@
     }
     .actions {
       margin-bottom: 20px;
-      .actionItem {
-        padding: 5px 15px;
-        font-size: 14px;
-      }
     }
   }
   .introductions {
     .item {
+      text-align: center;
       padding: 20px 0;
       .img {
         display: none;
       }
       .content {
-        padding-left: 10px;
+        padding-left: 0;
         h1 {
           font-size: 26px;
         }
@@ -339,7 +344,7 @@
       }
       &:nth-child(2n) {
         .content {
-          padding-left: 10px;
+          padding-right: 0;
         }
       }
     }
