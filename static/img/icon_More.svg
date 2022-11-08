@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="130px" height="130px" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_More</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4C81FF" offset="0%"></stop>
+            <stop stop-color="#61BCFF" stop-opacity="0.197868294" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01" transform="translate(-1516.000000, -4986.000000)">
+            <g id="Features" transform="translate(267.000000, 4065.000000)">
+                <g id="icon_More" transform="translate(1249.000000, 921.000000)">
+                    <circle id="椭圆形" fill="url(#linearGradient-1)" cx="65" cy="65" r="65"></circle>
+                    <circle id="椭圆形" fill="#FFFFFF" cx="32.5" cy="64.5" r="7.5"></circle>
+                    <circle id="椭圆形" fill="#FFFFFF" cx="64.5" cy="64.5" r="7.5"></circle>
+                    <circle id="椭圆形" fill="#FFFFFF" cx="97.5" cy="64.5" r="7.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
