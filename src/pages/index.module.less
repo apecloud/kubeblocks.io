@@ -1,5 +1,5 @@
 .bg {
-  background: linear-gradient(to right, #1D2483FF 0%, #1E1878FF 30%, #4519B3FF 100%);
+  background: linear-gradient(to right, #0f1f80 0%, #0e086e 40%, #2a0095 100%);
 }
 
 .page {
@@ -12,14 +12,15 @@
   height: 835px;
   overflow: hidden;
   position: relative;
+  font-weight: 600;
+  font-family: var(--ifm-font-family-base);
   .inner {
     margin: 0 auto;
-    padding-top: 170px;
+    padding-top: 150px;
     h1 {
       font-size: 78px;
       margin-bottom: 50px;
-      font-family: AppleSystemUIFont;
-      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 25%, #DDD69A 100%);
+      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 25%, #DDD69A 40%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -27,11 +28,10 @@
     p {
       font-size: 28px;
       line-height: 28px;
-      color: rgba(255, 255, 255, 0.5);
-      font-family: AppleSystemUIFont;
+      color: #fff;
     }
     span {
-      background: linear-gradient(to right, #4C84FF 50%, #59CCD5 80%, #DDD69A 100%);
+      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 80%, #DDD69A 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -40,7 +40,7 @@
 
   .description {
     font-size: 44px;
-    background: linear-gradient(225deg, #DDD69A 0%, #59CCD5 13%, #4C84FF 100%);
+    background: linear-gradient(to right, #4C84FF 0%, #59CCD5 50%, #DDD69A 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -65,11 +65,10 @@
       border-radius: 2px;
       transition: 0.3s;
       margin: 0px 15px;
-      color: rgba(255, 255, 255, 0.5);
+      color: #fff;
       display: inline-block;
-      font-weight: 500;
-      border: 1px solid rgba(204, 204, 204, 0);
       vertical-align: middle;
+      box-sizing: border-box;
       img {
         width: 16px;
         height: 16px;
@@ -100,6 +99,8 @@
     display: flex;
     min-height: 225px;
     align-items: center;
+    font-weight: 600;
+    font-family: var(--ifm-font-family-base);
     .img {
       width: 550px;
       height: 450px;
@@ -109,16 +110,20 @@
       padding-left: 60px;
       h1 {
         font-size: 38px;
-        color: #FFFFFF;
-        font-family: AppleSystemUIFont;
+        margin-bottom: 32px;
+        color: #fff;
       }
       p {
         font-size: 22px;
-        color: rgba(255, 255, 255, 0.5);
-        font-family: AppleSystemUIFont;
+        color: rgba(255, 255, 255, 0.65);
       }
     }
     &:nth-child(2n) {
+      .img {
+        width: 500px;
+        height: 400px;
+      }
+      margin-bottom: 30px;
       flex-direction: row-reverse;
       .content {
         padding-left: 0;
@@ -130,19 +135,13 @@
 
 .features {
   padding: 60px 0 100px;
-  border-top: 1px solid rgba(150, 150, 150, 0.1);
-  border-bottom: 1px solid rgba(150, 150, 150, 0.1);
+  font-family: var(--ifm-font-family-base);
   h1 {
     text-align: center;
+    font-size: 38px;
     margin-bottom: 40px;
     color: #fff;
-    font-family: AppleSystemUIFont;
-  }
-  p {
-    font-size: 20px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: AppleSystemUIFont;
+    font-weight: 600;
   }
   .items {
     display: flex;
@@ -165,9 +164,9 @@
         margin-bottom: 20px;
       }
       .title {
-        font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.5);
+        font-family: PingFangSC-Regular,PingFang SC;
+        color: rgba(255, 255, 255, 0.8);
       }
       &:hover {
         img {
@@ -175,7 +174,7 @@
         }
         .title {
           font-weight: 600;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 1);
         }
       }
     }
@@ -186,7 +185,7 @@
   .banner {
     height: 720px;
     .inner {
-      padding-top: 150px;
+      padding-top: 130px;
       h1 {
         font-size: 68px;
         margin-bottom: 40px;
@@ -196,16 +195,15 @@
         line-height: 24px;
       }
       .description {
-        font-size: 42px;
-        margin: 110px 0 45px 0;
-        text-align: center;
+        font-size: 38px;
+        margin: 120px 0 55px 0;
       }
     }
     .img {
-      top: 60px;
-      right: -48px;
-      width: 945px;
-      height: 625px;
+      top: 48px;
+      right: -45px;
+      width: 930px;
+      height: 600px;
     }
     .actions {
       margin-bottom: 30px;
@@ -218,7 +216,7 @@
 
   .introductions {
     .item {
-      padding: 65px 0;
+      padding: 60px 0;
       .img {
         width: 430px;
         height: 340px;
@@ -226,13 +224,18 @@
       .content {
         padding-left: 60px;
         h1 {
-          font-size: 36px;
+          font-size: 34px;
+          margin-bottom: 28px;
         }
         p {
           font-size: 20px;
         }
       }
       &:nth-child(2n) {
+        .img {
+          max-width: 410px;
+        }
+        margin-bottom: 10px;
         .content {
           padding-left: 0;
           padding-right: 60px;
@@ -254,7 +257,7 @@
   .banner {
     height: 620px;
     .inner {
-      padding-top: 120px;
+      padding-top: 100px;
       h1 {
         font-size: 50px;
       }
@@ -263,7 +266,7 @@
         line-height: 22px;
       }
       .description {
-        font-size: 36px;
+        font-size: 34px;
         margin: 72px 0 30px 0;
       }
     }
@@ -290,6 +293,10 @@
         height: 280px;
       }
       &:nth-child(2n) {
+        margin-bottom: 0;
+        .img {
+          max-width: 360px;
+        }
         .content {
           padding-right: 20px;
         }
@@ -298,6 +305,7 @@
         padding-left: 20px;
         h1 {
           font-size: 32px;
+          margin-bottom: 28px;
         }
         p {
           font-size: 18px;
@@ -314,9 +322,6 @@
 
   .features {
     padding: 50px 0;
-    p {
-      font-size: 18px;
-    }
     .items {
       .item {
         width: 25%;
@@ -340,8 +345,13 @@
       padding-top: 50px;
       text-align: center;
       h1 {
+        background: linear-gradient(to right, #4C84FF 0%, #59CCD5 80%, #DDD69A 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-size: 42px;
-        margin-bottom: 30px;
+        width: 280px;
+        margin: 0 auto 30px;
       }
       p {
         font-size: 20px;
@@ -350,7 +360,6 @@
       .description {
         font-size: 28px;
         margin: 40px 0 30px 0;
-        text-align: center;
       }
     }
     .img {
@@ -372,6 +381,7 @@
         padding-left: 0;
         h1 {
           font-size: 26px;
+          margin-bottom: 22px;
         }
       }
       &:nth-child(2n) {

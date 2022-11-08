@@ -31,7 +31,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature1.title',
       message: 'Built-in FinOps practice for database'
     }),
-    img: 'img/pic_FinOps.png',
+    img: 'img/pic_FinOps.svg',
     description: [
       translate({
         id: 'homepage.features.feature1.description1',
@@ -75,7 +75,7 @@ const FeatureList = [{
   icon: 'img/icon_Kubernetes.png'
 }, {
   title: 'Easy to use CLI tool',
-  icon: 'img/icon_CLI.png'
+  icon: 'img/icon.png'
 }, {
   title: 'Automated backup',
   icon: 'img/icon_Automated.png'
@@ -91,6 +91,9 @@ const FeatureList = [{
 }, {
   title: 'Cost calculator',
   icon: 'img/icon_Cost calculator.png'
+},{
+  title: 'More',
+  icon: 'img/icon_More.svg'
 }]
 
 export default function Home(): JSX.Element {
@@ -114,7 +117,7 @@ export default function Home(): JSX.Element {
                     <Link
                       className={`${styles.actionItem}`}
                       to="/docs/overview">
-                      Get a demo
+                      Get a Demo
                     </Link>
                     <Link
                       className={`${styles.actionItem}`}
@@ -147,7 +150,6 @@ export default function Home(): JSX.Element {
             <div className={styles.features}>
               <div className="container">
                 <h1>Features</h1>
-                <p>Cloud-prem data service for developer and DBA</p>
                 <ul className={styles.items}>
                   {FeatureList.map((item, index) => {
                     return (
