@@ -1,9 +1,10 @@
-.bg {
-  background: linear-gradient(to right, #0f1f80 0%, #0e086e 40%, #2a0095 100%);
-}
+// .bg {
+//   // background: linear-gradient(to right, #0f1f80 0%, #0e086e 40%, #2a0095 100%);
+//   background: #201E26
+// }
 
 .page {
-  background-image: url('../../static/img/bg.png');
+  // background-image: url('../../static/img/bg.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -20,7 +21,7 @@
     h1 {
       font-size: 78px;
       margin-bottom: 50px;
-      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 25%, #DDD69A 40%);
+      background: linear-gradient(to right, #1760ff 0%, #32949c 25%, #DDD69A 40%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -31,7 +32,7 @@
       color: #fff;
     }
     span {
-      background: linear-gradient(to right, #4C84FF 0%, #59CCD5 80%, #DDD69A 100%);
+      background: linear-gradient(to right, #1760ff 0%, #32949c 80%, #DDD69A 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -40,7 +41,7 @@
 
   .description {
     font-size: 44px;
-    background: linear-gradient(to right, #4C84FF 0%, #59CCD5 50%, #DDD69A 100%);
+    background: linear-gradient(to right, #1760ff 0%, #32949c 50%, #DDD69A 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -62,13 +63,15 @@
     .actionItem {
       padding: 10px 30px;
       text-decoration: none;
-      border-radius: 2px;
+      border-radius: 2.5px;
       transition: 0.3s;
       margin: 0px 15px;
       color: #fff;
       display: inline-block;
       vertical-align: middle;
       box-sizing: border-box;
+      transition-duration: .3s;
+      font-size: 16px;
       img {
         width: 16px;
         height: 16px;
@@ -77,15 +80,26 @@
         top: 2px;
       }
       &:hover {
+        font-weight: 600;
+        filter: brightness(120%);
         transform: scale(1.05);
-        color: #fff;
-        box-shadow: 0 0 5px 0 rgba(166, 166, 166, 0.642);
       }
       &:first-child {
-        background: #2C80FF;
+        border-radius: 2.5px;
+        background-image: linear-gradient(180deg,#6b81fa,#1760ff);
+        background-image: -webkit-gradient(linear,left top,left bottom,from(#6b81fa),to(#1760ff));
+        color: #fff;
+        text-shadow: none;
+      }
+      &:first-child:hover{
+        box-shadow: 0 0 20px 5px rgb(86 67 204 / 30%);
       }
       &:last-child {
-        background: #3D4656;
+        color: #060606;
+        background: #fff;
+      }
+      &:last-child:hover{
+        box-shadow: 0 0 20px 5px rgba(117, 116, 125, 0.3);
       }
     }
   }
@@ -115,7 +129,7 @@
       }
       p {
         font-size: 22px;
-        color: rgba(255, 255, 255, 0.65);
+        color: #8A94A7;
       }
     }
     &:nth-child(2n) {
@@ -164,7 +178,7 @@
         margin-bottom: 20px;
       }
       .title {
-        font-weight: 400;
+        font-weight: 600;
         font-family: PingFangSC-Regular,PingFang SC;
         color: rgba(255, 255, 255, 0.8);
       }
@@ -173,7 +187,6 @@
           transform: scale(1.1);
         }
         .title {
-          font-weight: 600;
           color: rgba(255, 255, 255, 1);
         }
       }
