@@ -93,7 +93,7 @@ const FeatureList = [{
   icon: 'img/icon_Cost calculator.png'
 },{
   title: 'More',
-  icon: 'img/icon_More.svg'
+  icon: 'img/icon_More.png'
 }]
 
 export default function Home(): JSX.Element {
