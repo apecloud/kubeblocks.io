@@ -127,10 +127,10 @@ export default function Home(): JSX.Element {
                     </Link>
                   </div>
                 </QueueAnim>
+                <QueueAnim duration={1000}>
+                  <img key='img1' className={styles.img} src="img/pic_KubeBlocks.png" />
+                </QueueAnim>
               </div>
-              <QueueAnim duration={1000}>
-                <img key='img1' className={styles.img} src="img/pic_KubeBlocks.png" />
-              </QueueAnim>
             </div>
           </header>
           <main>
