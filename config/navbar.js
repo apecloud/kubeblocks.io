@@ -11,6 +11,7 @@ module.exports = {
       label: "Docs",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
+    {to: '/typewriter', label: 'TypeWriter', position: 'left'},
     {
       href: 'https://github.com/apecloud/kubeblocks',
       position: 'right',
