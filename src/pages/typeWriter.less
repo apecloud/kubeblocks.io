@@ -1,10 +1,12 @@
 .box {
   text-align: left;
-  width: 50%;
-  height: 70vh;
+  width: 900px;
   padding: 20px 20px 50px;
   overflow-y: scroll;
   margin: 20px auto 30px auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .writer{
@@ -18,23 +20,34 @@
   color: white;
   background: black;
   border: 6px solid #cecece;
-  margin: 20px auto 30px auto;
   border-radius: 10px;
   box-shadow: 0px 2px 8px rgb(158 119 237 / 40%), 0px 5px 30px 2px rgb(105 65 198 / 40%);
+  margin: 20px 0;
 }
 
 .btn {
-  color: #ffffff;
   text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
-  background-color: #1677ff;
-  border-color: #1677ff #0331e9 #0214b7;
-  width: 80px;
-  height: 30px 
+  width: 90px;
+  height: 34px;
+  border-radius: 2.5px;
+  background-image: linear-gradient(180deg, #6b81fa, #1760ff);
+  color: #fff;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: 1s;
+  &:hover {
+    filter: brightness(120%);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 5px rgb(86 67 204 / 30%);
+  }
+  &:last-child {
+    margin-top: 20px 0;
+  }
 }
-.is_disable{
-  background-color: #959696;
-  border-color: #666;
-  cursor: not-allowed;
+
+.is_hidden{
+  display: none;
+  transition: 3s;
 }
 
 .new_pre{
@@ -42,6 +55,9 @@
   background: none;
   font-size: x-small;
   margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
 }
 
 .cli{

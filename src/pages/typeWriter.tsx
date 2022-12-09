@@ -13,27 +13,39 @@ export default () => {
     'visible_2': false,
   });
 
-  const onButtonClick = () => {
-    setStrIndex(strIndex + 1);
-    setBtnDisable(true);
-  };
-
-  const textArray = [
-    '$ kubectl cluster-info',
-    '$ kubectl get pods --namespace default',
-  ];
-
+  //默认展示
   const MSG = `
     |￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣|\n
     |                      https://kubeblocks.io                         |\n
     |    An open-source and cloud-neutral DBaaS built with Kubernetes    |\n
     |   Improved productivity, cost-efficiency and business continuity   |\n
     |＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿|\n
-    `;
+  `;
 
-  const TypewriterDiv = <Typewriter
+  //命令前缀
+  const text = <>
+    <span className="green-text">zxy</span>
+    <span className="blue-text">@zhouxinyidembp ~ %</span>
+  </>;
+
+  //运行命令数组
+  const textArray = [ 
+    '$ kubectl cluster-info',
+    '$ kubectl get pods --namespace default',
+  ];
+
+  const onButtonClick = () => {
+    if (!btnDisable) {
+      setStrIndex(strIndex + 1);
+      setBtnDisable(true);
+    }
+  };
+
+  //打字机配置
+  const TypewriterDiv = <Typewriter 
     options={{
       cursor: "", //取消光标闪烁
+      delay: 100,
     }}
     onInit={(typewriter) => {
       typewriter
@@ -43,33 +55,28 @@ export default () => {
           setTimeout(() => {
             setCliVisible({ ...cliVisible, [`visible_${strIndex}`]: true });
             setBtnDisable(false);
-          }, 1000);
+          }, 500);
         })
         .start();
     }}
   />;
 
-  const text = <>
-    <span className="green-text">zxy</span>
-    <span className="blue-text">@zhouxinyidembp ~ %</span>
-  </>;
-
-
   return (
     <Layout>
       <div className='box' >
+        <h2 className="centered-title">Try KubeBlocks right in the browser</h2>
+        <h4 className="text-center">Deploy Server for Mysql on Kubernetes </h4>
         <button
-          disabled={btnDisable}
           className={classNames({
             "btn": true,
-            "is_disable": btnDisable
+            "is_hidden": cliVisible[`visible_1`]
           })}
-          onClick={() => onButtonClick()}>Next string
+          onClick={() => onButtonClick()}>Start
         </button>
-
         <div className='writer' >
           <pre className='new_pre'>{MSG}</pre>
           {text}
+
           <span className='cli' >
             {strIndex > 0 && TypewriterDiv}
           </span>
@@ -81,17 +88,28 @@ export default () => {
             </pre>
             {text}
           </>}
+
           <span className='cli' >
             {strIndex > 1 && TypewriterDiv}
           </span>
           {cliVisible[`visible_2`] && <>
             <pre className='new_pre'>
-            NAME                          READY   STATUS    RESTARTS       AGE<br />
-            kubeblocks-648577bc96-g8shw   1/1     Running   1 (107m ago)   8d<br />
+              NAME                          READY   STATUS    RESTARTS       AGE<br />
+              kubeblocks-648577bc96-g8shw   1/1     Running   1 (107m ago)   8d<br />
             </pre>
             {text}
           </>}
         </div>
+
+        <button
+          className={classNames({
+            "btn": true,
+            "next-btn": true,
+            "is_hidden": cliVisible[`visible_2`] || cliVisible[`visible_1`] == false
+          })}
+          onClick={() => onButtonClick()}>Next string
+        </button>
+
       </div>
     </Layout>
   );
