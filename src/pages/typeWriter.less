@@ -1,7 +1,8 @@
 .box {
   text-align: left;
   width: 900px;
-  padding: 20px 20px 50px;
+  height: 70vh;
+  padding: 20px 20px 0px;
   overflow-y: scroll;
   margin: 20px auto 30px auto;
   display: flex;
@@ -9,12 +10,12 @@
   flex-direction: column;
 }
 
-.writer{
+.writer {
   text-align: left;
   width: 100%;
-  height: 50vh;
+  height: 60vh;
   border: 1px solid;
-  padding: 20px 20px 50px;
+  padding: 20px 20px 60px;
   overflow-y: scroll;
   font-family: monospace;
   color: white;
@@ -26,31 +27,41 @@
 }
 
 .btn {
+  border: none;
   text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
-  width: 90px;
-  height: 34px;
+  width: auto;
+  min-width: 80px;
+  height: 38px;
   border-radius: 2.5px;
   background-image: linear-gradient(180deg, #6b81fa, #1760ff);
   color: #fff;
   font-weight: 600;
   margin-top: 10px;
-  transition: 1s;
-  &:hover {
+
+  &:not(:disabled):hover {
     filter: brightness(120%);
     transform: scale(1.05);
     box-shadow: 0 0 20px 5px rgb(86 67 204 / 30%);
   }
+
+  &:disabled {
+    transform: 1;
+    // cursor: not-allowed ;
+    // background-image: linear-gradient(180deg, #a1a2a4, #888a8d);
+  }
+
   &:last-child {
     margin-top: 20px 0;
   }
 }
 
-.is_hidden{
+.is_hidden {
   display: none;
-  transition: 3s;
+  transition: display 1s;
+
 }
 
-.new_pre{
+.new_pre {
   padding: 0;
   background: none;
   font-size: x-small;
@@ -60,14 +71,14 @@
 
 }
 
-.cli{
-  .Typewriter{
+.cli {
+  .Typewriter {
     display: inline;
     margin-left: 5px;
   }
 }
 
-.is_display{
+.is_display {
   display: none;
 }
 
@@ -77,4 +88,19 @@
 
 .blue-text {
   color: #28a8cf;
+}
+
+.centered-title {
+  text-align: center;
+  font-weight: 800;
+  font-size: 40px;
+  margin: 20px auto;
+}
+
+.centered-des {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: normal;
+  margin: 0 0 14px 0;
 }
