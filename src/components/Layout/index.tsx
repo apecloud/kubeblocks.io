@@ -8,7 +8,7 @@ export default ({ children }) => {
  return (
   <Layout
     title={`${siteConfig.title}`}
-    description="The Database of next generation..">
+    description="Build your database like playing blocks.">
     { children }
   </Layout>
  )
