@@ -89,5 +89,5 @@ module.exports = {
     width: 72,
     height: 18,
   },
-  copyright: `© 2022 Hangzhou Kubeblocks Co., Ltd.`,
+  copyright: `© 2022 Hangzhou ApeCloud Co., Ltd.`,
 }

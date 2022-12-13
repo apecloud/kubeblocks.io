@@ -28,7 +28,7 @@
     "description": "The label of footer link with label=GitHub linking to https://github.com/apecloud/"
   },
   "copyright": {
-    "message": "版权所有 © 2022 Kubeblocks, Inc.",
+    "message": "版权所有 © 2022 ApeCloud, Inc.",
     "description": "The footer copyright"
   },
   "link.item.label.Docs": {
