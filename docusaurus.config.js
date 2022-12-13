@@ -8,14 +8,14 @@ const footerConfig = require("./config/footer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ApeCloud",
+  title: "Kubeblocks",
   url: "https://apecloud.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
   noIndex: true,
-  organizationName: "apecloud",
+  organizationName: "kubeblocks",
   projectName: "website",
   trailingSlash: false,
   i18n: {
