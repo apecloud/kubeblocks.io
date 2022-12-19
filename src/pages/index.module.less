@@ -29,10 +29,10 @@
     p {
       font-size: 28px;
       line-height: 28px;
-      color: #fff;
+      color: #2f3c50;
     }
     span {
-      background: linear-gradient(to right, #1760ff 0%, #32949c 80%, #DDD69A 100%);
+      background: linear-gradient(to right, #1760ff 0%, #32949c 40%, #DDD69A 80%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -40,7 +40,7 @@
     .img {
       position: absolute;
       top: 5px;
-      right: -55px;
+      right: -90px;
       z-index: 10;
       height: 580px;
     }
@@ -86,7 +86,7 @@
       &:first-child {
         border-radius: 2.5px;
         background-image: linear-gradient(180deg,#6b81fa,#1760ff);
-        background-image: -webkit-gradient(linear,left top,left bottom,from(#6b81fa),to(#1760ff));
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#6b81fa), to(#1760ff));
         color: #fff;
         text-shadow: none;
       }
@@ -94,8 +94,11 @@
         box-shadow: 0 0 20px 5px rgb(86 67 204 / 30%);
       }
       &:last-child {
-        color: #060606;
-        background: #fff;
+        color: #ffffff;
+        // background: #777575;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#5d5f62), to(#787876))
+        // color: #060606;
+        // background: #fff;
       }
       &:last-child:hover{
         box-shadow: 0 0 20px 5px rgba(117, 116, 125, 0.3);
@@ -124,7 +127,7 @@
       h1 {
         font-size: 38px;
         margin-bottom: 32px;
-        color: #fff;
+        color: #2f3c50;
       }
       p {
         font-size: 22px;
@@ -179,14 +182,14 @@
       .title {
         font-weight: 600;
         font-family: PingFangSC-Regular,PingFang SC;
-        color: rgba(255, 255, 255, 0.8);
+        color: #2f3c50c7;
       }
       &:hover {
         img {
           transform: scale(1.1);
         }
         .title {
-          color: rgba(255, 255, 255, 1);
+          color: rgb(28, 28, 28);
         }
       }
     }
@@ -212,7 +215,7 @@
       }
       .img {
         top: 5px;
-        right: -75px;
+        right: -90px;
         height: 520px;
       }
     }
@@ -283,8 +286,9 @@
         margin: 110px 0 30px 0;
       }
       .img {
-        right: 0;
-        height: 450px;
+        right: -50px;
+        height: 430px;
+        top: 20px;
       }
     }
   }
@@ -308,8 +312,9 @@
         margin: 78px 0 30px 0;
       }
       .img {
-        right: 0;
-        height: 420px;
+        right: -10px;
+        height: 400px;
+        top: 35px;
       }
     }
     .actions {
@@ -372,6 +377,34 @@
       }
     }
   }
+}
+
+@media(max-width:960px) {
+  .banner {
+    height: 620px;
+    .inner {
+      padding-top: 100px;
+      margin: 0 45px;
+      h1 {
+        font-size: 50px;
+      }
+      p {
+        font-size: 20px;
+        line-height: 20px;
+      }
+      .description {
+        font-size: 32px;
+        margin: 78px 0 30px 0;
+      }
+      .img {
+        right: -70px;
+        height: 350px;
+        top: 55px;
+      }
+    }
+  }
+
+
 }
 
 @media(max-width:880px) {

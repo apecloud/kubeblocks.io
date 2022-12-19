@@ -78,7 +78,7 @@ const config = {
     navbar: navbarConfig,
     footer: footerConfig,
     colorMode: {
-      defaultMode: 'dark',
+      defaultMode: 'light',
       disableSwitch: true,
       respectPrefersColorScheme: false,
     },

@@ -1,5 +1,5 @@
 module.exports = {
-  style: "dark",
+  style: "light",
   links: [
     {
       title: "Products",
@@ -73,7 +73,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <a href="http://www.linkedin.com/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Linkedin
                 </a>
               </span>
@@ -85,7 +85,7 @@ module.exports = {
   logo: {
     alt: 'Logo',
     src: 'img/logo.png',
-    href: 'https://opensource.fb.com',
+    href: '/',
     width: 72,
     height: 18,
   },
