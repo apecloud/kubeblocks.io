@@ -22,7 +22,9 @@ yarn-error.log*
 yarn.lock
 i18n/en/*
 .vscode
-.temp/*
+
+# docs version build
+.temp
 docs/*
 versioned_docs
 versioned_sidebars

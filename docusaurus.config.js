@@ -6,13 +6,21 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 const navbarConfig = require("./config/navbar");
 const footerConfig = require("./config/footer");
-const versionsConfig = require("./versions.json");
+const versionsConfig = require("./config/versions");
 
 const kubeblocksRepos = "https://github.com/apecloud/kubeblocks/tree";
-const lastVersion = versionsConfig?.[0] || "current";
+const lastVersion = versionsConfig[0]?.version || "current";
+
 const versions = (() => {
   const _versions = {};
-  versionsConfig.forEach(v => _versions[v] = { label: v, path: v });
+  versionsConfig.forEach(config => {
+    Object.assign(_versions, {
+      [config.version]: {
+        label: config.version,
+        path: config.version
+      }
+    })
+  });
   return _versions;
 })();
 

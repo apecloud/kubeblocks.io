@@ -5,7 +5,6 @@ const versionsConfig = require("../../config/versions");
 const sidebars = require("../../config/sidebars.js");
 const repos = "https://github.com/apecloud/kubeblocks.git";
 
-
 const root = process.cwd();
 const temp_dir = path.join(root, ".temp");
 const versions_filepath = path.join(root, "versions.json");
@@ -24,12 +23,20 @@ const makeDocsDirEmpty = (dir) => {
 }
 
 const cloneOrPullKubeBlocks = (version) => {
-  const dir = path.join(temp_dir, version);
-  const isExist = fs.existsSync(dir)
-  const command = isExist ? `cd ${dir} && git pull` : `git clone -b ${version} ${repos} ${dir}`;
-  console.log(`> ${isExist ? "pull" : "clone"} ${version}:  ${command}`)
+  const tempDirExisted = fs.existsSync(temp_dir) && fs.statSync(temp_dir).isDirectory();
+
+  if(!tempDirExisted) fs.mkdirSync(temp_dir);
+
+  const versionDir = path.join(temp_dir, version);
+  const versionDirExist = fs.existsSync(versionDir);
+
+  const command = versionDirExist ? `cd ${versionDir} && git pull` : `git clone -b ${version} ${repos} ${versionDir}`;
+
+  console.log(`> ${versionDirExist ? "pull" : "clone"} ${version}:  ${command} \n`);
+
   const stdout = execSync(command).toString();
-  console.log(stdout);
+
+  console.log(`${stdout}\n`);
 }
 
 const createKubeBlocksDocsVersion = (version) => {
@@ -37,6 +44,9 @@ const createKubeBlocksDocsVersion = (version) => {
   const sidebarConfigPathname = path.join(versioned_sidebars_dir, `version-${version}-sidebars.json`);
   const config = versionsConfig.find(c => c.version === version);
   const sidebar = config?.sidebar || sidebars;
+
+  if(!fs.existsSync(sourceDir)) cloneOrPullKubeBlocks(version);
+
   if(version === "main") {
     fs.cpSync(sourceDir, docs_dir, { recursive: true });
   } else {
@@ -50,24 +60,21 @@ const clear = () => {
   [docs_dir, versioned_docs_dir, versioned_sidebars_dir].forEach(dir => makeDocsDirEmpty(dir))
 }
 
+const reset = () => {
+  clear();
+  const versions = versionsConfig.map(c => c.version);
+  fs.writeFileSync(versions_filepath, JSON.stringify(versions));
+  versionsConfig.forEach((config) => createKubeBlocksDocsVersion(config.version));
+  createKubeBlocksDocsVersion("main")
+}
+
 const sync = () => {
-  if(!fs.existsSync(temp_dir)) {
-    fs.mkdirSync(temp_dir);
-  }
   versionsConfig.forEach((config) => cloneOrPullKubeBlocks(config.version));
   cloneOrPullKubeBlocks("main");
   reset();
 }
 
-const reset = () => {
-  clear();
 
-  const versions = versionsConfig.map(c => c.version);
-  fs.writeFileSync(versions_filepath, JSON.stringify(versions));
-
-  versionsConfig.forEach((config) => createKubeBlocksDocsVersion(config.version));
-  createKubeBlocksDocsVersion("main")
-}
 
 module.exports = { sync, reset, clear };
 
