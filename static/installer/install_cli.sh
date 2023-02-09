@@ -20,7 +20,7 @@ REPO="apecloud/kbcli"
 GITHUB="https://api.github.com"
 GITLAB_REPO="85948"
 GITLAB="https://jihulab.com/api/v4/projects"
-COUNTRY_CODE
+COUNTRY_CODE=""
 
 getCountryCode() {
     COUNTRY_CODE=`curl -s ifconfig.io/country_code`
@@ -128,7 +128,7 @@ downloadFile() {
     CLI_TMP_ROOT=$(mktemp -dt kbcli-install-XXXXXX)
     ARTIFACT_TMP_FILE="$CLI_TMP_ROOT/$CLI_ARTIFACT"
 
-    echo "Downloading $DOWNLOAD_URL ..."
+    echo "Downloading ..."
     if [ "$HTTP_REQUEST_CLI" == "curl" ]; then
         curl -SL --header 'Accept:application/octet-stream' "$DOWNLOAD_URL" -o "$ARTIFACT_TMP_FILE"
     else
