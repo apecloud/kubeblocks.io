@@ -23,7 +23,7 @@ yarn.lock
 i18n/en/*
 .vscode
 .temp/*
-.docs/*
-.versioned_docs/*
-.versioned_sidebars/*
-.versions.json
+docs/*
+versioned_docs
+versioned_sidebars
+versions.json
