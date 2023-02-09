@@ -7,19 +7,45 @@ on:
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
+env:
+  GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - name: Checkout Kubeblocks.io
+        uses: actions/checkout@v3
+
+      - name: Checkout Kubeblocks Docs main
+        uses: actions/checkout@v3
+        with: 
+           repository: apecloud/kubeblocks
+           ref: main
+           path: ".temp/main"
+           token: ${{ env.GITHUB_TOKEN }}
+
+      - name: Checkout Kubeblocks Docs release-0.3
+        uses: actions/checkout@v3
+        with: 
+           repository: apecloud/kubeblocks
+           ref: release-0.3
+           path: ".temp/release-0.3"
+           token: ${{ env.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
-      - name: Install dependencies
+      - name: Reset Docs
+        run: yarn reset
+
+      - name: Install Dependencies
         run: yarn install --frozen-lockfile
-      - name: Build website
+
+      - name: Build Docs
         run: yarn build
 
       # Popular action to deploy to GitHub Pages:

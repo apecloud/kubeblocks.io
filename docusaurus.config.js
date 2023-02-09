@@ -1,12 +1,21 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
+const lightCodeTheme = require("prism-react-renderer/themes/dracula");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+
 const navbarConfig = require("./config/navbar");
 const footerConfig = require("./config/footer");
+const versionsConfig = require("./versions.json");
 
-/** @type {import('@docusaurus/types').Config} */
+const kubeblocksRepos = "https://github.com/apecloud/kubeblocks/tree";
+const lastVersion = versionsConfig?.[0] || "current";
+const versions = (() => {
+  const _versions = {};
+  versionsConfig.forEach(v => _versions[v] = { label: v, path: v });
+  return _versions;
+})();
+
 const config = {
   title: "Kubeblocks",
   url: "https://apecloud.github.io",
@@ -15,57 +24,44 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
   noIndex: true,
-  organizationName: "kubeblocks",
-  projectName: "website",
+  organizationName: "ApeCloud",
+  projectName: "kubeblocks.io",
   trailingSlash: false,
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "zh"],
+    locales: ["en"],
     path: "i18n",
     localeConfigs: {
       en: {
         label: "English",
         htmlLang: "en-US",
       },
-      // zh: {
-      //   label: "简体中文",
-      //   htmlLang: "zh-CN",
-      // },
     },
   },
   presets: [
     [
-      "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      // "docusaurus-preset-openapi",
-      // /** @type {import('docusaurus-preset-openapi').Options} */
+      "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./config/sidebars.js"),
+          lastVersion,
+          versions,
+          path: "docs",
+          sidebarPath: require.resolve("./config/sidebars"),
           editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
+            const branch = (version === "current" ? "main" : version);
             if(locale != 'en') {
-              return `https://github.com/apecloud/website/tree/developer/i18n/${locale}/docusaurus-plugin-content-docs/${version}/${docPath}`
+              return `${kubeblocksRepos}/i18n/${locale}/docusaurus-plugin-content-docs/${branch}/docs/${docPath}`
             }
-            return `https://github.com/apecloud/website/tree/developer/${versionDocsDirPath}/${docPath}`;
+            return `${kubeblocksRepos}/${branch}/docs/${docPath}`;
           },
         },
         blog: {
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
-            `https://github.com/apecloud/website/tree/developer/${blogDirPath}/${blogPath}`,
+            `${kubeblocksRepos}/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
         },
-        // api: {
-        //   path: 'openapi/api-spec.json',
-        //   routeBasePath: 'apis',
-        //   proxy: {
-        //     '/apis': {
-        //       target: 'http://54.223.93.54:32539',
-        //       changeOrigin: true,
-        //     },
-        //   }
-        // }
       },
     ]
   ],

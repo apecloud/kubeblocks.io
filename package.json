@@ -1,20 +1,21 @@
 {
-  "name": "console-docs",
+  "name": "kubeblocks.io",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
     "dev": "docusaurus start",
     "build": "docusaurus build",
+    "docs:clear": "node scripts/docs/clear.js",
+    "docs:sync": "node scripts/docs/sync.js",
+    "docs:reset": "node scripts/docs/reset.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc",
-    "upload": "rm -rf docs/en && npm run write-translations && crowdin upload",
-    "download": "crowdin upload"
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@docusaurus/core": "^2.1.0",
