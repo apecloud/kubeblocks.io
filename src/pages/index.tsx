@@ -17,7 +17,7 @@ const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: ' Cloud or on-premise?  we provide the best of both worlds'
+      message: ' With cloud-prem, we provide the best of both worlds'
     }),
     img: 'img/one.png',
     connect: 'img/connect1.png',
@@ -83,10 +83,10 @@ export default function Home(): JSX.Element {
             <QueueAnim duration={500} type={['left', 'right']}>
               <div className={styles.title}>
                 <h1 key='p1'>Build your data platform </h1>
-                <h1 key='p2'>in a cloud-prem way</h1>
+                <h1 key='p2'>on Kubernetes</h1>
               </div>
-              <p key='p3'>Improve your business continuity,  resource utilization, </p>
-              <p key='p4'> and engineering productivity cost-efficiency</p>
+              <p key='p3'>Install, create, connect, and you have it all. </p>
+            
               <div key='p7' className={styles.actions}>
                 <Link
                   className={`${styles.actionItem}`}
