@@ -64,7 +64,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature2.description1',
-        message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactiv e guided CLI, management console, or Kubernetes-style declarative API.',
+        message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactive guided CLI, management console, or Kubernetes-style declarative API.',
       }),
       translate({
         id: 'homepage.features.feature2.description2',
