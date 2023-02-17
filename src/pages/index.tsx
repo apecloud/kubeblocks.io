@@ -17,14 +17,14 @@ const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: ' With cloud-prem, we provide the best of both worlds'
+      message: 'Cloud-prem with the best of both worlds'
     }),
     img: 'img/one.png',
     connect: 'img/connect1.png',
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'Levrage the benefits of both cloud and on-premises computing. ',
+        message: 'Leverage the benefits of both cloud and on-premises computing.',
       }),
       translate({
         id: 'homepage.features.feature0.description1',
@@ -64,7 +64,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature2.description1',
-        message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactiv e guided CLI, management console, or Kubernetes-style declarative API,',
+        message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactiv e guided CLI, management console, or Kubernetes-style declarative API.',
       }),
       translate({
         id: 'homepage.features.feature2.description2',
