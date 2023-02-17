@@ -150,14 +150,20 @@
 
 @media (max-width: 1360px) {
   .home {
-    width: 100%;
-    padding: 40px;
+      width: 992px;
+      margin: 0 auto;
     .banner {
-      text-align: center;
-      height: 600px;
-      padding-top: 160px;
+      height: 550px;
+      padding: 140px 0 0 0;
+      .title {
+        h1 {
+          font-size: 48px;
+          line-height: 44px;
+        }
+      }
       .img {
-        display: none;
+        top: 80px;
+        width: 680px;
       }
     }
     .introductions{
@@ -168,14 +174,14 @@
             width: 50%;
           }
           .content {
-            padding-left: 10%;
+            padding-left: 8%;
             h1 {
               font-size: 28px;
-              margin-bottom: 40px;
+              margin-bottom: 30px;
             }
             p {                   
-              font-size: 20px;
-              line-height: 28px;
+              font-size: 18px;
+              line-height: 22px;;
             }
           }
         }
@@ -184,21 +190,21 @@
             left: 35%;
             top: 52%;
             width: 35%;
-            height: 92%;
+            height: 91%;
           }
         }
         &:nth-child(2) {
           .introduce {
-            margin: 12% 0px;
+            margin: 12% 0 13% 0;
             .content {
-              padding-right: 5%;
+              padding-left: 0;
             }
           }
-          .connect {
-            left: 32%;
-            top: 81%;
+          .connect {         
+            left: 33%;
+            top: 82%;
             width: 38%;
-            height: 84%;
+            height: 85%;
           }
         }
       }
@@ -207,28 +213,32 @@
   .features {
     margin-top: -60px;
     img{
-      width: 1260px;
+      width: 1160px;
     }
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 992px) {
   .home {
+    width: 100%;
     padding: 10px;
     .banner {
-      height: 390px;
-      padding-top: 60px;
+      height: 420px;
+      padding-top: 80px;
+      text-align: center;
       .title {
         margin-bottom: 36px;
-        h1 {
-          font-size: 30px;
-          line-height: 20px;
+        h1 {       
+          font-size: 46px;
+          line-height: 42px;
         }
       }
       p {   
         font-size: 20px;
         line-height: 22px;
-
+      }
+      .img {
+        display: none;
       }
       .actions {
         margin-top: 50px;
@@ -237,6 +247,7 @@
     .introductions{
       .item {
         .introduce {
+          margin: 5% 0px;
           .content {
             padding: 10px 0;
           }
@@ -254,10 +265,15 @@
         }
         &:nth-child(2) {
           .introduce {
-            margin: 80px 0px;
+            margin: 20px 0px;
           }
           .connect {
             display: none;
+          }
+        }
+        &:nth-child(3) {
+          .introduce {
+            margin-bottom: 100px;
           }
         }
       }
@@ -265,11 +281,16 @@
   }
   .features {
     padding: 0;
+    img{
+      width: 98%;
+    }
   }
 }
 @media (max-width: 576px) {
   .home {
     .banner {
+      height: 390px;
+      padding-top: 80px;
       .title {
         h1 {
           font-size: 28px;
