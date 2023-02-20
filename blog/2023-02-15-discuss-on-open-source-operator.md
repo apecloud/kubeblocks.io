@@ -8,7 +8,7 @@ authors:
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [database operator, open source]
 tags: [operator]
-image: [test](assets/test.png)
+image: https://github.com/apecloud/kubeblocks.io/blob/master/blog/assets/test.png
 ---
 
 # Why isn't the open-source database Operator popular?
