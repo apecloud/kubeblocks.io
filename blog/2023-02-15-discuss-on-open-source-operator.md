@@ -4,7 +4,6 @@ title: Why isn't the open-source database Operator popular?
 description: Kubernetes and open-source Operators are becoming increasingly prevalent but why isn't the open-source database Operator popular?
 authors:
   name: Thomas
-  title: COO
   url: https://github.com/realzyy
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [database operator, open source]
