@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkconsole_docs=self.webpackChunkconsole_docs||[]).push([[535],{5641:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Why isn\'t the open-source database Operator popular?","permalink":"/blog/2023/02/15/discuss-on-open-source-operator"},{"title":"First Blog Post","permalink":"/blog/first-blog-post"}]}')}}]);
