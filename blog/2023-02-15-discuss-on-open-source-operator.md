@@ -1,3 +1,16 @@
+---
+slug: second-blog-post
+title: Why isn't the open-source database Operator popular?
+description: Kubernetes and open-source Operators are becoming increasingly prevalent but why isn't the open-source database Operator popular?
+authors:
+  name: Thomas
+  url: https://github.com/realzyy
+  image_url: https://avatars.githubusercontent.com/u/1814084?v=4
+tags: [database operator, open source]
+tags: [operator]
+image: [test](assets/test.png)
+---
+
 # Why isn't the open-source database Operator popular?
 
 It's unusual that even though Kubernetes and open-source Operators are becoming increasingly prevalent, many Kubernetes developers still opt to use fully managed database services provided by cloud vendors to construct their applications. The database engines of AWS Aurora or Snowflake are robust, although they are not open source, so there's nothing inherently wrong with utilizing them in Kubernetes. However, what's most perplexing is the use of RDS (such as RDS for MySQL or RDS for PostgreSQL), whose database engine is essentially the same as the open-source community version; what is hindering developers from utilizing various open-source database Operators to create a completely Kubernetes-native application architecture?
@@ -34,4 +47,4 @@ The Kubernetes community primarily categorizes user roles into two types: develo
 Aside from the reasons mentioned earlier, the inadequate integration of open-source database operators may also contribute to a less smooth user experience compared to fully managed database services. For instance, when creating a backup for MySQL, an open-source database operator may require additional steps such as allocating resources and configuring accounts for an object storage service in the Kubernetes cluster to store the backup file, whereas fully managed database services do not need these steps. Additionally, complex applications often involve multiple types of databases, such as MySQL and Redis. This may result in inconsistent user experiences with open-source database operators, whereas fully managed database services offer a unified design across the console, command line, and API, although the experience is often criticized.
 
 Even though there are challenges such as cognitive burden and limited integration, Kubernetes will continue to improve developer productivity and resource utilization, leading to a lasting influence on the world.
-These difficulties will eventually be overcome. If you face any issues with Kubernetes that cannot be resolved by open-source database operators or have any valuable experiences to share, please respond to XXX to assist the Kubernetes community in advancing more rapidly.
+These difficulties will eventually be overcome. If you face any issues with Kubernetes that cannot be resolved by open-source database operators or have any valuable experiences to share, please respond to [KubeBlocks](https://join.slack.com/t/kubeblocks/shared_invite/zt-1oz1hjyfk-UZwOJt8fge2TtWkTnuVfJg) or [DoK](https://dokcommunity.slack.com/join/shared_invite/zt-10v7uncvp-jNFwulsVWvUO0SKMDTjwAw#/shared-invite/email) to assist the Kubernetes community in advancing more rapidly.
