@@ -7,7 +7,6 @@ authors:
   url: https://github.com/realzyy
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [database operator, open source]
-tags: [operator]
 image: https://github.com/apecloud/kubeblocks.io/blob/master/blog/assets/test.png
 ---
 
