@@ -1,4 +1,4 @@
-apepipe#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 # apepipe location
 : ${CLI_INSTALL_DIR:="/usr/local/bin"}
@@ -120,7 +120,7 @@ downloadFile() {
     CLI_ARTIFACT="${CLI_FILENAME}-${OS}-${ARCH}-${LATEST_RELEASE_TAG}.tar.gz"
     DOWNLOAD_BASE="https://github.com/$REPO/releases/download"
     if [[ "$COUNTRY_CODE" == "CN" ]]; then
-        DOWNLOAD_BASE="$GITLAB/$GITLAB_REPO/packages/generic/kubeblocks"
+        DOWNLOAD_BASE="$GITLAB/$GITLAB_REPO/packages/generic/apepipe"
     fi
     DOWNLOAD_URL="${DOWNLOAD_BASE}/${LATEST_RELEASE_TAG}/${CLI_ARTIFACT}"
 
