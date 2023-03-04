@@ -231,7 +231,7 @@ installSteampipe() {
     	  if curl --version &>/dev/null; then
             echo "Downloading the steampipe package..."
             if [[ "$COUNTRY_CODE" == "CN" ]]; then
-                sudo /bin/sh -c "$(curl -fsSL https://jihulab.com/apecloud/apepipe/-/package_files/20031/download)" &>/dev/null
+                sudo /bin/sh -c "$(curl -fsSL https://jihulab.com/api/v4/projects/92815/packages/generic/apepipe/v0.0.1-test/install_steampipe.sh)" &>/dev/null
             else
                 sudo /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/turbot/steampipe/main/install.sh)" &>/dev/null
             fi
