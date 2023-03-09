@@ -2,8 +2,8 @@ module.exports = {
   logo: {
     alt: "Logo",
     src: "img/logo.png",
-    width: 70,
-    height: 28,
+    width: 125,
+    height: "100%",
   },
   items: [
     {

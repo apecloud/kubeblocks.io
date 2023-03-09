@@ -15,7 +15,7 @@ module.exports = {
       items: [
         {
           label: "Docs",
-          to: "/docs/Overview",
+          to: "/docs/next/user_docs",
         },
         {
           label: "Blog",
