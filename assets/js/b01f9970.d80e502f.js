@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkubeblocks_io=self.webpackChunkkubeblocks_io||[]).push([[566],{7968:a=>{a.exports=JSON.parse('{"label":"database operator","permalink":"/blog/tags/database-operator","allTagsPath":"/blog/tags","count":1}')}}]);

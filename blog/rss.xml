@@ -21,16 +21,5 @@ These difficulties will eventually be overcome. If you face any issues with Kube
             <category>database operator</category>
             <category>open source</category>
         </item>
-        <item>
-            <title><![CDATA[First Blog Post]]></title>
-            <link>https://apecloud.github.io/blog/first-blog-post</link>
-            <guid>https://apecloud.github.io/blog/first-blog-post</guid>
-            <pubDate>Tue, 28 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[Lorem itest psum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet]]></description>
-            <content:encoded><![CDATA[<p>Lorem itest psum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet
-this is a test</p>]]></content:encoded>
-            <category>hola</category>
-            <category>docusaurus</category>
-        </item>
     </channel>
 </rss>

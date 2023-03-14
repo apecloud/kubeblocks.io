@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkconsole_docs=self.webpackChunkconsole_docs||[]).push([[151],{3054:a=>{a.exports=JSON.parse('{"label":"database operator","permalink":"/zh/blog/tags/database-operator","allTagsPath":"/zh/blog/tags","count":1}')}}]);
