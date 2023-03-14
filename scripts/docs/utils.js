@@ -24,15 +24,16 @@ const makeDocsDirEmpty = (dir) => {
 
 const cloneOrPullKubeBlocks = (version) => {
   const tempDirExisted = fs.existsSync(temp_dir) && fs.statSync(temp_dir).isDirectory();
+  const branch = versionsConfig.find(c => c.version === version)?.branch || "main"
 
   if(!tempDirExisted) fs.mkdirSync(temp_dir);
 
   const versionDir = path.join(temp_dir, version);
   const versionDirExist = fs.existsSync(versionDir);
 
-  const command = versionDirExist ? `cd ${versionDir} && git pull` : `git clone -b ${version} ${repos} ${versionDir}`;
+  const command = versionDirExist ? `cd ${versionDir} && git pull` : `git clone -b ${branch} ${repos} ${versionDir}`;
 
-  console.log(`> ${versionDirExist ? "pull" : "clone"} ${version}:  ${command} \n`);
+  console.log(`> ${versionDirExist ? "pull" : "clone"} ${branch}:  ${command} \n`);
 
   const stdout = execSync(command).toString();
 
