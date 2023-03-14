@@ -2,13 +2,11 @@ module.exports = {
   logo: {
     alt: "Logo",
     src: "img/logo.png",
-    width: 125,
-    height: "100%",
   },
   items: [
     {
       type: "doc",
-      docId: "user_docs/README",
+      docId: "user_docs/introduction/feature-list",
       position: "left",
       label: "Documentation",
     },
@@ -29,5 +27,6 @@ module.exports = {
       className: 'header-github-link',
     },
   ],
-  style: "dark"
+  // style: "dark",
+  // style: "primary",
 }

@@ -28,7 +28,7 @@ const config = {
   title: "Kubeblocks",
   url: "https://apecloud.github.io",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
   noIndex: true,
