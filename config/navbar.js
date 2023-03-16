@@ -6,14 +6,14 @@ module.exports = {
   items: [
     {
       type: "doc",
-      docId: "user_docs/introduction/feature-list",
+      docId: "user_docs/introduction/introduction",
       position: "left",
       label: "Documentation",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
     {
       type: "doc",
-      docId: "release_notes/v0.3.6",
+      docId: "release_notes/v0.4.0/v0.4.0",
       position: "right",
       label: "Release Notes",
     },
