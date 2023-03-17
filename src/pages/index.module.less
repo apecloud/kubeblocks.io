@@ -142,8 +142,34 @@
   text-align: center;
   margin-top: -60px;
   background: #fff;
-  img{
-    width: 1380px;
+  h1 {
+    text-align: center;
+    font-size: 38px;
+    margin: 40px;
+    color: #313d4d;
+    font-weight: 600;
+  }
+  .items {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    .item {
+      width: 20%;
+      img {
+        display: inline-block;
+        width: 160px;
+        height: 160px;
+        transition-duration: 0.3s;
+        margin-bottom: 20px;
+      }
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
   }
 }
 
@@ -279,9 +305,18 @@
     }
   }
   .features {
-    padding: 0;
-    img{
-      width: 98%;
+    h1 {
+      font-size: 28px;
+      margin: 30px;
+    }
+    .items {
+      .item {
+        width: 20%;
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
     }
   }
 }
@@ -328,8 +363,9 @@
     }
   }
   .features {
-    img{
-      width: 98%;
+    h1 {
+      font-size: 22px;
+      margin: 20px 0 10px;
     }
   }
 }

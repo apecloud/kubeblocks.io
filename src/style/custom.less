@@ -75,8 +75,11 @@
   }
 }
 
-// bottomb bar
+// bottom bar
 .footer {
+  .footer__col{
+    margin-left: 7%;
+  }
   .footer__items {
     .footer__item {
       .contact-span {
@@ -136,6 +139,27 @@ code {
     &:hover {
       background: transparent;
       color: var(--ifm-tabs-color-active);
+    }
+  }
+}
+
+@media (max-width: 996px) {
+  .col{
+    --ifm-col-width: 20%;
+  }
+  .footer {
+    .footer__col{
+      margin-left: 5%;
+    }
+  }
+}
+@media (max-width: 576px) {
+  .col{
+    --ifm-col-width: 40%;
+  }
+  .footer {
+    .footer__col{
+      margin-left: 10%;
     }
   }
 }
