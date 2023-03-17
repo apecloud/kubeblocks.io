@@ -74,6 +74,38 @@ const IntroductionList: IntroductionItem[] = [
   },
 ];
 
+const FeatureList = [{
+  icon: 'img/icon-03.png'
+}, {
+  icon: 'img/icon-04.png'
+}, {
+  icon: 'img/icon-05.png'
+}, {
+  icon: 'img/icon-06.png'
+}, {
+  icon: 'img/icon-07.png'
+}, {
+  icon: 'img/icon-08.png'
+}, {
+  icon: 'img/icon-09.png'
+}, {
+  icon: 'img/icon-10.png'
+}, {
+  icon: 'img/icon-11.png'
+}, {
+  icon: 'img/icon-12.png'
+}, {
+  icon: 'img/icon-13.png'
+}, {
+  icon: 'img/icon-14.png'
+},{
+  icon: 'img/icon-15.png'
+}, {
+  icon: 'img/icon-16.png'
+}, {
+  icon: 'img/icon-17.png'
+}]
+
 export default function Home(): JSX.Element {
   return (
     <Layout>
@@ -86,7 +118,7 @@ export default function Home(): JSX.Element {
                 <h1 key='p2'>on Kubernetes</h1>
               </div>
               <p key='p3'>Install, create, connect, and you have it all. </p>
-            
+
               <div key='p7' className={styles.actions}>
                 <Link
                   className={`${styles.actionItem}`}
@@ -121,7 +153,18 @@ export default function Home(): JSX.Element {
         </div>
       </div>
       <div className={styles.features}>
-        <img src="img/features.png" />
+        <div className="container">
+          <h1>Features</h1>
+          <ul className={styles.items}>
+            {FeatureList.map((item, index) => {
+              return (
+                <li key={`li_${index}`} className={styles.item}>
+                  <img src={item.icon} />
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       </div>
     </Layout>
   )
