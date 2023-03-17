@@ -9,6 +9,7 @@ const footerConfig = require("./config/footer");
 const versionsConfig = require("./config/versions");
 
 const kubeblocksRepos = "https://github.com/apecloud/kubeblocks/tree";
+const websiteRepos = "https://github.com/apecloud/kubeblocks.io/tree/master";
 const lastVersion = versionsConfig[0]?.version || "current";
 
 const versions = (() => {
@@ -65,7 +66,7 @@ const config = {
         },
         blog: {
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
-            `${kubeblocksRepos}/${blogDirPath}/${blogPath}`,
+            `${websiteRepos}/${blogDirPath}/${blogPath}`,
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),

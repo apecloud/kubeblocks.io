@@ -15,11 +15,11 @@ module.exports = {
       items: [
         {
           label: "Docs",
-          to: "/docs/user_docs",
+          to: "/docs/next/user_docs/introduction",
         },
         {
           label: "Blog",
-          href: "/",
+          href: "/blog",
         },
         {
           label: "Community",
