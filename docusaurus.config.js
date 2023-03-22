@@ -18,7 +18,7 @@ const versions = (() => {
     Object.assign(_versions, {
       [config.version]: {
         label: config.version,
-        path: config.version
+        path: config.version,
       }
     })
   });
@@ -56,6 +56,8 @@ const config = {
           versions,
           path: "docs",
           sidebarPath: require.resolve("./config/sidebars"),
+          docLayoutComponent: require.resolve('./src/components/docLayoutComponent.tsx'),
+          docItemComponent: require.resolve('./src/components/docItemComponent.tsx'),
           editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
             const branch = (version === "current" ? "main" : version);
             if(locale != 'en') {
@@ -70,6 +72,10 @@ const config = {
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
+        },
+        gtag: {
+          trackingID: 'G-1P80WT42PB',
+          anonymizeIP: true,
         },
       },
     ]
