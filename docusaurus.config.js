@@ -77,6 +77,12 @@ const config = {
           trackingID: 'G-1P80WT42PB',
           anonymizeIP: true,
         },
+        sitemap: {
+          changefreq: 'daily',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
       },
     ]
   ],
@@ -97,6 +103,11 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+    // algolia: {
+    //   appId: "PXEV8M89HY",
+    //   apiKey: "b81d26901658d9dfea759151e5fd158d",
+    //   indexName: "kubeblocks"
+    // }
   },
 };
 
