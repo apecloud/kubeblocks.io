@@ -103,11 +103,11 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
-    // algolia: {
-    //   appId: "PXEV8M89HY",
-    //   apiKey: "b81d26901658d9dfea759151e5fd158d",
-    //   indexName: "kubeblocks"
-    // }
+    algolia: {
+      appId: "SES9RBYTIC",
+      apiKey: "81cd1a2799d82dc7218d055d2414476d",
+      indexName: "kubeblocks"
+    }
   },
 };
 
