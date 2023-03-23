@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://apecloud.github.io/blog</id>
+    <id>https://kubeblocks.io/blog</id>
     <title>Kubeblocks Blog</title>
     <updated>2023-02-15T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://apecloud.github.io/blog"/>
+    <link rel="alternate" href="https://kubeblocks.io/blog"/>
     <subtitle>Kubeblocks Blog</subtitle>
-    <icon>https://apecloud.github.io/img/favicon.png</icon>
+    <icon>https://kubeblocks.io/img/favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[Why isn't the open-source database Operator popular?]]></title>
-        <id>https://apecloud.github.io/blog/second-blog-post</id>
-        <link href="https://apecloud.github.io/blog/second-blog-post"/>
+        <id>https://kubeblocks.io/blog/second-blog-post</id>
+        <link href="https://kubeblocks.io/blog/second-blog-post"/>
         <updated>2023-02-15T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Kubernetes and open-source Operators are becoming increasingly prevalent but why isn't the open-source database Operator popular?]]></summary>
         <content type="html"><![CDATA[<p>It's unusual that even though Kubernetes and open-source Operators are becoming increasingly prevalent, many Kubernetes developers still opt to use fully managed database services provided by cloud vendors to construct their applications. The database engines of AWS Aurora or Snowflake are robust, although they are not open source, so there's nothing inherently wrong with utilizing them in Kubernetes. However, what's most perplexing is the use of RDS (such as RDS for MySQL or RDS for PostgreSQL), whose database engine is essentially the same as the open-source community version; what is hindering developers from utilizing various open-source database Operators to create a completely Kubernetes-native application architecture?</p><h2 class="anchor anchorWithStickyNavbar_LWe7" id="a-comparison-of-fully-managed-databases-and-open-source-database-operator">A comparison of fully managed databases and open-source database operator<a href="#a-comparison-of-fully-managed-databases-and-open-source-database-operator" class="hash-link" aria-label="Direct link to A comparison of fully managed databases and open-source database operator" title="Direct link to A comparison of fully managed databases and open-source database operator">​</a></h2><p>Surprisingly developers have not yet realized the cost discrepancy between fully-managed database services and equivalent computing resources, given that the cost of the former is 150% to 400% higher.
