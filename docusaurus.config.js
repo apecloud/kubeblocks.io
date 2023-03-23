@@ -13,7 +13,12 @@ const websiteRepos = "https://github.com/apecloud/kubeblocks.io/tree/master";
 const lastVersion = versionsConfig[0]?.version || "current";
 
 const versions = (() => {
-  const _versions = {};
+  const _versions = {
+    current: {
+      label: 'Preview',
+      path: 'preview',
+    }
+  };
   versionsConfig.forEach(config => {
     Object.assign(_versions, {
       [config.version]: {
@@ -27,7 +32,7 @@ const versions = (() => {
 
 const config = {
   title: "Kubeblocks",
-  url: "https://apecloud.github.io",
+  url: "https://kubeblocks.io",
   baseUrl: "/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",

@@ -122,12 +122,12 @@ export default function Home(): JSX.Element {
               <div key='p7' className={styles.actions}>
                 <Link
                   className={`${styles.actionItem}`}
-                  to="/docs/next/user_docs/introduction">
+                  to="/docs/preview/user_docs/introduction">
                   Get started
                 </Link>
                 <Link
                   className={`${styles.actionItem}`}
-                  to="/docs/next/user_docs/introduction">
+                  to="/docs/preview/user_docs/introduction">
                   Demo
                 </Link>
               </div>
