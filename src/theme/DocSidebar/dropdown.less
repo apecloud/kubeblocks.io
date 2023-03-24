@@ -1,0 +1,106 @@
+.Dropdown-root {
+  position: relative;
+}
+
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ifm-color-secondary);
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: var(--ifm-font-color-base);
+  outline: none;
+  padding: 0.5em;
+  transition: all 200ms ease;
+  cursor: pointer;
+  .Dropdown-placeholder {
+    color: var(--ifm-footer-link-color)
+  }
+  .Dropdown-control-label {
+    background: var(--ifm-color-secondary);
+    font-size: 80%;
+    font-weight: var(--ifm-font-weight-bold);
+    padding: var(--ifm-badge-padding-vertical) var(--ifm-badge-padding-horizontal);
+    border-radius: var(--ifm-badge-border-radius);
+    color: var(--ifm-font-color-base);
+  }
+}
+
+.Dropdown-arrow {
+  position: absolute;
+  right: 1.4em;
+  top: 0.65em;
+  content: '';
+  margin-left: auto;
+  min-width: 1.25rem;
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;
+  filter: var(--ifm-menu-link-sublist-icon-filter);
+  height: 1.25rem;
+  transform: rotate(90deg);
+  width: 1.25rem;
+  transition: transform var(--ifm-transition-fast) linear;
+}
+
+.is-open .Dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.Dropdown-menu {
+  background-color: white;
+  border: 1px solid var(--ifm-toc-border-color);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  right: 0;
+  left: 0;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--ifm-navbar-shadow);
+}
+
+.Dropdown-menu .Dropdown-group > .Dropdown-title{
+  padding: 8px 10px;
+  color: rgba(51, 51, 51, 1);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.Dropdown-option {
+  box-sizing: border-box;
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  display: block;
+  padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+  margin: 0.4em 0.8em;
+  border-radius: 0.25rem;
+  transition-duration: 0.3s;
+  line-height: 1.25;
+  font-size: 75%;
+    font-weight: var(--ifm-font-weight-bold);
+}
+
+.Dropdown-option:last-child {
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.Dropdown-option:hover {
+  background-color: var(--ifm-hover-overlay);
+  color: var(--ifm-color-primary);
+}
+
+.Dropdown-option.is-selected {
+  background-color: var(--ifm-hover-overlay);
+  color: var(--ifm-color-primary);
+}
+
+.Dropdown-noresults {
+  box-sizing: border-box;
+  color: #ccc;
+  cursor: default;
+  display: block;
+  padding: 8px 10px;
+}
