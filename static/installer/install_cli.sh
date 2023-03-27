@@ -23,7 +23,7 @@ GITLAB="https://jihulab.com/api/v4/projects"
 COUNTRY_CODE=""
 
 getCountryCode() {
-    COUNTRY_CODE=`curl -s ifconfig.io/country_code`
+    COUNTRY_CODE=`curl -s https://ifconfig.io/country_code`
 }
 
 getSystemInfo() {
