@@ -6,7 +6,7 @@ authors:
   name: Dehao Wang
   url: https://github.com/IWonderWang
   image_url: https://avatars.githubusercontent.com/u/8622632?v=4
-tags: [high availablitu]
+tags: [high availability]
 ---
 
 # A Comparison and Analysis of ApeCloud MySQL High Availability Solutions 
