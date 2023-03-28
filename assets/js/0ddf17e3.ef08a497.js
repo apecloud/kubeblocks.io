@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkubeblocks_io=self.webpackChunkkubeblocks_io||[]).push([[4158],{73342:a=>{a.exports=JSON.parse('{"label":"high availability","permalink":"/blog/tags/high-availability","allTagsPath":"/blog/tags","count":1}')}}]);
