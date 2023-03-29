@@ -38,7 +38,7 @@ const config = {
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
-  noIndex: true,
+  noIndex: false,
   organizationName: "ApeCloud",
   projectName: "kubeblocks.io",
   trailingSlash: false,
@@ -84,7 +84,7 @@ const config = {
           anonymizeIP: true,
         },
         sitemap: {
-          changefreq: 'daily',
+          changefreq: 'hourly',
           priority: 0.5,
           ignorePatterns: ['/tags/**'],
           filename: 'sitemap.xml',
@@ -96,6 +96,16 @@ const config = {
   plugins: [
     "@docusaurus/theme-live-codeblock", 
     "docusaurus-plugin-less",
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 85,
+        max: 1030, // max resized image's size.
+        min: 640, // min resized image's size. if original is lower, use that size.
+        steps: 2, // the max number of images generated between min and max (inclusive)
+        disableInDev: false,
+      },
+    ],
   ],
   themeConfig: {
     navbar: navbarConfig,
