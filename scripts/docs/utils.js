@@ -5,7 +5,7 @@ const versionsConfig = require("../../config/versions");
 const sidebars = require("../../config/sidebars.js");
 const repos = "https://github.com/apecloud/kubeblocks.git";
 
-const root = process.cwd();
+const root = path.join(__dirname, "../../");
 const temp_dir = path.join(root, ".temp");
 const versions_filepath = path.join(root, "versions.json");
 
