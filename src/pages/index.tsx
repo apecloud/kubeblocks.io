@@ -4,12 +4,12 @@ import Layout from '../components/Layout';
 import QueueAnim from 'rc-queue-anim';
 import styles from './index.module.less';
 import Translate, { translate } from '@docusaurus/Translate';
-
+import Image from '@theme/IdealImage';
 
 type IntroductionItem = {
   title: string;
-  img: string;
-  connect: string | undefined;
+  img: React.ReactNode;
+  connect: React.ReactNode;
   description: string[];
 };
 
@@ -19,8 +19,8 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature0.title',
       message: 'Cloud-prem with the best of both worlds'
     }),
-    img: 'img/one.png',
-    connect: 'img/connect1.png',
+    img: <Image img={require('../img/one.png')} />,
+    connect: <Image img={require('../img/connect1.png')} />,
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
@@ -41,8 +41,8 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature1.title',
       message: 'Day-2 automation for multi-database and analytical software'
     }),
-    img: 'img/two.png',
-    connect: 'img/connect2.png',
+    img: <Image img={require('../img/two.png')} />,
+    connect: <Image img={require('../img/connect2.png')} />,
     description: [
       translate({
         id: 'homepage.features.feature1.description1',
@@ -59,7 +59,7 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature2.title',
       message: 'Easy-to-use and consistent user interface',
     }),
-    img: 'img/three.png',
+    img: <Image img={require('../img/three.png')} />,
     connect: undefined,
     description: [
       translate({
@@ -75,35 +75,35 @@ const IntroductionList: IntroductionItem[] = [
 ];
 
 const FeatureList = [{
-  icon: 'img/icon-03.png'
+  icon: <Image img={require('../img/icon-03.png')} />
 }, {
-  icon: 'img/icon-04.png'
+  icon: <Image img={require('../img/icon-04.png')} />
 }, {
-  icon: 'img/icon-05.png'
+  icon: <Image img={require('../img/icon-05.png')} />
 }, {
-  icon: 'img/icon-06.png'
+  icon: <Image img={require('../img/icon-06.png')} />
 }, {
-  icon: 'img/icon-07.png'
+  icon: <Image img={require('../img/icon-07.png')} />
 }, {
-  icon: 'img/icon-08.png'
+  icon: <Image img={require('../img/icon-08.png')} />
 }, {
-  icon: 'img/icon-09.png'
+  icon: <Image img={require('../img/icon-09.png')} />
 }, {
-  icon: 'img/icon-10.png'
+  icon: <Image img={require('../img/icon-10.png')} />
 }, {
-  icon: 'img/icon-11.png'
+  icon: <Image img={require('../img/icon-11.png')} />
 }, {
-  icon: 'img/icon-12.png'
+  icon: <Image img={require('../img/icon-12.png')} />
 }, {
-  icon: 'img/icon-13.png'
+  icon: <Image img={require('../img/icon-13.png')} />
 }, {
-  icon: 'img/icon-14.png'
+  icon: <Image img={require('../img/icon-14.png')} />
 },{
-  icon: 'img/icon-15.png'
+  icon: <Image img={require('../img/icon-15.png')} />
 }, {
-  icon: 'img/icon-16.png'
+  icon: <Image img={require('../img/icon-06.png')} />
 }, {
-  icon: 'img/icon-17.png'
+  icon: <Image img={require('../img/icon-17.png')} />
 }]
 
 export default function Home(): JSX.Element {
@@ -133,20 +133,22 @@ export default function Home(): JSX.Element {
               </div>
             </QueueAnim>
             <QueueAnim duration={1000}>
-              <img key='img1' className={styles.img} src="img/bg.png" />
+              <div key='img1' className={styles.img} >
+                <Image img={require('../img/bg.png')} />
+              </div>
             </QueueAnim>
           </div>
           <div className={styles.introductions}>
             {IntroductionList.map(({ title, img, description, connect }, index) => (
               <div className={styles.item} key={`list_${index}`}>
                 <div className={styles.introduce} >
-                  <div className={styles.img} ><img src={img} /></div>
+                  <div className={styles.img} >{img}</div>
                   <div className={styles.content}>
                     <h1>{title}</h1>
                     {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
                   </div>
                 </div>
-                {connect ? <img className={styles.connect} src={connect} /> : null}
+                {connect ? <div className={styles.connect}>{connect}</div> : null}
               </div>
             ))}
           </div>
@@ -159,7 +161,7 @@ export default function Home(): JSX.Element {
             {FeatureList.map((item, index) => {
               return (
                 <li key={`li_${index}`} className={styles.item}>
-                  <img src={item.icon} />
+                  {item.icon}
                 </li>
               )
             })}
