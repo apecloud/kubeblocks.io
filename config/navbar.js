@@ -11,16 +11,16 @@ module.exports = {
       label: "Documentation",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
-    {
-      type: "doc",
-      docId: "release_notes/v0.4.0/v0.4.0",
-      position: "right",
-      label: "Release Notes",
-    },
-    {
-      type: 'docsVersionDropdown',
-      position: 'right',
-    },
+    // {
+    //   type: "doc",
+    //   docId: "release_notes/v0.4.0/v0.4.0",
+    //   position: "right",
+    //   label: "Release Notes",
+    // },
+    // {
+    //   type: 'docsVersionDropdown',
+    //   position: 'right',
+    // },
     {
       href: 'https://github.com/apecloud/kubeblocks',
       position: 'right',
