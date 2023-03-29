@@ -1,9 +1,12 @@
 name: docsearch
 
 on:
-  deployment:
+  push:
+    branches:
+      - master
   schedule:
     - cron: '0 0 * * *'
+
 jobs:
   algolia:
     runs-on: ubuntu-latest
