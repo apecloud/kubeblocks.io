@@ -38,7 +38,7 @@ const config = {
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.png",
-  noIndex: true,
+  noIndex: false,
   organizationName: "ApeCloud",
   projectName: "kubeblocks.io",
   trailingSlash: false,
