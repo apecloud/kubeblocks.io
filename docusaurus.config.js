@@ -84,7 +84,7 @@ const config = {
           anonymizeIP: true,
         },
         sitemap: {
-          changefreq: 'daily',
+          changefreq: 'hourly',
           priority: 0.5,
           ignorePatterns: ['/tags/**'],
           filename: 'sitemap.xml',
