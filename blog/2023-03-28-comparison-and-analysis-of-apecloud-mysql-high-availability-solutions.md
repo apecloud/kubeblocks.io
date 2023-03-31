@@ -7,7 +7,7 @@ authors:
   url: https://github.com/IWonderWang
   image_url: https://avatars.githubusercontent.com/u/8622632?v=4
 tags: [high availability]
-image: https://github.com/apecloud/kubeblocks.io/blob/master/blog/assets/img/blog-banner.png?raw=true
+image: /img/blog-banner.png
 ---
 
 # A Comparison and Analysis of ApeCloud MySQL High Availability Solutions 
