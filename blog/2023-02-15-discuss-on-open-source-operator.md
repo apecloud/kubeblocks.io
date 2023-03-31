@@ -7,6 +7,7 @@ authors:
   url: https://github.com/realzyy
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [database operator, open source]
+image: https://github.com/apecloud/kubeblocks.io/blob/master/blog/assets/img/blog-banner.png?raw=true
 ---
 
 # Why isn't the open-source database operator popular?
