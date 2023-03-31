@@ -1,0 +1,124 @@
+.search{
+  margin-bottom: 30px;
+}
+.cards{
+  a {
+    text-decoration: none;
+  }
+  .col {
+    --ifm-col-width: 33.3333%;
+    flex-basis: var(--ifm-col-width);
+    margin-left: 0;
+  }
+  .cardItem{
+    height: auto;
+    color: var(--ifm-font-color-base);
+    border: 1px solid #e0e2e9;
+    transition: box-shadow 0.5s ease-out;
+    &:hover{
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card_image{
+      aspect-ratio: 1.8/1;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: revert;
+        background-repeat: no-repeat;
+      }
+    }
+    .card_time{
+      background-color: #f8f9fb;
+      border-color:#e0e2e9;
+      border: 0 solid;
+      color: #6a6f87;
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .card_body{
+     padding: 20px;
+     .card_text{
+      height: 180px;
+      overflow: scroll;
+     }
+     p{
+      color: #4f5366;
+      line-height: 1.5;
+     }
+    }
+    .authors {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .author-images {
+      display: flex;
+      justify-content: flex-end;
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-left: -10px;
+        &:first-child {
+          margin-left: 0px;
+        }
+      }
+    }
+    .author-names {
+      margin-left: 10px;
+    }
+    .author-names span {
+      font-size: 14px;
+      color: var(--ifm-font-color-base);
+      font-weight: 600;
+    }
+  }
+}
+.button{
+  font-size: 18px;
+  border: 1px solid var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  &:hover{
+    background-color: var(--ifm-color-primary);
+    color: #fff;
+  }
+}
+
+@media (max-width: 996px) {
+  .cards{
+    .col {
+      --ifm-col-width: 50%;
+      flex-basis: var(--ifm-col-width);
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .cards{
+    .col {
+      --ifm-col-width: 100%;
+    }
+    .cardItem{
+      .card_image{
+        height: 285px;
+      }
+      .card_body{
+        .card_text{
+          height: auto;
+        }
+      }
+    }
+  }
+}
+  
+@media (max-width: 576px) {
+  .cards{
+    .cardItem{
+      .card_image{
+        height: auto;
+      }
+    }
+  }
+}

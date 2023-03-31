@@ -1,0 +1,29 @@
+.custom-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 52px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+  .icon {
+    margin: 0px 10px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+.active-input {
+  border: 1px var(--ifm-color-primary) solid;
+}
