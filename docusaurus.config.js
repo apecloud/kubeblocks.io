@@ -92,6 +92,9 @@ const config = {
       },
     ]
   ],
+  scripts: [
+    '/js/drift.js',
+  ],
   stylesheets: [],
   plugins: [
     "@docusaurus/theme-live-codeblock", 
