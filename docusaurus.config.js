@@ -93,7 +93,7 @@ const config = {
     ]
   ],
   scripts: [
-    '/js/drift.js',
+    '/js/contacts.js',
   ],
   stylesheets: [],
   plugins: [
