@@ -23,7 +23,7 @@ GITLAB="https://jihulab.com/api/v4/projects"
 COUNTRY_CODE=""
 
 getCountryCode() {
-    COUNTRY_CODE=`curl -s https://ifconfig.io/country_code`
+    COUNTRY_CODE=`curl -m 20 --connect-timeout 10 -s https://ifconfig.io/country_code`
 }
 
 getSystemInfo() {
@@ -94,7 +94,7 @@ checkExistingCLI() {
 
 getLatestRelease() {
     latest_release=""
-    if [[ "$COUNTRY_CODE" == "CN" ]]; then
+    if [[ "$COUNTRY_CODE" == "CN" || "$COUNTRY_CODE" == "" ]]; then
         releaseURL=$GITLAB/$GITLAB_REPO/repository/tags/latest
         if [ "$HTTP_REQUEST_CLI" == "curl" ]; then
             latest_release=`curl -s $releaseURL | grep 'message'|awk 'NR==1{print $1}'`
@@ -119,7 +119,7 @@ downloadFile() {
 
     CLI_ARTIFACT="${CLI_FILENAME}-${OS}-${ARCH}-${LATEST_RELEASE_TAG}.tar.gz"
     DOWNLOAD_BASE="https://github.com/$REPO/releases/download"
-    if [[ "$COUNTRY_CODE" == "CN" ]]; then
+    if [[ "$COUNTRY_CODE" == "CN" || "$COUNTRY_CODE" == "" ]]; then
         DOWNLOAD_BASE="$GITLAB/$GITLAB_REPO/packages/generic/kubeblocks"
     fi
     DOWNLOAD_URL="${DOWNLOAD_BASE}/${LATEST_RELEASE_TAG}/${CLI_ARTIFACT}"
