@@ -3,7 +3,7 @@ slug: third-blog-post
 title: A Comparison and Analysis of ApeCloud MySQL High Availability Solutions
 description: This is a comparison and analysis of current high availability solutions.
 authors:
-  name: Dehao Wang
+  name: Wonder
   url: https://github.com/IWonderWang
   image_url: https://avatars.githubusercontent.com/u/8622632?v=4
 tags: [high availability]

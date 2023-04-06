@@ -9,6 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 type IntroductionItem = {
   title: string;
   img: string;
+  alt: string,
   connect: string | undefined;
   description: string[];
 };
@@ -19,7 +20,8 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature0.title',
       message: 'Cloud-prem with the best of both worlds'
     }),
-    img: 'img/one.png',
+    img: 'img/one.webp',
+    alt: 'Cloud-prem with the best of both worlds',
     connect: 'img/connect1.png',
     description: [
       translate({
@@ -41,7 +43,8 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature1.title',
       message: 'Day-2 automation for multi-database and analytical software'
     }),
-    img: 'img/two.png',
+    img: 'img/two.webp',
+    alt: 'Day-2 automation for multi-database and analytical software',
     connect: 'img/connect2.png',
     description: [
       translate({
@@ -59,7 +62,8 @@ const IntroductionList: IntroductionItem[] = [
       id: 'homepage.features.feature2.title',
       message: 'Easy-to-use and consistent user interface',
     }),
-    img: 'img/three.png',
+    img: 'img/three.webp',
+    alt: 'Easy-to-use and consistent user interface',
     connect: undefined,
     description: [
       translate({
@@ -133,14 +137,14 @@ export default function Home(): JSX.Element {
               </div>
             </QueueAnim>
             <QueueAnim duration={1000}>
-              <LazyLoadImage key='img1' className={styles.img} src="img/bg.png" />
+              <LazyLoadImage key='img1' className={styles.img} src="img/bg.webp"  alt='Background image of kubeblocks'/>
             </QueueAnim>
           </div>
           <div className={styles.introductions}>
-            {IntroductionList.map(({ title, img, description, connect }, index) => (
+            {IntroductionList.map(({ title, img, description, connect, alt }, index) => (
               <div className={styles.item} key={`list_${index}`}>
                 <div className={styles.introduce} >
-                  <div className={styles.img} ><LazyLoadImage src={img} /></div>
+                  <div className={styles.img} ><LazyLoadImage src={img} alt={alt} /></div>
                   <div className={styles.content}>
                     <h1>{title}</h1>
                     {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
