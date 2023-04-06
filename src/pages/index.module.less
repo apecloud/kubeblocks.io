@@ -59,9 +59,9 @@
     }
     .img {
       position: absolute;
-      top: 100px;
-      right: -100px;
-      width: 900px;
+      top: 130px;
+      right: -70px;
+      width: 830px;
     }
   }
 
@@ -75,7 +75,8 @@
         align-items: center;
         font-weight: 600;
         .img {
-          width: 700px;
+          width: 620px;
+          height: 510px;
         }
         .content {
           flex: 1;
@@ -102,30 +103,40 @@
       }
       &:first-child {
         .introduce {
-          margin-top: 80px;
+          margin-top: 60px;
+          .img{
+            margin-right: 70px;
+          }
         }
-        .connect {  
-          left: 500px;
-          top: 350px;
-          width: 465px;
-
-          transform: rotate(10deg);
-
+        .connect {
+          left: 465px;
+          top: 250px;
+          width: 496px;
+          height: 604px;
+          transform: rotate(-5deg);
+          z-index: 2;
         }
       }
       &:nth-child(2) {
         .introduce{
-          margin: 210px 0px;
+          margin: 230px 0px;
           flex-direction: row-reverse;
-          img{
+          .content{
+            margin-right: 70px;
+          }
+          .img{
             margin-top: -20px;
+            z-index: 3;
+            position: relative;
           }
         }
         .connect {
-          left: 472px;
-          top: 470px;
-          width: 480px;
-          height: 500px;
+          left: 464px;
+          top: 375px;
+          width: 499px;
+          height: 570px;
+          z-index: 4;
+          transform: rotate(8deg);      
         }
       }
       &:nth-child(3) {
@@ -133,7 +144,8 @@
           margin-bottom: 160px;
           .img{
             position: relative;
-            z-index: 2;
+            z-index: 5;
+            margin-right: 70px;
           }
         }
       }
@@ -190,7 +202,7 @@
       }
       .img {
         top: 80px;
-        width: 680px;
+        width: 650px;
       }
     }
     .introductions{
@@ -199,6 +211,7 @@
           margin: 11% 0px;
           .img {
             width: 50%;
+            height: 422px;
           }
           .content {
             padding-left: 8%;
@@ -214,10 +227,11 @@
         }
         &:nth-child(1) {
           .connect {
-            left: 35%;
-            top: 52%;
-            width: 35%;
-            height: 91%;
+            left: 37%;
+            top: 51%;
+            width: 32%;
+            height: 94%;
+            transform: rotate(0);
           }
         }
         &:nth-child(2) {
@@ -227,11 +241,12 @@
               padding-left: 0;
             }
           }
-          .connect {         
-            left: 33%;
-            top: 82%;
-            width: 38%;
-            height: 85%;
+          .connect {   
+            left: 31%;
+            top: 81%;
+            width: 40%;
+            height: 91%;
+            transform: rotate(0deg);
           }
         }
       }
@@ -381,4 +396,5 @@
     }
   }
 }
+
 
