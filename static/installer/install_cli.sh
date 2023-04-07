@@ -145,10 +145,6 @@ installFile() {
     LATEST_RELEASE_TAG=$1
     echo ${LATEST_RELEASE_TAG=$1}
     local tmp_root_kbcli="$CLI_TMP_ROOT/${CLI_FILENAME}-${OS}-${ARCH}-${LATEST_RELEASE_TAG}/$CLI_FILENAME"
-    echo $LATEST_RELEASE_TAG
-    echo "CLI_TMP_ROOT = ${CLI_TMP_ROOT}"
-    echo "ARTIFACT_TMP_FILE = ${ARTIFACT_TMP_FILE}"
-    echo "tmp_root_kbcli = ${tmp_root_kbcli}"
     tar xf "$ARTIFACT_TMP_FILE" -C "$CLI_TMP_ROOT"
 
     if [[ $? -ne 0 || ! -f "$tmp_root_kbcli"  ]]; then
