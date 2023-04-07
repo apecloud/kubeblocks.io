@@ -117,7 +117,7 @@ getLatestRelease() {
 downloadFile() {
     LATEST_RELEASE_TAG=$1
 
-    CLI_ARTIFACT="${CLI_FILENAME}-${OS}-${ARCH}.tar.gz"
+    CLI_ARTIFACT="${CLI_FILENAME}-${OS}-${ARCH}-${LATEST_RELEASE_TAG}.tar.gz"
     DOWNLOAD_BASE="https://github.com/$REPO/releases/download"
     if [[ "$COUNTRY_CODE" == "CN" || "$COUNTRY_CODE" == "" ]]; then
         DOWNLOAD_BASE="$GITLAB/$GITLAB_REPO/packages/generic/kubeblocks"
@@ -142,16 +142,10 @@ downloadFile() {
 }
 
 installFile() {
-    LATEST_RELEASE_TAG=$1
-    echo ${LATEST_RELEASE_TAG=$1}
-    local tmp_root_kbcli="$CLI_TMP_ROOT/${CLI_FILENAME}-${OS}-${ARCH}-${LATEST_RELEASE_TAG}/$CLI_FILENAME"
-    echo $LATEST_RELEASE_TAG
-    echo "CLI_TMP_ROOT = ${CLI_TMP_ROOT}"
-    echo "ARTIFACT_TMP_FILE = ${ARTIFACT_TMP_FILE}"
-    echo "tmp_root_kbcli = ${tmp_root_kbcli}"
+    local tmp_root_kbcli="$CLI_TMP_ROOT/${OS}-${ARCH}/$CLI_FILENAME"
     tar xf "$ARTIFACT_TMP_FILE" -C "$CLI_TMP_ROOT"
 
-    if [[ $? -ne 0 || ! -f "$tmp_root_kbcli"  ]]; then
+    if [[ $? -ne 0 || ! -f "$tmp_root_kbcli" ]]; then
         echo "Failed to unpack kbcli executable."
         exit 1
     fi
@@ -213,6 +207,6 @@ else
 fi
 
 downloadFile $ret_val
-installFile $ret_val
+installFile
 cleanup
 installCompleted

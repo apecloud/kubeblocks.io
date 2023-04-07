@@ -10,6 +10,7 @@ $GITLAB_REPO = "85948"
 $GITLAB = "https://jihulab.com/api/v4/projects"
 $COUNTRY_CODE = ""
 
+Import-Module Microsoft.PowerShell.Utility
 
 function getCountryCode() {
     return (Invoke-WebRequest -Uri "https://ifconfig.io/country_code" -UseBasicParsing | Select-Object -ExpandProperty Content).Trim()
@@ -40,7 +41,7 @@ function checkExistingCLI {
 
 function getLatestRelease {
     $latest_release = ""
-    Write-Host $COUNTRY_CODE
+
     if ($COUNTRY_CODE -eq "CN") {
         $releaseURL = "$GITLAB/$GITLAB_REPO/repository/tags/latest"
         $latest_release = (Invoke-WebRequest -Uri $releaseURL | Select-String -Pattern "message" | Select-Object -First 1).Line
@@ -59,25 +60,35 @@ function getLatestRelease {
     return $latest_release
 }
 
-
+$webClient = New-Object System.Net.WebClient
 $isDownLoaded = $False
 $Data =
+
 function downloadFile {
     param (
         $LATEST_RELEASE_TAG
     )
-    $CLI_ARTIFACT = "$CLI_FILENAME-windows-amd64.zip"
+    $CLI_ARTIFACT="${CLI_FILENAME}-windows-amd64-${LATEST_RELEASE_TAG}.zip"
     $DOWNLOAD_BASE = "https://github.com/$REPO/releases/download"
-
     if ($COUNTRY_CODE -eq "CN") {
         $DOWNLOAD_BASE = "$GITLAB/$GITLAB_REPO/packages/generic/kubeblocks"
     }
     $DOWNLOAD_URL = "${DOWNLOAD_BASE}/${LATEST_RELEASE_TAG}/${CLI_ARTIFACT}"
-
+   
+    # Check the Resource 
+    $webRequest = [System.Net.HttpWebRequest]::Create($DOWNLOAD_URL)
+    $webRequest.Method = "HEAD"
+    try {
+        $webResponse = $webRequest.GetResponse()
+        Write-Host "Resource has been found"
+    } catch {
+        Write-Host "Resource not found."
+        exit 1
+    }
+    
+    # Create the temp directory
     $CLI_TMP_ROOT = New-Item -ItemType Directory -Path (Join-Path $env:TEMP "kbcli-install-$(Get-Date -Format 'yyyyMMddHHmmss')") 
     $Global:ARTIFACT_TMP_FILE = Join-Path $CLI_TMP_ROOT $CLI_ARTIFACT
-
-    $webClient = New-Object System.Net.WebClient
     
     Register-ObjectEvent -InputObject $webClient -EventName DownloadFileCompleted `
         -Action {
@@ -94,7 +105,7 @@ function downloadFile {
     $Global:isDownLoaded = $False
     $timer = New-Object System.Timers.Timer
     $timer.Interval = 500
-
+    
     Register-ObjectEvent -InputObject $timer -EventName Elapsed -SourceIdentifier "TimerElapsed" -Action {
         $precent = $Global:Data.SourceArgs.ProgressPercentage
         $totalBytes = $Global:Data.SourceArgs.TotalBytesToReceive
@@ -126,51 +137,38 @@ function downloadFile {
 }
 
 function installFile {
- 
-    param (
-        $LATEST_RELEASE_TAG
-    )
-    $DIR_NAME = "kbcli-windows-amd64-$LATEST_RELEASE_TAG"
+    $DIR_NAME = "kbcli-windows-amd64"
     $kbcliexe = "kbcli.exe"
     $installPath = Join-Path "C:\Program Files"  $DIR_NAME
+    
     if (!(Test-Path -Path $installPath -PathType Container)) {
         New-Item -ItemType Directory -Path $installPath | Out-Null
     }
-    $tmp_root_kbcli = Join-Path $CLI_TMP_ROOT $DIR_NAME
+
+    $tmp_root_kbcli = Join-Path $CLI_TMP_ROOT "windows-amd64" #Must match the folder name with workflow
     $tmp_root_kbcli = Join-Path $tmp_root_kbcli $kbcliexe  
+    
     Expand-Archive -Path "$Global:ARTIFACT_TMP_FILE" -DestinationPath $CLI_TMP_ROOT
     
     if ($? -ne $True -or !(Test-Path $tmp_root_kbcli -PathType Leaf) ) {
-        Write-Host "Failed to unpack kbcli executable."
-        Exit 1
+        throw "Failed to unpack kbcli executable."
     }
-   
-    Copy-Item -Path $tmp_root_kbcli -Destination $installPath
-
+    
     $envPath = [Environment]::GetEnvironmentVariable("Path", "User") # add to PATH
     if ($envPath -notlike "*$installPath*") {
         [Environment]::SetEnvironmentVariable("Path", "$envPath;$installPath", "User")
+        Set-Item -Path Env:Path -Value $env:Path
     }
 
-    if ($? -eq $True -and (Test-Path (Join-Path $installPath $kbcliexe) -PathType Leaf)) {
+    Copy-Item -Path $tmp_root_kbcli -Destination $installPath
+    if ( $? -eq $True -and (Test-Path (Join-Path $installPath $kbcliexe) -PathType Leaf) ) {
         Write-Host "kbcli installed successfully."
-        kbcli.exe version
+        Write-Host ""
         Write-Host "Make sure your docker service is running and begin your journey with kbcli:`n"
         Write-Host "`t$CLI_FILENAME playground init`n"
     } else {
-        Write-Host "Failed to install $CLI_FILENAME"
-        Exit 1
+        throw "Failed to install $CLI_FILENAME"
     }
-}
-
-function fail_trap {
-    $result = $LASTEXITCODE
-    if ($result -ne 0) {
-        Write-Host "Failed to install kbcli"
-        Write-Host "Go to https://kubeblocks.io for more support."
-    }
-    cleanup
-    exit $result
 }
 
 function cleanup {
@@ -205,9 +203,16 @@ else {
 }
 
 $CLI_TMP_ROOT = downloadFile $ret_val
-installFile $ret_val
+try {
+    installFile  
+} catch {
+    Write-Host "An error occurred: $($_.Exception.Message)"
+    Write-Host "Please try again in administrator mode!"
+    cleanup
+    exit 1
+}  
+
 cleanup 
 installCompleted
-
 
 
