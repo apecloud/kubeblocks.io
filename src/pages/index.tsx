@@ -18,60 +18,75 @@ const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: 'Cloud-prem with the best of both worlds'
+      message: 'Enhancing complex stateful workloads'
     }),
     img: 'img/one.webp',
-    alt: 'Cloud-prem with the best of both worlds',
-    connect: 'img/connect1.png',
+    alt: 'Enhancing complex stateful workloads',
+    connect: 'img/connect1.webp',
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'Leverage the benefits of both cloud and on-premises computing.',
-      }),
-      translate({
-        id: 'homepage.features.feature0.description1',
-        message: 'Take advantage of the scalability, agility, and cost-effectiveness of the cloud.',
-      }),
-      translate({
-        id: 'homepage.features.feature0.description2',
-        message: 'Maintain control over sensitive data and applications that need to remain on-premises for regulatory, security, or other reasons.',
+        message: 'The complexity of stateful workloads requires more than what is currently offered. KubeBlocks addresses complexity with ReplicationSet and ConsensusSet, which allow for role-based update order and latency-based election weight. KubeBlocks also maintains data replication status and automatically repairs errors or delays.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature1.title',
-      message: 'Day-2 automation for multi-database and analytical software'
+      message: 'Cloud-prem'
     }),
     img: 'img/two.webp',
-    alt: 'Day-2 automation for multi-database and analytical software',
-    connect: 'img/connect2.png',
+    alt: 'Cloud-prem',
+    connect: 'img/connect2.webp',
     description: [
       translate({
-        id: 'homepage.features.feature1.description1',
-        message: 'Combined with our state-of-the-art database management plan for all major database engines, such as MySQL, PostgreSQL, and Redis.',
+        id: 'homepage.features.feature1.description0',
+        message: 'Leverage the benefits of both cloud and on-premises computing.',
       }),
       translate({
         id: 'homepage.features.feature1.description1',
-        message: 'Streamlines deployment and management processes by providing on-demand provisioning, scaling, patching, and updating, reducing the time it takes to start seeing results.',
+        message: 'Take advantage of the scalability, agility, and cost-effectiveness of the cloud.',
+      }),
+      translate({
+        id: 'homepage.features.feature1.description2',
+        message: 'Maintain control over sensitive data and applications that need to remain on-premises for regulatory, security, or other reasons.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature2.title',
-      message: 'Easy-to-use and consistent user interface',
+      message: 'Optimized Day-2 automation'
     }),
     img: 'img/three.webp',
-    alt: 'Easy-to-use and consistent user interface',
-    connect: undefined,
+    alt: 'Optimized Day-2 automation',
+    connect: 'img/connect3.webp',
     description: [
       translate({
         id: 'homepage.features.feature2.description1',
+        message: 'Combined with our state-of-the-art database management plan for all major database engines, such as MySQL, PostgreSQL, and Redis.',
+      }),
+      translate({
+        id: 'homepage.features.feature2.description1',
+        message: 'Streamlines deployment and management processes by providing on-demand provisioning, scaling, patching, and updating, reducing the time it takes to start seeing results.',
+      }),
+    ],
+  },
+  {
+    title: translate({
+      id: 'homepage.features.feature3.title',
+      message: 'Kubernetes-style declarative API',
+    }),
+    img: 'img/four.webp',
+    alt: 'Kubernetes-style declarative API',
+    connect: undefined,
+    description: [
+      translate({
+        id: 'homepage.features.feature3.description1',
         message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactive guided CLI, management console, or Kubernetes-style declarative API.',
       }),
       translate({
-        id: 'homepage.features.feature2.description2',
+        id: 'homepage.features.feature3.description2',
         message: 'Eases the burden of learning different operation styles and increasing development efficiency.',
       }),
     ]
@@ -144,13 +159,13 @@ export default function Home(): JSX.Element {
             {IntroductionList.map(({ title, img, description, connect, alt }, index) => (
               <div className={styles.item} key={`list_${index}`}>
                 <div className={styles.introduce} >
-                  <div className={styles.img} ><LazyLoadImage src={img} alt={alt} /></div>
+                  <img src={img}  alt={alt} />
                   <div className={styles.content}>
                     <h1>{title}</h1>
                     {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
                   </div>
                 </div>
-                {connect ? <LazyLoadImage className={styles.connect} src={connect} /> : null}
+                {connect ? <img className={styles.connect}  src={connect} alt='pipeline img' /> : null}
               </div>
             ))}
           </div>
