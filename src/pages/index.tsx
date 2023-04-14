@@ -5,6 +5,7 @@ import QueueAnim from 'rc-queue-anim';
 import styles from './index.module.less';
 import Translate, { translate } from '@docusaurus/Translate';
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import TypeWriter from './typeWriter';
 
 type IntroductionItem = {
   title: string;
@@ -18,76 +19,45 @@ const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: 'Enhancing complex stateful workloads'
+      message: 'Enhanced support for running stateful applications'
     }),
     img: 'img/one.webp',
-    alt: 'Enhancing complex stateful workloads',
+    alt: 'Enhanced support for running stateful applications',
     connect: 'img/connect1.webp',
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'The complexity of stateful workloads requires more than what is currently offered. KubeBlocks addresses complexity with ReplicationSet and ConsensusSet, which allow for role-based update order and latency-based election weight. KubeBlocks also maintains data replication status and automatically repairs errors or delays.',
+        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity. Kubeblocks also supports cross-AZ topology and horizontal scaling, monitors data replication status and automatically fixes errors and lags.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature1.title',
-      message: 'Cloud-prem'
+      message: 'Full lifecycle Day 2 Automation'
     }),
-    img: 'img/two.webp',
-    alt: 'Cloud-prem',
-    connect: 'img/connect2.webp',
+    img: 'img/three.webp',
+    alt: 'Full lifecycle Day 2 Automation',
+    connect: 'img/connect2.png',
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
-        message: 'Leverage the benefits of both cloud and on-premises computing.',
-      }),
-      translate({
-        id: 'homepage.features.feature1.description1',
-        message: 'Take advantage of the scalability, agility, and cost-effectiveness of the cloud.',
-      }),
-      translate({
-        id: 'homepage.features.feature1.description2',
-        message: 'Maintain control over sensitive data and applications that need to remain on-premises for regulatory, security, or other reasons.',
+        message: 'KubeBlocks handles the complexity and provides state-of-the-art management experience for the most popular open-source database engines and streaming processing platforms. It provides on-demand provisioning, scaling, monitoring, backup, recovery, and migration, reducing the hassle and risk of database management and the time required to go from development to production.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature2.title',
-      message: 'Optimized Day-2 automation'
-    }),
-    img: 'img/three.webp',
-    alt: 'Optimized Day-2 automation',
-    connect: 'img/connect3.webp',
-    description: [
-      translate({
-        id: 'homepage.features.feature2.description1',
-        message: 'Combined with our state-of-the-art database management plan for all major database engines, such as MySQL, PostgreSQL, and Redis.',
-      }),
-      translate({
-        id: 'homepage.features.feature2.description1',
-        message: 'Streamlines deployment and management processes by providing on-demand provisioning, scaling, patching, and updating, reducing the time it takes to start seeing results.',
-      }),
-    ],
-  },
-  {
-    title: translate({
-      id: 'homepage.features.feature3.title',
-      message: 'Kubernetes-style declarative API',
+      message: 'Concise and intuitive CLI',
     }),
     img: 'img/four.webp',
-    alt: 'Kubernetes-style declarative API',
+    alt: 'Concise and Intuitive CLI',
     connect: undefined,
     description: [
       translate({
-        id: 'homepage.features.feature3.description1',
-        message: 'Makes it easy to start developing by allowing you to launch and manage a database instance through an interactive guided CLI, management console, or Kubernetes-style declarative API.',
-      }),
-      translate({
-        id: 'homepage.features.feature3.description2',
-        message: 'Eases the burden of learning different operation styles and increasing development efficiency.',
+        id: 'homepage.features.feature2.description0',
+        message: 'ClickOps is known for being time-consuming and error-prone. KubeBlocks offers kbcli for productivity. You can install KubeBlocks and launch a playground environment on a desktop or cloud with a single command. It also integrates popular database clients and benchmark tools to access the database from the terminal and switch to the web browser for the monitoring dashboard. kbcli simplifies the learning curve of using databases in Kubernetes.',
       }),
     ]
   },
@@ -117,7 +87,7 @@ const FeatureList = [{
   icon: 'img/icon-13.png'
 }, {
   icon: 'img/icon-14.png'
-},{
+}, {
   icon: 'img/icon-15.png'
 }, {
   icon: 'img/icon-16.png'
@@ -132,44 +102,57 @@ export default function Home(): JSX.Element {
         <div className={styles.home}>
           <div className={styles.banner}>
             <QueueAnim duration={500} type={['left', 'right']}>
-              <div className={styles.title}>
-                <h1 key='p1'>Build your data platform </h1>
-                <h1 key='p2'>on Kubernetes</h1>
-              </div>
-              <p key='p3'>Install, create, connect, and you have it all. </p>
-
-              <div key='p7' className={styles.actions}>
-                <Link
-                  className={`${styles.actionItem}`}
-                  to="/docs/preview/user_docs/introduction">
-                  Get started
-                </Link>
-                <Link
-                  className={`${styles.actionItem}`}
-                  to="/docs/preview/user_docs/introduction">
-                  Demo
-                </Link>
+              <div className={styles.text}>
+                <h1 key='p1'>The cloud native</h1>
+                <h1 key='p2'>data infrastructure</h1>
+                <p key='p3'>Install, create, connect, and you have it all.</p>
+                <div key='p7' className={styles.actions}>
+                  <Link
+                    className={`${styles.actionItem}`}
+                    to="/docs/preview/user_docs/introduction">
+                    Get started on Github
+                  </Link>
+                  <Link
+                    className={`${styles.actionItem}`}
+                    to="/docs/preview/user_docs/introduction">
+                    Get a Demo
+                  </Link>
+                </div>
               </div>
             </QueueAnim>
             <QueueAnim duration={1000}>
-              <LazyLoadImage key='img1' className={styles.img} src="img/bg.webp"  alt='Background image of kubeblocks'/>
+              <LazyLoadImage key='img1' className={styles.img} src="img/bg.webp" alt='Background image of kubeblocks' />
             </QueueAnim>
           </div>
-          <div className={styles.introductions}>
-            {IntroductionList.map(({ title, img, description, connect, alt }, index) => (
-              <div className={styles.item} key={`list_${index}`}>
-                <div className={styles.introduce} >
-                  <img src={img}  alt={alt} />
-                  <div className={styles.content}>
-                    <h1>{title}</h1>
-                    {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
-                  </div>
-                </div>
-                {connect ? <img className={styles.connect}  src={connect} alt='pipeline img' /> : null}
-              </div>
-            ))}
+        </div>
+        <div className={styles.description}>
+          <div className={styles.content}>
+            <h1>Why you need KubeBlocks</h1>
+            <div className={styles.context}>
+              <div>Kubernetes is the future. Building a secure, reliable, and cost-effective data infrastructure on K8s becomes increasingly popular. However, the difficulties of integrating with cloud providers, the lack of high-quality K8s operators, and the steep learning curve of K8s are the most prominent obstacles.</div>
+              <div>KubeBlocks solves these problems and offers an open-source option that helps application developers and platform engineers set up feature-rich services for relational databases, NoSQL databases, KV stores, caches, and stream-processing platforms.</div>
+              <div>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</div>
+            </div>
+            <div className={styles.text}>Created by <span>ApeCloud</span></div>
           </div>
         </div>
+        <div className={styles.introductions}>
+          {IntroductionList.map(({ title, img, description, connect, alt }, index) => (
+            <div className={styles.item} key={`list_${index}`}>
+              <div className={styles.introduce} >
+                <img src={img} alt={alt} />
+                <div className={styles.content}>
+                  <h1>{title}</h1>
+                  {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
+                </div>
+              </div>
+              {connect ? <img className={styles.connect} src={connect} alt='pipeline img' /> : null}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <TypeWriter />
       </div>
       <div className={styles.features}>
         <div className="container">

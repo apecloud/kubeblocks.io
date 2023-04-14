@@ -1,0 +1,135 @@
+.box {
+  text-align: left;
+  width: 900px;
+  height: auto;
+  padding:36px;
+  overflow-y: scroll;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: var(--ifm-font-family-base);
+  color: #313d4d;
+  .centered-title {
+    text-align: center;
+    margin: 20px auto;
+    color: #313d4d;
+    font-size: 54px;
+  }
+  .centered-des {
+    text-align: center;
+    font-size: 24px;
+    color: #353d48;
+    font-weight: 400;
+  }
+  .btn {
+    min-width: 110px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px solid #313d4d;
+    color: #313d4d;
+    background: #fff;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s;
+    &:not(:disabled):hover {
+      filter: brightness(120%);
+      transform: scale(1.05);
+      box-shadow: 0 0 8px 3px #93a4da;
+    }
+    &:disabled {
+      transform: 1;
+      // cursor: not-allowed ;
+      // background-image: linear-gradient(180deg, #a1a2a4, #888a8d);
+    }
+    &:last-child {
+      margin-top: 26px 0;
+    }
+  }
+  .is_hidden {
+    display: none;
+    transition: display 1s;
+  }
+  .writer {
+    text-align: left;
+    width: 100%;
+    height: 400px;
+    border: 1px solid;
+    padding: 20px 20px 60px;
+    overflow-y: scroll;
+    font-family: monospace;
+    color: #fff;
+    background: black;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(19, 53, 96, 0.4), 0px 5px 30px 2px rgba(7, 12, 120, 0.4);
+    margin: 20px 0;
+  }
+  .new_pre {
+    padding: 0;
+    background: none;
+    font-size: x-small;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .cli {
+    .Typewriter {
+      display: inline;
+      margin-left: 5px;
+    }
+  }
+}
+.green-text {
+  color: #4db62b;
+}
+
+.blue-text {
+  color: #28a8cf;
+}
+
+@media (max-width: 992px) {
+  .box {
+    width: 100%;
+    padding: 10px 10px 40px;
+    .writer{
+      width: 96%;
+      height: 300px;
+      .mobile{
+        display: none;
+      }
+    }
+    .centered-title {
+      margin: 12px auto;
+      color: #313d4d;
+      font-size: 40px;
+    }
+    .centered-des {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .box {
+    padding: 10px 10px 30px;
+    .btn {
+      min-width: 90px;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 16px;
+  }
+    .writer{
+      height: 200px;
+      margin: 16px 0;
+    }
+    .centered-title {
+      margin: 12px auto;
+      color: #313d4d;
+      font-size: 30px;
+    }
+    .centered-des {
+      font-size: 16px;
+    }
+  }
+}
