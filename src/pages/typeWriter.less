@@ -1,8 +1,8 @@
 .box {
   text-align: left;
-  width: 900px;
+  width: 1360px;
   height: auto;
-  padding:36px;
+  padding: 36px;
   overflow-y: scroll;
   margin: 0 auto;
   display: flex;
@@ -23,15 +23,22 @@
     font-weight: 400;
   }
   .btn {
-    min-width: 110px;
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: 2px solid #313d4d;
+    width: 260px;
+    margin: 30px 12px 10px;
+    font-weight: 700;
+    padding: 10px 30px;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    transition-duration: 0.3s;
+    font-size: 18px;
+    border-radius: 32px;
+    text-align: center;
+    border: 4px solid #313d4d;
     color: #313d4d;
     background: #fff;
-    font-weight: 600;
-    margin-top: 10px;
-    transition: 0.3s;
     &:not(:disabled):hover {
       filter: brightness(120%);
       transform: scale(1.05);
@@ -53,7 +60,7 @@
   .writer {
     text-align: left;
     width: 100%;
-    height: 400px;
+    height: 600px;
     border: 1px solid;
     padding: 20px 20px 60px;
     overflow-y: scroll;
@@ -83,19 +90,48 @@
 .green-text {
   color: #4db62b;
 }
-
 .blue-text {
   color: #28a8cf;
+}
+
+@media (max-width: 1360px) {
+  .box {
+    width: 992px;
+    padding: 30px 10px 40px;
+    .writer {
+      width: 96%;
+      height: 500px;
+    }
+    .centered-title {
+      margin: 12px auto;
+      color: #313d4d;
+      font-size: 40px;
+    }
+    .centered-des {
+      font-size: 20px;
+    }
+    .btn{
+      width: 228px;
+      font-size: 16px;
+      margin: 20px 11px 10px;
+      padding: 8px 26px;
+      border-radius: 26px;
+    } 
+  }
 }
 
 @media (max-width: 992px) {
   .box {
     width: 100%;
     padding: 10px 10px 40px;
-    .writer{
+    .btn {
+      width: 228px;
+      margin: 20px auto 10px;
+    }
+    .writer {
       width: 96%;
       height: 300px;
-      .mobile{
+      .mobile {
         display: none;
       }
     }
@@ -114,12 +150,12 @@
   .box {
     padding: 10px 10px 30px;
     .btn {
-      min-width: 90px;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 16px;
-  }
-    .writer{
+      width: 210px;
+      margin: 16px auto 10px;
+      padding: 6px 16px;
+      border-radius: 22px;
+    }
+    .writer {
       height: 200px;
       margin: 16px 0;
     }
