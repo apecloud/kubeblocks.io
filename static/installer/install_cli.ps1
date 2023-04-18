@@ -1,3 +1,6 @@
+param (
+    [string]$v
+)
 # kbcli filename
 $CLI_FILENAME = "kbcli"
 
@@ -186,20 +189,22 @@ function installCompleted {
 # main
 # ---------------------------------------
 
+
+
 verifySupported
 checkExistingCLI
 $COUNTRY_CODE = getCountryCode
 $ret_val
 
-if (-not $args) {
+if (-not $v) {
     Write-Host "Getting the latest kbcli ..."
     $ret_val = getLatestRelease
 }
-elseif ($args[0] -match "^v.*$") {
-    $ret_val = $args[0]
+elseif ($v -match "^v.*$") {
+    $ret_val = $v
 }
 else {
-    $ret_val = "v" + $args[0]
+    $ret_val = "v" + $v
 }
 
 $CLI_TMP_ROOT = downloadFile $ret_val
