@@ -13,6 +13,7 @@ $GITLAB_REPO = "85948"
 $GITLAB = "https://jihulab.com/api/v4/projects"
 $COUNTRY_CODE = ""
 
+
 function getCountryCode() {
     return (Invoke-WebRequest -Uri "https://ifconfig.io/country_code" -UseBasicParsing | Select-Object -ExpandProperty Content).Trim()
 }
