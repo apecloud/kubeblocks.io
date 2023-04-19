@@ -1,0 +1,18 @@
+- name: mysql
+  componentDefRef: mysql
+  replicas: 1
+  resources: # Change the values of resources.
+    requests:
+      memory: "1Gi"
+      cpu: "1000m"
+    limits:
+      memory: "2Gi"
+      cpu: "2000m"
+  volumeClaimTemplates:
+  - name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 20Gi

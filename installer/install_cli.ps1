@@ -1,3 +1,6 @@
+param (
+    [string]$v
+)
 # kbcli filename
 $CLI_FILENAME = "kbcli"
 
@@ -10,7 +13,6 @@ $GITLAB_REPO = "85948"
 $GITLAB = "https://jihulab.com/api/v4/projects"
 $COUNTRY_CODE = ""
 
-Import-Module Microsoft.PowerShell.Utility
 
 function getCountryCode() {
     return (Invoke-WebRequest -Uri "https://ifconfig.io/country_code" -UseBasicParsing | Select-Object -ExpandProperty Content).Trim()
@@ -23,7 +25,7 @@ function verifySupported {
         Write-Output "AMD64 is supported..."
         return
     }
-    Write-Output "No support for x86 systems"
+    Write-Output "No support to your pc $arch ARCH"
     exit 1
 }
 
@@ -107,10 +109,10 @@ function downloadFile {
     $timer.Interval = 500
     
     Register-ObjectEvent -InputObject $timer -EventName Elapsed -SourceIdentifier "TimerElapsed" -Action {
-        $precent = $Global:Data.SourceArgs.ProgressPercentage
+        $percent = $Global:Data.SourceArgs.ProgressPercentage
         $totalBytes = $Global:Data.SourceArgs.TotalBytesToReceive
         $receivedBytes = $Global:Data.SourceArgs.BytesReceived
-        if ($precent -ne $null) {
+        if ($percent -ne $null) {
             $downloadProgress = [Math]::Round(($receivedBytes / $totalBytes) * 100, 2)
             $status = "Downloaded {0} of {1} bytes" -f $receivedBytes, $totalBytes
             Write-Progress -Activity "Downloading kbcli..." -Status $status -PercentComplete $downloadProgress
@@ -191,15 +193,15 @@ checkExistingCLI
 $COUNTRY_CODE = getCountryCode
 $ret_val
 
-if (-not $args) {
+if (-not $v) {
     Write-Host "Getting the latest kbcli ..."
     $ret_val = getLatestRelease
 }
-elseif ($args[0] -match "^v.*$") {
-    $ret_val = $args[0]
+elseif ($v -match "^v.*$") {
+    $ret_val = $v
 }
 else {
-    $ret_val = "v" + $args[0]
+    $ret_val = "v" + $v
 }
 
 $CLI_TMP_ROOT = downloadFile $ret_val
@@ -214,5 +216,3 @@ try {
 
 cleanup 
 installCompleted
-
-
