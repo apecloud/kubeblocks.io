@@ -19,45 +19,45 @@ const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: 'Enhanced support for running stateful applications'
+      message: 'Enhanced stateful workloads'
     }),
     img: 'img/one.webp',
-    alt: 'Enhanced support for running stateful applications',
+    alt: 'Enhanced stateful workloads',
     connect: 'img/connect1.webp',
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity. Kubeblocks also supports cross-AZ topology and horizontal scaling, monitors data replication status and automatically fixes errors and lags.',
+        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity, monitoring data replication status and automatically fixes errors and lags.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature1.title',
-      message: 'Full lifecycle Day 2 Automation'
+      message: 'Rich day 2 operations'
     }),
     img: 'img/three.webp',
-    alt: 'Full lifecycle Day 2 Automation',
+    alt: 'Rich day 2 operations',
     connect: 'img/connect2.png',
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
-        message: 'KubeBlocks handles the complexity and provides state-of-the-art management experience for the most popular open-source database engines and streaming processing platforms. It provides on-demand provisioning, scaling, monitoring, backup, recovery, and migration, reducing the hassle and risk of database management and the time required to go from development to production.',
+        message: 'KubeBlocks handles the complexity and provides state-of-the-art management experience for MySQL, PostgreSQL, Redis, and MongoDB. It provides on-demand provisioning, scaling, monitoring, backup, and recovery, reducing the risk of database management and the time required to go from development to production.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature2.title',
-      message: 'Concise and intuitive CLI',
+      message: 'Powerful and intuitive CLI',
     }),
     img: 'img/four.webp',
-    alt: 'Concise and Intuitive CLI',
+    alt: 'Powerful and intuitive CLI',
     connect: undefined,
     description: [
       translate({
         id: 'homepage.features.feature2.description0',
-        message: 'ClickOps is known for being time-consuming and error-prone. KubeBlocks offers kbcli for productivity. You can install KubeBlocks and launch a playground environment on a desktop or cloud with a single command. It also integrates popular database clients and benchmark tools to access the database from the terminal and switch to the web browser for the monitoring dashboard. kbcli simplifies the learning curve of using databases in Kubernetes.',
+        message: 'ClickOps is known for being time-consuming and error-prone. KubeBlocks offers kbcli for productivity. You can install KubeBlocks and launch a playground environment on a desktop or cloud with a single command. kbcli simplifies the learning curve of using data infra in Kubernetes.',
       }),
     ]
   },
@@ -99,6 +99,13 @@ export default function Home(): JSX.Element {
   return (
     <Layout>
       <div className={styles.bg}>
+        <a href='https://github.com/apecloud/kubeblocks' target='_blank' className={styles.git}>
+          <span className={styles.text}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sbui-icon ">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+            Star us on GitHub</span>
+        </a>
         <div className={styles.home}>
           <div className={styles.banner}>
             <QueueAnim duration={500} type={['left', 'right']}>
@@ -110,13 +117,13 @@ export default function Home(): JSX.Element {
                   <Link
                     className={`${styles.actionItem}`}
                     to="/docs/preview/user_docs/introduction">
-                    Get started on Github
+                    Get Started
                   </Link>
-                  <Link
+                  <a 
                     className={`${styles.actionItem}`}
-                    to="/docs/preview/user_docs/introduction">
+                    href='#typeWriter'>
                     Get a Demo
-                  </Link>
+                  </a>
                 </div>
               </div>
             </QueueAnim>
@@ -129,8 +136,8 @@ export default function Home(): JSX.Element {
           <div className={styles.content}>
             <h1>Why you need KubeBlocks</h1>
             <div className={styles.context}>
-              <div>Kubernetes is the future. Building a secure, reliable, and cost-effective data infrastructure on K8s becomes increasingly popular. However, the difficulties of integrating with cloud providers, the lack of high-quality K8s operators, and the steep learning curve of K8s are the most prominent obstacles.</div>
-              <div>KubeBlocks solves these problems and offers an open-source option that helps application developers and platform engineers set up feature-rich services for relational databases, NoSQL databases, KV stores, caches, and stream-processing platforms.</div>
+              <div>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable K8s operators, and the steep learning curve of K8s.</div>
+              <div>KubeBlocks offers an open-source option that helps application developers and platform engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</div>
               <div>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</div>
             </div>
             <div className={styles.text}>Created by <span>ApeCloud</span></div>
@@ -152,7 +159,7 @@ export default function Home(): JSX.Element {
         </div>
       </div>
       <div>
-        <TypeWriter />
+        <TypeWriter/>
       </div>
       <div className={styles.features}>
         <div className="container">

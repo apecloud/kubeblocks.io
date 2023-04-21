@@ -1,7 +1,73 @@
+@keyframes errtips {
+  10%, 50%, 90% {
+    transform: translateY(1px) rotate(45deg);
+  }
+  30%, 70% {
+    transform: translateY(-1px) rotate(45deg);
+  }
+  100% {
+    transform: translateY(0)  rotate(45deg);
+  }
+}
+@keyframes scratchy {
+  0% {
+      background-position: -30% 0;
+  }
+  100% {
+      background-position: 130% 0;
+  }
+}
+
 .bg {
   background: #f4f4f4;
-  overflow-x: hidden;
+  overflow: hidden;
 }
+.git{
+  width: 360px;
+  line-height: 38px;
+  text-align: center;
+  background: #65abff;;
+  color: #ffffff;
+  position: fixed;
+  z-index: 1000;
+  right: -70px;
+  top: 90px;
+  transform: rotate(45deg);
+  box-shadow: 0 12px 32px rgba(50, 50, 50, 0.4);
+  &:hover {
+    text-decoration: none;
+    animation-name: errtips;
+    animation-duration: 0.5s;
+  }
+  svg{
+    stroke: #fadb15;
+    fill: #fadb15;
+    position: relative;
+    top: 2px;
+    right: 5px;
+  }
+  .text{
+    background: #fff
+      linear-gradient(
+      -135deg,
+      transparent 25%,
+      transparent 40%,
+      #fadb15 40%,/* 这两个值是滑动条的颜色 */
+      #fffb00 60%,/* 默认是绿色 自己更改即可 */
+      transparent 60%,
+      transparent
+      );
+      background-size: 60px 60px;
+      background-clip: text;
+      background-repeat: no-repeat;
+      -webkit-text-fill-color: transparent;
+      animation: scratchy 3s linear infinite;
+      color: transparent;
+      font-size: 26px;
+      font-weight: 500;
+  } 
+}
+
 .home {
     width: 1360px;
     margin: 0 auto;
@@ -66,7 +132,7 @@
   text-align: center;
   background-color: #fff;
   .content {
-    width: 1360px;
+    width: 1160px;
     margin: 0 auto;
     h1 {
       font-size: 66px;
@@ -94,15 +160,15 @@
   .item {
     position: relative;
     min-height: 420px;
-    margin-bottom: 220px;
+    margin-bottom: 210px;
     .introduce {
       position: relative;
       display: flex;
       align-items: center;
       font-weight: 600;
       img {
-        width: 560px;
-        height: 420px;
+        width: 534px;
+        height: 400px;
         position: relative;
       }
       .content {
@@ -130,11 +196,11 @@
       }
       .connect {
         position: absolute;
-        left: 427px;
-        top: 297px;
-        height: 500px;
-        width: 456px;
-        transform: rotate(-2deg);
+        left: 420px;
+        top: 266px;
+        height: 528px;
+        width: 460px;
+        transform: rotate(-5deg);
         z-index: 2;    
       }
     }
@@ -150,12 +216,12 @@
       }
       .connect {
         position: absolute;
-        left: 356px;
-        top: 257px;
-        width: 580px;
-        height: 570px;
+        left: 366px;
+        top: 224px;
+        width: 572px;
+        height: 616px;
         z-index: 4;
-        transform: rotate(4deg);
+        transform: rotate(8deg);
       }
     }
     &:nth-child(3) {
@@ -209,6 +275,20 @@
 }
 
 @media (max-width: 1360px) {
+  .git{
+    width: 290px;
+    right: -56px;
+    line-height: 32px;
+    top: 74px;
+    .text{
+      font-size: 22px;
+    }
+    svg{
+      width: 22px;
+      height: 22px;
+      top: 2px;
+    }
+  }
   .home {
     width: 992px;
     margin: 0 auto;
@@ -335,6 +415,21 @@
 }
 
 @media (max-width: 992px) {
+  .git{
+    width: 290px;
+    right: -70px;
+    line-height: 30px;
+    top: 64px;
+    box-shadow: 0 8px 28px rgba(50, 50, 50, 0.4);
+    .text{
+      font-size: 20px;
+    }
+    svg{
+      width: 20px;
+      height: 20px;
+      top: 2px;
+    }
+  }
   .home {
     width: 100%;
     .banner {
@@ -369,7 +464,7 @@
   }
   .description {
     margin: 40px 0;
-    padding: 10px;
+    padding: 10px 60px;
     .content {
       width: auto;
       margin: 40px auto;
@@ -394,7 +489,7 @@
         display: flex;
         flex-flow: wrap-reverse;
         .content {
-          padding: 10px;
+          padding: 10px 48px;
           flex-basis: 100%;
           h1 {
             font-size: 40px;
@@ -447,6 +542,21 @@
   }
 }
 @media (max-width: 576px) {
+  .git{
+    width: 270px;
+    right: -80px;
+    line-height: 26px;
+    top: 44px;
+    .text{
+      font-size: 16px;
+    }
+    svg{
+      width: 16px;
+      height: 16px;
+      right: 3px;
+      top: 2px;
+    }
+  }
   .home {
     .banner {
         padding: 76px 0 40px 0;
@@ -477,6 +587,7 @@
   }
   .description {
     margin:0;
+    padding: 10px;
     .content {
       h1 {
         font-size: 30px;
@@ -498,6 +609,7 @@
       .introduce {
         margin: 2% 0px;
         .content {
+          padding: 10px;
           h1 {
             font-size: 30px;
             line-height: 30px;
