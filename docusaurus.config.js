@@ -92,9 +92,9 @@ const config = {
       },
     ]
   ],
-  scripts: [
-    '/js/contacts.js',
-  ],
+  // scripts: [
+  //   '/js/contacts.js',
+  // ],
   stylesheets: [],
   plugins: [
     "@docusaurus/theme-live-codeblock", 

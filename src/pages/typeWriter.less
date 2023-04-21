@@ -1,6 +1,6 @@
 .box {
   text-align: left;
-  width: 1360px;
+  width: 1260px;
   height: auto;
   padding: 36px;
   overflow-y: scroll;
@@ -23,10 +23,10 @@
     font-weight: 400;
   }
   .btn {
-    width: 260px;
+    width: auto;
     margin: 30px 12px 10px;
     font-weight: 700;
-    padding: 10px 30px;
+    padding: 12px 30px;
     text-decoration: none;
     transition: 0.3s;
     display: inline-block;
@@ -70,7 +70,8 @@
     border: 1px solid #fff;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(19, 53, 96, 0.4), 0px 5px 30px 2px rgba(7, 12, 120, 0.4);
-    margin: 20px 0;
+    margin: 26px 0;
+    white-space: normal;
   }
   .new_pre {
     padding: 0;
@@ -79,6 +80,11 @@
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
+    white-space: pre-wrap; /*css-3*/
+	white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+	white-space: -pre-wrap; /*Opera4-6*/
+	white-space: -o-pre-wrap; /*Opera7*/
+	word-wrap: break-word;
   }
   .cli {
     .Typewriter {
@@ -92,6 +98,9 @@
 }
 .blue-text {
   color: #28a8cf;
+}
+.pink-text {
+  color: lightpink;
 }
 
 @media (max-width: 1360px) {
@@ -123,7 +132,7 @@
 @media (max-width: 992px) {
   .box {
     width: 100%;
-    padding: 10px 10px 40px;
+    padding: 10px 40px 40px;
     .btn {
       width: 228px;
       margin: 20px auto 10px;
