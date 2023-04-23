@@ -46,8 +46,6 @@
     }
     &:disabled {
       transform: 1;
-      // cursor: not-allowed ;
-      // background-image: linear-gradient(180deg, #a1a2a4, #888a8d);
     }
     &:last-child {
       margin-top: 26px 0;
@@ -81,10 +79,10 @@
     white-space: pre-wrap;
     word-wrap: break-word;
     white-space: pre-wrap; /*css-3*/
-	white-space: -moz-pre-wrap; /*Mozilla,since1999*/
-	white-space: -pre-wrap; /*Opera4-6*/
-	white-space: -o-pre-wrap; /*Opera7*/
-	word-wrap: break-word;
+    white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+    white-space: -pre-wrap; /*Opera4-6*/
+    white-space: -o-pre-wrap; /*Opera7*/
+    word-wrap: break-word;
   }
   .cli {
     .Typewriter {
@@ -101,6 +99,9 @@
 }
 .pink-text {
   color: lightpink;
+}
+.yellow-text {
+  color: rgb(189, 195, 10);
 }
 
 @media (max-width: 1360px) {
@@ -120,11 +121,11 @@
       font-size: 20px;
     }
     .btn{
-      width: 228px;
+      width: auto;
       font-size: 16px;
       margin: 20px 11px 10px;
-      padding: 8px 26px;
-      border-radius: 26px;
+      padding: 10px 26px;
+      border-radius: 30px;
     } 
   }
 }
@@ -134,7 +135,9 @@
     width: 100%;
     padding: 10px 40px 40px;
     .btn {
-      width: 228px;
+      width: auto;
+      max-width: 270px;
+      padding: 8px 20px;
       margin: 20px auto 10px;
     }
     .writer {
@@ -159,10 +162,11 @@
   .box {
     padding: 10px 10px 30px;
     .btn {
-      width: 210px;
+      font-size: 14px;
+      width: auto;
+      max-width: 210px;
       margin: 16px auto 10px;
       padding: 6px 16px;
-      border-radius: 22px;
     }
     .writer {
       height: 200px;
