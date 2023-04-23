@@ -1,24 +1,26 @@
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import React from 'react';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 import { register, unregister } from '../serviceWork';
 
-const SERVICE_WORK_ENABLE = true // process.env.NODE_ENV === "production";
+const SERVICE_WORK_ENABLE = process.env.NODE_ENV === "production";
 
-const TIMESTAMP = document.getElementsByTagName("meta")?.version?.getAttribute("content");
+if (ExecutionEnvironment.canUseDOM) {
+  const TIMESTAMP = document.getElementsByTagName("meta")?.version?.getAttribute("content");
+  if (SERVICE_WORK_ENABLE && TIMESTAMP) {
+    register({
+      swUrl: `/sw.js?t=${TIMESTAMP}`,
+      onSuccess: () => {
 
-if (SERVICE_WORK_ENABLE && TIMESTAMP) {
-  register({
-    swUrl: `/sw.js?t=${TIMESTAMP}`,
-    onSuccess: () => {
+      },
+      onUpdate: () => {
 
-    },
-    onUpdate: () => {
-
-    }
-  })
-} else {
-  unregister();
+      }
+    })
+  } else {
+    unregister();
+  }
 }
 
 export default ({ children }) => {
