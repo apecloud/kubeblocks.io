@@ -12,6 +12,8 @@ const kubeblocksRepos = "https://github.com/apecloud/kubeblocks/tree";
 const websiteRepos = "https://github.com/apecloud/kubeblocks.io/tree/master";
 const lastVersion = versionsConfig[0]?.version || "current";
 
+const TIMESTAMP = (new Date()).getTime();
+
 const versions = (() => {
   const _versions = {
     current: {
@@ -53,6 +55,15 @@ const config = {
       },
     },
   },
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'version',
+        content: String(TIMESTAMP),
+      },
+    },
+  ],
   presets: [
     [
       "@docusaurus/preset-classic",
