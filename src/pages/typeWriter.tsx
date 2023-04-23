@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 export default () => {
   const [btnDisable, setBtnDisable] = useState(false);
+  const [btnIndex, setbtnIndex] = useState(0);
   const [strIndex, setStrIndex] = useState(0);
   const [cliVisible, setCliVisible] = useState({
     'visible_1': false,
@@ -23,27 +24,23 @@ export default () => {
     'visible_14': false,
     'visible_15': false,
     'visible_16': false,
-    'visible_17': false,
-    'visible_18': false,
-    'visible_19': false,
-    'visible_20': false,
   });
 
   //默认展示
   const MSG = `
-  =============================================
-     __    __ _______   ______  __       ______ 
-    |  \\  /  \\       \\ /      \\|  \\     |      \\ 
-    | ▓▓ /  ▓▓ ▓▓▓▓▓▓▓\\  ▓▓▓▓▓▓\\ ▓▓      \\▓▓▓▓▓▓
-    | ▓▓/  ▓▓| ▓▓__/ ▓▓ ▓▓   \\▓▓ ▓▓       | ▓▓  
-    | ▓▓  ▓▓ | ▓▓    ▓▓ ▓▓     | ▓▓       | ▓▓  
-    | ▓▓▓▓▓\\ | ▓▓▓▓▓▓▓\\ ▓▓   __| ▓▓       | ▓▓  
-    | ▓▓ \\▓▓\\| ▓▓__/ ▓▓ ▓▓__/  \\ ▓▓_____ _| ▓▓_ 
-    | ▓▓  \\▓▓\\ ▓▓    ▓▓\\▓▓    ▓▓ ▓▓     \\   ▓▓ \\
-     \\▓▓   \\▓▓\\▓▓▓▓▓▓▓  \\▓▓▓▓▓▓ \\▓▓▓▓▓▓▓▓\\▓▓▓▓▓▓
+=============================================
+ __    __ _______   ______  __       ______ 
+|  \\  /  \\       \\ /      \\|  \\     |      \\
+| ▓▓ /  ▓▓ ▓▓▓▓▓▓▓\\  ▓▓▓▓▓▓\\ ▓▓      \\▓▓▓▓▓▓
+| ▓▓/  ▓▓| ▓▓__/ ▓▓ ▓▓   \\▓▓ ▓▓       | ▓▓  
+| ▓▓  ▓▓ | ▓▓    ▓▓ ▓▓     | ▓▓       | ▓▓  
+| ▓▓▓▓▓\\ | ▓▓▓▓▓▓▓\\ ▓▓   __| ▓▓       | ▓▓  
+| ▓▓ \\▓▓\\| ▓▓__/ ▓▓ ▓▓__/  \\ ▓▓_____ _| ▓▓_ 
+| ▓▓  \\▓▓\\ ▓▓    ▓▓\\▓▓    ▓▓ ▓▓     \\   ▓▓ \\
+ \\▓▓   \\▓▓\\▓▓▓▓▓▓▓  \\▓▓▓▓▓▓ \\▓▓▓▓▓▓▓▓\\▓▓▓▓▓▓
 
-    =============================================
-  A Command Line Interface for KubeBlocks`;
+=============================================
+A Command Line Interface for KubeBlocks`;
 
   //命令前缀
   const text = <>
@@ -51,65 +48,54 @@ export default () => {
     <span className="blue-text"> ~ %</span>
   </>;
   const mysql = <>
-    <span className="green-text">mysql</span>
-    <span className="blue-text"> {'>'}</span>
+    <span className="green-text">{'mysql>'}</span>
   </>;
   const other = <span className="pink-text">Please type the name again(separate with white space when more than one):</span>;
 
   //运行命令数组
   const textArray = [
+    'kbcli cluster create mysql-cluster --cluster-definition=apecloud-mysql --set replicas=3',
     'kbcli cluster list',
     'kbcli cluster describe mysql-cluster',
     'kbcli cluster connect mysql-cluster',
-    'SHOW DATABASES;',
-    'CREATE DATABASE airlines_demo;',
-    'USE airlines_demo;',
     '',
-    '',
-    'SELECT * FROM flights;',
-    'exit',
-    'kbcli cluster vscale mysql-cluster --components mysql --cpu 2000m --memory 4Gi',
-    'kbcli cluster describe-ops mysql-cluster-verticalscaling-xz5xb -n default',
+    'kbcli cluster vscale mysql-cluster --components mysql --cpu 2000m --memory 2Gi',
+    'kbcli cluster describe-ops mysql-cluster-verticalscaling-w9m7h -n default',
+    'kbcli cluster describe-config mysql-cluster --show-detail | grep max_connections=',
+    'kbcli cluster configure mysql-cluster --set max_connections=2000',
+    'kbcli cluster describe-config mysql-cluster --show-detail | grep max_connections=',
     'kbcli cluster backup mysql-cluster',
-    'kbcli cluster list-backups --name=backup-default-mysql-cluster-20230421195300 -n default',
-    'kbcli cluster restore new-cluster --backup backup-default-mysql-cluster-20230421195300',
+    'kbcli cluster list-backups --name=backup-default-mysql-cluster-20230423155856 -n default',
+    'kbcli cluster restore new-cluster --backup backup-default-mysql-cluster-20230423155856',
     'kbcli cluster list',
     'kbcli cluster connect new-cluster',
-    'USE airlines_demo',
-    'SELECT * FROM flights;',
-    'exit',
   ];
 
   //按钮文案数组
   const ButtonTextArray = [
+    'Create cluster',
     'View cluster list',
     'View cluster details',
     'Connect Cluster',
-    'Show dataBases',
-    'Create dataBases',
-    'Use dataBases',
-    'Create table',
-    'Insert data',
-    'Select query',
-    'Disconnect',
+    'Execute SQL',
     'Cluster variation ',
     'Describe ops',
+    'View cluster configure',
+    'Edit cluster configure',
+    'View the current cluster configure',
     'Cluster backup',
     'List backups',
     'Recovery by backup',
-    'View the cluster list and the status',
-    'Connect to new cluster',
-    'Show dataBases',
-    'Use dataBases',
-    'Select query',
-    'Disconnect',
+    'View the cluster list and observe the status',
+    'Wait status is running & connect new-cluster',
+    'Execute SQL',
   ];
 
   const onButtonClick = () => {
     if (!btnDisable) {
-      setStrIndex(strIndex + 1);
       setBtnDisable(true);
-      if (strIndex + 1 == 7 || strIndex + 1 == 8) {
+      setStrIndex(strIndex + 1);
+      if (strIndex + 1 == 5 || strIndex + 1 == 16) {
         setCliVisible({ ...cliVisible, [`visible_${strIndex + 1}`]: true });
         setTimeout(() => {
           setBtnDisable(false);
@@ -118,6 +104,7 @@ export default () => {
             div.scrollTop = div.scrollHeight;
           }
         }, 500);
+        setbtnIndex(btnIndex + 1)
       }
     }
   };
@@ -126,7 +113,7 @@ export default () => {
   const TypewriterDiv = <Typewriter
     options={{
       cursor: "", //取消光标闪烁
-      delay: 30,
+      delay: 50,
     }}
     onInit={(typewriter) => {
       typewriter
@@ -140,7 +127,8 @@ export default () => {
             if (div.scrollHeight > div.offsetHeight) {
               div.scrollTop = div.scrollHeight;
             }
-          }, 300);
+          }, 500);
+          setbtnIndex(btnIndex + 1)
         })
         .start();
     }}
@@ -149,7 +137,7 @@ export default () => {
   return (
     <div id='typeWriter' className='box' >
       <h2 className="centered-title">Try KubeBlocks in the browser</h2>
-      <h4 className="centered-des">Deploy Server for Mysql on Kubernetes </h4>
+      <h4 className="centered-des">Try MySQL on KubeBlocks</h4>
       <div className='writer' id='writer' >
         <pre className='new_pre mobile'>{MSG}</pre>
         {text}
@@ -158,11 +146,8 @@ export default () => {
           {strIndex > 0 && TypewriterDiv}
         </span>
         {cliVisible[`visible_1`] && <>
-          <pre className='new_pre'>
-            {`NAME              NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS    CREATED-TIME
-mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     WipeOut              Running   Apr 18,2023 11:31 UTC+0800
-              `}
-          </pre>
+          <div><span className="yellow-text">Warning:</span> cluster version is not specified, use the recently created ClusterVersion ac-mysql-8.0.30<br /></div>
+          <div>Cluster mysql-cluster created</div>
           {text}
         </>}
 
@@ -171,23 +156,35 @@ mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     WipeOut  
         </span>
         {cliVisible[`visible_2`] && <>
           <pre className='new_pre'>
-            {`Name: mysql-cluster	 Created Time: Apr 18,2023 11:31 UTC+0800
+            {`NAME              NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS    CREATED-TIME
+mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Creating   Apr 23,2023 15:50 UTC+0800
+              `}
+          </pre>
+          {text}
+        </>}
+
+        <span className='cli' >
+          {strIndex > 2 && TypewriterDiv}
+        </span>
+        {cliVisible[`visible_3`] && <>
+          <pre className='new_pre'>
+            {`Name: mysql-cluster	 Created Time: Apr 23,2023 15:50 UTC+0800
 NAMESPACE   CLUSTER-DEFINITION   VERSION           STATUS    TERMINATION-POLICY   
-default     apecloud-mysql       ac-mysql-8.0.30   Running   WipeOut              
+default     apecloud-mysql       ac-mysql-8.0.30   Running   Delete               
 
 Endpoints:
 COMPONENT   MODE        INTERNAL                                             EXTERNAL   
 mysql       ReadWrite   mysql-cluster-mysql.default.svc.cluster.local:3306   <none>     
 
 Topology:
-COMPONENT   INSTANCE                ROLE       STATUS    AZ                NODE                                                           CREATED-TIME                 
-mysql       mysql-cluster-mysql-0   leader     Running   cn-northwest-1b   ip-172-31-28-3.cn-northwest-1.compute.internal/172.31.28.3     Apr 18,2023 11:38 UTC+0800   
-mysql       mysql-cluster-mysql-1   follower   Running   cn-northwest-1a   ip-172-31-13-48.cn-northwest-1.compute.internal/172.31.13.48   Apr 18,2023 11:38 UTC+0800   
-mysql       mysql-cluster-mysql-2   follower   Running   cn-northwest-1c   ip-172-31-44-8.cn-northwest-1.compute.internal/172.31.44.8     Apr 18,2023 11:38 UTC+0800   
+COMPONENT   INSTANCE                ROLE       STATUS    AZ                NODE                                                             CREATED-TIME                 
+mysql       mysql-cluster-mysql-0   leader     Running   cn-northwest-1c   ip-172-31-39-93.cn-northwest-1.compute.internal/172.31.39.93     Apr 23,2023 15:50 UTC+0800   
+mysql       mysql-cluster-mysql-1   follower   Running   cn-northwest-1b   ip-172-31-28-145.cn-northwest-1.compute.internal/172.31.28.145   Apr 23,2023 15:50 UTC+0800   
+mysql       mysql-cluster-mysql-2   follower   Running   cn-northwest-1a   ip-172-31-7-150.cn-northwest-1.compute.internal/172.31.7.150     Apr 23,2023 15:50 UTC+0800   
 
 Resources Allocation:
 COMPONENT   DEDICATED   CPU(REQUEST/LIMIT)   MEMORY(REQUEST/LIMIT)   STORAGE-SIZE   STORAGE-CLASS   
-mysql       false       100m / 100m          512Mi / 512Mi           data:1Gi       ebs-sc          
+mysql       false       1 / 1                1Gi / 1Gi               data:20Gi      ebs-sc          
 
 Images:
 COMPONENT   TYPE    IMAGE                                                                                                  
@@ -198,17 +195,16 @@ AUTO-BACKUP   BACKUP-SCHEDULE   TYPE       BACKUP-TTL   LAST-SCHEDULE   RECOVERA
 Disabled      0 18 * * 0        snapshot   7d           <none>          <none>             
 
 Events(last 5 warnings, see more:kbcli cluster list-events -n default mysql-cluster):
-TIME   TYPE   REASON   OBJECT   MESSAGE   
-
-`}
+TIME                         TYPE      REASON        OBJECT                           MESSAGE                                                                                                               
+Apr 23,2023 15:50 UTC+0800   Warning   FailedMount   Instance/mysql-cluster-mysql-2   MountVolume.SetUp failed for volume "scripts" : failed to sync configmap cache: timed out waiting for the condition`}
           </pre>
           {text}
         </>}
 
         <span className='cli' >
-          {strIndex > 2 && TypewriterDiv}
+          {strIndex > 3 && TypewriterDiv}
         </span>
-        {cliVisible[`visible_3`] && <>
+        {cliVisible[`visible_4`] && <>
           <pre className='new_pre'>
             {`Connect to instance mysql-cluster-mysql-0: out of mysql-cluster-mysql-0(leader), mysql-cluster-mysql-1(follower), mysql-cluster-mysql-2(follower)
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -229,105 +225,119 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
         </>}
 
         <span className='cli' >
-          {strIndex > 3 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_4`] && <>
-          <pre className='new_pre'>
-            {`+--------------------+
-| Database           |
-+--------------------+
-| airlines_demo      |
-| information_schema |
-| mydb               |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-6 rows in set (0.01 sec)`}
-          </pre>
-          {mysql}
-        </>}
-
-        <span className='cli' >
-          {strIndex > 4 && TypewriterDiv}
+          {strIndex > 4 && <> USE mydb</>}
         </span>
         {cliVisible[`visible_5`] && <>
+          <div>Database changed</div>
+          <div><span className="green-text">{'mysql>'}</span> CREATE TABLE students (</div>
           <pre className='new_pre'>
-            {`Query OK, 1 row affected (0.01 sec)`}
+            {`    ->     student_id INT PRIMARY KEY,
+    ->     name VARCHAR(50) NOT NULL,
+    ->     gender VARCHAR(10) NOT NULL,
+    ->     birthday DATE NOT NULL,
+    ->     major VARCHAR(50) NOT NULL,
+    ->     grade INT NOT NULL
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+            `}
           </pre>
-          {mysql}
+          <div><span className="green-text">{'mysql>'}</span> INSERT INTO students (student_id, name, gender, birthday, major, grade)</div>
+          <pre className='new_pre'>
+            {`    -> VALUES (1, 'John Smith', 'Male', '2001-01-01', 'Computer Science and Technology', 2020),
+    -> (2, 'Emily Brown', 'Female', '2002-02-15', 'Software Engineering', 2021),
+    -> (3, 'Michael Johnson', 'Male', '2003-03-26', 'Information Security', 2022);
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+            `}
+          </pre>
+          <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
+          <pre className='new_pre'>
+            {`+------------+-----------------+--------+------------+---------------------------------+-------+
+| student_id | name            | gender | birthday   | major                           | grade |
++------------+-----------------+--------+------------+---------------------------------+-------+
+|          1 | John Smith      | Male   | 2001-01-01 | Computer Science and Technology |  2020 |
+|          2 | Emily Brown     | Female | 2002-02-15 | Software Engineering            |  2021 |
+|          3 | Michael Johnson | Male   | 2003-03-26 | Information Security            |  2022 |
++------------+-----------------+--------+------------+---------------------------------+-------+
+3 rows in set (0.00 sec)`}
+          </pre>
+          <div><span className="green-text">{'mysql>'}</span> exit</div>
+          <div>Bye</div>
+          {text}
         </>}
 
         <span className='cli' >
           {strIndex > 5 && TypewriterDiv}
         </span>
         {cliVisible[`visible_6`] && <>
-          <pre className='new_pre'>
-            {`Database changed`}
-          </pre>
-          {mysql}
+          <div>{other} mysql-cluster</div>
+          <pre className='new_pre'>{`OpsRequest mysql-cluster-verticalscaling-w9m7h created successfully, you can view the progress:
+	kbcli cluster describe-ops mysql-cluster-verticalscaling-w9m7h -n default`}</pre>
+          {text}
         </>}
 
         <span className='cli' >
-          {strIndex > 6 && <> CREATE TABLE flights (</>}
+          {strIndex > 6 && TypewriterDiv}
         </span>
         {cliVisible[`visible_7`] && <>
           <pre className='new_pre'>
-            {`    ->   flight_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  
-    ->   flight_number VARCHAR(10) NOT NULL,  
-    ->   airline VARCHAR(50) NOT NULL,
-    ->   depart_from VARCHAR(50) NOT NULL,
-    ->   arrive_at VARCHAR(50) NOT NULL,
-    ->   depart_time DATETIME NOT NULL,
-    ->   arrive_time DATETIME NOT NULL,
-    ->   price DECIMAL(10, 2) NOT NULL
-    -> );
-Query OK, 0 rows affected (0.10 sec)`}
+            {`Spec:
+  Name: mysql-cluster-verticalscaling-w9m7h	NameSpace: default	Cluster: mysql-cluster	Type: VerticalScaling	
+
+Command:
+  kbcli cluster vscale mysql-cluster --components=mysql --cpu=2 --memory=2Gi --namespace=default
+
+Last Configuration:
+COMPONENT   REQUEST-CPU   REQUEST-MEMORY   LIMIT-CPU   LIMIT-MEMORY   
+mysql       100m          512Mi            100m        512Mi          
+
+Status:
+  Start Time:         Apr 23,2023 15:55 UTC+0800
+  Duration:           115s
+  Status:             Running
+  Progress:           0/3
+                      OBJECT-KEY                  STATUS       DURATION   MESSAGE                                                                  
+                      Pod/mysql-cluster-mysql-1   Processing   115s       Start to vertical scale: Pod/mysql-cluster-mysql-1 in Component: mysql   
+                      Pod/mysql-cluster-mysql-0   Pending      115s                                                                                
+                      Pod/mysql-cluster-mysql-2   Pending      115s                                                                                
+
+Conditions:
+LAST-TRANSITION-TIME         TYPE              REASON                         STATUS   MESSAGE                                                                                          
+Apr 23,2023 15:55 UTC+0800   Progressing       OpsRequestProgressingStarted   True     Start to process the OpsRequest: mysql-cluster-verticalscaling-w9m7h in Cluster: mysql-cluster   
+Apr 23,2023 15:55 UTC+0800   Validated         ValidateOpsRequestPassed       True     OpsRequest: mysql-cluster-verticalscaling-w9m7h is validated                                     
+Apr 23,2023 15:55 UTC+0800   VerticalScaling   VerticalScalingStarted         True     Start to vertical scale resources in Cluster: mysql-cluster                                      
+
+Warning Events: <none>`}
           </pre>
-          {mysql}
+          {text}
         </>}
 
         <span className='cli' >
-          {strIndex > 7 && <> INSERT INTO flights (flight_number, airline, depart_from, arrive_at, depart_time, arrive_time, price)</>}
+          {strIndex > 7 && TypewriterDiv}
         </span>
         {cliVisible[`visible_8`] && <>
-          <pre className='new_pre'>
-            {`    -> VALUES
-    -> ('CA123', 'Air China', 'Beijing', 'New York', DATE_ADD(NOW(), INTERVAL 1 DAY), DATE_ADD(NOW(), INTERVAL 32 HOUR), 1000.00),
-    -> ('UA456', 'United Airlines', 'New York', 'Los Angeles', DATE_ADD(NOW(), INTERVAL 50 HOUR), DATE_ADD(NOW(), INTERVAL 52 HOUR), 500.00),
-    -> ('DL789', 'Delta Air Lines', 'Los Angeles', 'Tokyo', DATE_ADD(NOW(), INTERVAL 74 HOUR), DATE_ADD(NOW(), INTERVAL 81 HOUR), 1200.00),
-    -> ('AA246', 'American Airlines', 'Tokyo', 'London', DATE_ADD(NOW(), INTERVAL 101 HOUR), DATE_ADD(NOW(), INTERVAL 127 HOUR), 800.00),
-    -> ('CX357', 'Cathay Pacific', 'London', 'Hong Kong', DATE_ADD(NOW(), INTERVAL 5 DAY), DATE_ADD(NOW(), INTERVAL 148 HOUR), 900.00);
-Query OK, 5 rows affected (0.09 sec)
-Records: 5  Duplicates: 0  Warnings: 0`}
-          </pre>
-          {mysql}
+          <div>max_connections=83</div>
+          {text}
         </>}
 
         <span className='cli' >
           {strIndex > 8 && TypewriterDiv}
         </span>
         {cliVisible[`visible_9`] && <>
+          <div>Will updated configure file meta:</div>
+          <div>ConfigSpec: <span className="yellow-text">mysql-consensusset-config&nbsp;&nbsp;</span>ConfigFile: <span className="yellow-text">my.cnf&nbsp;&nbsp;</span>ComponentName: 	ClusterName: mysql-cluster</div>
           <pre className='new_pre'>
-            {`+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-| flight_id | flight_number | airline           | depart_from | arrive_at   | depart_time         | arrive_time         | price   |
-+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-|         1 | CA123         | Air China         | Beijing     | New York    | 2023-04-22 07:01:07 | 2023-04-22 15:01:07 | 1000.00 |
-|         2 | UA456         | United Airlines   | New York    | Los Angeles | 2023-04-23 09:01:07 | 2023-04-23 11:01:07 |  500.00 |
-|         3 | DL789         | Delta Air Lines   | Los Angeles | Tokyo       | 2023-04-24 09:01:07 | 2023-04-24 16:01:07 | 1200.00 |
-|         4 | AA246         | American Airlines | Tokyo       | London      | 2023-04-25 12:01:07 | 2023-04-26 14:01:07 |  800.00 |
-|         5 | CX357         | Cathay Pacific    | London      | Hong Kong   | 2023-04-26 07:01:07 | 2023-04-27 11:01:07 |  900.00 |
-+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-5 rows in set (0.00 sec)`}
+            {`OpsRequest mysql-cluster-reconfiguring-6xrkm created successfully, you can view the progress:
+	kbcli cluster describe-ops mysql-cluster-reconfiguring-6xrkm -n default`}
           </pre>
-          {mysql}
+          {text}
         </>}
 
         <span className='cli' >
           {strIndex > 9 && TypewriterDiv}
         </span>
         {cliVisible[`visible_10`] && <>
-          <pre className='new_pre'>Bye</pre>
+          <div>max_connections=2000</div>
           {text}
         </>}
 
@@ -335,46 +345,21 @@ Records: 5  Duplicates: 0  Warnings: 0`}
           {strIndex > 10 && TypewriterDiv}
         </span>
         {cliVisible[`visible_11`] && <>
-          <div>{other} mysql-cluster</div>
-          <pre className='new_pre'>{`OpsRequest mysql-cluster-verticalscaling-xz5xb created successfully, you can view the progress:
-	kbcli cluster describe-ops mysql-cluster-verticalscaling-xz5xb -n default`}</pre>
+          <pre className='new_pre'>
+            {`Backup backup-default-mysql-cluster-20230423155856 created successfully, you can view the progress:
+	kbcli cluster list-backups --name=backup-default-mysql-cluster-20230423155856 -n default`}
+          </pre>
           {text}
         </>}
+
 
         <span className='cli' >
           {strIndex > 11 && TypewriterDiv}
         </span>
         {cliVisible[`visible_12`] && <>
           <pre className='new_pre'>
-            {`Spec:
-  Name: mysql-cluster-verticalscaling-xz5xb	NameSpace: default	Cluster: mysql-cluster	Type: VerticalScaling	
-
-Command:
-  kbcli cluster vscale mysql-cluster --components=mysql --cpu=2 --memory=4Gi --namespace=default
-
-Last Configuration:
-COMPONENT   REQUEST-CPU   REQUEST-MEMORY   LIMIT-CPU   LIMIT-MEMORY   
-mysql       100m          512Mi            100m        512Mi          
-
-Status:
-  Start Time:         Apr 21,2023 19:43 UTC+0800
-  Completion Time:    Apr 21,2023 19:46 UTC+0800
-  Duration:           2m5s
-  Status:             Succeed
-  Progress:           3/3
-                      OBJECT-KEY                  STATUS    DURATION   MESSAGE                                                                      
-                      Pod/mysql-cluster-mysql-0   Succeed   2m3s       Successfully vertical scale: Pod/mysql-cluster-mysql-0 in Component: mysql   
-                      Pod/mysql-cluster-mysql-1   Succeed   43s        Successfully vertical scale: Pod/mysql-cluster-mysql-1 in Component: mysql   
-                      Pod/mysql-cluster-mysql-2   Succeed   87s        Successfully vertical scale: Pod/mysql-cluster-mysql-2 in Component: mysql   
-
-Conditions:
-LAST-TRANSITION-TIME         TYPE              REASON                            STATUS   MESSAGE                                                                                                
-Apr 21,2023 19:43 UTC+0800   Progressing       OpsRequestProgressingStarted      True     Start to process the OpsRequest: mysql-cluster-verticalscaling-xz5xb in Cluster: mysql-cluster         
-Apr 21,2023 19:43 UTC+0800   Validated         ValidateOpsRequestPassed          True     OpsRequest: mysql-cluster-verticalscaling-xz5xb is validated                                           
-Apr 21,2023 19:43 UTC+0800   VerticalScaling   VerticalScalingStarted            True     Start to vertical scale resources in Cluster: mysql-cluster                                            
-Apr 21,2023 19:46 UTC+0800   Succeed           OpsRequestProcessedSuccessfully   True     Successfully processed the OpsRequest: mysql-cluster-verticalscaling-xz5xb in Cluster: mysql-cluster   
-
-Warning Events: <none>`}
+            {`NAME                                          CLUSTER         TYPE       STATUS      TOTAL-SIZE   DURATION   CREATE-TIME                  COMPLETION-TIME              
+backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Completed   1Gi          24s        Apr 23,2023 15:58 UTC+0800   Apr 23,2023 15:58 UTC+0800`}
           </pre>
           {text}
         </>}
@@ -384,20 +369,20 @@ Warning Events: <none>`}
         </span>
         {cliVisible[`visible_13`] && <>
           <pre className='new_pre'>
-            {`Backup backup-default-mysql-cluster-20230421195300 created successfully, you can view the progress:
-	kbcli cluster list-backups --name=backup-default-mysql-cluster-20230421195300 -n default`}
+            {`Cluster new-cluster created`}
           </pre>
           {text}
         </>}
-
 
         <span className='cli' >
           {strIndex > 13 && TypewriterDiv}
         </span>
         {cliVisible[`visible_14`] && <>
           <pre className='new_pre'>
-            {`NAME                                          CLUSTER         TYPE       STATUS      TOTAL-SIZE   DURATION   CREATE-TIME                  COMPLETION-TIME              
-backup-default-mysql-cluster-20230421195300   mysql-cluster   snapshot   Completed   1Gi          24s        Apr 21,2023 19:53 UTC+0800   Apr 21,2023 19:53 UTC+0800`}
+            {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
+mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 15:50 UTC+0800   
+new-cluster       default     apecloud-mysql       ac-mysql-8.0.30     Delete               Creating   Apr 23,2023 16:05 UTC+0800    
+`}
           </pre>
           {text}
         </>}
@@ -407,34 +392,10 @@ backup-default-mysql-cluster-20230421195300   mysql-cluster   snapshot   Complet
         </span>
         {cliVisible[`visible_15`] && <>
           <pre className='new_pre'>
-            {`Cluster new-cluster created`}
-          </pre>
-          {text}
-        </>}
-
-        <span className='cli' >
-          {strIndex > 15 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_16`] && <>
-          <pre className='new_pre'>
-            {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
-mysql-cluster                default     apecloud-mysql       ac-mysql-8.0.30     WipeOut              Running    Apr 18,2023 11:31 UTC+0800   
-new-cluster                  default     apecloud-mysql       ac-mysql-8.0.30     WipeOut              Creating   Apr 21,2023 20:01 UTC+0800   
-`}
-          </pre>
-          {text}
-        </>}
-
-        <span className='cli' >
-          {strIndex > 16 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_17`] && <>
-          <div>{mysql} SHOW DATABASES;</div>
-          <pre className='new_pre'>
-            {` Connect to instance new-cluster-mysql-0: out of new-cluster-mysql-0(leader), new-cluster-mysql-1(follower), new-cluster-mysql-2(follower)
+            {`Connect to instance new-cluster-mysql-1: out of new-cluster-mysql-1(leader), new-cluster-mysql-0(follower), new-cluster-mysql-2(follower)
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 35
+Your MySQL connection id is 9961
 Server version: 8.0.30 WeSQL Server - GPL, Release 5, Revision 28f261a
 
 Copyright (c) 2000, 2022, Oracle and/or its affiliates.
@@ -449,40 +410,22 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.`}
         </>}
 
         <span className='cli' >
-          {strIndex > 17 && TypewriterDiv}
+          {strIndex > 15 && <>USE mydb</>}
         </span>
-        {cliVisible[`visible_18`] && <>
+        {cliVisible[`visible_16`] && <>
+          <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
           <pre className='new_pre'>
-            {`Database changed`}
+            {`+------------+-----------------+--------+------------+---------------------------------+-------+
+| student_id | name            | gender | birthday   | major                           | grade |
++------------+-----------------+--------+------------+---------------------------------+-------+
+|          1 | John Smith      | Male   | 2001-01-01 | Computer Science and Technology |  2020 |
+|          2 | Emily Brown     | Female | 2002-02-15 | Software Engineering            |  2021 |
+|          3 | Michael Johnson | Male   | 2003-03-26 | Information Security            |  2022 |
++------------+-----------------+--------+------------+---------------------------------+-------+
+3 rows in set (0.00 sec)`}
           </pre>
-          {mysql}
-        </>}
-
-        <span className='cli' >
-          {strIndex > 18 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_19`] && <>
-          <pre className='new_pre'>
-            {`+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-| flight_id | flight_number | airline           | depart_from | arrive_at   | depart_time         | arrive_time         | price   |
-+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-|         1 | CA123         | Air China         | Beijing     | New York    | 2023-04-22 07:01:07 | 2023-04-22 15:01:07 | 1000.00 |
-|         2 | UA456         | United Airlines   | New York    | Los Angeles | 2023-04-23 09:01:07 | 2023-04-23 11:01:07 |  500.00 |
-|         3 | DL789         | Delta Air Lines   | Los Angeles | Tokyo       | 2023-04-24 09:01:07 | 2023-04-24 16:01:07 | 1200.00 |
-|         4 | AA246         | American Airlines | Tokyo       | London      | 2023-04-25 12:01:07 | 2023-04-26 14:01:07 |  800.00 |
-|         5 | CX357         | Cathay Pacific    | London      | Hong Kong   | 2023-04-26 07:01:07 | 2023-04-27 11:01:07 |  900.00 |
-+-----------+---------------+-------------------+-------------+-------------+---------------------+---------------------+---------+
-5 rows in set (0.00 sec)`}
-          </pre>
-          {mysql}
-        </>}
-       
-        <span className='cli' >
-          {strIndex > 19 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_20`] && <>
-          <pre className='new_pre'>Bye
-          </pre>
+          <div><span className="green-text">{'mysql>'}</span> exit</div>
+          <div>Bye</div>
           {text}
         </>}
 
@@ -492,10 +435,10 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.`}
         className={classNames({
           "btn": true,
           "next-btn": true,
-          "is_hidden": cliVisible[`visible_20`] == true,
+          "is_hidden": cliVisible[`visible_16`] == true,
         })}
         disabled={btnDisable}
-        onClick={() => onButtonClick()}>{ButtonTextArray[strIndex]}
+        onClick={() => onButtonClick()}>{ButtonTextArray[btnIndex]}
       </button>
 
     </div>
