@@ -96,14 +96,14 @@ const FeatureList = [{
 }]
 
 export default function Home(): JSX.Element {
-  const [isHidden, setHidden] = useState(true);
+  const [isShow, setShow] = useState(true);
 
   useEffect(() => {
     const callBack = () => {
       if (document.body.clientWidth < 992) {
-        setHidden(false)
+        setShow(false)
       } else {
-        setHidden(true)
+        setShow(true)
       }
     };
     window.addEventListener('resize', callBack);
@@ -169,7 +169,7 @@ export default function Home(): JSX.Element {
                   {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
                 </div>
               </div>
-              {connect && isHidden ? <img className={styles.connect} src={connect} alt='pipeline img' /> : null}
+              {connect && isShow ? <img className={styles.connect} src={connect} alt='pipeline img' /> : null}
             </div>
           ))}
         </div>
