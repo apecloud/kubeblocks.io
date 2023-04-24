@@ -96,7 +96,7 @@ const FeatureList = [{
 }]
 
 export default function Home(): JSX.Element {
-  const [isShow, setShow] = useState(true);
+  const [isShow, setShow] = useState(document.body.clientWidth < 992 ? false : true);
 
   useEffect(() => {
     const callBack = () => {
