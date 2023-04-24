@@ -359,7 +359,7 @@ Warning Events: <none>`}
         {cliVisible[`visible_12`] && <>
           <pre className='new_pre'>
             {`NAME                                          CLUSTER         TYPE       STATUS      TOTAL-SIZE   DURATION   CREATE-TIME                  COMPLETION-TIME              
-backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Completed   1Gi          24s        Apr 23,2023 15:58 UTC+0800   Apr 23,2023 15:58 UTC+0800`}
+backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Completed   20Gi         24s        Apr 23,2023 15:58 UTC+0800   Apr 23,2023 15:58 UTC+0800`}
           </pre>
           {text}
         </>}
@@ -381,7 +381,7 @@ backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Complet
           <pre className='new_pre'>
             {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
 mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 15:50 UTC+0800   
-new-cluster       default     apecloud-mysql       ac-mysql-8.0.30     Delete               Creating   Apr 23,2023 16:05 UTC+0800    
+new-cluster       default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 16:05 UTC+0800    
 `}
           </pre>
           {text}

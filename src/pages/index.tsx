@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '../components/Layout';
 import QueueAnim from 'rc-queue-anim';
@@ -38,7 +38,7 @@ const IntroductionList: IntroductionItem[] = [
     }),
     img: 'img/three.webp',
     alt: 'Rich day 2 operations',
-    connect: 'img/connect2.png',
+    connect: 'img/connect2.webp',
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
@@ -96,6 +96,22 @@ const FeatureList = [{
 }]
 
 export default function Home(): JSX.Element {
+  const [isHidden, setHidden] = useState(true);
+
+  useEffect(() => {
+    const callBack = () => {
+      if (document.body.clientWidth < 992) {
+        setHidden(false)
+      } else {
+        setHidden(true)
+      }
+    };
+    window.addEventListener('resize', callBack);
+    return () => {
+      window.removeEventListener('resize', callBack);
+    };
+  }, []);
+
   return (
     <Layout>
       <div className={styles.bg}>
@@ -153,7 +169,7 @@ export default function Home(): JSX.Element {
                   {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
                 </div>
               </div>
-              {connect ? <img className={styles.connect} src={connect} alt='pipeline img' /> : null}
+              {connect && isHidden ? <img className={styles.connect} src={connect} alt='pipeline img' /> : null}
             </div>
           ))}
         </div>
