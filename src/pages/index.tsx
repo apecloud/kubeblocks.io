@@ -6,7 +6,6 @@ import styles from './index.module.less';
 import Translate, { translate } from '@docusaurus/Translate';
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import TypeWriter from './typeWriter';
-import useIsBrowser from '@docusaurus/useIsBrowser';
 
 type IntroductionItem = {
   title: string;
@@ -97,20 +96,18 @@ const FeatureList = [{
 }]
 
 export default function Home(): JSX.Element {
-  const isBrowser = useIsBrowser();
-  const [isShow, setShow] = useState(isBrowser ? document.body.clientWidth < 992 ? false : true : false);
+  const [isShow, setShow] = useState(true);
 
   useEffect(() => {
-    const callBack = () => {
-      if (document.body.clientWidth < 992) {
-        setShow(false)
-      } else {
-        setShow(true)
-      }
+    const handleResize = () => {
+      setShow(document.body.clientWidth > 992);
     };
-    window.addEventListener('resize', callBack);
+  
+    handleResize();
+  
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener('resize', callBack);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
