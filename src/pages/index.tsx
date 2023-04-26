@@ -150,7 +150,7 @@ export default function Home(): JSX.Element {
             {isMedium? <div className={styles.context}>
               <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are</p>
               <p>the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning</p>
-              <p>curve of K8s.KubeBlocks offers an open-source option that helps application developers and platform</p>
+              <p>curve of K8s. KubeBlocks offers an open-source option that helps application developers and platform</p>
               <p>engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</p>
               <p>No need to be a K8s professional, anyone can set up a full-stack, </p>
               <p>production-ready data infrastructure in minutes.</p>
