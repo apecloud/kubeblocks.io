@@ -97,14 +97,16 @@ const FeatureList = [{
 
 export default function Home(): JSX.Element {
   const [isShow, setShow] = useState(true);
+  const [isMedium, setMedium] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
       setShow(document.body.clientWidth > 992);
+      setMedium(document.body.clientWidth > 880);
     };
-  
+
     handleResize();
-  
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -130,15 +132,10 @@ export default function Home(): JSX.Element {
                 <p key='p3'>Install, create, connect, and you have it all.</p>
                 <div key='p7' className={styles.actions}>
                   <Link
-                    className={`${styles.actionItem}`}
+                    className={styles.actionItem}
                     to="/docs/preview/user_docs/quick-start/try-kubeblocks-functions-on-cloud">
-                    Get Started
+                    <span className={styles.btnText}>View documentation</span>
                   </Link>
-                  <a
-                    className={`${styles.actionItem}`}
-                    href='#typeWriter'>
-                    Get a Demo
-                  </a>
                 </div>
               </div>
             </QueueAnim>
@@ -150,11 +147,17 @@ export default function Home(): JSX.Element {
         <div className={styles.description}>
           <div className={styles.content}>
             <h1>Why you need KubeBlocks</h1>
-            <div className={styles.context}>
-              <div>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable K8s operators, and the steep learning curve of K8s.</div>
-              <div>KubeBlocks offers an open-source option that helps application developers and platform engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</div>
-              <div>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</div>
-            </div>
+            {isMedium? <div className={styles.context}>
+              <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are</p>
+              <p>the difficulties of integrating with cloud providers, the lack of reliable K8s operators, and the steep learning</p>
+              <p>curve of K8s.KubeBlocks offers an open-source option that helps application developers and platform</p>
+              <p> engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</p>
+              <p>No need to be a K8s professional, anyone can set up a full-stack, </p>
+              <p>production-ready data infrastructure in minutes.</p>
+            </div> : <div className={styles.context}>
+              <p>Building data infrastructure on K8s becomes increasingly popular.However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable K8s and the steep learning curve of K8s.KubeBlocks offers an open-source option that helps application developers and platform operators, engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</p>  
+              <p>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</p>
+            </div>}
             <div className={styles.text}>Created by <span>ApeCloud</span></div>
           </div>
         </div>
