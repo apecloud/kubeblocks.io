@@ -24,6 +24,7 @@ export default () => {
     'visible_14': false,
     'visible_15': false,
     'visible_16': false,
+    'visible_17': false,
   });
 
   //默认展示
@@ -73,22 +74,23 @@ A Command Line Interface for KubeBlocks`;
 
   //按钮文案数组
   const ButtonTextArray = [
-    'Create cluster',
-    'View cluster list',
+    'Create a cluster',
+    'View the cluster list',
     'View cluster details',
-    'Connect Cluster',
-    'Execute SQL',
-    'Cluster variation ',
-    'Describe ops',
-    'View cluster configure',
-    'Edit cluster configure',
-    'View the current cluster configure',
-    'Cluster backup',
-    'List backups',
-    'Recovery by backup',
-    'View the cluster list and observe the status',
-    'Wait status is running & connect new-cluster',
-    'Execute SQL',
+    'Connect the cluster',
+    'Insert and select data',
+    'Vertically scale the cluster',
+    'View the progress',
+    'View max connection',
+    'Configure this parameter',
+    'Validate the configuration',
+    'Create a backup',
+    'View the backup progress',
+    'Restore data from backup',
+    'View the cluster list',
+    'Connect the restored cluster',
+    'Verify restored data',
+    'Try again',
   ];
 
   const onButtonClick = () => {
@@ -105,6 +107,30 @@ A Command Line Interface for KubeBlocks`;
           }
         }, 500);
         setbtnIndex(btnIndex + 1)
+      }
+      if(strIndex+1 == 17){
+        setBtnDisable(false);
+        setbtnIndex(0);
+        setStrIndex(0);
+        setCliVisible({
+          'visible_1': false,
+          'visible_2': false,
+          'visible_3': false,
+          'visible_4': false,
+          'visible_5': false,
+          'visible_6': false,
+          'visible_7': false,
+          'visible_8': false,
+          'visible_9': false,
+          'visible_10': false,
+          'visible_11': false,
+          'visible_12': false,
+          'visible_13': false,
+          'visible_14': false,
+          'visible_15': false,
+          'visible_16': false,
+          'visible_17': false,
+        })
       }
     }
   };
@@ -138,37 +164,41 @@ A Command Line Interface for KubeBlocks`;
     <div id='typeWriter' className='box' >
       <h2 className="centered-title">Try KubeBlocks in the browser</h2>
       <h4 className="centered-des">Try MySQL on KubeBlocks</h4>
-      <div className='writer' id='writer' >
-        <pre className='new_pre mobile'>{MSG}</pre>
-        {text}
-
-        <span className='cli' >
-          {strIndex > 0 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_1`] && <>
-          <div><span className="yellow-text">Warning:</span> cluster version is not specified, use the recently created ClusterVersion ac-mysql-8.0.30<br /></div>
-          <div>Cluster mysql-cluster created</div>
+      <div className='writer' >
+        <div className='writer-title'>
+        <img src={'img/icon.png'} alt='icon' />
+        </div>
+        <div className='writer-content' id='writer'>
+          <pre className='new_pre mobile'>{MSG}</pre>
           {text}
-        </>}
 
-        <span className='cli' >
-          {strIndex > 1 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_2`] && <>
-          <pre className='new_pre'>
-            {`NAME              NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS    CREATED-TIME
+          <span className='cli' >
+            {strIndex > 0 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_1`] && <>
+            <div><span className="yellow-text">Warning:</span> cluster version is not specified, use the recently created ClusterVersion ac-mysql-8.0.30<br /></div>
+            <div>Cluster mysql-cluster created</div>
+            {text}
+          </>}
+
+          <span className='cli' >
+            {strIndex > 1 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_2`] && <>
+            <pre className='new_pre'>
+              {`NAME              NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS    CREATED-TIME
 mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Creating   Apr 23,2023 15:50 UTC+0800
               `}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 2 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_3`] && <>
-          <pre className='new_pre'>
-            {`Name: mysql-cluster	 Created Time: Apr 23,2023 15:50 UTC+0800
+          <span className='cli' >
+            {strIndex > 2 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_3`] && <>
+            <pre className='new_pre'>
+              {`Name: mysql-cluster	 Created Time: Apr 23,2023 15:50 UTC+0800
 NAMESPACE   CLUSTER-DEFINITION   VERSION           STATUS    TERMINATION-POLICY   
 default     apecloud-mysql       ac-mysql-8.0.30   Running   Delete               
 
@@ -197,16 +227,16 @@ Disabled      0 18 * * 0        snapshot   7d           <none>          <none>
 Events(last 5 warnings, see more:kbcli cluster list-events -n default mysql-cluster):
 TIME                         TYPE      REASON        OBJECT                           MESSAGE                                                                                                               
 Apr 23,2023 15:50 UTC+0800   Warning   FailedMount   Instance/mysql-cluster-mysql-2   MountVolume.SetUp failed for volume "scripts" : failed to sync configmap cache: timed out waiting for the condition`}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 3 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_4`] && <>
-          <pre className='new_pre'>
-            {`Connect to instance mysql-cluster-mysql-0: out of mysql-cluster-mysql-0(leader), mysql-cluster-mysql-1(follower), mysql-cluster-mysql-2(follower)
+          <span className='cli' >
+            {strIndex > 3 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_4`] && <>
+            <pre className='new_pre'>
+              {`Connect to instance mysql-cluster-mysql-0: out of mysql-cluster-mysql-0(leader), mysql-cluster-mysql-1(follower), mysql-cluster-mysql-2(follower)
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 18057
@@ -220,18 +250,18 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 `}
-          </pre>
-          {mysql}
-        </>}
+            </pre>
+            {mysql}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 4 && <> USE mydb</>}
-        </span>
-        {cliVisible[`visible_5`] && <>
-          <div>Database changed</div>
-          <div><span className="green-text">{'mysql>'}</span> CREATE TABLE students (</div>
-          <pre className='new_pre'>
-            {`    ->     student_id INT PRIMARY KEY,
+          <span className='cli' >
+            {strIndex > 4 && <> USE mydb</>}
+          </span>
+          {cliVisible[`visible_5`] && <>
+            <div>Database changed</div>
+            <div><span className="green-text">{'mysql>'}</span> CREATE TABLE students (</div>
+            <pre className='new_pre'>
+              {`    ->     student_id INT PRIMARY KEY,
     ->     name VARCHAR(50) NOT NULL,
     ->     gender VARCHAR(10) NOT NULL,
     ->     birthday DATE NOT NULL,
@@ -240,19 +270,19 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
     -> );
 Query OK, 0 rows affected (0.06 sec)
             `}
-          </pre>
-          <div><span className="green-text">{'mysql>'}</span> INSERT INTO students (student_id, name, gender, birthday, major, grade)</div>
-          <pre className='new_pre'>
-            {`    -> VALUES (1, 'John Smith', 'Male', '2001-01-01', 'Computer Science and Technology', 2020),
+            </pre>
+            <div><span className="green-text">{'mysql>'}</span> INSERT INTO students (student_id, name, gender, birthday, major, grade)</div>
+            <pre className='new_pre'>
+              {`    -> VALUES (1, 'John Smith', 'Male', '2001-01-01', 'Computer Science and Technology', 2020),
     -> (2, 'Emily Brown', 'Female', '2002-02-15', 'Software Engineering', 2021),
     -> (3, 'Michael Johnson', 'Male', '2003-03-26', 'Information Security', 2022);
 Query OK, 3 rows affected (0.08 sec)
 Records: 3  Duplicates: 0  Warnings: 0
             `}
-          </pre>
-          <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
-          <pre className='new_pre'>
-            {`+------------+-----------------+--------+------------+---------------------------------+-------+
+            </pre>
+            <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
+            <pre className='new_pre'>
+              {`+------------+-----------------+--------+------------+---------------------------------+-------+
 | student_id | name            | gender | birthday   | major                           | grade |
 +------------+-----------------+--------+------------+---------------------------------+-------+
 |          1 | John Smith      | Male   | 2001-01-01 | Computer Science and Technology |  2020 |
@@ -260,28 +290,28 @@ Records: 3  Duplicates: 0  Warnings: 0
 |          3 | Michael Johnson | Male   | 2003-03-26 | Information Security            |  2022 |
 +------------+-----------------+--------+------------+---------------------------------+-------+
 3 rows in set (0.00 sec)`}
-          </pre>
-          <div><span className="green-text">{'mysql>'}</span> exit</div>
-          <div>Bye</div>
-          {text}
-        </>}
+            </pre>
+            <div><span className="green-text">{'mysql>'}</span> exit</div>
+            <div>Bye</div>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 5 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_6`] && <>
-          <div>{other} mysql-cluster</div>
-          <pre className='new_pre'>{`OpsRequest mysql-cluster-verticalscaling-w9m7h created successfully, you can view the progress:
+          <span className='cli' >
+            {strIndex > 5 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_6`] && <>
+            <div>{other} mysql-cluster</div>
+            <pre className='new_pre'>{`OpsRequest mysql-cluster-verticalscaling-w9m7h created successfully, you can view the progress:
 	kbcli cluster describe-ops mysql-cluster-verticalscaling-w9m7h -n default`}</pre>
-          {text}
-        </>}
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 6 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_7`] && <>
-          <pre className='new_pre'>
-            {`Spec:
+          <span className='cli' >
+            {strIndex > 6 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_7`] && <>
+            <pre className='new_pre'>
+              {`Spec:
   Name: mysql-cluster-verticalscaling-w9m7h	NameSpace: default	Cluster: mysql-cluster	Type: VerticalScaling	
 
 Command:
@@ -308,91 +338,91 @@ Apr 23,2023 15:55 UTC+0800   Validated         ValidateOpsRequestPassed       Tr
 Apr 23,2023 15:55 UTC+0800   VerticalScaling   VerticalScalingStarted         True     Start to vertical scale resources in Cluster: mysql-cluster                                      
 
 Warning Events: <none>`}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 7 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_8`] && <>
-          <div>max_connections=83</div>
-          {text}
-        </>}
+          <span className='cli' >
+            {strIndex > 7 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_8`] && <>
+            <div>max_connections=83</div>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 8 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_9`] && <>
-          <div>Will updated configure file meta:</div>
-          <div>ConfigSpec: <span className="yellow-text">mysql-consensusset-config&nbsp;&nbsp;</span>ConfigFile: <span className="yellow-text">my.cnf&nbsp;&nbsp;</span>ComponentName: 	ClusterName: mysql-cluster</div>
-          <pre className='new_pre'>
-            {`OpsRequest mysql-cluster-reconfiguring-6xrkm created successfully, you can view the progress:
+          <span className='cli' >
+            {strIndex > 8 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_9`] && <>
+            <div>Will updated configure file meta:</div>
+            <div>ConfigSpec: <span className="yellow-text">mysql-consensusset-config&nbsp;&nbsp;</span>ConfigFile: <span className="yellow-text">my.cnf&nbsp;&nbsp;</span>ComponentName: 	ClusterName: mysql-cluster</div>
+            <pre className='new_pre'>
+              {`OpsRequest mysql-cluster-reconfiguring-6xrkm created successfully, you can view the progress:
 	kbcli cluster describe-ops mysql-cluster-reconfiguring-6xrkm -n default`}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 9 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_10`] && <>
-          <div>max_connections=2000</div>
-          {text}
-        </>}
+          <span className='cli' >
+            {strIndex > 9 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_10`] && <>
+            <div>max_connections=2000</div>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 10 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_11`] && <>
-          <pre className='new_pre'>
-            {`Backup backup-default-mysql-cluster-20230423155856 created successfully, you can view the progress:
+          <span className='cli' >
+            {strIndex > 10 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_11`] && <>
+            <pre className='new_pre'>
+              {`Backup backup-default-mysql-cluster-20230423155856 created successfully, you can view the progress:
 	kbcli cluster list-backups --name=backup-default-mysql-cluster-20230423155856 -n default`}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
 
-        <span className='cli' >
-          {strIndex > 11 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_12`] && <>
-          <pre className='new_pre'>
-            {`NAME                                          CLUSTER         TYPE       STATUS      TOTAL-SIZE   DURATION   CREATE-TIME                  COMPLETION-TIME              
+          <span className='cli' >
+            {strIndex > 11 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_12`] && <>
+            <pre className='new_pre'>
+              {`NAME                                          CLUSTER         TYPE       STATUS      TOTAL-SIZE   DURATION   CREATE-TIME                  COMPLETION-TIME              
 backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Completed   20Gi         24s        Apr 23,2023 15:58 UTC+0800   Apr 23,2023 15:58 UTC+0800`}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 12 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_13`] && <>
-          <pre className='new_pre'>
-            {`Cluster new-cluster created`}
-          </pre>
-          {text}
-        </>}
+          <span className='cli' >
+            {strIndex > 12 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_13`] && <>
+            <pre className='new_pre'>
+              {`Cluster new-cluster created`}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 13 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_14`] && <>
-          <pre className='new_pre'>
-            {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
+          <span className='cli' >
+            {strIndex > 13 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_14`] && <>
+            <pre className='new_pre'>
+              {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
 mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 15:50 UTC+0800   
 new-cluster       default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 16:05 UTC+0800    
 `}
-          </pre>
-          {text}
-        </>}
+            </pre>
+            {text}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 14 && TypewriterDiv}
-        </span>
-        {cliVisible[`visible_15`] && <>
-          <pre className='new_pre'>
-            {`Connect to instance new-cluster-mysql-1: out of new-cluster-mysql-1(leader), new-cluster-mysql-0(follower), new-cluster-mysql-2(follower)
+          <span className='cli' >
+            {strIndex > 14 && TypewriterDiv}
+          </span>
+          {cliVisible[`visible_15`] && <>
+            <pre className='new_pre'>
+              {`Connect to instance new-cluster-mysql-1: out of new-cluster-mysql-1(leader), new-cluster-mysql-0(follower), new-cluster-mysql-2(follower)
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 9961
@@ -405,17 +435,17 @@ affiliates. Other names may be trademarks of their respective
 owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.`}
-          </pre>
-          {mysql}
-        </>}
+            </pre>
+            {mysql}
+          </>}
 
-        <span className='cli' >
-          {strIndex > 15 && <>USE mydb</>}
-        </span>
-        {cliVisible[`visible_16`] && <>
-          <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
-          <pre className='new_pre'>
-            {`+------------+-----------------+--------+------------+---------------------------------+-------+
+          <span className='cli' >
+            {strIndex > 15 && <>USE mydb</>}
+          </span>
+          {cliVisible[`visible_16`] && <>
+            <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
+            <pre className='new_pre'>
+              {`+------------+-----------------+--------+------------+---------------------------------+-------+
 | student_id | name            | gender | birthday   | major                           | grade |
 +------------+-----------------+--------+------------+---------------------------------+-------+
 |          1 | John Smith      | Male   | 2001-01-01 | Computer Science and Technology |  2020 |
@@ -423,19 +453,19 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.`}
 |          3 | Michael Johnson | Male   | 2003-03-26 | Information Security            |  2022 |
 +------------+-----------------+--------+------------+---------------------------------+-------+
 3 rows in set (0.00 sec)`}
-          </pre>
-          <div><span className="green-text">{'mysql>'}</span> exit</div>
-          <div>Bye</div>
-          {text}
-        </>}
-
+            </pre>
+            <div><span className="green-text">{'mysql>'}</span> exit</div>
+            <div>Bye</div>
+            {text}
+          </>}
+        </div>
       </div>
+
 
       <button
         className={classNames({
           "btn": true,
           "next-btn": true,
-          "is_hidden": cliVisible[`visible_16`] == true,
         })}
         disabled={btnDisable}
         onClick={() => onButtonClick()}>{ButtonTextArray[btnIndex]}
