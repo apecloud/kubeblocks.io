@@ -33,13 +33,14 @@ const versions = (() => {
 })();
 
 const config = {
-  title: "Kubeblocks",
+  title: "KubeBlocks",
+  tagline: "The Cloud Native Data Infra",
   url: "https://kubeblocks.io",
   baseUrl: "/",
   baseUrlIssueBanner: false,
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.png",
+  favicon: "img/favicon2.png",
   noIndex: false,
   organizationName: "ApeCloud",
   projectName: "kubeblocks.io",

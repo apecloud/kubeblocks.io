@@ -23,13 +23,14 @@ if (ExecutionEnvironment.canUseDOM) {
   }
 }
 
-export default ({ children }) => {
+export default ({ children, title }) => {
   const { siteConfig } = useDocusaurusContext();
+  console.log(siteConfig, children, 44444)
   return (
     <Layout
-      title={`${siteConfig.title}`}
+      title={title ? title : `${siteConfig.tagline}`}
       description="Build your database like playing blocks.">
-    { children }
+      {children}
     </Layout>
   )
 }

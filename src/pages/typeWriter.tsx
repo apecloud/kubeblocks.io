@@ -163,7 +163,6 @@ A Command Line Interface for KubeBlocks`;
   return (
     <div id='typeWriter' className='box' >
       <h2 className="centered-title">Try KubeBlocks in the browser</h2>
-      <h4 className="centered-des">Try MySQL on KubeBlocks</h4>
       <div className='writer' >
         <div className='writer-title'>
         <img src={'img/icon.png'} alt='icon' />

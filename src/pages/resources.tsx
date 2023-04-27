@@ -5,10 +5,8 @@ export default () => {
   
 
   return (
-    <Layout>
-        <div>
-          <TypeWriter />
-        </div>
+    <Layout title="Resources">
+      <TypeWriter />
     </Layout>
   );
 }
