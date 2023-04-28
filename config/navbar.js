@@ -11,7 +11,7 @@ module.exports = {
       label: "Docs",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
-    {to: '/webinar', label: 'Webinar', position: 'left'},
+    {to: '/', label: 'Webinar', position: 'left'},
     // {
     //   type: 'docsVersionDropdown',
     //   position: 'right',

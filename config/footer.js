@@ -22,7 +22,7 @@ module.exports = {
           href: "/blog",
         },
         {
-          label: "Community",
+          label: "Webinar",
           href: "/",
         },
       ],
