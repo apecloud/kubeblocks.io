@@ -73,7 +73,7 @@
       }
     }
     .writer-content {
-      overflow-y: scroll;
+      overflow-y: auto;
       height: 540px;
       padding: 20px 20px 60px;
       font-size: 16px;
@@ -95,13 +95,17 @@
       .yellow-text {
         color: rgb(189, 195, 10);
       }
-      .new_pre {
-        padding: 0;
-        background: none;
-        font-size: 16px;
-        margin: 0;
-        word-wrap: break-word;
-      }
+    }
+    .new_pre {
+      padding: 0;
+      background: none;
+      font-size: 16px;
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      white-space: -moz-pre-wrap; /*Mozilla,since1999*/
+      white-space: -pre-wrap; /*Opera4-6*/
+      white-space: -o-pre-wrap; /*Opera7*/
     }
   }
 }
@@ -117,9 +121,9 @@
         height: 440px;
         padding: 16px 16px 40px;
         font-size: 14px;
-        .new_pre {
-          font-size: 14px;
-        }
+      }
+      .new_pre {
+        font-size: 14px;
       }
     }
     .centered-title {
