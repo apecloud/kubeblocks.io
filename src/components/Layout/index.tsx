@@ -25,7 +25,6 @@ if (ExecutionEnvironment.canUseDOM) {
 
 export default ({ children, title }) => {
   const { siteConfig } = useDocusaurusContext();
-  console.log(siteConfig, children, 44444)
   return (
     <Layout
       title={title ? title : `${siteConfig.tagline}`}
