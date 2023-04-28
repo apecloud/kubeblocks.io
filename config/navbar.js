@@ -8,10 +8,10 @@ module.exports = {
       type: "doc",
       docId: "user_docs/introduction/introduction",
       position: "left",
-      label: "Documentation",
+      label: "Docs",
     },
     {to: '/blog', label: 'Blog', position: 'left'},
-    {to: '/resources', label: 'Resources', position: 'left'},
+    {to: '/webinar', label: 'Webinar', position: 'left'},
     // {
     //   type: 'docsVersionDropdown',
     //   position: 'right',

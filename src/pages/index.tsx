@@ -27,7 +27,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity, monitoring data replication status and automatically fixes errors and lags.',
+        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity, monitoring data replication status and automatically fixing errors and lags.',
       }),
     ],
   },

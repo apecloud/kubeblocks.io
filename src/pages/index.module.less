@@ -56,8 +56,7 @@
   box-shadow: 0 12px 32px rgba(50, 50, 50, 0.4);
   &:hover {
     text-decoration: none;
-    animation-name: slider;
-    animation-duration: 0.5s;
+    animation: slider 0.5s;
   }
   svg{
     stroke: #fadb15;
@@ -72,8 +71,8 @@
       -135deg,
       transparent 25%,
       transparent 40%,
-      #fadb15 40%,/* 这两个值是滑动条的颜色 */
-      #fffb00 60%,/* 默认是绿色 自己更改即可 */
+      #fadb15 40%,
+      #fffb00 60%,
       transparent 60%,
       transparent
       );
@@ -81,6 +80,10 @@
     background-clip: text;
     background-repeat: no-repeat;
     -webkit-text-fill-color: transparent;
+    -webkit-animation: scratchy 3s linear infinite;
+    -moz-animation: scratchy 3s linear infinite;
+    -ms-animation: scratchy 3s linear infinite;
+    -o-animation: scratchy 3s linear infinite;
     animation: scratchy 3s linear infinite;
     color: transparent;
     font-size: 26px;
@@ -130,9 +133,8 @@
           &:hover {
             border: 1px solid #e6e6e6;
             cursor: pointer;
-            animation-name: btnSlider;
+            animation: btnSlider 0.5s;
             text-decoration: none;
-            animation-duration: 0.5s;
             box-shadow: 0 0 8px 3px #afafb1;
           }
           .btnText{
@@ -141,8 +143,8 @@
               -135deg,
               transparent 25%,
               #a4c8fe  30%,
-              #ffb88f 50%,/* 这两个值是滑动条的颜色 */
-              #faff72 60%,/* 默认是绿色 自己更改即可 */
+              #ffb88f 50%,
+              #faff72 60%,
               transparent 60%,
               transparent
               );
@@ -150,6 +152,10 @@
             background-clip: text;
             background-repeat: no-repeat;
             -webkit-text-fill-color: transparent;
+            -webkit-animation: btnScratchy 3s linear infinite;
+            -moz-animation: btnScratchy 3s linear infinite;
+            -ms-animation: btnScratchy 3s linear infinite;
+            -o-animation: btnScratchy 3s linear infinite;
             animation: btnScratchy 3s linear infinite;
             color: transparent;
           }
@@ -223,7 +229,7 @@
           margin: 50px 0 32px 0;
         }
         p {
-          font-size: 23px;
+          font-size: 20px;
           font-weight: 400;
           letter-spacing: 1px;
         }
@@ -270,7 +276,7 @@
       .introduce {
         .content {
           h1 {
-            margin-top: 70px;
+            margin-top: 90px;
           }
         }
         img {

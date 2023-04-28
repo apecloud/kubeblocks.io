@@ -23,25 +23,23 @@ export default () => {
     'visible_13': false,
     'visible_14': false,
     'visible_15': false,
-    'visible_16': false,
-    'visible_17': false,
   });
 
   //默认展示
-  const MSG = `
-=============================================
- __    __ _______   ______  __       ______ 
-|  \\  /  \\       \\ /      \\|  \\     |      \\
-| ▓▓ /  ▓▓ ▓▓▓▓▓▓▓\\  ▓▓▓▓▓▓\\ ▓▓      \\▓▓▓▓▓▓
-| ▓▓/  ▓▓| ▓▓__/ ▓▓ ▓▓   \\▓▓ ▓▓       | ▓▓  
-| ▓▓  ▓▓ | ▓▓    ▓▓ ▓▓     | ▓▓       | ▓▓  
-| ▓▓▓▓▓\\ | ▓▓▓▓▓▓▓\\ ▓▓   __| ▓▓       | ▓▓  
-| ▓▓ \\▓▓\\| ▓▓__/ ▓▓ ▓▓__/  \\ ▓▓_____ _| ▓▓_ 
-| ▓▓  \\▓▓\\ ▓▓    ▓▓\\▓▓    ▓▓ ▓▓     \\   ▓▓ \\
- \\▓▓   \\▓▓\\▓▓▓▓▓▓▓  \\▓▓▓▓▓▓ \\▓▓▓▓▓▓▓▓\\▓▓▓▓▓▓
+  //   const MSG = `
+  // =============================================
+  //  __    __ _______   ______  __       ______ 
+  // |  \\  /  \\       \\ /      \\|  \\     |      \\
+  // | ▓▓ /  ▓▓ ▓▓▓▓▓▓▓\\  ▓▓▓▓▓▓\\ ▓▓      \\▓▓▓▓▓▓
+  // | ▓▓/  ▓▓| ▓▓__/ ▓▓ ▓▓   \\▓▓ ▓▓       | ▓▓  
+  // | ▓▓  ▓▓ | ▓▓    ▓▓ ▓▓     | ▓▓       | ▓▓  
+  // | ▓▓▓▓▓\\ | ▓▓▓▓▓▓▓\\ ▓▓   __| ▓▓       | ▓▓  
+  // | ▓▓ \\▓▓\\| ▓▓__/ ▓▓ ▓▓__/  \\ ▓▓_____ _| ▓▓_ 
+  // | ▓▓  \\▓▓\\ ▓▓    ▓▓\\▓▓    ▓▓ ▓▓     \\   ▓▓ \\
+  //  \\▓▓   \\▓▓\\▓▓▓▓▓▓▓  \\▓▓▓▓▓▓ \\▓▓▓▓▓▓▓▓\\▓▓▓▓▓▓
 
-=============================================
-A Command Line Interface for KubeBlocks`;
+  // =============================================
+  // A Command Line Interface for KubeBlocks`;
 
   //命令前缀
   const text = <>
@@ -68,27 +66,20 @@ A Command Line Interface for KubeBlocks`;
     'kbcli cluster backup mysql-cluster',
     'kbcli cluster list-backups --name=backup-default-mysql-cluster-20230423155856 -n default',
     'kbcli cluster restore new-cluster --backup backup-default-mysql-cluster-20230423155856',
-    'kbcli cluster list',
     'kbcli cluster connect new-cluster',
   ];
 
-  //按钮文案数组
+  //按钮文案数组 11个
   const ButtonTextArray = [
-    'Create a cluster',
-    'View the cluster list',
-    'View cluster details',
-    'Connect the cluster',
-    'Insert and select data',
-    'Vertically scale the cluster',
-    'View the progress',
-    'View max connection',
-    'Configure this parameter',
-    'Validate the configuration',
-    'Create a backup',
-    'View the backup progress',
-    'Restore data from backup',
-    'View the cluster list',
-    'Connect the restored cluster',
+    'Create a MySQL cluster',
+    'List clusters created by KubeBlocks',
+    'Describe the cluster details',
+    'Connect to a MySQL cluster',
+    'Manipulate data in MySQL',
+    'Scale a cluster vertically',
+    'Increase MySQL parameter "max_connection"',
+    'Backup a cluster',
+    'Restore data to a new cluster',
     'Verify restored data',
     'Try again',
   ];
@@ -97,18 +88,17 @@ A Command Line Interface for KubeBlocks`;
     if (!btnDisable) {
       setBtnDisable(true);
       setStrIndex(strIndex + 1);
-      if (strIndex + 1 == 5 || strIndex + 1 == 16) {
+      if (strIndex == 4 || strIndex == 14) {
         setCliVisible({ ...cliVisible, [`visible_${strIndex + 1}`]: true });
         setTimeout(() => {
           setBtnDisable(false);
-          let div = document.getElementById('writer');
-          if (div.scrollHeight > div.offsetHeight) {
-            div.scrollTop = div.scrollHeight;
-          }
+          autoScroll();
+        }, 400);
+        setTimeout(() => {
+          setbtnIndex(btnIndex + 1)
         }, 500);
-        setbtnIndex(btnIndex + 1)
       }
-      if(strIndex+1 == 17){
+      if (strIndex == 15) {
         setBtnDisable(false);
         setbtnIndex(0);
         setStrIndex(0);
@@ -128,33 +118,64 @@ A Command Line Interface for KubeBlocks`;
           'visible_13': false,
           'visible_14': false,
           'visible_15': false,
-          'visible_16': false,
-          'visible_17': false,
         })
       }
     }
   };
 
+  const autoScroll = () => {
+    let div = document.getElementById('writer');
+    let scrollHeight = div.scrollHeight;
+    let offsetHeight = div.offsetHeight;
+    let scrollTop = div.scrollTop;
+    let step = 30;
+    let intervalTime = 20;
+    if(scrollHeight > scrollTop + offsetHeight +  5*step){
+      let intervalId = setInterval(function () {
+        div.scrollTop += step;
+        if (div.scrollTop + offsetHeight >= scrollHeight) {
+          clearInterval(intervalId);
+        }
+      }, intervalTime);
+      div.addEventListener('wheel', function(e) {
+        clearInterval(intervalId); 
+      });
+    }else{
+      div.scrollTop = scrollHeight;
+    }
+  }
+
   //打字机配置
   const TypewriterDiv = <Typewriter
     options={{
       cursor: "", //取消光标闪烁
-      delay: 50,
+      delay: 40,
     }}
-    onInit={(typewriter) => {
+    onInit={async (typewriter) => {
       typewriter
         .typeString(textArray[strIndex - 1])
         .pauseFor(200)
         .callFunction(() => {
           setTimeout(() => {
             setCliVisible({ ...cliVisible, [`visible_${strIndex}`]: true });
-            setBtnDisable(false);
-            let div = document.getElementById('writer');
-            if (div.scrollHeight > div.offsetHeight) {
-              div.scrollTop = div.scrollHeight;
+            strIndex === 6 || strIndex === 8 || strIndex === 9 || strIndex === 11 || strIndex === 14
+              ? null : setBtnDisable(false);
+            autoScroll();
+          }, 400);
+        })
+        .callFunction(() => {
+          setTimeout(() => {
+            strIndex === 6 || strIndex === 8 || strIndex === 9 || strIndex === 11 || strIndex === 14
+              ? setStrIndex(strIndex + 1)
+              : setbtnIndex(btnIndex + 1);
+          }, 400);
+          setTimeout(() => {
+            if (strIndex === 14) {
+              setBtnDisable(false);
+              autoScroll();
+              setbtnIndex(btnIndex + 1);
             }
-          }, 500);
-          setbtnIndex(btnIndex + 1)
+          }, 800);
         })
         .start();
     }}
@@ -165,12 +186,11 @@ A Command Line Interface for KubeBlocks`;
       <h2 className="centered-title">Try KubeBlocks in the browser</h2>
       <div className='writer' >
         <div className='writer-title'>
-        <img src={'img/icon.png'} alt='icon' />
+          <img src={'img/icon.png'} alt='icon' />
         </div>
         <div className='writer-content' id='writer'>
-          <pre className='new_pre mobile'>{MSG}</pre>
+          {/* <pre className='new_pre mobile'>{MSG}</pre> */}
           {text}
-
           <span className='cli' >
             {strIndex > 0 && TypewriterDiv}
           </span>
@@ -408,19 +428,6 @@ backup-default-mysql-cluster-20230423155856   mysql-cluster   snapshot   Complet
           </span>
           {cliVisible[`visible_14`] && <>
             <pre className='new_pre'>
-              {`NAME                         NAMESPACE   CLUSTER-DEFINITION   VERSION             TERMINATION-POLICY   STATUS     CREATED-TIME                 
-mysql-cluster     default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 15:50 UTC+0800   
-new-cluster       default     apecloud-mysql       ac-mysql-8.0.30     Delete               Running    Apr 23,2023 16:05 UTC+0800    
-`}
-            </pre>
-            {text}
-          </>}
-
-          <span className='cli' >
-            {strIndex > 14 && TypewriterDiv}
-          </span>
-          {cliVisible[`visible_15`] && <>
-            <pre className='new_pre'>
               {`Connect to instance new-cluster-mysql-1: out of new-cluster-mysql-1(leader), new-cluster-mysql-0(follower), new-cluster-mysql-2(follower)
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -439,9 +446,9 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.`}
           </>}
 
           <span className='cli' >
-            {strIndex > 15 && <>USE mydb</>}
+            {strIndex > 14 && <> USE mydb</>}
           </span>
-          {cliVisible[`visible_16`] && <>
+          {strIndex > 14 && <>
             <div><span className="green-text">{'mysql>'}</span> SELECT * FROM students;</div>
             <pre className='new_pre'>
               {`+------------+-----------------+--------+------------+---------------------------------+-------+
