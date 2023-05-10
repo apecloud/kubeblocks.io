@@ -73,7 +73,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="http://www.linkedin.com/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <a href="https://www.linkedin.com/company/apecloud-technology-co-ltd/about/" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
                   Linkedin
                 </a>
               </span>
@@ -89,5 +89,5 @@ module.exports = {
     width: 72,
     height: 18,
   },
-  copyright: `© 2022 ApeCloud Co., Ltd.`,
+  copyright: `© 2023 ApeCloud Co., Ltd.`,
 }
