@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkkubeblocks_io=self.webpackChunkkubeblocks_io||[]).push([[1748],{65550:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/dag-model","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
