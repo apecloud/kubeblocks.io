@@ -1,6 +1,6 @@
 ---
 slug: why-do-we-choose-the-dag-model-part-1
-title: Unveiling KubeBlocks Technology (Part 1) -- Why Do We Choose the DAG Model?
+title: Unveiling KubeBlocks Technology (Part 1) - Why Do We Choose the DAG Model?
 description: This article discusses the problems with the current implementation of Kubernetes' Cluster Controller and introduces KubeBlocks, a new model that uses a Directed Acyclic Graph (DAG) to express a cluster. 
 authors:
   name: free6om
@@ -18,7 +18,7 @@ In the current implementation of Kubernetes, the Cluster Controller is responsib
 
 We analyzed the main logic of the current code. In this article, we provide a more structured plan for refactoring, including detailed explanations of several key issues in the plan.
 
-## Current Model - `prepare-checkedCreate` pattern
+## Current Model - prepare-checkedCreate pattern
 
 In the Cluster Controller, the operation of the cluster object is mainly in the [`reconcileClusterWorkloads`](https://github.com/apecloud/kubeblocks/blob/main/controllers/apps/lifecycle_utils.go#L77) function, which uses the `prepare-checkedCreate` pattern: First, prepare all the required K8s objects according to `cluster.spec` (prepare phase); then try to create these objects. When the API Server returns an object already exists error (`metav1.StatusReasonAlreadyExists`), call the update function again to update these objects (checkedCreate phase).
 
@@ -59,7 +59,7 @@ For the first problem, an example analysis has been given earlier.
 
 For the second problem, if the corresponding component is deleted during cluster update, the corresponding object will be deleted, so it can also be solved.
 
-### How to obtain the old version of the `cluster` object?
+### How to obtain the old version of the cluster object?
 
 You may have a question. Where is the old version of the cluster object when generating the final plan?
 
