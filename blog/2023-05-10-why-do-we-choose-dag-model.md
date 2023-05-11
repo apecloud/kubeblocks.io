@@ -1,6 +1,6 @@
 ---
 slug: why-do-we-choose-the-dag-model-part-1
-title: Unveiling KubeBlocks Technology (Part 1): Why Do We Choose the DAG Model?
+title: Unveiling KubeBlocks Technology (Part 1) -- Why Do We Choose the DAG Model?
 description: This article discusses the problems with the current implementation of Kubernetes' Cluster Controller and introduces KubeBlocks, a new model that uses a Directed Acyclic Graph (DAG) to express a cluster. 
 authors:
   name: free6om
@@ -45,7 +45,7 @@ When we add new business logic later, we can write a new Transformer. In this wa
 
 ### The _Plan_
 
-<font color="#c5161b">After applying a series of Transformers, we obtain a final Directed Acyclic Graph (DAG). What should we do next?</font>
+<font color="#c5161b"> After applying a series of Transformers, we obtain a final Directed Acyclic Graph (DAG). What should we do next? </font>
 
 If each Node in this DAG has a K8s object and its corresponding operation (Create/Update/Delete), it would be very friendly, wouldn't it? If each edge represents the order in which they are executed, would it be better? If I just write a bunch of Transformers and apply them, and the final execution does not require my efforts, would it be close to perfection?
 
@@ -105,37 +105,37 @@ Cache\Plan Action
 
 <table>
     <tr>
-        <td colspan="2">Cache\Plan Action</td>
-        <td>Create</td>
-        <td>Update</td>
-        <td>Delete</td>
+        <td colspan="2"> Cache\Plan Action </td>
+        <td> Create </td>
+        <td> Update </td>
+        <td> Delete </td>
     </tr>
     <tr>
-        <td colspan="2">Latest</td>
-        <td>✅</td>
-        <td>✅</td>
-        <td>✅</td>
+        <td colspan="2"> Latest </td>
+        <td> ✅ </td>
+        <td> ✅ </td>
+        <td> ✅ </td>
     </tr>
     <tr>
-        <td rowspan="4">Stale</td>
+        <td rowspan="4"> Stale </td>
     </tr>
     <tr>
-        <td>c-lag</td>
-        <td>--</td>
-        <td>❌</td>
-        <td>❌</td>
+        <td> c-lag </td>
+        <td> -- </td>
+        <td> ❌ </td>
+        <td> ❌ </td>
     </tr>
-        <tr>
-        <td>u-lag</td>
-        <td>--</td>
-        <td>✅</td>
-        <td>✅</td>
+    <tr>
+        <td> u-lag </td>
+        <td> -- </td>
+        <td> ✅ </td>
+        <td> ✅ </td>
     </tr>
-        <tr>
-        <td>d-lag</td>
-        <td>❌</td>
-        <td>--</td>
-        <td>--</td>
+    <tr>
+        <td> d-lag </td>
+        <td> ❌ </td>
+        <td> -- </td>
+        <td> -- </td>
     </tr>
 </table>
 
