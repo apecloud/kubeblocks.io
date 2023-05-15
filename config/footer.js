@@ -18,7 +18,7 @@ module.exports = {
           to: "/docs/preview/user_docs/introduction",
         },
         {
-          label: "Blog",
+          label: "Blogs",
           href: "/blog",
         },
         {
