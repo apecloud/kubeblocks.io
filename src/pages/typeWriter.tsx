@@ -58,7 +58,7 @@ export default () => {
     'kbcli cluster describe mysql-cluster',
     'kbcli cluster connect mysql-cluster',
     '',
-    'kbcli cluster vscale mysql-cluster --components mysql --cpu 2000m --memory 2Gi',
+    'kbcli cluster vscale mysql-cluster --components=mysql --cpu 2000m --memory 2Gi',
     'kbcli cluster describe-ops mysql-cluster-verticalscaling-w9m7h -n default',
     'kbcli cluster describe-config mysql-cluster --show-detail | grep max_connections=',
     'kbcli cluster configure mysql-cluster --set max_connections=2000',
@@ -195,7 +195,7 @@ export default () => {
             {strIndex > 0 && TypewriterDiv}
           </span>
           {cliVisible[`visible_1`] && <>
-            <div><span className="yellow-text">Warning:</span> cluster version is not specified, use the recently created ClusterVersion ac-mysql-8.0.30<br /></div>
+            <div>Info: --cluster-version is not specified, ClusterVersion ac-mysql-8.0.30 is applied by default</div>
             <div>Cluster mysql-cluster created</div>
             {text}
           </>}
