@@ -1,7 +1,7 @@
 ---
 slug: sysbench-performance-report-mysql
 title: Sysbench Performance Test Report - ApeCloud MySQL Raft Group
-description: This is a Sysbench performance test report which compares ApeCloud PostgreSQL with other RDS PostgreSQL on Pod and ECS.
+description: This is a Sysbench performance test report which compares ApeCloud MySQL with other MySQL.
 tags: [Sysbench performance test report, PostgreSQL, Test on Pod, Test on ECS, Read-intensive performance]
 image: /img/blog-banner.png
 ---
