@@ -1,13 +1,12 @@
 ---
 slug: sysbench-performance-report-postgresql
-title: Sysbench Performance Test Report -- ApeCloud PostgreSQL vs. RDS PostgreSQL
+title: Sysbench Performance Test Report - ApeCloud PostgreSQL
 description: This is a Sysbench performance test report which compares ApeCloud PostgreSQL with other RDS PostgreSQL on Pod and ECS.
 tags: [Sysbench performance test report, PostgreSQL, Test on Pod, Test on ECS, Read-intensive performance]
 image: /img/blog-banner.png
 ---
 
-# Sysbench Performance Test Report -- ApeCloud PostgreSQL vs. RDS PostgreSQL
-
+# Sysbench Performance Test Report - ApeCloud PostgreSQL
 ## Purpose
 
 This test aims at comparing the Sysbench performance between Apecloud PostgreSQL and * RDS PostgreSQL in the Online Transactional Processing (OLTP) scenario.
@@ -47,7 +46,7 @@ This test aims at comparing the Sysbench performance between Apecloud PostgreSQL
 
 <table align="center">
     <tr>
-        <th> Test Plan </th>
+        <th> Test Environment </th>
         <th> Volume </th>
     </tr>
     <tr>
