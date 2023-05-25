@@ -2,7 +2,7 @@
 slug: sysbench-performance-report-postgresql
 title: Sysbench Performance Test Report -- ApeCloud PostgreSQL vs. RDS PostgreSQL
 description: This is a Sysbench performance test report which compares ApeCloud PostgreSQL with other RDS PostgreSQL on Pod and ECS.
-tags: [Sysbench performance test report, PostgreSQL, Test on Pod, Test on ECS]
+tags: [Sysbench performance test report, PostgreSQL, Test on Pod, Test on ECS, Read-intensive performance]
 image: /img/blog-banner.png
 ---
 
@@ -83,70 +83,68 @@ This test aims at comparing the Sysbench performance between Apecloud PostgreSQL
 
 ## Test on Pod
 
-***Steps:***
+### Plan
 
 1. Deploy Apecloud PostgreSQL and * RDS PostgreSQL.
 2. Use Sysbench to import 60 tables and each table includes 2,000,000 rows of data.
 3. Start the Sysbench client on Pod to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud PostgreSQL via Pod IP and * RDS PostgreSQL via VPC IP.
 4. The test takes about 10 minutes.
 
+### Prepare the test data
+
+```yaml
+kubectl create -f - <<EOF
+apiVersion: v1
+kind: Pod                  
+metadata:
+  namespace: default          
+  generateName: test-sysbench-prepare-
+spec:
+  containers: 
+    - name: test-sysbench
+      image: registry.cn-hangzhou.aliyuncs.com/apecloud/datatestsuites:latest
+      env:   
+        - name: TYPE
+          value: "2"    
+        - name: FLAG
+          value: "0"                 
+        - name: CONFIGS 
+          value: "mode:prepare,driver:pgsql,host:<db_host>,user:postgres,password:<db_password>,port:5432,db:pgbenchtest,size:2000000,tables:60,times:600,type:oltp_read_write_pct"
+  restartPolicy: Never
+EOF
+```
+
 ### Perform the test
 
-1. Prepare the test data.
+Configure a read-intensive workload: 80% reads and 20% writes by setting `--read-percent=80` and `--write-percent=20`.
 
-    ```yaml
-    kubectl create -f - <<EOF
-    apiVersion: v1
-    kind: Pod                  
-    metadata:
-      namespace: default          
-      generateName: test-sysbench-prepare-
-    spec:
-      containers: 
-        - name: test-sysbench
-          image: registry.cn-hangzhou.aliyuncs.com/apecloud/datatestsuites:latest
-          env:   
-            - name: TYPE
-              value: "2"    
-            - name: FLAG
-              value: "0"                 
-            - name: CONFIGS 
-              value: "mode:prepare,driver:pgsql,host:<db_host>,user:postgres,password:<db_password>,port:5432,db:pgbenchtest,size:2000000,tables:60,times:600,type:oltp_read_write_pct"
-      restartPolicy: Never
-    EOF
-    ```
-
-2. Perform the test.
-
-    Configure a read-intensive workload: 80% reads and 20% writes by setting `--read-percent=80` and `--write-percent=20`.
-
-    ```yaml
-    kubectl create -f - <<EOF
-    apiVersion: v1
-    kind: Pod                  
-    metadata:
-      namespace: default          
-      generateName: test-sysbench-run-
-    spec:
-      containers: 
-        - name: test-sysbench
-          image: registry.cn-hangzhou.aliyuncs.com/apecloud/datatestsuites:latest
-          env:   
-            - name: TYPE
-              value: "2"    
-            - name: FLAG
-              value: "0"                 
+```yaml
+kubectl create -f - <<EOF
+apiVersion: v1
+kind: Pod                  
+metadata:
+  namespace: default          
+  generateName: test-sysbench-run-
+spec:
+  containers: 
+    - name: test-sysbench
+      image: registry.cn-hangzhou.aliyuncs.com/apecloud/datatestsuites:latest
+      env:   
+        - name: TYPE
+          value: "2"    
+        - name: FLAG
+          value: "0"                 
         - name: CONFIGS 
           value: "mode:run,driver:pgsql,host:<db_host>,user:postgres,password:<db_password>,port:5432,db:pgbenchtest,size:2000000,tables:60,times:600,type:oltp_read_write_pct,threads:25 50 100 150 175,others:--read-percent=80 --write-percent=20"
-      restartPolicy: Never
-    EOF
-    ```
+  restartPolicy: Never
+EOF
+```
 
 ### Results
 
-#### Read-Intensive performance
+#### Read-intensive performance
 
-point_select:update_index=4:1
+Point Select : Update Index = 4 : 1
 
 **QPS**
 
@@ -234,7 +232,7 @@ The Read-Intensive performance of Apecloud PostgreSQL is about 46.78% more than 
 
 ## Test on ECS
 
-***Steps:***
+### Plan
 
 1. Use the clusters and table data in [Test on Pod](#test-on-pod).
 2. Start the Sysbench client on ECS to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud PostgreSQL via load balancer IP and * RDS PostgreSQL via VPC IP.
@@ -246,11 +244,11 @@ The Read-Intensive performance of Apecloud PostgreSQL is about 46.78% more than 
 sysbench --db-driver=pgsql --pgsql-host=<db_host> --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=<db_password> --pgsql-db=pgbenchtest --table_size=2000000 --tables=60 --time=120 --threads=$i --events=0 --percentile=95 --read-percent=80 --write-percent=20 --report-interval=1 oltp_read_write_pct run
 ```
 
-### Test results
+### Results
 
-#### Read-Intensive performance
+#### Read-intensive performance
 
-point_select:update_index 4:1
+Point Select : Update Index = 4 : 1
 
 **QPS**
 
