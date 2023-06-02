@@ -27,14 +27,6 @@ jobs:
            path: ".temp/main"
            token: ${{ env.GITHUB_TOKEN }}
 
-      - name: Checkout Kubeblocks Docs release-0.4
-        uses: actions/checkout@v3
-        with: 
-           repository: apecloud/kubeblocks
-           ref: release-0.4
-           path: ".temp/release-0.4"
-           token: ${{ env.GITHUB_TOKEN }}
-
       - name: Checkout Kubeblocks Docs release-0.5
         uses: actions/checkout@v3
         with: 
