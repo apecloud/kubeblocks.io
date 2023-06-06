@@ -166,13 +166,13 @@ Point Select : Update Index = 4 : 1
 | 175         | 45.24%                 | 74.26%                                  | 89.88%                          |
 | **Average** | 23.00%                 | 73.41%                                  | 90.21%                          |
 
-- The Read-intensive performance of ApeCloud MySQL is about 23% more than AWS RDS MySQL.
-- The Read-intensive performance of ApeCloud MySQL is about 73.41% more than Percona Server for MySQL.
-- The Read-intensive performance of ApeCloud MySQL is about 90.21% more than Oracle's MySQL.
+- For Read-intensive Workloads, ApeCloud MySQL outperforms AWS RDS MySQL by 23%.
+- For Read-intensive Workloads, ApeCloud MySQL outperforms Percona Server for MySQL by 73.41%.
+- For Read-intensive Workloads, ApeCloud MySQL outperforms Oracle's MySQL by 90.21%.
 
 ![img](./assets/img/sysbench-read-intensive-mysql.png)
 
-#### Balanced performance
+#### Balanced Workload performance
 
 Point Select : Update Index = 1 : 1
 
@@ -207,9 +207,9 @@ Point Select : Update Index = 1 : 1
 | 175         | 59.92%                 | 83.68%                                  | 84.51%                          |
 | **Average** | 49.65%                 | 82.42%                                  | 87.03%                          |
 
-- The Balanced performance of ApeCloud MySQL is about 49.65% more than AWS RDS MySQL.
-- The Balanced performance of ApeCloud MySQL is about 82.42% more than Percona Server for MySQL.
-- The Balanced performance of ApeCloud MySQL is about 87.03% more than Oracle's MySQL.
+- For Balanced Workloads, ApeCloud MySQL outperforms AWS RDS MySQL by 49.65%.
+- For Balanced Workloads, ApeCloud MySQL outperforms Percona Server for MySQL by 82.42%.
+- For Balanced Workloads, ApeCloud MySQL outperforms Oracle's MySQL by 87.03%.
 
 ![img](./assets/img/sysbench-balanced-mysql.png)
 
@@ -248,8 +248,8 @@ Point Select : Update Index = 1 : 4
 | 175         | 61.68%                 | 84.76%                                  | 87.35%                          |
 | **Average** | 49.31%                 | 82.66%                                  | 89.71%                          |
 
-- The Read-intensive performance of ApeCloud MySQL is about 49.31% more than AWS RDS MySQL.
-- The Read-intensive performance of ApeCloud MySQL is about  82.66% more than Percona Server for MySQL.
-- The Read-intensive performance of ApeCloud MySQL is about 89.71% more than Oracle's MySQL.
+- For Write-intensive Workloads, ApeCloud MySQL outperforms AWS RDS MySQL by 49.31%.
+- For Write-intensive Workloads, ApeCloud MySQL outperforms Percona Server for MySQL by 82.66%.
+- For Write-intensive Workloads, ApeCloud MySQL outperforms Oracle's MySQL by 89.71%.
 
 ![img](./assets/img/sysbench-write-intensive-mysql.png)

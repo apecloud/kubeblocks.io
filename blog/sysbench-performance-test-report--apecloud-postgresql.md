@@ -113,7 +113,7 @@ EOF
 
 ### Perform the test
 
-Configure a read-intensive workload: 80% reads and 20% writes by setting `--read-percent=80` and `--write-percent=20`.
+Configure a Read-intensive Workload: 80% reads and 20% writes by setting `--read-percent=80` and `--write-percent=20`.
 
 ```yaml
 kubectl create -f - <<EOF
@@ -223,7 +223,7 @@ Point Select : Update Index = 4 : 1
     </tr>
 </table>
 
-The Read-intensive performance of KubeBlocks PostgreSQL is about 46.78% more than RDS PostgreSQL on Pod.
+For Read-intensive Workloads, KubeBlocks PostgreSQL outperforms RDS PostgreSQL by 46.78%.
 
 ![Sysbench on Pod](./assets/img/sysbench-on-pod-pg-new.png)
 
@@ -472,6 +472,6 @@ Point Select : Update Index = 4 : 1
     </tr>
 </table>
 
-The Read-intensive performance of KubeBlocks PostgreSQL is about 6.63% more than RDS PostgreSQL on ECS.
+For Read-intensive Workloads, KubeBlocks PostgreSQL outperforms RDS PostgreSQL by 6.63%.
 
 ![Sysbench on ECS](./assets/img/sysbench-on-ecs-pg-new.png)
