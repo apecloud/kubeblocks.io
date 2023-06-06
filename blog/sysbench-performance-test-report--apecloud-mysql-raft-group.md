@@ -72,7 +72,7 @@ This test aims to compare the transactional processing performance of popular My
 
 ## Test plan
 
-1. Deploy MySQL and sysbench in Kubernetes using operators.
+1. Deploy MySQL and sysbench on Kubernetes using operators.
 2. Use Sysbench to import 300 tables, each table with 2000000 rows of data.
 3. Start the Sysbench client on Pod to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud MySQL Raft Group, Percona Server for MySQL, MySQL Operator for Kubernetes via Pod IP and * RDS MySQL via DNS.
 4. The test takes 10 minutes.
