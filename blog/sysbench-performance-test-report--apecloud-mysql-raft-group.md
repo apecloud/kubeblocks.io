@@ -1,94 +1,69 @@
 ---
 slug: sysbench-performance-report-mysql
-title: Sysbench Performance Test Report - ApeCloud MySQL Raft Group
-description: This is a Sysbench performance test report which compares ApeCloud MySQL with other MySQL.
+title: Sysbench Performance Test Report - MySQL
+description: This is a Sysbench performance test report which compares popular MySQL distributions.
 tags: [Sysbench performance test report, MySQL, Read-intensive performance, Balanced performance, Write-intensive performance]
 image: /img/blog-banner.png
 ---
 
-# Sysbench Performance Test Report - ApeCloud MySQL Raft Group
+# Sysbench Performance Test Report - MySQL
 
 ## Purpose
 
-This test aims at comparing the Sysbench performance of Apecloud MySQL Raft Group and * RDS MySQL, Percona Server for MySQL and MySQL Operator for Kubernetes in the Online Transactional Processing (OLTP) scenario.
+This test aims to compare the transactional processing performance of popular MySQL distributions provided by Percona, Oracle, and other companies. To truly simulate the runtime environment of cloud-native applications, sysbench was run within a Kubernetes cluster throughout all tests.
 
 ## Environment (EKS/EC2)
 
-### Hardware configuration
+### MySQL versions and resources
 
 <table align="center">
     <tr>
-        <th> Product </th>
+        <th> MySQL distribution </th>
+        <th> Version </th>
         <th> Deployment </th>
-        <th> EC2 Type </th>
-        <th> Instance Count </th>
-        <th> Region </th>
+        <th> EC2 Class </th>
+        <th> EC2 Instances </th>
     </tr>
     <tr>
-        <td align="center"> ApeCloud Raft Group </td>
-        <td align="center"> EKS + KB </td>
+        <td align="center"> ApeCloud MySQL </td>
+        <td align="center"> 8.0.30 </td>
+        <td align="center"> EKS + KubeBlocks </td>
         <td align="center"> m5a.2xlarge (node 8c32g, pod 4c16g) </td>
         <td align="center"> 3 </td>
-        <td rowspan="5" align="center"> cn-northwest-1 </td>
     </tr>
     <tr>
-        <td align="center"> * RDS MySQL Operator </td>
+        <td align="center"> AWS RDS MySQL </td>
+        <td align="center"> 8.0.32 </td>
         <td align="center"> EKS + RDS </td>
         <td align="center"> db.m5.xlarg (4c16g) </td>
         <td align="center"> 3 </td>
     </tr>
     <tr>
-        <td align="center"> Operator for Percona Server for MySQL </td>
-        <td align="center"> EKS + Percona </td>
+        <td align="center"> Percona Server for MySQL </td>
+        <td align="center"> 8.0.29-21.1 </td>
+        <td align="center"> EKS + Percona Operator </td>
         <td align="center"> m5a.2xlarge (node 8c32g, pod 4c16g) </td>
         <td align="center"> 3 </td>
     </tr>
     <tr>
-        <td align="center"> MySQL Operator for Kubernetes </td>
-        <td align="center"> EKS + MySQL </td>
+        <td align="center"> Oracle's MySQL </td>
+        <td align="center"> 8.0.32 </td>
+        <td align="center"> EKS + MySQL Operator </td>
         <td align="center"> m5a.2xlarge (node 8c32g, pod 4c16g) </td>
         <td align="center"> 3 </td>
     </tr>   
     <tr>
         <td align="center"> Sysbench </td>
-        <td align="center"> EKS + Sysbench </td>
+        <td align="center"> 1.0.20 </td>
+        <td align="center"> EKS </td>
         <td align="center"> m5a.2xlarge (node 8c32g) </td>
         <td align="center"> 1 </td>
     </tr>    
 </table>
 
-### Software version
+### MySQL parameters
 
-<table align="center">
-    <tr>
-        <th> Product </th>
-        <th> Version </th>
-    </tr>
-    <tr>
-        <td align="center"> ApeCloud MySQL Raft Group </td>
-        <td align="center"> 8.0.30 </td>
-    </tr>
-    <tr>
-        <td align="center"> * RDS MySQL Operator </td>
-        <td align="center"> 8.0.32 </td>
-    </tr>
-    <tr>
-        <td align="center"> Operator for Percona Server for MySQL </td>
-        <td align="center"> 8.0.29-21.1 </td>
-    </tr>
-    <tr>
-        <td align="center"> MySQL Operator for Kubernetes </td>
-        <td align="center"> 8.0.32 </td>
-    </tr>
-    <tr>
-        <td align="center"> Sysbench </td>
-        <td align="center"> 1.0.20 </td>
-    </tr>
-</table>
-
-### Parameter configuration
-
-| Configuration             | ApeCloud MySQL Raft Group   | * RDS MySQL Operator   | Operator for Percona Server for MySQL   | MySQL Operator for Kubernetes   |
+| Configuration             | ApeCloud MySQL | AWS RDS MySQL | Percona Server for MySQL | Oracle's MySQL   |
 |:-------------------------:|:---------------------------:|:----------------------:|:---------------------------------------:|:-------------------------------:|
 | innodb_buffer_pool_size   | 9G                          | 11G                    | 9G                                      | 9G                              |
 | innodb_log_file_size      | 48M                         | 128M                   | 48M                                     | 48M                             |
@@ -97,7 +72,7 @@ This test aims at comparing the Sysbench performance of Apecloud MySQL Raft Grou
 
 ## Test plan
 
-1. Deploy ApeCloud MySQL Raft Group, * RDS MySQL, Percona Server for MySQL and MySQL Operator for Kubernetes.
+1. Deploy MySQL and sysbench in Kubernetes using operators.
 2. Use Sysbench to import 300 tables, each table with 2000000 rows of data.
 3. Start the Sysbench client on Pod to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud MySQL Raft Group, Percona Server for MySQL, MySQL Operator for Kubernetes via Pod IP and * RDS MySQL via DNS.
 4. The test takes 10 minutes.
