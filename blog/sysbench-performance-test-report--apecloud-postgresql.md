@@ -11,7 +11,7 @@ image: /img/blog-banner.png
 
 This test aims at comparing the transactional processing performance between KubeBlocks PostgreSQL and RDS PostgreSQL.
 
-## Environment (ACK/ECS)
+## Environment (Managed Kubernetes/ECS)
 
 ### Hardware configuration
 
@@ -23,8 +23,8 @@ This test aims at comparing the transactional processing performance between Kub
         <th> Instance Count </th>
     </tr>
     <tr>
-        <td align="center"> ApeCloud PostgreSQL </td>
-        <td align="center"> ACK + KubeBlocks PostgreSQL </td>
+        <td align="center"> KubeBlocks PostgreSQL </td>
+        <td align="center"> Managed Kubernetes + KubeBlocks PostgreSQL </td>
         <td align="center"> ecs.g8i.4xlarge(16c64g) </td>
         <td align="center"> 2 </td>
     </tr>
@@ -36,7 +36,7 @@ This test aims at comparing the transactional processing performance between Kub
     </tr>
     <tr>
         <td align="center"> Sysbench </td>
-        <td align="center"> ACK + Sysbench </td>
+        <td align="center"> Managed Kubernetes + Sysbench </td>
         <td align="center"> ecs.g8i.4xlarge </td>
         <td align="center"> 1 </td>
     </tr>
@@ -65,11 +65,11 @@ This test aims at comparing the transactional processing performance between Kub
         <th> Product Version </th>
     </tr>
     <tr>
-        <td align="center"> ApeCloud PostgreSQL </td>
+        <td align="center"> KubeBlocks PostgreSQL </td>
         <td align="center"> 12.14 </td>
     </tr>
     <tr>
-        <td align="center"> * RDS PostgreSQL </td>
+        <td align="center"> RDS PostgreSQL </td>
         <td align="center"> 12.13 </td>
     </tr>
     <tr>
@@ -82,9 +82,9 @@ This test aims at comparing the transactional processing performance between Kub
 
 ### Plan
 
-1. Deploy ApeCloud PostgreSQL and * RDS PostgreSQL.
-2. Use Sysbench to import 60 tables and each table includes 2,000,000 rows of data.
-3. Start the Sysbench client on Pod to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud PostgreSQL via Pod IP and * RDS PostgreSQL via VPC IP.
+1. Deploy KubeBlocks PostgreSQL and RDS PostgreSQL.
+2. Use Sysbench to import 60 tables, each table with 2,000,000 rows of data.
+3. Start the Sysbench client on Pod to perform the `point_select` and `update_index` tests. Perform stress tests on KubeBlocks PostgreSQL via Pod IP and RDS PostgreSQL via VPC IP.
 4. The test takes about 10 minutes.
 
 ### Prepare the test data
@@ -148,8 +148,8 @@ Point Select : Update Index = 4 : 1
 <table align="center">
     <tr>
         <th> Threads </th>
-        <th> ApeCloud PostgreSQL </th>
-        <th> * RDS PostgreSQL </th>
+        <th> KubeBlocks PostgreSQL </th>
+        <th> RDS PostgreSQL </th>
         <th> QPS Improvement </th>
     </tr>
     <tr>
@@ -193,8 +193,8 @@ Point Select : Update Index = 4 : 1
 <table align="center">
     <tr>
         <th> Threads </th>
-        <th> ApeCloud PostgreSQL </th>
-        <th> * RDS PostgreSQL </th>
+        <th> KubeBlocks PostgreSQL </th>
+        <th> RDS PostgreSQL </th>
     </tr>
     <tr>
         <td align="center"> 25 </td>
@@ -223,7 +223,7 @@ Point Select : Update Index = 4 : 1
     </tr>
 </table>
 
-The Read-intensive performance of ApeCloud PostgreSQL is about 46.78% more than * RDS PostgreSQL on Pod.
+The Read-intensive performance of KubeBlocks PostgreSQL is about 46.78% more than RDS PostgreSQL on Pod.
 
 ![Sysbench on Pod](./assets/img/sysbench-on-pod-pg-new.png)
 
@@ -232,7 +232,7 @@ The Read-intensive performance of ApeCloud PostgreSQL is about 46.78% more than 
 ### Plan
 
 1. Use the clusters and table data in [Test on Pod](#test-on-pod).
-2. Start the Sysbench client on ECS to perform the `point_select` and `update_index` tests. Perform stress tests on ApeCloud PostgreSQL via load balancer IP and * RDS PostgreSQL via VPC IP.
+2. Start the Sysbench client on ECS to perform the `point_select` and `update_index` tests. Perform stress tests on KubeBlocks PostgreSQL via load balancer IP and RDS PostgreSQL via VPC IP.
 3. The test takes about 2 minutes.
 
 ### Perform the test
@@ -252,8 +252,8 @@ Point Select : Update Index = 4 : 1
 <table align="center">
     <tr>
         <th> Threads </th>
-        <th> ApeCloud PostgreSQL </th>
-        <th> * RDS PostgreSQL </th>
+        <th> KubeBlocks PostgreSQL </th>
+        <th> RDS PostgreSQL </th>
         <th> QPS Improvement </th>
     </tr>
     <tr>
@@ -472,6 +472,6 @@ Point Select : Update Index = 4 : 1
     </tr>
 </table>
 
-The Read-intensive performance of ApeCloud PostgreSQL is about 6.63% more than * RDS PostgreSQL on ECS.
+The Read-intensive performance of KubeBlocks PostgreSQL is about 6.63% more than RDS PostgreSQL on ECS.
 
 ![Sysbench on ECS](./assets/img/sysbench-on-ecs-pg-new.png)
