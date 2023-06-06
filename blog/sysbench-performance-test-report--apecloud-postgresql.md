@@ -9,7 +9,7 @@ image: /img/blog-banner.png
 # Sysbench Performance Test Report - PostgreSQL
 ## Purpose
 
-This test aims at comparing the transactional processing performance between KubeBlocks PostgreSQL and RDS PostgreSQL.
+This test aims at comparing the transactional processing performance between KubeBlocks managed PostgreSQL and RDS PostgreSQL. To truly simulate the runtime environment of cloud-native applications, sysbench was run within a Kubernetes cluster throughout all tests.
 
 ## Environment (ACK/ECS)
 
