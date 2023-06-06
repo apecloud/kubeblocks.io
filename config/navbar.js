@@ -10,8 +10,8 @@ module.exports = {
       position: "left",
       label: "Docs",
     },
-    {to: '/blog', label: 'Blogs', position: 'left'},
-    {to: '/', label: 'Webinar', position: 'left'},
+    // {to: '/blog', label: 'Blogs', position: 'left'},
+    {to: '/resources', label: 'Resources', position: 'left'},
     // {
     //   type: 'docsVersionDropdown',
     //   position: 'right',
