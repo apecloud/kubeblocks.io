@@ -23,6 +23,7 @@ export default () => {
                 url='https://youtu.be/CEeSwlKZ-xI'
                 controls={true}
                 style={{margin: '0 auto', }}
+                config={{ youtube : { playerVars: { origin: ' https://www.youtube.com ' } } }}
               />
             </div>
           {/* </TabPanel>
