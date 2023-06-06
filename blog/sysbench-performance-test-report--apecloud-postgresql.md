@@ -1,15 +1,15 @@
 ---
 slug: sysbench-performance-report-postgresql
-title: Sysbench Performance Test Report - ApeCloud PostgreSQL
-description: This is a Sysbench performance test report which compares ApeCloud PostgreSQL with other RDS PostgreSQL on Pod and ECS.
-tags: [Sysbench performance test report, PostgreSQL, Test on Pod, Test on ECS, Read-intensive performance]
+title: Sysbench Performance Test Report - PostgreSQL
+description: This is a Sysbench performance test report which compares KubeBlocks  PostgreSQL with RDS PostgreSQL.
+tags: [Sysbench performance test report, PostgreSQL, Read-intensive performance]
 image: /img/blog-banner.png
 ---
 
-# Sysbench Performance Test Report - ApeCloud PostgreSQL
+# Sysbench Performance Test Report - PostgreSQL
 ## Purpose
 
-This test aims at comparing the Sysbench performance between ApeCloud PostgreSQL and * RDS PostgreSQL in the Online Transactional Processing (OLTP) scenario.
+This test aims at comparing the transactional processing performance between KubeBlocks PostgreSQL and RDS PostgreSQL.
 
 ## Environment (ACK/ECS)
 
@@ -21,17 +21,15 @@ This test aims at comparing the Sysbench performance between ApeCloud PostgreSQL
         <th> Deployment </th>
         <th> ECS Type </th>
         <th> Instance Count </th>
-        <th> Region </th>
     </tr>
     <tr>
         <td align="center"> ApeCloud PostgreSQL </td>
         <td align="center"> ACK + KubeBlocks PostgreSQL </td>
         <td align="center"> ecs.g8i.4xlarge(16c64g) </td>
         <td align="center"> 2 </td>
-        <td rowspan="3" align="center"> cn-hangzhou </td>
     </tr>
     <tr>
-        <td align="center"> * RDS PostgreSQL </td>
+        <td align="center"> RDS PostgreSQL </td>
         <td align="center"> RDS PostgreSQL </td>
         <td align="center"> pg.x4.2xlarge.2c(16c64g) </td>
         <td align="center"> 2 </td>
