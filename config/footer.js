@@ -46,7 +46,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="mailto:marcom@apecloud.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <a href="mailto:kubeblocks@apecloud.com" target="_blank" rel="noreferrer noopener">
                   Email
                 </a>
               </span>
@@ -55,7 +55,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="https://twitter.com/KubeBlocks" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <a href="https://twitter.com/KubeBlocks" target="_blank" rel="noreferrer noopener">
                   Twitter
                 </a>
               </span>
@@ -64,7 +64,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-1wuhvfww0-WMZOCSvgnAByQ0joAGUi4Q" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-1wuhvfww0-WMZOCSvgnAByQ0joAGUi4Q" target="_blank" rel="noreferrer noopener">
                   Slack
                 </a>
               </span>
