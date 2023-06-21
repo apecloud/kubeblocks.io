@@ -80,5 +80,5 @@ module.exports = {
     width: 72,
     height: 18,
   },
-  copyright: `© 2023 ApeCloud Co., Ltd.`,
+  copyright: `© 2023 ApeCloud PTE. Ltd.`,
 }
