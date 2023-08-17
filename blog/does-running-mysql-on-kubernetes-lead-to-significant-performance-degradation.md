@@ -1,3 +1,15 @@
+---
+slug: first-blog-post
+title: Does running MySQL on Kubernetes lead to significant performance degradation?
+description: Does running MySQL on Kubernetes lead to significant performance degradation?
+authors:
+  name: Thomas
+  url: https://github.com/realzyy
+  image_url: https://avatars.githubusercontent.com/u/1814084?v=4
+tags: [benchmark, MySQL database operator]
+image: /img/blog-banner.png
+---
+
 # Does running MySQL on Kubernetes lead to significant performance degradation?
  
  Does running MySQL on Kubernetes lead to significant performance degradation? Although concerns about this have been raised recently, few tests have been conducted, and results have rarely been shared publicly.
@@ -76,70 +88,112 @@ The above points have been verified on AWS and are likely to still hold true on 
 
 ### MySQL and sysbench are deployed in the same K8s cluster
 
-![Deploy MySQL and sysbench in the same K8s cluster](/img/MySQL%20and%20sysbench%20are%20deployed%20in%20the%20same%20K8s%20cluster.png)
+<img src="/blogImg/MySQL%20and%20sysbench%20are%20deployed%20in%20the%20same%20K8s%20cluster.png" alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
+
 
 #### Read-intensive workload
-![img](/img/Read-intensive%20workload-1.png)
-![img](/img/Read-intensive%20workload-2.png)
-![img](/img/Read-intensive%20workload-3.png)
-![img](/img/Read-intensive%20workload-4.ong.png)
-![img](/img/Read-intensive%20workload-5.png)
-![img](/img/Read-intensive%20workload-6.png)
-![img](/img/Read-intensive%20workload-7.png)
+
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-1.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload-2.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-3.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload-4.ong.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-5.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload-6.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-7.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+</div>
+
 
 
 #### Read-write balanced workload
-![img](/img/Read-write%20balanced%20workload-1.png)
-![img](/img/Read-write%20balanced%20workload-2.png)
-![img](/img/Read-write%20balanced%20workload-3.png)
-![img](/img/Read-write%20balanced%20workload-4.png)
-![img](/img/Read-write%20balanced%20workload-5.png)
-![img](/img/Read-write%20balanced%20workload-6.png)
+
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload-1.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload-2.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload-3.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload-4.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload-5.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload-6.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
 
 
 #### Write-intensive workload
-![img](/img/Write-intensive%20workload-1.png)
-![img](/img/Write-intensive%20workload-2.png)
-![img](/img/Write-intensive%20workload-3.png)
-![img](/img/Write-intensive%20workload-4.png)
-![img](/img/Write-intensive%20workload-5.png)
-![img](/img/Write-intensive%20workload-6.png)
 
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload-1.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload-2.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload-3.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload-4.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload-5.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload-6.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
 
 
 ### MySQL and sysbench are deployed in two K8s clusters
 
-![img](/img/MySQL%20and%20sysbench%20are%20deployed%20in%20two%20K8s%20clusters.png)
+<img src="/blogImg/MySQL%20and%20sysbench%20are%20deployed%20in%20two%20K8s%20clusters.png" alt="MySQL and sysbench are deployed in two K8s clusters" style={{padding: "10px 10%"}} />
 
 
 #### Read-intensive workload
 
-![img](/img/Read-intensive%20workload-two%201.png)
-![img](/img/Read-intensive%20workload-two%202.png)
-![img](/img/Read-intensive%20workload%20-two%203.png)
-![img](/img/Read-intensive%20workload%20-two%204.png)
-![img](/img/Read-intensive%20workload-%20two%205.png)
-![img](/img/Read-intensive%20workload%20-%20two%207.png)
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-two%201.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload-two%202.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload%20-two%203.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload%20-two%204.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-intensive%20workload-%20two%205.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-intensive%20workload%20-%20two%207.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
+
 
 #### Read-write balanced workload
 
-![img](/img/Read-write%20balanced%20workload%20-two%20-1.png)
-![img](/img/Read-write%20balanced%20workload-%20two%202.png)
-![img](/img/Read-write%20balanced%20workload%20-two%204.png)
-![img](/img/Read-write%20balanced%20workload%20-two%205%20.png)
-![img](/img/Read-write%20balanced%20workload%20-%20two%206.png)
-![img](/img/Read-write%20balanced%20workload%20two%207.png)
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload%20-two%20-1.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload-%20two%202.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload%20-two%204.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload%20-two%205%20.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Read-write%20balanced%20workload%20-%20two%206.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Read-write%20balanced%20workload%20two%207.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
 
 
 #### Write-intensive workload
 
-![img](/img/Write-intensive%20workload%20two%20-1.png)
-![img](/img/Write-intensive%20workload%20two%202.png)
-![img](/img/Write-intensive%20workload%20-%20two%203.png)
-![img](/img/Write-intensive%20workload%20two%204.png)
-![img](/img/Write-intensive%20workload%20two%205.png)
-![img](/img/Write-intensive%20workload%20two%206.png)
-
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload%20two%20-1.png" alt="Image 1" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload%20two%202.png" alt="Image 2" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload%20-%20two%203.png" alt="Image 3" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload%20two%204.png" alt="Image 4" style={{width: "50%", padding: "5px"}} />
+</div>
+<div style={{display: "flex"}}>
+  <img src="/blogImg/Write-intensive%20workload%20two%205.png" alt="Image 5" style={{width: "50%", padding: "5px"}} />
+  <img src="/blogImg/Write-intensive%20workload%20two%206.png" alt="Image 6" style={{width: "50%", padding: "5px"}} />
+</div>
 
 
 
