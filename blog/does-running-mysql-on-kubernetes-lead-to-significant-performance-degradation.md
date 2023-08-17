@@ -1,5 +1,5 @@
 ---
-slug: first-blog-post
+slug: Does-running-MySQL-on-Kubernetes-lead-to-significant-performance-degradation
 title: Does running MySQL on Kubernetes lead to significant performance degradation?
 description: Does running MySQL on Kubernetes lead to significant performance degradation?
 authors:
