@@ -36,7 +36,7 @@ export default function BlogPostItems({ items }: Props): JSX.Element {
             <div key={BlogPostContent.metadata.permalink} className='col margin-bottom--lg'>
               <a href={BlogPostContent.metadata.permalink}><div className="card cardItem">
                 <div className="card_image">
-                  <LazyLoadImage src={BlogPostContent.frontMatter.image ? BlogPostContent.frontMatter.image : '/img/default.jpg'} alt={BlogPostContent.metadata.title} />
+                  <LazyLoadImage src={BlogPostContent.frontMatter.image ? BlogPostContent.frontMatter.image : '/img/blog-banner.png'} alt={BlogPostContent.metadata.title} />
                 </div>
                 <div className="card_time">{BlogPostContent.metadata.formattedDate}</div>
                 <div className="card_body">
