@@ -17,10 +17,10 @@ module.exports = {
           label: "Docs",
           to: "/docs/preview/user_docs/introduction",
         },
-        {
-          label: "Blogs",
-          href: "/blog",
-        },
+        // {
+        //   label: "Blogs",
+        //   href: "/blog",
+        // },
         {
           label: "Resources",
           href: "/resources",
