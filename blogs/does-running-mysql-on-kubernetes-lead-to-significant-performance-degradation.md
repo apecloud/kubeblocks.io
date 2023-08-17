@@ -1,7 +1,7 @@
 # Does running MySQL on Kubernetes lead to significant performance degradation?
  
  Does running MySQL on Kubernetes lead to significant performance degradation? Although concerns about this have been raised recently, few tests have been conducted, and results have rarely been shared publicly.
-To answer this question, we used a popular benchmarking tool to evaluate MySQL throughput and latency in the following typical scenarios:
+To answer this question, we used a popular benchmarking tool to evaluate MySQL throughput and latency in the following typical scenarios and tried to give a report and our insights:
 - MySQL and the benchmarking tool are deployed in the same K8s cluster to simulate the application and database running in the same K8s cluster.
 - MySQL and the benchmarking tool are deployed in two K8s clusters to simulate the application and database running in two K8s clusters.
 Furthermore, we obtained Amazon RDS MySQL performance data using the same testing method. By comparing the performance data of Amazon RDS MySQL, users can gain a more comprehensive understanding of whether MySQL's performance on K8s can meet their production requirements.
@@ -15,21 +15,20 @@ As part of the LAMP stack, MySQL is often used to build websites and web applica
 - Read-intensive workload: 80% of operations are reads, and 20% are writes
 - Read-write balanced workload: 50% of operations are reads, and 50% are writes
 - Write-intensive workload: 20% of operations are reads, and 80% are writes
-We have chosen sysbench as our benchmarking tool. It is a widely used tool that can be scripted and run on multiple threads. Sysbench can simulate the application workloads mentioned above and output throughput in terms of queries per second (QPS) and latency in terms of the 99th percentile (ms).
-https://github.com/akopytov/sysbench
+We have chosen [sysbench](https://github.com/akopytov/sysbench) as our benchmarking tool. It is a widely used tool that can be scripted and run on multiple threads. Sysbench can simulate the application workloads mentioned above and output throughput in terms of queries per second (QPS) and latency in terms of the 99th percentile (ms).
 
 ### The Open Source MySQL Operators
 
-For K8s, MySQL is a complex stateful application that requires deployment and configuration through an operator. We have selected several open-source MySQL operators for testing, and their information is as follows:
-- MySQL Operator for Kubernetes by the Oracle team
+For K8s, MySQL is a complex stateful application that requires deployment and configuration with an operator. We have selected several open-source MySQL operators for testing, and their information is as follows:
+- [MySQL Operator](https://github.com/mysql/mysql-operator) for Kubernetes by the Oracle team
 The MySQL Operator for Kubernetes is an operator for managing MySQL InnoDB Cluster setups inside a Kubernetes Cluster. It manages the full lifecycle with set up and maintenance that includes automating upgrades and backup.
-https://github.com/mysql/mysql-operator
-- XtraDB Cluster Operator by the Percona team
+
+- [XtraDB Cluster](https://github.com/percona/percona-xtradb-cluster-operator) Operator by the Percona team
 Based on our best practices for deployment and configuration, Percona Operator for MySQL based on Percona XtraDB Cluster contains everything you need to quickly and consistently deploy and scale Percona XtraDB Cluster instances in a Kubernetes-based environment on-premises or in the cloud.
-https://github.com/percona/percona-xtradb-cluster-operator
-- KubeBlocks by the ApeCloud team
+
+- [KubeBlocks by the ApeCloud](https://github.com/apecloud/kubeblocks) team
 KubeBlocks is an open-source Kubernetes operator that manages relational, NoSQL, vector, and streaming databases on the public cloud or on-premise. It is designed for production purposes, providing reliable, performant, observable, and cost-effective data infrastructure for most scenarios.
-https://github.com/apecloud/kubeblocks
+
 
 ### The Infrastructure - Computing, Storage, and Networking
 
