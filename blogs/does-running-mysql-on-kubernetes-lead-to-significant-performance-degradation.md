@@ -76,24 +76,71 @@ The above points have been verified on AWS and are likely to still hold true on 
 ## Detailed benchmarks
 
 ### MySQL and sysbench are deployed in the same K8s cluster
-img
+
+![Deploy MySQL and sysbench in the same K8s cluster](/img/MySQL%20and%20sysbench%20are%20deployed%20in%20the%20same%20K8s%20cluster.png)
+
 #### Read-intensive workload
-img
+![img](/img/Read-intensive%20workload-1.png)
+![img](/img/Read-intensive%20workload-2.png)
+![img](/img/Read-intensive%20workload-3.png)
+![img](/img/Read-intensive%20workload-4.ong.png)
+![img](/img/Read-intensive%20workload-5.png)
+![img](/img/Read-intensive%20workload-6.png)
+![img](/img/Read-intensive%20workload-7.png)
+
 
 #### Read-write balanced workload
-img
+![img](/img/Read-write%20balanced%20workload-1.png)
+![img](/img/Read-write%20balanced%20workload-2.png)
+![img](/img/Read-write%20balanced%20workload-3.png)
+![img](/img/Read-write%20balanced%20workload-4.png)
+![img](/img/Read-write%20balanced%20workload-5.png)
+![img](/img/Read-write%20balanced%20workload-6.png)
+
 
 #### Write-intensive workload
-img
+![img](/img/Write-intensive%20workload-1.png)
+![img](/img/Write-intensive%20workload-2.png)
+![img](/img/Write-intensive%20workload-3.png)
+![img](/img/Write-intensive%20workload-4.png)
+![img](/img/Write-intensive%20workload-5.png)
+![img](/img/Write-intensive%20workload-6.png)
+
+
 
 ### MySQL and sysbench are deployed in two K8s clusters
-img
+
+![img](/img/MySQL%20and%20sysbench%20are%20deployed%20in%20two%20K8s%20clusters.png)
+
 
 #### Read-intensive workload
-img
+
+![img](/img/Read-intensive%20workload-two%201.png)
+![img](/img/Read-intensive%20workload-two%202.png)
+![img](/img/Read-intensive%20workload%20-two%203.png)
+![img](/img/Read-intensive%20workload%20-two%204.png)
+![img](/img/Read-intensive%20workload-%20two%205.png)
+![img](/img/Read-intensive%20workload%20-%20two%207.png)
 
 #### Read-write balanced workload
-img
+
+![img](/img/Read-write%20balanced%20workload%20-two%20-1.png)
+![img](/img/Read-write%20balanced%20workload-%20two%202.png)
+![img](/img/Read-write%20balanced%20workload%20-two%204.png)
+![img](/img/Read-write%20balanced%20workload%20-two%205%20.png)
+![img](/img/Read-write%20balanced%20workload%20-%20two%206.png)
+![img](/img/Read-write%20balanced%20workload%20two%207.png)
+
 
 #### Write-intensive workload
-img
+
+![img](/img/Write-intensive%20workload%20two%20-1.png)
+![img](/img/Write-intensive%20workload%20two%202.png)
+![img](/img/Write-intensive%20workload%20-%20two%203.png)
+![img](/img/Write-intensive%20workload%20two%204.png)
+![img](/img/Write-intensive%20workload%20two%205.png)
+![img](/img/Write-intensive%20workload%20two%206.png)
+
+
+
+
