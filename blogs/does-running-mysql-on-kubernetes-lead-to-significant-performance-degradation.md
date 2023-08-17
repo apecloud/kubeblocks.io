@@ -4,6 +4,7 @@
 To answer this question, we used a popular benchmarking tool to evaluate MySQL throughput and latency in the following typical scenarios and tried to give a report and our insights:
 - MySQL and the benchmarking tool are deployed in the same K8s cluster to simulate the application and database running in the same K8s cluster.
 - MySQL and the benchmarking tool are deployed in two K8s clusters to simulate the application and database running in two K8s clusters.
+
 Furthermore, we obtained Amazon RDS MySQL performance data using the same testing method. By comparing the performance data of Amazon RDS MySQL, users can gain a more comprehensive understanding of whether MySQL's performance on K8s can meet their production requirements.
 
 This report evaluates the performance of self-hosted MySQL on Amazon EKS for typical OLTP workloads.
