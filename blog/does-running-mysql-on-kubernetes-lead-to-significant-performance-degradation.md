@@ -33,13 +33,13 @@ We have chosen [sysbench](https://github.com/akopytov/sysbench) as our benchmark
 ### The Open Source MySQL Operators
 
 For K8s, MySQL is a complex stateful application that requires deployment and configuration with an operator. We have selected several open-source MySQL operators for testing, and their information is as follows:
-- [MySQL Operator for Kubernetes](https://github.com/mysql/mysql-operator) by the Oracle team
+- [MySQL Operator for Kubernetes](https://github.com/mysql/mysql-operator) by the Oracle team  
 The MySQL Operator for Kubernetes is an operator for managing MySQL InnoDB Cluster setups inside a Kubernetes Cluster. It manages the full lifecycle with set up and maintenance that includes automating upgrades and backup.
 
-- [XtraDB Cluster Operator](https://github.com/percona/percona-xtradb-cluster-operator) by the Percona team
+- [XtraDB Cluster Operator](https://github.com/percona/percona-xtradb-cluster-operator) by the Percona team  
 Based on our best practices for deployment and configuration, Percona Operator for MySQL based on Percona XtraDB Cluster contains everything you need to quickly and consistently deploy and scale Percona XtraDB Cluster instances in a Kubernetes-based environment on-premises or in the cloud.
 
-- [KubeBlocks](https://github.com/apecloud/kubeblocks) by the ApeCloud team
+- [KubeBlocks](https://github.com/apecloud/kubeblocks) by the ApeCloud team  
 KubeBlocks is an open-source Kubernetes operator that manages relational, NoSQL, vector, and streaming databases on the public cloud or on-premise. It is designed for production purposes, providing reliable, performant, observable, and cost-effective data infrastructure for most scenarios.
 
 
