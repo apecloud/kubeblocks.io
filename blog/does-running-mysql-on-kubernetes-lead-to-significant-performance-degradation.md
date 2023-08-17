@@ -12,14 +12,13 @@ image: /img/blog-banner.png
 
 # Does running MySQL on Kubernetes lead to significant performance degradation?
  
- Does running MySQL on Kubernetes lead to significant performance degradation? Although concerns about this have been raised recently, few tests have been conducted, and results have rarely been shared publicly.
+Does running MySQL on Kubernetes lead to significant performance degradation? Although concerns about this have been raised recently, few tests have been conducted, and results have rarely been shared publicly.
 To answer this question, we used a popular benchmarking tool to evaluate MySQL throughput and latency in the following typical scenarios and tried to give a report and our insights:
 - MySQL and the benchmarking tool are deployed in the same K8s cluster to simulate the application and database running in the same K8s cluster.
 - MySQL and the benchmarking tool are deployed in two K8s clusters to simulate the application and database running in two K8s clusters.
 
 Furthermore, we obtained Amazon RDS MySQL performance data using the same testing method. By comparing the performance data of Amazon RDS MySQL, users can gain a more comprehensive understanding of whether MySQL's performance on K8s can meet their production requirements.
 
-This report evaluates the performance of self-hosted MySQL on Amazon EKS for typical OLTP workloads.
 
 ## Methodology
 
@@ -34,21 +33,24 @@ We have chosen [sysbench](https://github.com/akopytov/sysbench) as our benchmark
 ### The Open Source MySQL Operators
 
 For K8s, MySQL is a complex stateful application that requires deployment and configuration with an operator. We have selected several open-source MySQL operators for testing, and their information is as follows:
-- [MySQL Operator](https://github.com/mysql/mysql-operator) for Kubernetes by the Oracle team
+- [MySQL Operator for Kubernetes](https://github.com/mysql/mysql-operator) by the Oracle team
 The MySQL Operator for Kubernetes is an operator for managing MySQL InnoDB Cluster setups inside a Kubernetes Cluster. It manages the full lifecycle with set up and maintenance that includes automating upgrades and backup.
 
-- [XtraDB Cluster](https://github.com/percona/percona-xtradb-cluster-operator) Operator by the Percona team
+- [XtraDB Cluster Operator](https://github.com/percona/percona-xtradb-cluster-operator) by the Percona team
 Based on our best practices for deployment and configuration, Percona Operator for MySQL based on Percona XtraDB Cluster contains everything you need to quickly and consistently deploy and scale Percona XtraDB Cluster instances in a Kubernetes-based environment on-premises or in the cloud.
 
-- [KubeBlocks by the ApeCloud](https://github.com/apecloud/kubeblocks) team
+- [KubeBlocks](https://github.com/apecloud/kubeblocks) by the ApeCloud team
 KubeBlocks is an open-source Kubernetes operator that manages relational, NoSQL, vector, and streaming databases on the public cloud or on-premise. It is designed for production purposes, providing reliable, performant, observable, and cost-effective data infrastructure for most scenarios.
 
 
-### The Infrastructure - Computing, Storage, and Networking
+### The Infrastructure - Computing, Storage, and Network
 
-We utilized AWS, the world's largest cloud computing vendor, to provide the necessary computing, storage, and networking resources for benchmarking. We established baseline performance by testing Amazon RDS Multi-AZ with two standbys.
+We utilized AWS, the world's largest cloud computing vendor, to provide the necessary computing, storage, and network resources for benchmarking. We established baseline performance by testing Amazon RDS Multi-AZ with two standbys.
+
 We tested three mainstream instance types: one with 4 vCPUs and 16GB of memory, another with 8 vCPUs and 32GB of memory, and a third with 16 vCPUs and 64GB of memory. We chose these instance types because smaller ones are commonly used in development without performance bottlenecks, while larger ones are less widely used and therefore less representative. We selected the latest Intel CPU platforms for our instance types. Although AMD and ARM platforms may perform better in specific scenarios, testing them would remain the same conclusion as our tests.
+
 We have designated gp3 as the primary block storage option. This selection ensures a consistent baseline performance of 3,000 IOPS, while allowing for scalable IOPS and throughput regardless of volume size. In cases where gp3 is unsuitable, we may consider io2 as an alternative. Although both gp3 and io2 offer excellent performance, there are cost differences to keep in mind. We have configured various volume sizes for different vCPU numbers and adjusted IOPS to achieve optimal performance under both CPU-bound and IO-bound scenarios.
+
 To meet disaster recovery requirements in production, we deployed MySQL on EC2 instances within the same region but across different availability zones. This allowed us to observe the impact of cross-AZ container networks on MySQL performance. Additionally, we configured a layer 4 load balancer on top of MySQL to handle requests from sysbench deployed on other K8s clusters.
 
 ## Insights
