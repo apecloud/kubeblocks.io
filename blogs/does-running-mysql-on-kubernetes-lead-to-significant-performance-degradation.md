@@ -15,6 +15,7 @@ As part of the LAMP stack, MySQL is often used to build websites and web applica
 - Read-intensive workload: 80% of operations are reads, and 20% are writes
 - Read-write balanced workload: 50% of operations are reads, and 50% are writes
 - Write-intensive workload: 20% of operations are reads, and 80% are writes
+
 We have chosen [sysbench](https://github.com/akopytov/sysbench) as our benchmarking tool. It is a widely used tool that can be scripted and run on multiple threads. Sysbench can simulate the application workloads mentioned above and output throughput in terms of queries per second (QPS) and latency in terms of the 99th percentile (ms).
 
 ### The Open Source MySQL Operators
