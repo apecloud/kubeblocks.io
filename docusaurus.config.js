@@ -134,11 +134,11 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
-    algolia: {
-      appId: "SES9RBYTIC",
-      apiKey: "81cd1a2799d82dc7218d055d2414476d",
-      indexName: "kubeblocks"
-    }
+    // algolia: {
+    //   appId: "SES9RBYTIC",
+    //   apiKey: "81cd1a2799d82dc7218d055d2414476d",
+    //   indexName: "kubeblocks"
+    // }
   },
 };
 
