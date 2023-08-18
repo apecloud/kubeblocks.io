@@ -80,7 +80,7 @@ The three workloads chosen in this article all involve a large amount of read an
 
 ### Running MySQL on K8s does not necessarily result in performance degradation
 
-This report includes testing of additional scenarios with sufficient IOPS to verify buffer pool hit rates and potential impacts of cross-K8s cluster networks. The specific test data is as follows:
+This report includes testing of additional scenarios with sufficient IOPS to verify the potential impacts of buffer pool hit rates and cross-K8s cluster networks. The specific test data is as follows:
 
 <div>
   <img src='https://cdn.kubeblocks.com/img/kubeblocks/max-throughput.png' alt="max throughput" style={{padding: "10px 10%"}} />
