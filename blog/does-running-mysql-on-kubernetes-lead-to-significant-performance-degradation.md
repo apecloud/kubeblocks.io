@@ -73,7 +73,7 @@ To achieve better performance, users should set innodb_redo_log_capacity to 2G. 
 Whether it is a fully managed MySQL service or a self-hosted MySQL, response time (RT) is positively correlated with concurrent threads. Increasing the number of concurrent threads will lead to an increase in RT. When the load is heavy, increasing the number of concurrent threads will bring extra burden, reduce the overall throughput, and even cause database crashes. In general, most MySQL connections are in an idle state, and active connections are not that high. In the test with 10 concurrent threads, the RT data of MySQL is as follows:
 
 <div>
-  <img src='https://kubeblocks.io/img/blogImg/mysql-rt.png' alt="mysql rt" style={{padding: "10px 10%"}} />
+  <img src='https://kubeblocks.io/img/images/mysql-rt.png' alt="mysql rt" style={{padding: "10px 10%"}} />
 </div>
 
 The three workloads chosen in this article all involve a large amount of read and write operations on EBS. By setting innodb_redo_log_capacity to 2G, KubeBlocks has lower RT in IO-bound situations. After adjusting the IOPS to 12000, the RT of AWS RDS MySQL cluster has improved significantly. To achieve better performance, users should purchase enough IOPS. However, it is important to remember that AWS IOPS can be expensive, so more is not necessarily better.
@@ -83,7 +83,7 @@ The three workloads chosen in this article all involve a large amount of read an
 This report includes testing of additional scenarios with sufficient IOPS to verify buffer pool hit rates and potential impacts of cross-K8s cluster networks. The specific test data is as follows:
 
 <div>
-  <img src='https://kubeblocks.io/img/blogImg/max-throughput.png' alt="max throughput" style={{padding: "10px 10%"}} />
+  <img src='https://kubeblocks.io/img/images/max-throughput.png' alt="max throughput" style={{padding: "10px 10%"}} />
 </div>
 
 When data is not fully loaded into memory, the throughput of AWS RDS MySQL cluster is slightly lower than that of MySQL managed by KubeBlocks operator. Subsequently, sysbench was deployed to another K8s cluster to access AWS RDS MySQL Cluster and MySQL managed by KubeBlocks operator. The three workloads simulated by sysbench all achieved some performance improvements, but the throughput of AWS RDS MySQL cluster was still slightly lower than that of MySQL managed by KubeBlocks operator.
@@ -99,89 +99,89 @@ The above points have been verified on AWS and are likely to still hold true on 
 ### MySQL and sysbench are deployed in the same K8s cluster
 
 <div>
-  <img src='https://kubeblocks.io/img/blogImg/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
+  <img src='http://kubeblocks.io/img/images/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
 </div>
 
 #### Read-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-7.png' alt="Image 7" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-7.png' alt="Image 7" style={{width: "33%", padding: "5px"}} />
 </div>
 
 #### Read-write balanced workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
 
 #### Write-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
 
 ### MySQL and sysbench are deployed in two K8s clusters
 
 <div>
-  <img src='https://kubeblocks.io/img/blogImg/MySQL-and-sysbench-are-deployed-in-two-K8s-clusters.png' alt="MySQL and sysbench are deployed in two K8s clusters" style={{padding: "10px 10%"}} />
+  <img src='https://kubeblocks.io/img/images/MySQL-and-sysbench-are-deployed-in-two-K8s-clusters.png' alt="MySQL and sysbench are deployed in two K8s clusters" style={{padding: "10px 10%"}} />
 </div>
 
 #### Read-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-intensive-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-intensive-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
 
 #### Read-write balanced workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Read-write-balanced-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Read-write-balanced-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
 
 #### Write-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-1.png' alt="Image 1" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-3.png' alt="Image 3" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-5.png' alt="Image 5" style={{width: "33%", padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
-  <img src='https://kubeblocks.io/img/blogImg/Write-intensive-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-2.png' alt="Image 2" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-4.png' alt="Image 4" style={{width: "33%", padding: "5px"}} />
+  <img src='https://kubeblocks.io/img/images/Write-intensive-workload-two-6.png' alt="Image 6" style={{width: "33%", padding: "5px"}} />
 </div>
