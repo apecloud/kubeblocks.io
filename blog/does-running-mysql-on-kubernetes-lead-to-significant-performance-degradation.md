@@ -99,7 +99,7 @@ The above points have been verified on AWS and are likely to still hold true on 
 ### MySQL and sysbench are deployed in the same K8s cluster
 
 <div>
-  <img src='https://kubeblocks.io/img/images/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
+  <img src='https://kubeblocks.io/images/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
 </div>
 
 #### Read-intensive workload
