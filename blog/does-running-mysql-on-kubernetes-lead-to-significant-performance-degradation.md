@@ -99,46 +99,46 @@ The above points have been verified on AWS and are likely to still hold true on 
 ### MySQL and sysbench are deployed in the same K8s cluster
 
 <div>
-  <img src='http://kubeblocks.io/img/images/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
+  <img src='https://kubeblocks.io/img/images/MySQL-and-sysbench-are-deployed-in-the-same-K8s-cluster.png' alt="Deploy MySQL and sysbench in the same K8s cluster" style={{padding: "10px 10%"}} />
 </div>
 
 #### Read-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-1.png' alt="Image 1" width='33%' />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-1.png' alt="Image 1" width='33%' style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-5.png' alt="Image 5" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-7.png' alt="Image 7" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-7.png' alt="Image 7" width="33%" style={{padding: "5px"}} />
 </div>
 
 #### Read-write balanced workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-1.png' alt="Image 1" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-5.png' alt="Image 5" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-1.png' alt="Image 1" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-4.png' alt="Image 4" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-4.png' alt="Image 4" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
 
 #### Write-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-1.png' alt="Image 1" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-5.png' alt="Image 5" width="33%" />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-1.png' alt="Image 1" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-4.png' alt="Image 4" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-4.png' alt="Image 4" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
 
 ### MySQL and sysbench are deployed in two K8s clusters
@@ -150,38 +150,38 @@ The above points have been verified on AWS and are likely to still hold true on 
 #### Read-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-1.png' alt="Image 1" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-5.png' alt="Image 5" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-1.png' alt="Image 1" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-4.png' alt="Image 4" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-4.png' alt="Image 4" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-intensive-workload-two-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
 
 #### Read-write balanced workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-1.png' alt="Image 1" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-5.png' alt="Image 5" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-1.png' alt="Image 1" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-4.png' alt="Image 4" width="33%" />
-  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-4.png' alt="Image 4" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Read-write-balanced-workload-two-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
 
 #### Write-intensive workload
 
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-1.png' alt="Image 1" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-3.png' alt="Image 3" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-5.png' alt="Image 5" width="33%" />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-1.png' alt="Image 1" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-3.png' alt="Image 3" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-5.png' alt="Image 5" width="33%" style={{padding: "5px"}} />
 </div>
 <div style={{display: "flex"}}>
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-2.png' alt="Image 2" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-4.png' alt="Image 4" width="33%" />
-  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-6.png' alt="Image 6" width="33%" />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-2.png' alt="Image 2" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-4.png' alt="Image 4" width="33%" style={{padding: "5px"}} />
+  <img src='https://kubeblocks.io/images/Write-intensive-workload-two-6.png' alt="Image 6" width="33%" style={{padding: "5px"}} />
 </div>
