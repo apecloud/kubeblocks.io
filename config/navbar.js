@@ -6,7 +6,7 @@ module.exports = {
   items: [
     {
       type: "doc",
-      docId: "user_docs/introduction/introduction",
+      docId: "user_docs/overview/introduction",
       position: "left",
       label: "Docs",
     },

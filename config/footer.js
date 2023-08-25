@@ -15,12 +15,12 @@ module.exports = {
       items: [
         {
           label: "Docs",
-          to: "/docs/preview/user_docs/introduction",
+          to: "/docs/preview/user_docs/overview/introduction",
         },
-        // {
-        //   label: "Blogs",
-        //   href: "/blog",
-        // },
+        {
+          label: "Blogs",
+          href: "/blog",
+        },
         {
           label: "Resources",
           href: "/resources",
