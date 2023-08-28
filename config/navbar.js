@@ -20,6 +20,7 @@ module.exports = {
       href: 'https://github.com/apecloud/kubeblocks',
       position: 'right',
       className: 'header-github-link',
+      label: "Go to GitHub",
     },
   ],
   // style: "dark",
