@@ -16,11 +16,11 @@ module.exports = {
     //   type: 'docsVersionDropdown',
     //   position: 'right',
     // },
-    // {
-    //   href: 'https://github.com/apecloud/kubeblocks',
-    //   position: 'right',
-    //   className: 'header-github-link',
-    // },
+    {
+      href: 'https://github.com/apecloud/kubeblocks',
+      position: 'right',
+      className: 'header-github-link',
+    },
   ],
   // style: "dark",
   // style: "primary",
