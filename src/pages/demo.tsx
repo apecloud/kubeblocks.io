@@ -3,13 +3,13 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactPlayer from 'react-player'
 import Layout from '@theme/Layout';
 import 'react-tabs/style/react-tabs.css';
-import './resources.less';
+import './demo.less';
 
 export default () => {
 
 
   return (
-    <Layout title="Resources">
+    <Layout title="Demo">
       <div className="container margin-vert--lg">
         {/* <Tabs>
           <TabList>
