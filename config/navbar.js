@@ -5,31 +5,16 @@ module.exports = {
   },
   items: [
     {
-      label: 'Docs',
-      type: 'dropdown',
+      label: 'User Docs',
+      type: 'doc',
       position: 'left',
-      items: [
-        {
-          label: 'User Docs',
-          type: 'doc',
-          docId: 'user_docs/overview/introduction',
-        },
-        {
-          label: 'Developer Docs',//api
-          type: 'doc',
-          docId: 'release_notes/v0.4.0/v0.4.0',
-        },
-        // {
-        //   label: 'Fault Injection',
-        //   type: 'doc',
-        //   docId: 'fault_injection',
-        // },
-        // {
-        //   label: 'Integration',
-        //   type: 'doc',
-        //   docId: 'integration',
-        // },
-      ],
+      docId: 'user_docs/overview/introduction',
+    },
+    {
+      type: 'doc',
+      label: 'Developer Docs',
+      position: 'left',
+      docId: 'developer_docs/overview',
     },
     {to: '/blog', label: 'Blogs', position: 'left'},
     {to: '/demo', label: 'Demo', position: 'left'},
@@ -47,3 +32,5 @@ module.exports = {
   // style: "dark",
   // style: "primary",
 }
+
+
