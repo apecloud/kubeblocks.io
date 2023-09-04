@@ -43,7 +43,6 @@ function DocSidebarDesktop({path, sidebar, onCollapse, isHidden}: Props) {
       const p = location.pathname.replace(pathMatch[0], version.path);
       localStorage.setItem("docs-preferred-version-default", version.name)
       if(version.name=='release-0.5'&&(p.indexOf('integration')!=-1||p.indexOf('fault_injection')!=-1)){
-        console.log(version.sidebars.developer_docs.link.path,3333)
         history.push(version.sidebars.developer_docs.link.path)
       }else{
         history.push(p)
