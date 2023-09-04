@@ -26,8 +26,8 @@ module.exports = {
           href: "/blog",
         },
         {
-          label: "Resources",
-          href: "/resources",
+          label: "Demo",
+          href: "/demo",
         },
       ],
     },
