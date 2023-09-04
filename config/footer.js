@@ -14,8 +14,12 @@ module.exports = {
       title: "Resources",
       items: [
         {
-          label: "Docs",
+          label: "User Docs",
           to: "/docs/preview/user_docs/overview/introduction",
+        },
+        {
+          label: "Developer Docs",
+          to: "/docs/preview/developer_docs/overview",
         },
         {
           label: "Blogs",

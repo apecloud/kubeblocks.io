@@ -5,13 +5,19 @@ module.exports = {
   },
   items: [
     {
-      type: "doc",
-      docId: "user_docs/overview/introduction",
-      position: "left",
-      label: "Docs",
+      label: 'User Docs',
+      type: 'doc',
+      position: 'left',
+      docId: 'user_docs/overview/introduction',
+    },
+    {
+      label: 'Developer Docs',
+      type: 'doc',
+      position: 'left',
+      docId: 'developer_docs/overview',
     },
     {to: '/blog', label: 'Blogs', position: 'left'},
-    {to: '/resources', label: 'Resources', position: 'left'},
+    {to: '/demo', label: 'Demo', position: 'left'},
     // {
     //   type: 'docsVersionDropdown',
     //   position: 'right',
@@ -26,3 +32,5 @@ module.exports = {
   // style: "dark",
   // style: "primary",
 }
+
+
