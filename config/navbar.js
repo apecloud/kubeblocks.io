@@ -11,8 +11,8 @@ module.exports = {
       docId: 'user_docs/overview/introduction',
     },
     {
-      type: 'doc',
       label: 'Developer Docs',
+      type: 'doc',
       position: 'left',
       docId: 'developer_docs/overview',
     },
