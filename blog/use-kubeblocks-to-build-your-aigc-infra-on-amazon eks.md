@@ -47,7 +47,7 @@ The above capabilities allow us to build AIGC infrastructure, such as LLMs and v
 The following instructions take Qdrant as an example to introduce how to set up a vector database on AWS EKS by KubeBlocks.
 
 Qdrant is an open-source vector database designed to efficiently store and query high-dimensional vector data. The architecture of Qdrant can be described as follows:
-![](../static/images/use-kubeblocks-to-build2.png)
+![Qdrant architecture](../static/images/use-kubeblocks-to-build2.png)
 
 **Below are key features of Qdrant:**
 
@@ -247,25 +247,27 @@ spec:
 - Install kubectl and Helm clients.
 
 ### Install kbcli and KubeBlocks
-1. Install kbcli
+
+1. Install kbcli.
   
    ```bash
    curl -fsSL https://kubeblocks.io/installer/install_cli.sh | bash
    ```
 
-2. Install KubeBlocks
+2. Install KubeBlocks.
    
    ```bash
    kbcli kubeblocks install
    ```
 
-3. Enable Qdrant addon
+3. Enable Qdrant addon.
     
    ```bash
    kbcli addon enable qdrant
    ```
 
-## Create a cluster 
+## Create a cluster
+
 1. Create a Standalone Qdrant cluster.
 
    ```bash
@@ -278,7 +280,7 @@ spec:
    ```
 
 
-2. View the cluster status and when the status is running, the cluster is created successfully.
+1. View the cluster status and when the status is running, the cluster is created successfully.
 
    ```bash
    # View the cluster list
@@ -349,16 +351,16 @@ If your cluster is on AWS, install the AWS Load Balancer Controller first.
             }
         }'
    ```
-   Result
+   **Result**
    ```json
-   {"result":true,"status":"ok","time":0.173516958}`
+   {"result":true,"status":"ok","time":0.173516958}
    ```
 
 2. View the information of the created Collection.
    ```bash
    curl 'http://localhost:6333/collections/test_collection'
    ```
-   Result
+   **Result**
    ```sql
    {
      "result": {
@@ -426,7 +428,7 @@ If your cluster is on AWS, install the AWS Load Balancer Controller first.
         }'
     ```
 
-   Result
+   **Result**
     ```json
     {
       "result": {
@@ -448,60 +450,60 @@ If your cluster is on AWS, install the AWS Load Balancer Controller first.
         }'
    ```
 
-   Result
-    ```json
-    {
-      "result": [
-        {
-          "id": 4,
-          "version": 0,
-          "score": 0.99248314,
-          "payload": null,
-          "vector": null
-        },
-        {
-          "id": 1,
-          "version": 0,
-          "score": 0.89463294,
-          "payload": null,
-          "vector": null
-        },
-        {
-          "id": 5,
-          "version": 0,
-          "score": 0.8543979,
-          "payload": null,
-          "vector": null
-        }
-      ],
-      "status": "ok",
-      "time": 0.003061
-    }
-    ```
+   **Result**
+     ```json
+     {
+       "result": [
+         {
+           "id": 4,
+           "version": 0,
+           "score": 0.99248314,
+           "payload": null,
+           "vector": null
+         },
+         {
+           "id": 1,
+           "version": 0,
+           "score": 0.89463294,
+           "payload": null,
+           "vector": null
+         },
+         {
+           "id": 5,
+           "version": 0,
+           "score": 0.8543979,
+           "payload": null,
+           "vector": null
+         }
+       ],
+       "status": "ok",
+       "time": 0.003061
+     }
+     ```
 
-    You can also add additional metadata filtering conditions, such as finding data similar to the vector [0.2,0.1,0.9,0.7] in points where city is equal to London.
+     You can also add additional metadata filtering conditions, such as finding data similar to the vector [0.2,0.1,0.9,0.7] in points where city is equal to London.
 
-    ```bash
-    curl -L -X POST 'http://localhost:6333/collections/test_collection/points/search' \
-        -H 'Content-Type: application/json' \
-        --data-raw '{
-          "filter": {
-              "should": [
-                  {
-                      "key": "city",
-                      "match": {
-                          "value": "London"
-                      }
-                  }
-              ]
-          },
-          "vector": [0.2, 0.1, 0.9, 0.7],
-          "limit": 3
-      }'
+     ```bash
+     curl -L -X POST 'http://localhost:6333/collections/test_collection/points/search' \
+         -H 'Content-Type: application/json' \
+         --data-raw '{
+           "filter": {
+               "should": [
+                   {
+                       "key": "city",
+                       "match": {
+                           "value": "London"
+                       }
+                   }
+               ]
+           },
+           "vector": [0.2, 0.1, 0.9, 0.7],
+           "limit": 3
+       }'
       ```
 
 
-    Result
+   **Result**
 
     ```json
     {
@@ -527,6 +529,7 @@ If your cluster is on AWS, install the AWS Load Balancer Controller first.
     ```
 
 ## Scale the cluster
+
 KubeBlocks supports both vertical and horizontal scaling. If you create a Standalone cluster first, but later find that the capacity is not enough and needs to be scaled, you can vertically or horizontally scale your cluster.
 
 Vertical scaling adds CPU and memory resources.
