@@ -67,7 +67,7 @@ Overall, the architecture of Qdrant is designed to deliver efficient vector stor
 
 This CR defines the ClusterDefinition of Qdrant, including parameters closely related to the engine, such as how Qdrant's services are accessed, how monitoring metrics are collected, how availability is probed.
 
-```YAML
+```yaml
 ---
 apiVersion: apps.kubeblocks.io/v1alpha1
 kind: ClusterDefinition
@@ -242,7 +242,7 @@ spec:
 
 ## Demo
 
-### Prerequisites
+### Before you start
 - Prepare an EKS cluster.
 - Install kubectl and Helm clients.
 
@@ -330,9 +330,11 @@ spec:
 Qdrant provides both HTTP and gRPC protocols for client access on ports 6333 and 6334 respectively. Depending on where the client is, different connection options are offered to connect to the Qdrant cluster. 
 
 
->Note:
+:::note
+
 If your cluster is on AWS, install the AWS Load Balancer Controller first.
 
+:::
 
 - If your client is inside a K8s cluster, run `kbcli cluster describe qdrant` to get the ClusterIP address of the cluster or the corresponding K8s cluster domain name.
 -  If your client is outside the K8s cluster but in the same VPC as the server, run `kbcli cluster expose qdant --enable=true --type=vpc` to get a VPC load balancer address for the database cluster.
