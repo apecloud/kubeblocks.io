@@ -280,7 +280,7 @@ spec:
    ```
 
 
-1. View the cluster status and when the status is running, the cluster is created successfully.
+2. View the cluster status and when the status is running, the cluster is created successfully.
 
    ```bash
    # View the cluster list
