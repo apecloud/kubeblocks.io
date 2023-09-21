@@ -1,7 +1,7 @@
 ---
-slug: Use KubeBlocks to Build Your AIGC Infra on Amazon EKS
-title: Use KubeBlocks to Build Your AIGC Infra on Amazon EKS
-description: Use KubeBlocks to Build Your AIGC Infra on Amazon EKS
+slug: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
+title: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
+description: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
 authors:
   name: iziang
   url: https://github.com/iziang
@@ -10,7 +10,7 @@ tags: [KubeBlocks, AIGC, Amazon EKS]
 image: /img/blog-banner.png
 ---
 
-# Use KubeBlocks to Build Your AIGC Infra on Amazon EKS
+# Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
 ## Foreword
 Generative AI has sparked a widespread interest and catapulted the vector database market into the spotlight. Numerous vector databases have begun to emerge and catch the public's attention.
 
@@ -20,13 +20,13 @@ In Generative AI and Deep Learning, the common practice is to convert unstructur
 
 So, what is embedding? Put simply, embedding is a vector representation composed of floating point numbers. The distance between two vectors represents their correlation. The closer the distance, the higher the correlation; the farther the distance, the lower the correlation. If two embedding vectors are similar, it means that the original data they represent is also similar, which is different from traditional keyword searches.
 
-However, a vector database is complex to manage due to its stateful nature. If used in a production environment, it also faces the same problems as traditional OLTP and OLAP databases does, such as data security, high availability, vertical/horizontal scalability, monitoring and alerts, backup and restore, etc. **Users pay more attention to the value that LLMs and vector databases bring to the business, rather than investing excessive effort into their management.** As vector databases are relatively new, most users lack necessary knowledge, which brings great challenges to implementing LLMs + vector databases stack.
+However, a vector database is complex to manage because in nature it is a stateful workload. When used in the production environment, it faces the same problems as those of traditional OLTP and OLAP databases, such as data security, high availability, vertical/horizontal scalability, monitoring and alerts, backup and restore, etc. **Users pay more attention to the value that LLMs and vector databases bring to the business, rather than investing excessive effort into their management.** As vector databases are relatively new, most users lack necessary knowledge, which brings great challenges to implementing LLMs + vector databases stack.
 
-In fact, these challenges are not unique and are commonly encountered across various stateful databases. To address these problems, KubeBlocks, leveraging the declarative API of K8s, abstracts various databases in a unified manner and uses an operator and a set of APIs to manage databases, greatly alleviating the management burden. Moreover, **built on K8s, KubeBlocks supports multi-cloud to avoid the risk of cloud vendors lock-in.**
+To address these problems, KubeBlocks, leveraging the declarative API of K8s, abstracts various databases in a unified manner and uses an operator and a set of APIs to manage databases, greatly alleviating the management burden. Moreover, **built on K8s, KubeBlocks supports multi-cloud to avoid the risk of cloud vendors lock-in.**
 
 EKS, a managed K8s service provided by AWS, offers an easy way to run, scale, and manage K8s clusters on AWS without worrying about node deployment, upgrade and maintenance. EKS itself also supports multi-AZ deployment to offer high-availability, ensuring that the cluster remains available when node failure or Availability Zone disruption occurs. In addition, with the help of AWS robust resource pool, you can add or remove nodes on demand during business peaks and off-peaks, guaranteeing elasticity and scalability.
 
-This blog mainly discusses how to easily deploy and manage vector databases through KubeBlocks based on services like Amazon EKS.
+This blog mainly discusses how to easily deploy and manage vector databases through KubeBlocks based on Amazon EKS.
 
 ## Architecture
 Kubernetes has become the de facto standard for container orchestration. It leverages the scalability and availability provided by ReplicaSet and the rollout and rollback capabilities provided by Deployment to manage an increasing number of stateless workloads. However, managing stateful workloads poses significant challenges to Kubernetes. Although StatefulSet provides stable persistent storage and unique network identifiers, these capabilities are not enough for complex stateful workloads. To tackle these challenges and simplify the complexity, KubeBlocks introduces ReplicationSet and ConsensusSet, which have the following functions:
@@ -49,7 +49,7 @@ The following instructions take Qdrant as an example to introduce how to set up 
 Qdrant is an open-source vector database designed to efficiently store and query high-dimensional vector data. The architecture of Qdrant can be described as follows:
 ![Qdrant architecture](../static/images/use-kubeblocks-to-build2.png)
 
-**Below are key features of Qdrant:**
+**Key features of Qdrant:**
 
 1. Storage Engine: Qdrant uses RocksDB as its storage engine. RocksDB is a high-performance key-value storage engine based on the LSM (Log-Structured Merge) tree structure, offering exceptional write and query performance.
 
