@@ -504,7 +504,6 @@ If your cluster is on AWS, install the AWS Load Balancer Controller first.
        }'
       ```
 
-
    **Result**
 
     ```json
