@@ -102,11 +102,11 @@ Issues occurred:
 2. Rapid concurrency decay: As the concurrency numbers increased, the performance of KubeBlocks PG deteriorated faster compared to ECS PG.
 3. Intermittent TPS drops to 0: TPS drops were frequently observed during the testing (starting at 307 seconds).
    
-![TPS dropped to 0](../static/images/k8s-1.jpeg)
+<img src='https://kubeblocks.io/images/k8s-1.jpeg' alt="TPS dropped to 0" width='80%' style={{margin: "0 10%"}} />
 
 Since both the client- and server-side CPUs were not fully loaded, I doubted whether there was an issue with the network, especially whether SLB specifications had reached their limits. Therefore, I changed the SLB specification from the default 'slb.s2.small' to 'slb.s3.large' and re-initiated the stress testing. 
 
-![Change spec](../static/images/k8s-2.jpeg)
+<img src='https://kubeblocks.io/images/k8s-2.jpeg' alt="Change spec" width='80%' style={{margin: "0 10%"}} />
 
 However, problems remained.
 
@@ -163,29 +163,29 @@ As the result indicated, both ACK and SLB networks worked well, which meant they
 ## Third round of stress testing: Adjust IO bandwidth
 Then we continued with the original testing plan and performed qualitative analysis of system by examining the ECS monitoring graphics.
 
-![CPU busy rate](../static/images/k8s-3.jpeg)
+<img src='https://kubeblocks.io/images/k8s-3.jpeg' alt="CPU busy rate" width='80%' style={{margin: "0 10%"}} />
 
 We can tell from the monitoring graphics that:
 1. The disk read/write bandwidth has reached its bottleneck. ESSD bandwidth is directly correlated with disk capacity, whose formula is min{120+0.5*capacity, 350}. For a 300GB disk, the corresponding bandwidth is 270MB, and the data showed that it has reached the bottleneck.
    
 2. Upon checking the logs, I discovered that the CPU busy rate dropped when TPS dropped to 0.
 
-![CPU busy rate](../static/images/k8s-4.jpeg)
+<img src='https://kubeblocks.io/images/k8s-4.jpeg' alt="CPU busy rate" width='60%' style={{margin: "0 20%"}} />
 
 
 Since the bandwidth reached its limit, an additional set of tests was conducted to assess the performance of a 500GB disk. The bandwidth for a 500GB disk is 350MB (min{120+0.5*500, 350} ). During stress testing, the CPU exhibited intermittent fluctuations even when the disk was full. These fluctuations may be related to checkpoints, but still, that should not lead to a complete TPS drop to 0.
 
 Increasing the disk bandwidth and the TPS drop issue was mitigated. Therefore, we decided to maximize the disk bandwidth by switching to an ESSD PL2 1TB disk with a bandwidth of 620MB. The result showed that while fluctuations existed, they have been greatly reduced, and there has been a narrower decline in CPU busy rate.
 
-![CPU busy rate](../static/images/k8s-5.jpeg)
+<img src='https://kubeblocks.io/images/k8s-5.jpeg' alt="CPU busy rate" width='60%' style={{margin: "0 20%"}} />
 
 We've taken a more aggressive approach to adjustment -- upgraded to an ESSD PL3 2TB disk with a bandwidth of 700MB.
 
-![CPU busy rate](../static/images/k8s-6.jpeg)
+<img src='https://kubeblocks.io/images/k8s-6.jpeg' alt="CPU busy rate" width='60%' style={{margin: "0 20%"}} />
 
 This time, TPS drops and CPU fluctuations have been mitigated, but problems persisted. At 8183s, TPS plunged from 2400 to 1400, a drop of approximately 40% and CPU fluctuation range has narrowed but still persisted.
 
-![TPS drops and CPU fluctuations](../static/images/k8s-7.jpeg)
+<img src='https://kubeblocks.io/images/k8s-7.jpeg' alt="TPS drops and CPU fluctuations" width='80%' style={{margin: "0 10%"}} />
 
 To conclude, IO bandwidth had a significant impact on both CPU and TPS. As IO bandwidth increased, fluctuations decreased, and the TPS drop-to-0 disappeared. However, even with no IO bandwidth limitation, TPS still experienced a 40% decrease. Hardware constraints excluded, the issue was very likely related to PG cluster itself.
 
@@ -202,7 +202,7 @@ As a result, when TPS dropped to 0, I observed a 10GB memory reclamation in a si
 
 This type of reclamation was typically related to an improper setting of dirty_background_ratio. Then I executed `sysctl -a | grep dirty_background_ratio` and found `vm.dirty_background_ratio = 10`.
 
-![dirty_background_ratio = 10](../static/images/k8s-8.jpeg)
+<img src='https://kubeblocks.io/images/k8s-8.jpeg' alt="dirty_background_ratio = 10" width='80%' style={{margin: "0 10%"}} />
 
 
 Adjust the background ratio to 5% with the command `sysctl -w vm.dirty_background_ratio=5`. It could flush some dirty page cache. 
@@ -224,7 +224,7 @@ Moreover, PostgreSQL's background processes would clean WAL logs under pg_wal di
 
 When a checkpoint was performed, CPU idle spiked to 80% (corresponding to a TPS drop to 0).
 
-![CPU idle spiked to 80%](../static/images/k8s-9.png)
+<img src='https://kubeblocks.io/images/k8s-9.jpeg' alt="CPU idle spiked to 80%" width='80%' style={{margin: "0 10%"}} />
 
 The duration of some transactions in the logs extended to over 1s.
 
@@ -245,37 +245,37 @@ At 13:47:04, the checkpoint was finally completed.
 
 The entire process was shown in the monitoring graph.
 
-![Entire process](../static/images/k8s-10.jpeg)
+<img src='https://kubeblocks.io/images/k8s-10.jpeg' alt="Entire process" width='80%' style={{margin: "0 10%"}} />
 
 CPU fluctuations were closely aligned with dirty page flush process during checkpoints.
 
 And the disk bandwidth remained saturated.
 
-![Disk bandwidth saturated](../static/images/k8s-11.png)
+<img src='https://kubeblocks.io/images/k8s-11.jpeg' alt="Disk bandwidth saturated" width='80%' style={{margin: "0 10%"}} />
 
 The periods when the TPS dropped to 0 closely coincided with the moments when the checkpoint flushed dirty pages.
 
-![Checkpoint flush](../static/images/k8s-12.jpeg)
+<img src='https://kubeblocks.io/images/k8s-12.jpeg' alt="Checkpoint flush" width='80%' style={{margin: "0 10%"}} />
 
 By monitoring memory fluctuations, it could be observed that the hang issue caused by memory reclamation has been effectively solved, indicating that adjusting `dirty_background_ratio` was effective.
 
 Additionally, during the flush process, the number of locks remained relatively high, which was in stark contrast to the non-flushing state.
 
-![Number of locks](../static/images/k8s-13.jpeg)
+<img src='https://kubeblocks.io/images/k8s-13.jpeg' alt="Number of locks" width='80%' style={{margin: "0 10%"}} />
 
 Locks included:
 
-![Locks](../static/images/k8s-14.png)
-![Locks](../static/images/k8s-15.png)
+<img src='https://kubeblocks.io/images/k8s-14.png' alt="Locks" width='80%' style={{margin: "0 10%"}} />
+<img src='https://kubeblocks.io/images/k8s-15.png' alt="Locks" width='80%' style={{margin: "0 10%"}} />
 
 At times, multiple processes contended for the same lock.
 
-![Lock contentions](../static/images/k8s-16.png)
-![Lock contentions](../static/images/k8s-17.png)
+<img src='https://kubeblocks.io/images/k8s-16.png' alt="Lock contentions" width='80%' style={{margin: "0 10%"}} />
+<img src='https://kubeblocks.io/images/k8s-17.png' alt="Lock contentions" width='80%' style={{margin: "0 10%"}} />
 
 During regular I/O operations, even though disk bandwidth may be fully utilized, there is rarely any lock contention among transactions, and TPS remains stable. However, when lock contention becomes pronounced, TPS easily drops to 0, which is directly related to the checkpoint process.
 
-![Lock contentions](../static/images/k8s-18.png)
+<img src='https://kubeblocks.io/images/k8s-18.png' alt="Lock contentions" width='80%' style={{margin: "0 10%"}} />
 
 ## Fifth round of stress testing: Analyze PG core codes and trace
 
@@ -403,7 +403,7 @@ Below are two consecutive clearing operations monitored, where the interval betw
 
 The bandwidth of the disk was:
 
-![Disk bandwidth](../static/images/k8s-19.png)
+<img src='https://kubeblocks.io/images/k8s-19.png' alt="Disk bandwidth" width='80%' style={{margin: "0 10%"}} />
 
 For a 16MB WAL segment, if it required 2,000 operations and each took 1ms, then it would take at least 2s to complete the overall zeroing.
 
@@ -428,7 +428,7 @@ So far, it could be drawn that TPS drops to 0 and CPU fluctuations were related 
 
 WAL creation -> WAL zeroing -> I/O contention during dirty page flush and zeroing processes -> Transaction duration became longer -> Lock holding time became longer -> More blocked transactions -> Transactions timeout. 
 
-![TPS drops mechanism](../static/images/k8s-20.jpg)
+<img src='https://kubeblocks.io/images/k8s-20.jpg' alt="TPS drops mechanism" width='80%' style={{margin: "0 10%"}} />
 
 The biggest problem with zeroing was that it generated a large amount of IO and required all transactions to wait for syncing data until the new WAL file was ready. During this process, all transactions had to wait for WALWrite and wal_insert locks, which was the top reason for jitters. 
 
@@ -463,7 +463,7 @@ For stability considerations, I opted for XFS and set wal_init_zero=off. To redu
 
 This time, TPS drops and CPU jitters were significantly mitigated.
 
-![Disable wal_init_zero](../static/images/k8s-21.jpeg)
+<img src='https://kubeblocks.io/images/k8s-21.jpeg' alt="Disable wal_init_zero" width='60%' style={{margin: "0 20%"}} />
 
 Although avoiding zeroing operations and reducing the locking frequency took effect, during checkpoints, flushing dirty pages and writing WAL logs still brought contentions for bandwidth and locks, resulting in jittering. To further optimize the problem, I focused on reducing the IO volume of individual transactions.
 
@@ -472,8 +472,8 @@ For data safety, previous stress testings enabled full_page_write, which was to 
 ## Seventh round of stress testing: Disable full_page_write
 This time, both CPU and IO bandwidth presented quite different performances before and after disabling `full_page_write`.
 
-![CPU performance with full_page_write off](../static/images/k8s-22.jpeg)
-![IO bandwidth performance with full_page_write off](../static/images/k8s-23.jpeg)
+<img src='https://kubeblocks.io/images/k8s-22.jpeg' alt="CPU performance with full_page_write off" width='60%' style={{margin: "0 20%"}} />
+<img src='https://kubeblocks.io/images/k8s-23.jpeg' alt="IO bandwidth performance with full_page_write off" width='60%' style={{margin: "0 20%"}} />
 
 It can be seen that IO contention had a significant impact on PG, and even after disabling `full_page_write`, there was hardly any CPU jitter during checkpoints.
 
@@ -482,14 +482,14 @@ Then I conducted another three testings:
 2. Enabling `full_page_write` with a 1GB WAL segment size.
 3. Disabling `full_page_write` with a 1GB WAL segment size.
 
-![KubeBlocks PG wal_segment 1GB vs 16MB](../static/images/k8s-24.jpeg)
+<img src='https://kubeblocks.io/images/k8s-24.jpeg' alt="KubeBlocks PG wal_segment 1GB vs 16MB" width='60%' style={{margin: "0 20%"}} />
 
 When `full_page_write` was on, a 1GB segment performed slightly better compared to a 16MB one, which confirmed that increasing segment size helped to reduce locking frequency. After disabling `full_page_write`, PG performance was very good.
 
 Finally, I chose a combination of settings for testing: (`wal_init_zero off` + XFS) + (`full_page_write` off) + (`wal_segment_size` 1GB). The results were as follows:
 
-![CPU performance](../static/images/k8s-25.png)
-![Disk R/W data performance](../static/images/k8s-26.png)
+<img src='https://kubeblocks.io/images/k8s-25.png' alt="CPU performance" width='60%' style={{margin: "0 20%"}} />
+<img src='https://kubeblocks.io/images/k8s-26.png' alt="Disk R/W data performance" width='60%' style={{margin: "0 20%"}} />
 
 During checkpoints, the system ran very smoothly with no jitters. PG also transitioned from being IO-bound to CPU-bound. This time, the crux of the problem should be PG's locking mechanism.
 
@@ -498,10 +498,10 @@ However, based on my experience, PG, a process-based model where one session cor
 
 To ensure fairness, I enabled `full_page_write` on KubeBlocks in the following tests.
 
-![KubeBlocks PG vs ECS PG throughput](../static/images/k8s-27.jpeg)
+<img src='https://kubeblocks.io/images/k8s-27.jpeg' alt="KubeBlocks PG vs ECS PG throughput" width='60%' style={{margin: "0 20%"}} />
 After introducing pgBouncer, PG could handle more connections without significant performance degradation. KubeBlocks PG performed similarly to PG, but it worked slightly better in lower concurrency scenarios and offered overall better stability.
 
-![KubeBlocks PG vs ECS PG latency](../static/images/k8s-28.jpeg)
+<img src='https://kubeblocks.io/images/k8s-28.jpeg' alt="KubeBlocks PG vs ECS PG latency" width='60%' style={{margin: "0 20%"}} />
 
 ## Conclusions
 1. Zeroing WAL segments has a significant impact on both the performance and stability of PG. If the filesystem supports zeroing, you can disable the `wal_init_zero` option to effectively reduce CPU and TPS fluctuations.
