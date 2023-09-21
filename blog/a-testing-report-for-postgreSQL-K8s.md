@@ -42,14 +42,7 @@ In the testing scenario, reading is more than writing request and it is similar 
 
 The testing was initiated by ECS, which accessed PG cluster via VPC IP.
 
-<table style="undefined;table-layout: fixed; width: 565px">
-<colgroup>
-<col style="width: 79px">
-<col style="width: 119px">
-<col style="width: 122px">
-<col style="width: 113px">
-<col style="width: 132px">
-</colgroup>
+<table>
 <thead>
   <tr>
     <th>Threads</th>
@@ -128,16 +121,7 @@ The testing was again initiated by ECS :
 
 The results were as follows:
 
-<table style="undefined;table-layout: fixed; width: 513px">
-<colgroup>
-<col style="width: 98px">
-<col style="width: 68px">
-<col style="width: 66px">
-<col style="width: 71px">
-<col style="width: 70px">
-<col style="width: 68px">
-<col style="width: 72px">
-</colgroup>
+<table>
 <thead>
   <tr>
     <th>Threads</th>
