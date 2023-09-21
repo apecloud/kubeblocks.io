@@ -440,7 +440,7 @@ Finally, I chose a combination of settings for testing: (`wal_init_zero off` + X
 During checkpoints, the system ran very smoothly with no jitters. PG also transitioned from being IO-bound to CPU-bound. This time, the crux of the problem should be PG's locking mechanism.
 
 ## Eighth round of stress testing: Final performance comparisons
-However, based on my experience, PG, a process-based model where one session corresponds to one process, incurs a high cost in terms of page table and process context switching when the concurrency is relatively high, therefore pgBouncer should be introduced. This user self-built ECS PG instances to address concurrency issues, and so enabled Huge Pages, while KubeBlocks PG, being deployed on ACK, does not have Huge Page on.
+However, based on my experience, PG, a process-based model where one session corresponds to one process, incurs a high cost in terms of page table and process context switching when the concurrency is relatively high, therefore pgBouncer should be introduced. Users often self-build ECS PG instances to address concurrency issues, and so enable Huge Pages, while KubeBlocks PG, being deployed on ACK, does not have Huge Page on.
 
 To ensure fairness, I enabled `full_page_write` on KubeBlocks in the following tests.
 
