@@ -224,7 +224,7 @@ Moreover, PostgreSQL's background processes would clean WAL logs under pg_wal di
 
 When a checkpoint was performed, CPU idle spiked to 80% (corresponding to a TPS drop to 0).
 
-<img src='https://kubeblocks.io/images/k8s-9.jpeg' alt="CPU idle spiked to 80%" width='80%' style={{margin: "0 10%"}} />
+<img src='https://kubeblocks.io/images/k8s-9.png' alt="CPU idle spiked to 80%" width='80%' style={{margin: "0 10%"}} />
 
 The duration of some transactions in the logs extended to over 1s.
 
@@ -251,7 +251,7 @@ CPU fluctuations were closely aligned with dirty page flush process during check
 
 And the disk bandwidth remained saturated.
 
-<img src='https://kubeblocks.io/images/k8s-11.jpeg' alt="Disk bandwidth saturated" width='80%' style={{margin: "0 10%"}} />
+<img src='https://kubeblocks.io/images/k8s-11.png' alt="Disk bandwidth saturated" width='80%' style={{margin: "0 10%"}} />
 
 The periods when the TPS dropped to 0 closely coincided with the moments when the checkpoint flushed dirty pages.
 
