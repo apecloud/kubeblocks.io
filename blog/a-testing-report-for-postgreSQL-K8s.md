@@ -43,22 +43,19 @@ In the testing scenario, reading is more than writing request and it is similar 
 The testing was initiated by ECS, which accessed PG cluster via VPC IP.
 <table>
 <tr>
-<th>Threads </th><th colspan="2">Throughput</td><th colspan="2">Latency(ms)</td>
+<th>Threads </th><th colspan="2">Throughput</th><th colspan="2">Latency(ms)</th>
 </tr>
 <tr>
 <td></td><td colspan="1">KubeBlocks PG</td><td colspan="1">ECS PG</td><td colspan="1">KubeBlocks PG</td><td colspan="1">ECS PG</td>
 </tr>
 <tr>
-<td>25</td><td>87264</td><td>91310</td><td>31.94</td><td>28.67
-</td>
+<td>25</td><td>87264</td><td>91310</td><td>31.94</td><td>28.67</td>
 </tr>
 <tr>
-<td>50</td><td>111063</td><td>140559</td><td>55.82</td><td>40.3
-7</td>
+<td>50</td><td>111063</td><td>140559</td><td>55.82</td><td>40.37</td>
 <tr>
 <tr>
-<td>100</td><td>83032</td><td>159386</td><td>132,49</td><td>92,4
-2</td>
+<td>100</td><td>83032</td><td>159386</td><td>132.49</td><td>92.42</td>
 <tr>
 <tr>
 <td>150</td><td>61865</td><td>140938</td><td>272.27</td><td>18654</td>
@@ -72,6 +69,7 @@ Issues occurred:
 1. CPU failed to be fully loaded: When the database was tested by ECS, the CPU on the node where the database was hosted can't be fully loaded.
 2. Rapid concurrency decay: As the concurrency numbers increased, the performance of KubeBlocks PG deteriorated faster compared to ECS PG.
 3. Intermittent TPS drops to 0: TPS drops were frequently observed during the testing (starting at 307 seconds).
+   
 ![TPS dropped to 0](../static/images/k8s-1.jpeg)
 
 Since both the client- and server-side CPUs were not fully loaded, I doubted whether there was an issue with the network, especially whether SLB specifications had reached their limits. Therefore, I changed the SLB specification from the default 'slb.s2.small' to 'slb.s3.large' and re-initiated the stress testing. 
