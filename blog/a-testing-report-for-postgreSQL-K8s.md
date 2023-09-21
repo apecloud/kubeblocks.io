@@ -61,7 +61,8 @@ The testing was initiated by ECS, which accessed PG cluster via VPC IP.
 <td>150</td><td>61865</td><td>140938</td><td>272.27</td><td>18654</td>
 <tr>
 <tr>
-<td>175</td><td>56487</td><td>134933</td><td>350.33</td><td>240.02</td></tr>
+<td>175</td><td>56487</td><td>134933</td><td>350.33</td><td>240.02</td>
+</tr>
 </table>
 
 Issues occurred: 
