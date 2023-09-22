@@ -1,7 +1,7 @@
 ---
-slug: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
-title: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
-description: Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
+slug: Use-KubeBlocks-to-build-your-AIGC-infrastructure-on-Amazon-EKS
+title: Use KubeBlocks to build your AIGC infrastructure on Amazon EKS
+description: Use KubeBlocks to build your AIGC infrastructure on Amazon EKS
 authors:
   name: iziang
   url: https://github.com/iziang
@@ -10,7 +10,7 @@ tags: [KubeBlocks, AIGC, Amazon EKS]
 image: /img/blog-banner.png
 ---
 
-# Use KubeBlocks to Build Your AIGC Infrastructure on Amazon EKS
+# Use KubeBlocks to build your AIGC infrastructure on Amazon EKS
 ## Foreword
 Generative AI has sparked a widespread interest and catapulted the vector database market into the spotlight. Numerous vector databases have begun to emerge and catch the public's attention.
 
