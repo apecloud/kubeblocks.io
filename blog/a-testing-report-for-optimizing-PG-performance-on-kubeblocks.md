@@ -1,17 +1,17 @@
 ---
-slug: A-testing-report-for-optimizing-PG-performance-on-KubeBlocks
-title: A testing report for optimizing PG performance on KubeBlocks
-description: A testing report for optimizing PG performance on KubeBlocks
+slug: a-testing-report-for-optimizing-PG-performance-on-Kubernetes
+title: A testing report for optimizing PG performance on Kubernetes
+description: A testing report for optimizing PG performance on Kubernetes
 date: 2022-09-21
 authors:
   name: dullboy
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
-tags: [KubeBlocks PG, ECS PG]
+tags: [KubeBlocks PG, ECS PG, optimization, performance]
 image: /img/blog-banner.png
 ---
 
-# A testing report for optimizing PG performance on KubeBlocks
+# A testing report for optimizing PG performance on Kubernetes
 
 ## Introduction
 
