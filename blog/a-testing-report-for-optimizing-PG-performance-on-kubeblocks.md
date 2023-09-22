@@ -1,5 +1,5 @@
 ---
-slug: a-testing-report-for-optimizing-PG-performance-on-Kubernetes
+slug: A-testing-report-for-optimizing-PG-performance-on-Kubernetes
 title: A testing report for optimizing PG performance on Kubernetes
 description: A testing report for optimizing PG performance on Kubernetes
 date: 2022-09-21
