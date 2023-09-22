@@ -1,16 +1,16 @@
 ---
-slug: A testing report for PostgreSQL @K8s
-title: A testing report for PostgreSQL @K8s
-description: A testing report for PostgreSQL @K8s
+slug: A-testing-report-for-optimizing-PG-performance-on-KubeBlocks
+title: A testing report for optimizing PG performance on KubeBlocks
+description: A testing report for optimizing PG performance on KubeBlocks
 authors:
   name: dullboy
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
-tags: [KubeBlocks PG, ESC PG]
+tags: [KubeBlocks PG, ECS PG]
 image: /img/blog-banner.png
 ---
 
-# A testing report for PostgreSQL @K8s
+# A testing report for optimizing PG performance on KubeBlocks
 
 ## Introduction
 
