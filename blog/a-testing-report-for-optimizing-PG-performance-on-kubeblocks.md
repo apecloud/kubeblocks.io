@@ -2,6 +2,7 @@
 slug: A-testing-report-for-optimizing-PG-performance-on-KubeBlocks
 title: A testing report for optimizing PG performance on KubeBlocks
 description: A testing report for optimizing PG performance on KubeBlocks
+date: 2022-09-21
 authors:
   name: dullboy
   url: https://github.com/nayutah
