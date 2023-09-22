@@ -2,6 +2,7 @@
 slug: Use-KubeBlocks-to-build-your-AIGC-infrastructure-on-Amazon-EKS
 title: Use KubeBlocks to build your AIGC infrastructure on Amazon EKS
 description: Use KubeBlocks to build your AIGC infrastructure on Amazon EKS
+date: 2022-09-21
 authors:
   name: iziang
   url: https://github.com/iziang
