@@ -1,7 +1,7 @@
 ---
 name: Document request
 about: Suggest an request for documents
-title: ''
+title: "[Document]"
 labels: ''
 assignees: TalktoCrystal
 
