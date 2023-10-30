@@ -123,6 +123,15 @@ const config = {
     // ],
   ],
   themeConfig: {
+    customCss: require.resolve("./src/style/custom.less"),
+    announcementBar: {
+      id: 'support_ukraine',
+      content:
+        'Meet us at 2023 KubeCon + CloudNativeCon, Nov. 7-9, Chicago.  (Booth No. M41)',
+      backgroundColor: '#fc9856',
+      textColor: '#fff',
+      isCloseable: false,
+    },
     navbar: navbarConfig,
     footer: footerConfig,
     colorMode: {
