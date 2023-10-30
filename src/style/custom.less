@@ -13,6 +13,31 @@
   --ifm-breadcrumb-padding-vertical: var(--ifm-menu-link-padding-vertical);
   --ifm-breadcrumb-padding-horizontal: var(--ifm-menu-link-padding-horizontal);
 }
+//Announcement Bar
+@keyframes siz {
+  0%{
+    color:#fa383e;
+  }
+  50%{
+    color:#3578e5;
+  }
+  100%{
+    color:#6aad1c;
+  }
+
+}
+
+:root {
+  --docusaurus-announcement-bar-height: auto !important;
+}
+
+div[class*="announcementBarContent"] {
+  line-height: 36px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 4px 20px;
+  animation:  siz 3s linear infinite;
+}
 
 // top bar
 .navbar__brand {
