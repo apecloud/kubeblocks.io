@@ -2,7 +2,7 @@
 slug: A-testing-report-for-optimizing-PG-performance-on-Kubernetes
 title: A testing report for optimizing PG performance on Kubernetes
 description: A testing report for optimizing PG performance on Kubernetes
-date: 2022-09-21
+date: 2023-09-21
 authors:
   name: dullboy
   url: https://github.com/nayutah
