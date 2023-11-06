@@ -11,7 +11,7 @@ image: /img/blog-banner.png
 
 We're thrilled to announce the official release of KubeBlocks v0.7.0!  🚀 🎉 🎈
 
-This version supports the function of referencing external components, making it possible to assemble building blocks - add-ons more flexibly.
+This version supports the function of referencing external components, making it possible to assemble *building blocks* - add-ons more flexibly.
 
 Backup is decoupled from the cluster with a separate API, and three new object storage services from public cloud providers are added as backup storage options.
 
@@ -23,7 +23,11 @@ We would like to extend our appreciation to all contributors who helped make thi
 
 ### Support referencing external components
 
-The new feature of referencing external components brings greater flexibility to KubeBlocks clusters, allowing them to be assembled like building blocks to create new clusters. Currently, this function can be applied to two scenarios. Firstly, you can reference external components, such as external Zookeeper, that are not created and managed by KubeBlocks. You just need to define the service description and Kubernetes deployment is not required. Another scenario is that clusters created by KubeBlocks can be referenced as components by other clusters. For example, a Redis Sentinel cluster can be referenced by other Redis Replication clusters for managing high availability.
+The new feature of referencing external components brings greater flexibility to KubeBlocks clusters, allowing them to be assembled like building blocks to create new clusters. Currently, this function can be applied to two scenarios.
+
+Firstly, you can reference external components, such as external Zookeeper, that are not created and managed by KubeBlocks. You just need to define the service description and Kubernetes deployment is not required. 
+
+Another scenario is that clusters created by KubeBlocks can be referenced as components by other clusters. For example, a Redis Sentinel cluster can be referenced by other Redis Replication clusters for managing high availability.
 
 ### Decouple cluster and backup [#4877](https://github.com/apecloud/kubeblocks/issues/4877), [#4494](https://github.com/apecloud/kubeblocks/issues/4494)
 
@@ -31,7 +35,9 @@ The backup policy supports customizing backup methods, allowing you to specify a
 
 ### Support Pika v3.5
 
-Pika, developed by Qihoo, is an open-source NoSQL database that is compatible with Redis interfaces such as string, hash, list, zset, and set operations. It offers a cost advantage in 100 GB level and larger data volumes. Switching from Redis to Pika is seamless, as it maintains the same usage and operation habits. Currently, KubeBlocks has already supported deploying the sharded cluster mode from Pika v3.5. After a cluster is created by KubeBlocks, Pika is automatically added to the Codis cluster with rebalancing applied. KubeBlocks can also automatically manage Pika Primary-Secondary clusters, which can automatically add one primary with one or multiple secondaries.
+Pika, developed by Qihoo, is an open-source NoSQL database that is compatible with Redis interfaces such as string, hash, list, zset, and set operations. It offers a cost advantage in 100 GB level and larger data volumes. Switching from Redis to Pika is seamless, as it maintains the same usage and operation habits. 
+
+Currently, KubeBlocks has already supported deploying the sharded cluster mode from Pika v3.5. After a cluster is created by KubeBlocks, Pika is automatically added to the Codis cluster with rebalancing applied. KubeBlocks can also automatically manage Pika Primary-Secondary clusters, which can automatically add one primary with one or multiple secondaries.
 
 ## What's Changed
 
