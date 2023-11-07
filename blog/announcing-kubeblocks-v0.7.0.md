@@ -11,7 +11,7 @@ image: /img/blog-banner.png
 
 We are excited to announce the official release of KubeBlocks v0.7.0!
 
-This release supports 31 open-source database engines, including new add-ons such as MariaDB, Elasticsearch, Pulsar, and Pika. This offers Kubernetes users a wider range of choices while maintaining the same user experience.
+In this release, KubeBlocks has already supported 31 open-source database engines, including new add-ons such as MariaDB, Elasticsearch, Pulsar, and Pika. This offers Kubernetes users a wider range of choices while maintaining the same user experience.
 
 ## Highlights
 
