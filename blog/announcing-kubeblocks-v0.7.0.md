@@ -9,57 +9,31 @@ image: /img/blog-banner.png
 
 # Announcing KubeBlocks v0.7.0
 
-We're thrilled to announce the official release of KubeBlocks v0.7.0!  🚀 🎉 🎈
+We are excited to announce the official release of KubeBlocks v0.7.0!
 
-This version supports the function of referencing external components, making it possible to assemble *building blocks* - add-ons more flexibly.
-
-Backup is decoupled from the cluster with a separate API, and three new object storage services from public cloud providers are added as backup storage options.
-
-Thanks to the support of our community, KubeBlocks has included 31 open-source database engines, including MariaDB, Elasticsearch, Pika and more, providing more choices for you.
-
-We would like to extend our appreciation to all contributors who helped make this release happen.
+This release supports 31 open-source database engines, including new add-ons such as MariaDB, Elasticsearch, Pulsar, and Pika. This offers Kubernetes users a wider range of choices while maintaining the same user experience.
 
 ## Highlights
 
-### Support referencing external components
+### External components
 
-The new feature of referencing external components brings greater flexibility to KubeBlocks clusters, allowing them to be assembled like building blocks to create new clusters. Currently, this function can be applied to two scenarios.
+Some database clusters rely on metadata storage for distributed coordination and dynamic configuration. However, as the number of database clusters increases, the metadata storage itself can consume a significant amount of resources. Examples of such components include Zookeeper in Pulsar. To reduce overhead, users can reference the same external component in multiple database clusters now.
 
-Firstly, you can reference external components, such as external Zookeeper, that are not created and managed by KubeBlocks. You just need to define the service description and Kubernetes deployment is not required. 
+### Backup API
 
-Another scenario is that clusters created by KubeBlocks can be referenced as components by other clusters. For example, a Redis Sentinel cluster can be referenced by other Redis Replication clusters for managing high availability.
+Some lifecycle management functions of the database cluster rely on the backup and restore functionality, which depends on object storage. However, if object storage is missing, certain lifecycle management functions of KubeBlocks may not work properly. For example, creating new replicas or recovering data to another node may be affected.
 
-### Decouple cluster and backup [#4877](https://github.com/apecloud/kubeblocks/issues/4877), [#4494](https://github.com/apecloud/kubeblocks/issues/4494)
+To address this issue, we plan to decouple the cluster's lifecycle management functions from the backup and restore functionality. The first step is to separate the API. With the new backup API, backup and restore actions are abstracted, allowing users to define their own backup methods. Additionally, the API supports GCS, OBS, and COS object storage now.
 
-The backup policy supports customizing backup methods, allowing you to specify a backup method when creating a backup. The BackupTool has been replaced with the ActionSet CRD, which defines actions for backup and restore. Three new object storage services, GCS, OBS, and COS, have been added as backup storage options. Besides, BackupSchedule is added to decouple automatic scheduling configurations from BackupPolicy that can be used for both automatic and manual backup.
+### Pika v3.5
 
-### Support Pika v3.5
+Pika, an open-source NoSQL database developed by Qihoo, supports the Redis protocol and offers a cost advantage for handling data volumes exceeding 100 GB. The transition from Redis to Pika is smooth, as Pika preserves the same operational and usage patterns, ensuring minimal disruption to existing workflows. As of now, KubeBlocks supports the deployment of the Pika v3.5 sharding cluster.
 
-Pika, developed by Qihoo, is an open-source NoSQL database that is compatible with Redis interfaces such as string, hash, list, zset, and set operations. It offers a cost advantage in 100 GB level and larger data volumes. Switching from Redis to Pika is seamless, as it maintains the same usage and operation habits. 
-
-Currently, KubeBlocks has already supported deploying the sharded cluster mode from Pika v3.5. After a cluster is created by KubeBlocks, Pika is automatically added to the Codis cluster with rebalancing applied. KubeBlocks can also automatically manage Pika Primary-Secondary clusters, which can automatically add one primary with one or multiple secondaries.
-
-## What's Changed
-
-### New features
-
-#### Pulsar [#4587](https://github.com/apecloud/kubeblocks/issues/4587)
-
-Supports multiple Pulsar clusters that can share a zookeeper component.
-
-#### Backup and restore
-
-Supports three object storage services, namely GCS(Google Cloud Storage), OBS (Huawei Cloud Object Storage), and COS (Tencent Cloud Object Storage), as backup storage options.
-
-#### Compatibility
-
-Compatible with Huawei Cloud. [#4697](https://github.com/apecloud/kubeblocks/issues/4697)
-
-#### Support multiple open-source engines
+## Overview of Integrated Engines
 
 The table below provides an overview of the integrated engines and their capabilities in KubeBlocks.
 
-| V0.7.0                                | Vscale | Hscale | Volumeexpand | Stop/Start | Restart | Backup/Restore | Logs | Config | Upgrade (DB engine version) | Account | Failover | Switchover | Monitor |
+| v0.7.0                                | Vscale | Hscale | Volumeexpand | Stop/Start | Restart | Backup/Restore | Logs | Config | Upgrade (DB engine version) | Account | Failover | Switchover | Monitor |
 |---------------------------------------|--------|--------|--------------|------------|---------|----------------|------|--------|-----------------------------|---------|----------|------------|---------|
 | apecloud-mysql                        | ✔️      | ✔️      | ✔️            | ✔️          | ✔️       | ✔️              | ✔️    | ✔️      | N/A                         | ✔️       | ✔️        | ✔️          | ✔️       |
 | postgresql                            | ✔️      | ✔️      | ✔️            | ✔️          | ✔️       | ✔️              | ✔️    | ✔️      | ✔️                           | ✔️       | ✔️        | ✔️          | ✔️       |
