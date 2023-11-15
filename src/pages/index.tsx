@@ -136,6 +136,11 @@ export default function Home(): JSX.Element {
                     to="/docs/preview/user_docs/overview/introduction">
                     <span className={styles.btnText}>View documentation</span>
                   </Link>
+                  <a
+                    className={styles.actionItem}
+                    href="mailto:marcom@apecloud.com" target="_blank" rel="noreferrer noopener" >
+                    <span className={styles.btnText}>Book a demo</span>
+                  </a>
                 </div>
               </div>
             </QueueAnim>
