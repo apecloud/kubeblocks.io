@@ -50,15 +50,7 @@ jobs:
           ref: release-0.7
           path: ".temp/release-0.7"
           token: ${{ env.GITHUB_TOKEN }}
-          
-      - name: Checkout kbcli Docs main
-        uses: actions/checkout@v3
-        with: 
-           repository: apecloud/kbcli
-           ref: main
-           path: ".temp/kbcli/main"
-           token: ${{ env.GITHUB_TOKEN }}
-           
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
