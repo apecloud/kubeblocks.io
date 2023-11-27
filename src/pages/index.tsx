@@ -127,8 +127,8 @@ export default function Home(): JSX.Element {
           <div className={styles.banner}>
             <QueueAnim duration={500} type={['left', 'right']}>
               <div className={styles.text}>
-                <h1 key='p1'>The cloud native</h1>
-                <h1 key='p2'>data infrastructure</h1>
+                <h1 key='p1'>The control plane for your </h1>
+                <h1 key='p2'>cloud-native data infrastructure</h1>
                 <p key='p3'>Install, create, connect, and you have it all.</p>
                 <div key='p7' className={styles.actions}>
                   <Link
