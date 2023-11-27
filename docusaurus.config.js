@@ -34,7 +34,7 @@ const versions = (() => {
 
 const config = {
   title: "KubeBlocks",
-  tagline: "The Cloud Native Data Infra",
+  tagline: "The control plane for your cloud-native data infrastructure",
   url: "https://kubeblocks.io",
   baseUrl: "/",
   baseUrlIssueBanner: false,
