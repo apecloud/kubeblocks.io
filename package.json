@@ -50,7 +50,7 @@
     "react-player": "^2.12.0",
     "react-tabs": "4.3.0",
     "typewriter-effect": "^2.19.0",
-    "url": "^0.11.0"
+    "url": "^0.11.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.4.1",
