@@ -23,6 +23,17 @@ module.exports = {
     //   position: 'right',
     // },
     {
+      type: "localeDropdown",
+      className: "header-locale-dropdown",
+      position: "right",
+      dropdownItemsAfter: [
+        {
+          to: "https://cn.kubeblocks.io/",
+          label: "中文",
+        },
+      ],
+    },
+    {
       href: 'https://github.com/apecloud/kubeblocks',
       position: 'right',
       className: 'header-github-link',
