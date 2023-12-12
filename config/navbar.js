@@ -30,6 +30,7 @@ module.exports = {
         {
           to: "https://cn.kubeblocks.io/",
           label: "中文",
+          target: "_self"
         },
       ],
     },
