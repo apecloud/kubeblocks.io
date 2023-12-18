@@ -29,7 +29,7 @@ module.exports = {
       dropdownItemsAfter: [
         {
           to: "https://cn.kubeblocks.io/",
-          label: "中文",
+          label: "简体中文",
           target: "_self"
         },
       ],
