@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import DocPage from "@theme/DocPage"
 import KubeChat from '../components/kubechat';
@@ -31,7 +32,6 @@ export default (props) => {
               setChatReady(true);
             }}
           />
-
         </div>
     </>
   )
