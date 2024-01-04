@@ -38,6 +38,26 @@
   }
 }
 
+.kubechat {
+  position: fixed;
+  right: 15px;
+  bottom: 50px;
+  z-index: 10000;
+  transition: 0.3s;
+  &.kubechat-ready {
+    display: block;
+  }
+  .logo.customized {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 6px;
+  }
+  // &:hover, &.kubechat-open {
+  //   right: 0;
+  //   bottom: 0;
+  // }
+}
+
 .bg {
   background: #f4f4f4;
   overflow: hidden;
