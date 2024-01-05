@@ -68,7 +68,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-2884w01z6-DMMzLR70E~2G4uvbMr_RJw" target="_blank" rel="noreferrer noopener">
+                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-29tx52d8n-vli24S6gtD5ODJlNUqLqbQ" target="_blank" rel="noreferrer noopener">
                   Slack
                 </a>
               </span>
@@ -84,5 +84,5 @@ module.exports = {
     width: 72,
     height: 18,
   },
-  copyright: `© 2023 ApeCloud PTE. Ltd.`,
+  copyright: `© 2024 ApeCloud PTE. Ltd.`,
 }
