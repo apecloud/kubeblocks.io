@@ -14,7 +14,7 @@ export default (props) => {
   return (
     <>
       <DocPage {...props} />
-      <div
+      {/* <div
           className={classNames({
             [styles.kubechat]: true,
             [styles.kubechatOpen]: open,
@@ -32,7 +32,7 @@ export default (props) => {
               setChatReady(true);
             }}
           />
-        </div>
+        </div> */}
     </>
   )
 }
