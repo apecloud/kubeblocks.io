@@ -12,22 +12,21 @@ const kubeblocksRepos = "https://github.com/apecloud/kubeblocks/tree";
 const websiteRepos = "https://github.com/apecloud/kubeblocks.io/tree/master";
 const lastVersion = versionsConfig[0]?.version || "current";
 
-const TIMESTAMP = (new Date()).getTime();
-
+const TIMESTAMP = new Date().getTime();
 const versions = (() => {
   const _versions = {
     current: {
-      label: 'Preview',
-      path: 'preview',
-    }
+      label: "Preview",
+      path: "preview",
+    },
   };
-  versionsConfig.forEach(config => {
+  versionsConfig.forEach((config) => {
     Object.assign(_versions, {
       [config.version]: {
         label: config.version,
         path: config.version,
-      }
-    })
+      },
+    });
   });
   return _versions;
 })();
@@ -49,7 +48,7 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
     localeConfigs: {
-      "en": {
+      en: {
         label: "English",
         htmlLang: "en-US",
       },
@@ -57,9 +56,9 @@ const config = {
   },
   headTags: [
     {
-      tagName: 'meta',
+      tagName: "meta",
       attributes: {
-        name: 'version',
+        name: "version",
         content: String(TIMESTAMP),
       },
     },
@@ -73,12 +72,22 @@ const config = {
           versions,
           path: "docs",
           sidebarPath: require.resolve("./config/sidebars"),
-          docLayoutComponent: require.resolve('./src/components/docLayoutComponent.tsx'),
-          docItemComponent: require.resolve('./src/components/docItemComponent.tsx'),
-          editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
-            const branch = (version === "current" ? "main" : version);
-            if(locale != 'en') {
-              return `${kubeblocksRepos}/i18n/${locale}/docusaurus-plugin-content-docs/${branch}/docs/${docPath}`
+          docLayoutComponent: require.resolve(
+            "./src/components/docLayoutComponent.tsx"
+          ),
+          docItemComponent: require.resolve(
+            "./src/components/docItemComponent.tsx"
+          ),
+          editUrl: ({
+            version,
+            versionDocsDirPath,
+            docPath,
+            permalink,
+            locale,
+          }) => {
+            const branch = version === "current" ? "main" : version;
+            if (locale != "en") {
+              return `${kubeblocksRepos}/i18n/${locale}/docusaurus-plugin-content-docs/${branch}/docs/${docPath}`;
             }
             return `${kubeblocksRepos}/${branch}/docs/${docPath}`;
           },
@@ -91,24 +100,26 @@ const config = {
           customCss: require.resolve("./src/style/custom.less"),
         },
         gtag: {
-          trackingID: 'G-1P80WT42PB',
+          trackingID: "G-1P80WT42PB",
           anonymizeIP: true,
         },
         sitemap: {
-          changefreq: 'hourly',
+          changefreq: "hourly",
           priority: 0.5,
-          ignorePatterns: ['/tags/**'],
-          filename: 'sitemap.xml',
+          ignorePatterns: ["/blog/**"].concat(
+            versionsConfig.map((c) => `/docs/${c.version}/**`)
+          ),
+          filename: "sitemap.xml",
         },
       },
-    ]
+    ],
   ],
   // scripts: [
   //   '/js/contacts.js',
   // ],
   stylesheets: [],
   plugins: [
-    "@docusaurus/theme-live-codeblock", 
+    "@docusaurus/theme-live-codeblock",
     "docusaurus-plugin-less",
     // [
     //   '@docusaurus/plugin-ideal-image',
@@ -133,7 +144,7 @@ const config = {
     navbar: navbarConfig,
     footer: footerConfig,
     colorMode: {
-      defaultMode: 'light',
+      defaultMode: "light",
       disableSwitch: true,
       respectPrefersColorScheme: false,
     },
@@ -144,8 +155,8 @@ const config = {
     algolia: {
       appId: "SES9RBYTIC",
       apiKey: "81cd1a2799d82dc7218d055d2414476d",
-      indexName: "kubeblocks"
-    }
+      indexName: "kubeblocks",
+    },
   },
 };
 
