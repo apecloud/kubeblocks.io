@@ -3,8 +3,10 @@ name: Improvement request
 about: Suggest an improvement idea for this project
 title: "[Improvement]"
 labels: ''
-assignees: sailwebs
-
+assignees: 
+  - TalktoCrystal
+  - sailwebs
+  - michelle-0808
 ---
 
 Is your improvement request related to a problem? Please describe.
