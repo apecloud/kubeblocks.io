@@ -1,5 +1,5 @@
 {
-  "index_name": "kubeblocks",
+  "index_name": "kubeblocks-us",
   "start_urls": ["https://kubeblocks.io"],
   "sitemap_urls": ["https://kubeblocks.io/sitemap.xml"], 
   "stop_urls": ["/search"],

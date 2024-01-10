@@ -153,9 +153,9 @@ const config = {
       darkTheme: darkCodeTheme,
     },
     algolia: {
-      appId: "SES9RBYTIC",
-      apiKey: "81cd1a2799d82dc7218d055d2414476d",
-      indexName: "kubeblocks",
+      appId: "NRQ28YPQ0N",
+      apiKey: "cc5d86733eacd9eedb631ab9b39e719f",
+      indexName: "kubeblocks-us",
     },
   },
 };
