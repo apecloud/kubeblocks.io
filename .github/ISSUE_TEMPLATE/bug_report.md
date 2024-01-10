@@ -3,8 +3,10 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
 labels: ''
-assignees: sailwebs
-
+assignees: 
+  - TalktoCrystal
+  - sailwebs
+  - michelle-0808
 ---
 
 **Describe the bug**
