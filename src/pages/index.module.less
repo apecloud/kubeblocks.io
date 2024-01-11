@@ -164,26 +164,6 @@
           }
           .btnText{
             color: #fff;
-            // background: #fff
-            //   linear-gradient(
-            //   -135deg,
-            //   transparent 25%,
-            //   #a4c8fe  30%,
-            //   #ffb88f 50%,
-            //   #faff72 60%,
-            //   transparent 60%,
-            //   transparent
-            //   );
-            // background-size: 80px 60px;
-            // background-clip: text;
-            // background-repeat: no-repeat;
-            // -webkit-text-fill-color: transparent;
-            // -webkit-animation: btnScratchy 3s linear infinite;
-            // -moz-animation: btnScratchy 3s linear infinite;
-            // -ms-animation: btnScratchy 3s linear infinite;
-            // -o-animation: btnScratchy 3s linear infinite;
-            // animation: btnScratchy 3s linear infinite;
-            // color: transparent;
           }
         }
       }
@@ -313,10 +293,10 @@
   }
 }
 .features {
+  text-align: center;
   background: #fff;
   padding: 60px 0;
   h1 {
-    text-align: center;
     font-size: 54px;
     margin-bottom:40px;
     color: #313d4d;
@@ -343,6 +323,37 @@
           transform: scale(1.1);
         }
       }
+    }
+  }
+  .actionItem {
+    width: 260px;
+    margin: 0px 12px;
+    font-weight: 700;
+    padding: 12px 30px;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    transition-duration: 0.3s;
+    font-size: 18px;
+    border-radius: 32px;
+    text-align: center;
+    border: 1px solid #313d4d;
+    background-color: #313d4d;
+    &:hover {
+      border: 1px solid #e6e6e6;
+      cursor: pointer;
+      animation: btnSlider 0.5s;
+      text-decoration: none;
+      box-shadow: 0 0 8px 3px #afafb1;
+      background-color: #4e6583;
+      .btnText{
+        color: #fff;
+      }
+    }
+    .btnText{
+      color: #fff;
     }
   }
 }
