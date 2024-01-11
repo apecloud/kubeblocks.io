@@ -138,8 +138,8 @@ export default function Home(): JSX.Element {
                   </Link>
                   <a
                     className={styles.actionItem}
-                    href="mailto:marcom@apecloud.com" target="_blank" rel="noreferrer noopener" >
-                    <span className={styles.btnText}>Book a demo</span>
+                    href="https://console.kubeblocks.io/" target="" rel="noreferrer noopener" >
+                    <span className={styles.btnText}>KubeBlocks Cloud</span>
                   </a>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function Home(): JSX.Element {
         <div className={styles.description}>
           <div className={styles.content}>
             <h1>Why you need KubeBlocks</h1>
-            {isMedium? <div className={styles.context}>
+            {isMedium ? <div className={styles.context}>
               <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are</p>
               <p>the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning</p>
               <p>curve of K8s. KubeBlocks offers an open-source option that helps application developers and platform</p>
@@ -160,8 +160,8 @@ export default function Home(): JSX.Element {
               <p>No need to be a K8s professional, anyone can set up a full-stack, </p>
               <p>production-ready data infrastructure in minutes.</p>
             </div> : <div className={styles.context}>
-              <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning curve of K8s. 
- KubeBlocks offers an open-source option that helps application developers and platform engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems. </p>  
+              <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning curve of K8s.
+                KubeBlocks offers an open-source option that helps application developers and platform engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems. </p>
               <p>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</p>
             </div>}
             <div className={styles.text}>Created by <span>ApeCloud</span></div>
@@ -197,6 +197,12 @@ export default function Home(): JSX.Element {
               )
             })}
           </ul>
+          <a
+            className={styles.actionItem}
+            href="mailto:marcom@apecloud.com" target="_blank" rel="noreferrer noopener" >
+            <span className={styles.btnText}>Book a demo</span>
+          </a>
+
         </div>
       </div>
     </Layout>
