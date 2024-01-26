@@ -16,7 +16,7 @@ image: /img/blog-banner.png
 Containers are a hot topic, especially in scenarios where swift time-to-market is crucial for scaling operations. The trend of database containerization is becoming increasingly evident. As depicted in Fig.1., workloads related to databases and analytics have claimed a significant portion of the landscape. However, many individuals still grapple with a challenge when making technical choices: Does containerization affect database performance? If so, what are the influencing factors? How does one address performance and even stability issues introduced by containerization?
 
 ![Usage of containerized workloads by category](./../static/img/Usage-of-containerized-workloads-by%20category.png)
-Fig. 1. Usage of containerized workloads by category [4]
+Fig. 1. Usage of containerized workloads by category<sup>[4]</sup>
 
 # Advantages and technical principles of containerization
 
@@ -27,13 +27,16 @@ Taking the orchestration of containers to the next level, Kubernetes, commonly r
 ## Advantages of containerization
 
 1. Flexibility and portability.
-The deployment and migration of databases are simpler and more reliable. Containerization is also the foundation for Infrastructure as Code (IaC).
+  
+   The deployment and migration of databases are simpler and more reliable. Containerization is also the foundation for Infrastructure as Code (IaC).
 
 2. Resource isolation and scalability.
-Containerization technology provides advantages in resource isolation and scalability through the use of container runtime engines. Each container has its own runtime environment and resource allocation, allowing database instances to run independently within containers, minimizing mutual interference. This resource isolation enables database instances to better utilize computing resources, providing improved performance and reliability.
+
+   Containerization technology provides advantages in resource isolation and scalability through the use of container runtime engines. Each container has its own runtime environment and resource allocation, allowing database instances to run independently within containers, minimizing mutual interference. This resource isolation enables database instances to better utilize computing resources, providing improved performance and reliability.
 
 3. More user-friendly scheduling strategies. 
-With the smaller granularity of resources after containerization, it becomes more user-friendly for higher-level scheduling. Different scheduling strategies can be applied in various scenarios, such as staggered utilization of computing resources through a mix of offline and online deployments. Deploying multiple engines together enhances overall utilization, and increasing deployment density helps reduce computational costs.
+
+   With the smaller granularity of resources after containerization, it becomes more user-friendly for higher-level scheduling. Different scheduling strategies can be applied in various scenarios, such as staggered utilization of computing resources through a mix of offline and online deployments. Deploying multiple engines together enhances overall utilization, and increasing deployment density helps reduce computational costs.
 
 ## Technical principles and categories of containerization
 
@@ -53,37 +56,41 @@ According to the resource isolation and virtualization methods of container runt
 4. Pure Virtual Machines: Examples include KVM, Xen, VMWare, serving as the underlying virtualization technology for mainstream cloud provider servers. Generally, they exist as Nodes in K8s, one level lower than containers in terms of abstraction.
 
 ![Comparison of system architecture of various lightweight virtualization methods](./../static/img/Comparison-of-system-architecture.png)
-Fig. 2. Comparison of system architecture of various lightweight virtualization methods. Orange parts are kernel space, while green parts are user space.[2]
+Fig. 2. Comparison of system architecture of various lightweight virtualization methods. Orange parts are kernel space, while green parts are user space.<sup>[2]</sup>
 
 ### Implementations of OCI mainstream containerization technologies
 
 The following paragraphs analyze several mainstream containerization technologies that comply with the OCI specification.
 
 1. runc
-Runc is an OCI-compliant container runtime and is part of the core container engine for Docker/Containerd. It utilizes Linux namespaces and Cgroup technologies to achieve container isolation.
-When running containers, runc employs namespace isolation for processes, networking, file systems, and IPC (Inter-Process Communication). It also utilizes Cgroups to restrict resource usage of processes within the container. This isolation technology enables applications within containers to run in a relatively independent environment, separated from the host system and other containers.
-While runc's isolation techniques introduce some overhead, this overhead is limited to namespace mapping, restriction checks, and some accounting logic. In theory, the impact is minimal, and when syscalls are long-duration operations, this impact is nearly negligible. Generally, Namespace+Cgroup isolation technologies have a minimal impact on CPU, memory, and I/O performances.
+
+   Runc is an OCI-compliant container runtime and is part of the core container engine for Docker/Containerd. It utilizes Linux namespaces and Cgroup technologies to achieve container isolation.
+   When running containers, runc employs namespace isolation for processes, networking, file systems, and IPC (Inter-Process Communication). It also utilizes Cgroups to restrict resource usage of processes within the container. This isolation technology enables applications within containers to run in a relatively independent environment, separated from the host system and other containers.
+   While runc's isolation techniques introduce some overhead, this overhead is limited to namespace mapping, restriction checks, and some accounting logic. In theory, the impact is minimal, and when syscalls are long-duration operations, this impact is nearly negligible. Generally, Namespace+Cgroup isolation technologies have a minimal impact on CPU, memory, and I/O performances.
 
 ![Architecture of runc](./../static/img/Architecture-of-runc.png)
 Fig. 3. Architecture of runc
 
 2. Kata Containers
-Kata Containers is a container runtime implemented using virtualization technology, with enhanced isolation and security. It leverages Intel's Clear Containers technology and combines lightweight virtual machine (VM) monitors with container runtimes.
-Kata Containers runs an independent virtual machine inside each container, with its own kernel and user space. This virtualization technology provides stricter isolation, preventing applications within the container from directly accessing host resources. However, due to the introduction of VM startup and overhead management, Kata Containers may incur some additional overhead compared to traditional container runtimes in terms of system calls and I/O performance.
+
+   Kata Containers is a container runtime implemented using virtualization technology, with enhanced isolation and security. It leverages Intel's Clear Containers technology and combines lightweight virtual machine (VM) monitors with container runtimes.
+   Kata Containers runs an independent virtual machine inside each container, with its own kernel and user space. This virtualization technology provides stricter isolation, preventing applications within the container from directly accessing host resources. However, due to the introduction of VM startup and overhead management, Kata Containers may incur some additional overhead compared to traditional container runtimes in terms of system calls and I/O performance.
 
 ![Architecture of Kata Containers](./../static/img/Architecture-of-Kata-Containers.png)
 Fig. 4. Architecture of Kata Containers
 
 3. gVisor
-gVisor is a container runtime implemented using user-space virtualization technology, with enhanced isolation and security. It utilizes its own kernel implementation, known as "Sandboxed Kernel", to run inside containers.
-The Sandboxed Kernel in gVisor provides emulation and management of operating system interfaces within the container. Applications and processes within the container are isolated from the host kernel, preventing direct access to or impact on host kernel resources. While this isolation technology improves security, it may introduce some additional system calls and I/O performance overhead compared to traditional container runtimes.
+
+   gVisor is a container runtime implemented using user-space virtualization technology, with enhanced isolation and security. It utilizes its own kernel implementation, known as "Sandboxed Kernel", to run inside containers.
+   The Sandboxed Kernel in gVisor provides emulation and management of operating system interfaces within the container. Applications and processes within the container are isolated from the host kernel, preventing direct access to or impact on host kernel resources. While this isolation technology improves security, it may introduce some additional system calls and I/O performance overhead compared to traditional container runtimes.
 
 ![Architecture of gVisor](./../static/img/Architecture-of-gVisor.png)
 Fig. 5. Architecture of gVisor
 
 4. Firecracker
-Firecracker is a virtualization technology designed for serverless computing and lightweight workloads. It utilizes micro-virtualization to run each container as an independent virtual machine.
-Firecracker employs Kernel-based Virtual Machine (KVM) as the underlying virtualization technology. Each container runs within its own virtual machine, together with its own kernel and root file system. It utilizes separate virtual device emulators to communicate with the host machine. In this way, the technology provides higher security and isolation. However, compared to traditional container runtimes, Firecracker may introduce greater system calls and I/O performance overhead.
+
+   Firecracker is a virtualization technology designed for serverless computing and lightweight workloads. It utilizes micro-virtualization to run each container as an independent virtual machine.
+   Firecracker employs Kernel-based Virtual Machine (KVM) as the underlying virtualization technology. Each container runs within its own virtual machine, together with its own kernel and root file system. It utilizes separate virtual device emulators to communicate with the host machine. In this way, the technology provides higher security and isolation. However, compared to traditional container runtimes, Firecracker may introduce greater system calls and I/O performance overhead.
 
 ![Architecture of Firecracker](./../static/img/Architecture-of-Firecracker.png)
 Fig. 6. Architecture of Firecracker
@@ -103,7 +110,7 @@ Table. 1. Overview of implementations of virtualization and isolation in Contain
 | Disk I/O| Host| virtio| Gofer| virtio| 
 | Network I/O| Host + veth| tc + veth| netstack| tap + virtio-net
 
-There have also been comparisons made among different implementations of Container Engines, such as Containerd and CRI-O [3][5]. However, it is beyond the scope of this article and the part is left for you to explore.
+There have also been comparisons made among different implementations of Container Engines, such as Containerd and CRI-O<sup>[3][5]</sup>. However, it is beyond the scope of this article and the part is left for you to explore.
 
 # How K8s+containerization affect databases
 
@@ -139,7 +146,7 @@ The following sections will provide an overview of the impact of containerizatio
 
 Test server: Quad-Core Hyper Thread 4 Intel Core i5-7500, 8GB RAM, 1TB disk, Ubuntu 18.04 LTS.
 
-Test scenario: The data and test scenarios here are based on the paper [1]. Case 1 involves performing prime number calculations using sysbench with a concurrency of 4. The reported metric is the number of events per second. This scenario represents a pure computational workload where almost all instructions run in the user space, and syscalls can be ignored. Therefore, in theory, the performance of different container technologies should be similar.
+Test scenario: The data and test scenarios here are based on the paper<sup>[1]</sup>. Case 1 involves performing prime number calculations using sysbench with a concurrency of 4. The reported metric is the number of events per second. This scenario represents a pure computational workload where almost all instructions run in the user space, and syscalls can be ignored. Therefore, in theory, the performance of different container technologies should be similar.
 
 Test results: The CPU performance of various containers is similar. Compared to bare metal, the performance degradation in other scenarios is around 4%.
 
@@ -230,7 +237,7 @@ Fig. 15. TCP_RR, TCP_CRR and UDP_RR performance (Xingyu Wang 2022)
 
 ### CNI network
 
-Containers are commonly used with K8s, and container orchestration based on K8s has become the de facto standard. In a K8s environment, networking is typically implemented through a combination of CNI and container technologies. There are many popular CNIs available, such as Calico, Flannel, and Cilium. In the latest versions, both Calico and Cilium extensively utilize eBPF (extended Berkeley Packet Filter) technology. Although the specific implementations may differ, these two CNIs exhibit comparable performance in many testing scenarios. For specific test data, please refer to [CNI Benchmark: Understanding Cilium Network Performance](https://cilium.io/blog/2021/05/11/cni-benchmark/) [6].
+Containers are commonly used with K8s, and container orchestration based on K8s has become the de facto standard. In a K8s environment, networking is typically implemented through a combination of CNI and container technologies. There are many popular CNIs available, such as Calico, Flannel, and Cilium. In the latest versions, both Calico and Cilium extensively utilize eBPF (extended Berkeley Packet Filter) technology. Although the specific implementations may differ, these two CNIs exhibit comparable performance in many testing scenarios. For specific test data, please refer to [CNI Benchmark: Understanding Cilium Network Performance](https://cilium.io/blog/2021/05/11/cni-benchmark/)<sup>[6]</sup>.
 
 
 The following tests compare the Cilium eBPF legacy host-routing mode and the Cilium eBPF mode to examine the specific impact of the CNI on database performance.
@@ -246,7 +253,7 @@ eBPF-based host-routing：
 In the new eBPF-based routing mode, Cilium no longer relies on iptables. Instead, it leverages the extended Berkeley Packet Filter (eBPF) of the Linux kernel for packet filtering and forwarding. eBPF host-routing allows bypassing all iptables and upper stack overhead within the host namespace, as well as reducing some context switch overhead during traversal of virtual network interfaces. Network packets are captured early from the network device facing network and directly delivered into the network namespace of the K8s Pod. On the egress side, packets still traverse through a veth pair, where they are captured by eBPF and directly delivered to the external network-facing interface. Routing tables are queried directly by eBPF, making this optimization completely transparent and compatible with any other service running on the system that provides routing distribution.
 
 ![Comparison of legacy and eBPF container networking](./../static/img/Comparison-of-legacy-and-eBPF-container-networking.png)
-Fig. 16. Comparison of legacy and eBPF container networking [6]
+Fig. 16. Comparison of legacy and eBPF container networking<sup>[6]</sup>
 
 Test environment:
 
@@ -314,7 +321,7 @@ When there is a large number of BufferedIO operations, such as writing temporary
 
 The above example demonstrates that bottlenecks are not always determined by a single factor but are the result of multiple interconnected factors. In the case of Disk IO hang, the page cache is related to memory and Disk I/O, and CPU throttling is related to CPU scheduling, while the Ext4 Journal is related to locks. Therefore, all these factors interact and influence each other to create a complete IO hang.
 
-It is worth mentioning that many database vendors recommend using XFS as the preferred file system to optimize I/O operations. For a deeper understanding of the profound impact of Disk I/O on databases, you can refer to [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md) [7].
+It is worth mentioning that many database vendors recommend using XFS as the preferred file system to optimize I/O operations. For a deeper understanding of the profound impact of Disk I/O on databases, you can refer to [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md)<sup>[7]</sup>.
 
 ### Out of memory (OOM)
 
@@ -384,7 +391,7 @@ Table. 4. Overview of different database performance bottlenecks
 |Redis|RDB + Aof|BufferedIO|Key-Value|Single-Thread*|CPU Sys（Network）|
 
 - MySQL requires special attention to temporary tables. Since temporary tables use BufferedI/O, if there are no Cgroup limitations, it can quickly trigger a large number of dirty page flushes by the OS. This flushing process can occupy almost all channels of the storage device, causing normal requests to hang, which is a classic case of Disk I/O hang.
-- PostgreSQL operates in a multi-process model, so it is important to pay attention to the number of connections and the size of the page table. Although using the Hugepage scheme can reduce the burden on the page table, Hugepage itself has several side effects. Utilizing proxies like pgBouncer for connection pooling is a better solution. When enabling full-page writes, PostgreSQL has a strong demand for I/O bandwidth, making I/O bandwidth the bottleneck. When both I/O and the number of connections work well, PostgreSQL's internal lock mechanism can become the bottleneck under higher concurrency. For more details, you can refer to [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md) [7].
+- PostgreSQL operates in a multi-process model, so it is important to pay attention to the number of connections and the size of the page table. Although using the Hugepage scheme can reduce the burden on the page table, Hugepage itself has several side effects. Utilizing proxies like pgBouncer for connection pooling is a better solution. When enabling full-page writes, PostgreSQL has a strong demand for I/O bandwidth, making I/O bandwidth the bottleneck. When both I/O and the number of connections work well, PostgreSQL's internal lock mechanism can become the bottleneck under higher concurrency. For more details, you can refer to [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md)<sup>[7]</sup>.
 - MongoDB generally exhibits stable performance. The main issues typically arise from Disk I/O and the number of connections. WiredTiger performs well in controlling the flow from cache to I/O, so although there may be I/O contention, the probability of an IO hang is relatively low. However, the workload of an OLTP database can be more complex than MongoDB and it is often harder to strike a balance.
 - The bottleneck for Redis mainly lies in networking. Therefore, it is important to pay special attention to the network latency between the application and Redis services. This latency is determined by the network link. When Redis is heavily loaded, more than 70% of CPU consumption is on the network stack. To address the scalability issues of network performance, Redis 6.0 introduced network multi-threading functionality. The actual worker thread is still single-threaded. This feature significantly improves its performance while maintaining its simplicity and elegance.
 
@@ -399,9 +406,15 @@ Database containerization has become a frequently discussed topic. To be, or not
 # References
 
 [1] Wang, Xing et al. “Performance and isolation analysis of RunC, gVisor and Kata Containers runtimes.” Cluster Computing 25 (2022): 1497-1513.
+
 [2] Goethals, Tom et al. “A Functional and Performance Benchmark of Lightweight Virtualization Platforms for Edge Computing.” 2022 IEEE International Conference on Edge Computing and Communications (EDGE) (2022): 60-68.
+
 [3] Espe, Lennart et al. “Performance Evaluation of Container Runtimes.” International Conference on Cloud Computing and Services Science (2020).
+
 [4] https://www.datadoghq.com/container-report/
+
 [5] https://www.reddit.com/r/kubernetes/comments/x75sb4/kube_container_performance_crio_vs_containerd/
+
 [6] https://cilium.io/blog/2021/05/11/cni-benchmark/
+
 [7] [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md)
