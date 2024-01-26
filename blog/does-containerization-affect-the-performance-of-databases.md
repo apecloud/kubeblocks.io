@@ -383,12 +383,14 @@ Table. 3. Overview of different database process-connection models
     <td>*C</td>
     <td></td>
   </tr>
+  <tr>
     <td rowspan="2">Multi-Thread</td>
     <td>Thread Pool</td>
     <td>C:P</td>
     <td>*1</td>
     <td>C >> P</td>
   </tr>
+  <tr>
     <td>Per Thread</td>
     <td>C:C</td>
     <td>*1</td>
