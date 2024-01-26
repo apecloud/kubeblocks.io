@@ -13,7 +13,7 @@ image: /img/blog-banner.png
 
 # Does containerization affect the performance of databases?
 
-Containers are a hot topic, especially in scenarios where swift time-to-market is crucial for scaling operations. The trend of database containerization is becoming increasingly evident. As depicted in Fig.1., workloads related to databases and analytics have claimed a significant portion of the landscape. However, many individuals still grapple with a challenge when making technical choices: Does containerization affect database performance? If so, what are the influencing factors? How does one address performance and even stability issues introduced by containerization?
+The trend of database containerization is becoming increasingly evident. As depicted in Fig.1., workloads related to databases and analytics have claimed a significant portion of the landscape. However, many individuals still grapple with a challenge when making technical choices: Does containerization affect database performance? If so, what are the influencing factors? How does one address performance and even stability issues introduced by containerization?
 
 <img src='https://kubeblocks.io/images/Usage-of-containerized-workloads-by-category.png'  alt="Usage of containerized workloads by category<sup>[4]</sup>"  width='80%' style={{margin: "0 10%"}} />
 <div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 1. Usage of containerized workloads by category<sup>[4]</sup></div>
