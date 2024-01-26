@@ -118,7 +118,7 @@ There have also been comparisons made among different implementations of Contain
 
 # How K8s+containerization affect databases
 
-Containerization has many positive impacts on databases. For example, it simplifies the deployment and management of databases, provides a standardized isolated runtime environment for databases, enables easy deployment and flexible migration of databases in different complex environments, and offers more standardized and convenient version management for databases. Moreover, with the support of Kubernetes (K8s), various roles and components within a database can be flexibly and organically orchestrated together.
+Containerization has many positive impacts on databases. For example, it simplifies the deployment and management of databases, provides a standardized isolated runtime environment for databases, enables easy deployment and flexible migration of databases in different complex environments, and offers more standardized and convenient version management for databases. Moreover, with the support of K8s, various roles and components within a database can be flexibly and organically orchestrated together.
 
 ## The challenges containerization presents databases
 
@@ -126,7 +126,7 @@ However, K8s+containerization also brings forth numerous challenges for database
 
 1. Databases are complex applications with multiple roles.
 
-   A complete database consists of various roles. For example, in a MySQL primary-secondary configuration, there are two MySQL containers, one serving as the primary and the other as the secondary. These roles are not equivalent, and it is crucial to express this asymmetrical relationship correctly. Additionally, managing these roles correctly during operations such as creation, restart, deletion, backup, and high availability is essential. Fundamentally, this involves interdependent data states between containers, and both containers and Kubernetes (K8s) currently lack a well-abstracted and resolved solution for handling such dependencies.
+   A complete database consists of various roles. For example, in a MySQL primary-secondary configuration, there are two MySQL containers, one serving as the primary and the other as the secondary. These roles are not equivalent, and it is crucial to express this asymmetrical relationship correctly. Additionally, managing these roles correctly during operations such as creation, restart, deletion, backup, and high availability is essential. Fundamentally, this involves interdependent data states between containers, and both containers and K8s currently lack a well-abstracted and resolved solution for handling such dependencies.
 
 2. Databases require high levels of data persistence and consistency.
 
@@ -191,7 +191,7 @@ Test results: K8s+containerization has minimal impact on runc and kata-qemu, whi
 
 Analysis: Redis is a single-threaded application with heavy network I/O. All network I/O operations are performed through syscalls, which results in significant performance degradation for gVisor. The original paper mistakenly attributed the performance loss mainly to memory allocation. However, Redis internally uses the user-space memory management tool jemalloc, which leverages mmap syscalls to request large blocks of memory from the operating system and then performs local small block allocations. Due to jemalloc's mature memory allocation and caching mechanisms, the frequency of mmap syscalls is minimal. When Redis is under full load, CPU sys usage for network I/O is around 70%. Therefore, the performance degradation of gVisor in this scenario is primarily caused by syscall interception and the internal network stack (netstack). This test also indicates that gVisor is currently not suitable for scenarios with heavy network I/O.
 
-<img src='https://kubeblocks.io/images/Redis-performance-for-different-container%20runtimes.png'  alt="Redis performance for different container runtimes"  width='80%' style={{margin: "0 10%"}} />
+<img src='https://kubeblocks.io/images/Redis-performance-for-different-container-runtimes.png'  alt="Redis performance for different container runtimes"  width='80%' style={{margin: "0 10%"}} />
 <div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 10. Redis performance for different container runtimes (Xingyu Wang 2022)</div>
 
 ### Disk I/O
@@ -361,12 +361,40 @@ There are two types of multi-threaded models. One type is where each connection 
 Proxy and Thread Pool are essentially the same, as they both aim to reuse connections, but they differ in their implementation, and these two approaches can be used together to further increase capacity and reduce load.
 
 Table. 3. Overview of different database process-connection models
-|       | | Number of Connections: Number of Processes	  | Page Tables	 |Notes  |
-|:----------------|:---------| :---------| :---------|:---------|
-|Multi-Process	|Proxy|	C:P	|*P	|C >> P|
-|Multi-Process	|Direct Connection|	C:C|	*C	| |
-|Multi-Thread	|Thread Pool|	C:P	|*1|	C >> P|
-|Multi-Thread	|Per Thread	|C:C	|*1	||
+
+<table>
+  <tr>
+    <th> </th>
+    <th> </th>
+    <th>Number of Connections: Number of Processes	</th>
+    <th> Page Tables</th>
+    <th> Notes</th>
+  </tr>
+  <tr>
+    <td rowspan="2">Multi-Process</td>
+    <td>Proxy</td>
+    <td>C:P</td>
+    <td>*P</td>
+    <td>C >> P</td>
+  </tr>
+  <tr>
+    <td>Direct Connection</td>
+    <td>C:C</td>
+    <td>*C</td>
+    <td></td>
+  </tr>
+    <td rowspan="2">Multi-Thread</td>
+    <td>Thread Pool</td>
+    <td>C:P</td>
+    <td>*1</td>
+    <td>C >> P</td>
+  </tr>
+    <td>Per Thread</td>
+    <td>C:C</td>
+    <td>*1</td>
+    <td></td>
+  </tr>
+</table>
 
 ### TCP retran
 
@@ -424,10 +452,11 @@ Database containerization has become a frequently discussed topic. To be, or not
 
 [3] Espe, Lennart et al. “Performance Evaluation of Container Runtimes.” International Conference on Cloud Computing and Services Science (2020).
 
-[4] https://www.datadoghq.com/container-report/
+[4] 10 Insights on
+Realworld Container Use: https://www.datadoghq.com/container-report/
 
-[5] https://www.reddit.com/r/kubernetes/comments/x75sb4/kube_container_performance_crio_vs_containerd/
+[5] Kube container Performance CRI-O vs containerD maybe alternatives: https://www.reddit.com/r/kubernetes/comments/x75sb4/kube_container_performance_crio_vs_containerd/
 
-[6] https://cilium.io/blog/2021/05/11/cni-benchmark/
+[6] CNI Benchmark: Understanding Cilium Network Performance: https://cilium.io/blog/2021/05/11/cni-benchmark/
 
-[7] [A testing report for optimizing PG performance on Kubernetes](./../blog/a-testing-report-for-optimizing-PG-performance-on-kubeblocks.md)
+[7] A testing report for optimizing PG performance on Kubernetes: https://kubeblocks.io/blog/A-testing-report-for-optimizing-PG-performance-on-Kubernetes
