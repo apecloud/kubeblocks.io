@@ -383,12 +383,14 @@ Table. 3. Overview of different database process-connection models
     <td>*C</td>
     <td></td>
   </tr>
+  <tr>
     <td rowspan="2">Multi-Thread</td>
     <td>Thread Pool</td>
     <td>C:P</td>
     <td>*1</td>
     <td>C >> P</td>
   </tr>
+  <tr>
     <td>Per Thread</td>
     <td>C:C</td>
     <td>*1</td>
@@ -452,8 +454,7 @@ Database containerization has become a frequently discussed topic. To be, or not
 
 [3] Espe, Lennart et al. “Performance Evaluation of Container Runtimes.” International Conference on Cloud Computing and Services Science (2020).
 
-[4] 10 Insights on
-Realworld Container Use: https://www.datadoghq.com/container-report/.
+[4] 10 insights on real-world container use: https://www.datadoghq.com/container-report/.
 
 [5] Kube container Performance CRI-O vs containerD maybe alternatives: https://www.reddit.com/r/kubernetes/comments/x75sb4/kube_container_performance_crio_vs_containerd/.
 
