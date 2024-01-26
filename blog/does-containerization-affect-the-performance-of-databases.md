@@ -454,7 +454,7 @@ Database containerization has become a frequently discussed topic. To be, or not
 
 [3] Espe, Lennart et al. “Performance Evaluation of Container Runtimes.” International Conference on Cloud Computing and Services Science (2020).
 
-[4] 10 Insights on Realworld Container Use: https://www.datadoghq.com/container-report/.
+[4] 10 insights on real-world container use: https://www.datadoghq.com/container-report/.
 
 [5] Kube container Performance CRI-O vs containerD maybe alternatives: https://www.reddit.com/r/kubernetes/comments/x75sb4/kube_container_performance_crio_vs_containerd/.
 
