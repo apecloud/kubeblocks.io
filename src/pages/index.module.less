@@ -149,7 +149,6 @@
           text-align: center;
           border: 1px solid #313d4d;
           background-color: #313d4d;
-          margin: 0 8px;
           &:hover {
             border: 1px solid #e6e6e6;
             cursor: pointer;
@@ -161,9 +160,9 @@
               color: #fff;
             }
           }
-          // &:first-child{
-          //   margin-right: 24px;
-          // }
+          &:first-child{
+            margin-right: 24px;
+          }
           .btnText{
             color: #fff;
           }
@@ -540,7 +539,10 @@
         .actions {
           .actionItem {
             width: 228px;
-            margin: 10px auto 30px;
+            margin: 10px 10px 30px 10px;
+            &:first-child{
+              margin-right:0px;
+            } 
           }
         }
       }
@@ -678,11 +680,18 @@
           font-size: 16px;
         }
         .actions {
+          display: flex;
+          flex-direction: column;
           .actionItem {
             width: 210px;
-            margin: 10px auto 12px;
             padding: 6px 16px;
-            border-radius: 22px;     
+            border-radius: 22px;  
+            &:first-child{
+              margin: 0px auto;
+            }
+            &:last-child{
+              margin: 30px auto;
+            }   
           }
         }
       }
