@@ -36,13 +36,13 @@ Taking the orchestration of containers to the next level, Kubernetes, commonly r
 
 3. More user-friendly scheduling strategies. 
 
-   Containerization's fine-grained resource management paves the way for smarter scheduling strategies. It enables tailored deployment tactics for different scenarios, such as blending offline and online deployments to balance resource usage or combining various engines to boost overall efficiency. Additionally, increasing deployment density can lead to significant reductions in computational costs.
+   Containerization's fine-grained resource management paves the way for smarter scheduling strategies. It enables tailored deployment tactics for different scenarios, such as blending offline and online workloads to balance resource usage or combining various database workloads to boost overall efficiency. Additionally, increasing deployment density can lead to significant reductions in computational costs.
 
 ### Technical principles and categories of containerization
 
 #### Virtualization
 
-Speaking of containers, virtualization cannot be ignored. Virtualization is a technique that abstracts and isolates computing resources, allowing multiple virtual instances to run simultaneously on the same physical server. This is achieved by slipping in a software layer called the Hypervisor between the hardware and the operating system. This layer carves up the physical server into multiple virtual machines, each with its own independent operating system and resources. It's similar to having several independent computers, each with its own full-fledged operating system, running on one physical server.
+Speaking of containers, virtualization cannot be ignored. Virtualization is a technique that abstracts and isolates computing resources, allowing multiple virtual instances to run simultaneously on the same physical server. This is achieved by employing a software layer called the Hypervisor between the hardware and the operating system. This layer carves up the physical server into multiple virtual machines, each with its own independent operating system and resources. It's similar to having several independent computers, each with its own full-fledged operating system, running on one physical server.
 
 Containerization, on the other hand, is a more lightweight virtualization technique. It leverages operating system-level virtualization to create isolated pockets where applications and their required environments can run. Often, containerization is paired with virtualization to cater to various needs for isolation in different computing scenarios.
 
@@ -53,10 +53,10 @@ According to resource isolation and virtualization methods, mainstream virtualiz
 1. Standard Containers, which adhere to the Open Container Initiative (OCI) standards, like Docker/Containerd, use runC as their runtime and are the go-to for K8s workloads today.
 2. User-Space Kernel Containers, such as gVisor, also meet OCI standards and use runsc as their runtime, known for better isolation and security but at the cost of performance, making them ideal for less demanding workloads.
 3. Microkernel Containers, which employ hypervisors like Firecracker and Kata-Container, comply with OCI specification too, and use either runC or runv as their runtime, striking a balance among security, isolation, and performance, sitting somewhere between standard containers and user-space kernel containers.
-4. Pure Virtual Machines, including KVM, Xen, VMWare, form the foundational virtualization layer for major cloud providers' servers, typically acting as Nodes in K8s, and operate at a more fundamental level than containers.
+4. Virtual Machines, including KVM, Xen, VMWare, form the foundational virtualization layer for major cloud providers' servers, typically acting as Nodes in K8s, and operate at a more fundamental level than containers.
 
 <img src='https://kubeblocks.io/images/Comparison-of-system-architecture.png'  alt="Comparison of system architecture of various lightweight virtualization methods"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 2. Comparison of system architecture of various lightweight virtualization methods. Orange parts are kernel space, while green parts are user space.<sup>[2]</sup></div>
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 2. Comparison of system architecture of various lightweight virtualization methods. Orange for kernel space, green for user space.<sup>[2]</sup></div>
 
 
 #### Exploring OCI-compliant containerization technologies
@@ -65,11 +65,11 @@ The following paragraphs analyze several mainstream containerization technologie
 
 1. RunC
 
-   RunC is an OCI-compliant container runtime integral to the Docker/Containerd core container engine. It leverages Linux's Namespace and Cgroup features to create a secure isolation for containers.
+   RunC is an OCI-compliant container runtime integral to the Docker/Containerd core container engine. It leverages Linux's Namespace and Cgroup functions to create a secure isolation for containers.
 
    During container operation, runC employs Namespaces to segregate a container's processes, networking, file system, and IPC (Inter-Process Communication). It also utilizes Cgroups to regulate the resource consumption of the container's processes. This isolation method ensures that applications within the container operate in a relatively self-contained environment, distinct from the host system and other containers.
 
-   While runC's isolation approach does introduce some overhead, such overhead is confined to namespace mapping, limit verification, and certain accounting procedures, and is theoretically minimal. Furthermore, the overhead is virtually imperceptible when syscalls involve lengthy operations. In general, the Namespace+Cgroup-based isolation approach has minimal impact on the CPU, memory, and I/O performance.
+   While runC's isolation approach does introduce some overhead, such overhead is confined to namespace mapping, limit verification, and certain accounting procedures, and is theoretically minimal. Furthermore, the overhead can be ignored when syscalls involve lengthy operations. In general, the Namespace+Cgroup-based isolation approach has minimal impact on the CPU, memory, and I/O performance.
 
 
 <img src='https://kubeblocks.io/images/Architecture-of-runc.png'  alt="Architecture of  RunC"  width='80%' style={{margin: "0 10%"}} />
@@ -79,7 +79,7 @@ The following paragraphs analyze several mainstream containerization technologie
 
    Imagine a secure bubble where each application operates in its own space, shielded from the outside world. That's what Kata Containers offers by harnessing the power of virtual machine technology. Building on Intel's Clear Containers innovation, Kata Containers merge the lightweight oversight of virtual machine monitors with the agility of container runtimes.
 
-   Each container gets its own virtual machine, complete with a unique kernel and user space, ensuring that applications are kept in their own secure compartments. This approach ramps up isolation, making it tough for containerized apps to peek into the host's resources. But there's a trade-off: the extra steps of booting up and managing these virtual machines might slow down syscalls and I/O operations a bit when compared to the more traditional container runtimes.
+   Each container gets its own virtual machine, complete with a unique kernel and user space, ensuring that applications are kept in their own secure compartments. This approach ramps up isolation, making it tough for containerized apps to peek into the host's resources. But there's a trade-off: the extra steps of booting up and managing these virtual machines might slow down syscalls and I/O operations a bit when compared to the classical container runtimes.
 
 <img src='https://kubeblocks.io/images/Architecture-of-Kata-Containers.png'  alt="Architecture of Kata Containers"  width='80%' style={{margin: "0 10%"}} />
 <div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 4. Architecture of Kata Containers
@@ -136,11 +136,11 @@ However, the combination of K8s and containerization brings forth numerous chall
 
 2. Databases demand robust data persistence and consistency.
 
-   They have exacting storage requirements that cannot be met by containerization alone, necessitating additional components like the Container Storage Interface (CSI) and PersistentVolume for production-level workloads. The choice of storage medium also dictates the range of operations a database can perform. For instance, cloud disks provide high durability, snapshot backup capabilities, and the flexibility to attach or detach from various computing nodes, which are beneficial for database backup, restore, and ensuring high availability. In contrast, these features may be limited on local disks. For example, in the event of a node failure, a data replica could be irretrievably lost, posing a significant challenge to maintaining high availability, and backup options might be confined to physical or file-based, or logical backups. Different storage solutions offer varying degrees of persistence and support different database architectures.
+   They have exacting storage requirements that cannot be met by containerization alone, necessitating additional components like the Container Storage Interface (CSI) and PersistentVolume for production-level workloads. The choice of storage medium also dictates the range of operations a database can perform. For instance, cloud disks provide high durability, snapshot backup capabilities, and the flexibility to attach or detach from various computing nodes, which are beneficial for database backup, restore, and ensuring high availability. In contrast, these features may be limited on local disks. For example, in the event of a node failure, a local disk data replica could be irretrievably lost, posing a significant challenge to maintaining high availability, and backup options are also confined. Different storage solutions offer varying degrees of persistence and affect database architectures.
 
 3. Databases are powerhouses that need to perform at top speed.
 
-   They come with a variety of performance needs that can be sorted into categories like CPU, memory, network, and storage. For instance, when it comes to handling massive data analysis, products like ClickHouse and Greenplum are heavy on CPU and storage I/O. On the flip side, databases such as Redis and those that store everything in memory are more demanding on memory and network I/O. Then there are the classic workhorses like MySQL and PostgreSQL, which are traditional OLTP databases that also lean heavily on CPU and storage I/O. What's more, even within a single database, the thirst for resources can shift dramatically based on the type of query being run.
+   Databases come with a variety of performance needs that can be sorted into categories like CPU, memory, network, and storage. For instance, when it comes to handling massive data analysis, products like ClickHouse and Greenplum are heavy on CPU and storage I/O. On the flip side, databases such as Redis and Memcached are more demanding on memory and network I/O. Then there are the classic workhorses like MySQL and PostgreSQL, which are traditional OLTP databases that also lean heavily on CPU and storage I/O. What's more, even within a single database, the thirst for resources can shift dramatically based on the type of query being run.
 
 4. Databases come with their own set of security needs.
 
