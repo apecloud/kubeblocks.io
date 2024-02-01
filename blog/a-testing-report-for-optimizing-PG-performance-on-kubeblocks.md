@@ -8,7 +8,7 @@ authors:
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
 tags: [KubeBlocks PG, ECS PG, optimization, performance]
-image: /img/blog-banner.png
+image: /img/blog-pg.png
 ---
 
 # A testing report for optimizing PG performance on Kubernetes

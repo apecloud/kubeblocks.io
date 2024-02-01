@@ -8,7 +8,7 @@ authors:
   url: https://github.com/realzyy
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [benchmark, MySQL database operator]
-image: /img/blog-banner.png
+image: /img/blog-mysql.png
 ---
 
 # Does running MySQL on Kubernetes lead to significant performance degradation?
