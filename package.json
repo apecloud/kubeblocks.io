@@ -28,7 +28,7 @@
     "@mdx-js/react": "^1.6.22",
     "@types/lodash": "^4.14.192",
     "@types/react-lazy-load-image-component": "^1.5.2",
-    "classnames": "^2.3.2",
+    "classnames": "^2.5.1",
     "clsx": "^1.2.1",
     "docusaurus-plugin-less": "^2.0.2",
     "docusaurus-plugin-openapi": "^0.6.4",
