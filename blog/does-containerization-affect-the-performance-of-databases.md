@@ -8,7 +8,7 @@ authors:
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
 tags: [containerization, database performance, Kubernetes]
-image: /img/blog-banner.png
+image: /img/blog-containerization.png
 ---
 
 # Does containerization affect the performance of databases?
