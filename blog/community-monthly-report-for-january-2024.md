@@ -12,7 +12,7 @@ image: /img/blog-2024-01-monthly-report.png
 
 ## 1. Overview
 
-### 01  Era of KubeBlocks v0.8.0
+### 01  Release of KubeBlocks v0.8.0
 
 KubeBlocks [v0.8.0](./announcing-kubeblocks-v0.8.0.md) was officially released this month, with the current latest stable version being v0.8.1.
 
@@ -26,7 +26,7 @@ In the past month, the community has merged 114 PRs and resolved 100 issues. A t
 
 ### 2. Highlights
 
-- This month KubeBlocks has supported more addons, such as TiDB, Xinference, openGauss, InfluxDB, OceanBase (primary/standby), and Flink. Check the [official documentation](https://kubeblocks.io/docs/release-0.8/user_docs/overview/supported-addons) for the supported capabilities of each engine.
+- KubeBlocks has supported more addons, such as TiDB, Xinference, openGauss, InfluxDB, OceanBase (primary/standby), and Flink. Check the [official documentation](https://kubeblocks.io/docs/release-0.8/user_docs/overview/supported-addons) for the supported capabilities of each engine.
 - KubeBlocks Client SDK is now available (check the [repo](https://github.com/apecloud/kubeblocks-client)) and currently supports Java, Python, and Rust.
 - Switchover is now supported for MySQL Replication clusters, and it allows `kbcli promote` commands.
 
