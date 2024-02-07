@@ -2,7 +2,7 @@
 slug: Community-Monthly-Report-for-January-2024
 title: Community Monthly Report for January 2024
 description: v0.8.x Release, New Contributors, Client SDK... Take a look at the fresh news in the KubeBlocks Community
-date: 2023-11-06
+date: 2024-02-07
 tags: [Monthly Report, v0.8.0, Community]
 image: /img/blog-2024-01-monthly-report.png
 ---
