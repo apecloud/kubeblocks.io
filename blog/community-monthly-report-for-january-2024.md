@@ -12,15 +12,15 @@ image: /img/blog-2024-01-monthly-report.png
 
 ## 1. Overview
 
-- **01 Release of KubeBlocks v0.8.0**
+- **Release of KubeBlocks v0.8.0**
   
   KubeBlocks [v0.8.0](./announcing-kubeblocks-v0.8.0.md) was officially released this month, with the current latest stable version being v0.8.1.
 
-- **02 Highlights of KubeBlocks v0.8.0**
+- **Highlights of KubeBlocks v0.8.0**
   
   KubeBlocks v0.8.0 introduced the Component API, which simplified the integration of database engines. Addons have also been separated from the KubeBlocks repository and now exist independently, making it more convenient to use.
 
-- **03 Community Contributions**
+- **Community Contributions**
   
   In the past month, the community has merged 114 PRs and resolved 100 issues. A total of 24 community members participated in these contributions, including 5 new contributors.
 
