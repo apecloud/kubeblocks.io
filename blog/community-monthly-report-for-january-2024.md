@@ -32,7 +32,7 @@ In the past month, the community has merged 114 PRs and resolved 100 issues. A t
 
 ### 3. New Contributors
 
-In January, KubeBlocks had seen 5 new contributors who merged 5 pull requests. They are 💙 @earayu @driverby @kissycn @LiuG-lynx @lispking 💙. Thank you for your contributions for helping to build KubeBlocks as the next-generation database management platform.
+In January, KubeBlocks has seen 5 new contributors who merged 5 pull requests. They are 💙 @earayu @driverby @kissycn @LiuG-lynx @lispking 💙. Thank you for your contributions for helping to build KubeBlocks as the next-generation database management platform.
 
 Developers who want to contribute to KubeBlocks can start by tackling "good first issues" and leave a comment to claim them. Once our maintainers assign the issues, you can just start right away!
 
