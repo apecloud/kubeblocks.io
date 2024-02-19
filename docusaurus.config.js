@@ -116,7 +116,7 @@ const config = {
   ],
   scripts: [
     {
-      src: '/js/kubechatcomponent.js',
+      src: '/js/kubechat.js',
       defer: true,
     },
   ],
