@@ -1137,7 +1137,7 @@ class kubechatComponent extends HTMLElement {
             'DELETE', 'EXISTS', 'HAVING', 'INSERT', 'ROWNUM', 'SELECT', 'SERIAL', 'COMMIT', 'UNIQUE', 'UPDATE', 'VALUES', 'LENGTH', 
             'CONCAT', 'IFNULL', 'NULLIF', 'ALTER', 'CHECK', 'BEGIN', 'GROUP', 'INDEX', 'INNER', 'LIMIT', 'ORDER', 'OUTER', 'RIGHT', 
             'TABLE', 'UNION', 'WHERE', 'COUNT', 'UPPER', 'LOWER', 'ROUND', 'CASE', 'DESC', 'DROP', 'EXEC', 'FROM', 'FULL', 'INTO', 
-            'JOIN', 'WORK', 'LEFT', 'LIKE', 'NULL', 'VIEW', 'CAST', 'CASE', 'ADD', 'ALL', 'AND', 'ANY', 'ASC', 'KEY', 'END',
+            'JOIN', 'WORK', 'LEFT', 'LIKE', 'NULL', 'VIEW', 'CAST', 'CASE', 'SHOW', 'ADD', 'ALL', 'AND', 'ANY', 'ASC', 'KEY', 'END',
             'NOT', 'SET', 'TOP', 'AVG', 'SUM', 'MIN', 'MAX', 'NOW', 'SET', 'AS', 'IN', 'IS', 'OR', 'BY', 'GO', 'ON'
         ];
         const tagFree = this.tagFree, trim = this.trim;
@@ -1313,7 +1313,7 @@ class kubechatComponent extends HTMLElement {
         return cssMachine;
     }
     
-    // ES Machine
+    // ES Machine (+Python)
     esMachine = () => {
         const tagFree = this.tagFree, trim = this.trim;
         const KEYWORDS = new Set([//es keywords
@@ -1361,7 +1361,7 @@ class kubechatComponent extends HTMLElement {
                     condition: (o) => o.char === ':' && o.next!=='\n',
                     tokenProcessor: (token)=>KP(token),
                     },
-                    {
+                    {// for python
                     condition: (o) => o.char === ':' && o.next==='\n',
                     tokenProcessor: (token)=>K(token),
                     },
@@ -1388,7 +1388,7 @@ class kubechatComponent extends HTMLElement {
                     pairChar: (o) => o.next,
                     charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
                     },
-                    {
+                    {// for python
                     condition: (o) => o.char === '#',
                     toState: 'STATE_ES_COMMENT',
                     pairChar: (o) => o.next,
@@ -1595,6 +1595,8 @@ class kubechatComponent extends HTMLElement {
             css: this.cssMachine(),
             javascript: ESMachine,
             json: ESMachine,
+            jsx: ESMachine,
+            ts: ESMachine,
             python: ESMachine,
         }
         const inlineRules = {
@@ -1651,6 +1653,12 @@ class kubechatComponent extends HTMLElement {
                     charProcessor: (char)=>'',
                     charStep: 1,
                     },
+                    {
+                    condition: (o)=> o.char === '`',
+                    toState: 'STATE_CODE',
+                    nestState: true,
+                    charProcessor: (char)=>'',
+                    },
                 ],
                 entryToken: `<em>`,
                 exitToken: `</em>`,
@@ -1667,6 +1675,12 @@ class kubechatComponent extends HTMLElement {
                     {
                     condition: (o)=> (o.char === '*' || o.char === '_'),
                     toState: 'STATE_STRONG_EM',
+                    nestState: true,
+                    charProcessor: (char)=>'',
+                    },
+                    {
+                    condition: (o)=> o.char === '`',
+                    toState: 'STATE_CODE',
                     nestState: true,
                     charProcessor: (char)=>'',
                     },
@@ -1723,7 +1737,7 @@ class kubechatComponent extends HTMLElement {
                         if(highlightCode){
                             const fnHighlight = highlights[_inline['STATE_CODE_BLOCK']['type']];
                             const inlineToken = _inline['STATE_CODE_BLOCK']['token'];
-                            const code = fnHighlight?.gothrough(inlineToken) || inlineToken;
+                            const code = fnHighlight?.gothrough(inlineToken) || tagFree(inlineToken);
                             data = `${code}</pre>`;
                         }else{
                             data = `</pre>`;
@@ -2120,6 +2134,7 @@ class kubechatComponent extends HTMLElement {
     }
 
     handleKeyDown = (e) => {
+        e.stopPropagation();
         if(e.keyCode === 13 && !this.waiting){
             this.askQuestion();
         }
@@ -2323,13 +2338,14 @@ class kubechatComponent extends HTMLElement {
 
     stringifyRef = (refs) => {
         let ref = '';
+        let tagFree = this.tagFree;
         if(refs && refs.length>0){
             let refDetail = [];
             refs.map((item, index)=>{
                 let data = { 
                     'index': index+1,
                     'score': item.score, 
-                    'text': item.text,
+                    'text': tagFree(item.text),
                     'source': item.metadata?.source,
                 }
                 refDetail.push(this.getTemplateRef(data));
@@ -2559,12 +2575,11 @@ class kubechatComponent extends HTMLElement {
     }
     static mount = (options={}) => {
         const { Element='kube-chat' } = options;
-        if (!window.customElements.get(Element)){
+        if (window?.customElements && !window.customElements.get(Element)){
             window.customElements.define(Element, kubechatComponent);
         }
     }
 }
-
 if (!window.customElements.get('kube-chat')){
     window.customElements.define('kube-chat', kubechatComponent);
 };
