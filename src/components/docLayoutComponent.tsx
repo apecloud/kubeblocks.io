@@ -5,16 +5,14 @@ import KubeChat from '../components/kubechat';
 import classNames from 'classnames';
 import styles from '../pages/index.module.less';
 
-
 export default (props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [chatReady, setChatReady] = useState<boolean>(false);
 
-
   return (
     <>
       <DocPage {...props} />
-      {/* <div
+      <div
           className={classNames({
             [styles.kubechat]: true,
             [styles.kubechatOpen]: open,
@@ -32,7 +30,7 @@ export default (props) => {
               setChatReady(true);
             }}
           />
-        </div> */}
+        </div>
     </>
   )
 }
