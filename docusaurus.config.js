@@ -114,9 +114,12 @@ const config = {
       },
     ],
   ],
-  // scripts: [
-  //   '/js/contacts.js',
-  // ],
+  scripts: [
+    {
+      src: '/js/kubechatcomponent.js',
+      defer: true,
+    },
+  ],
   stylesheets: [],
   plugins: [
     "@docusaurus/theme-live-codeblock",
