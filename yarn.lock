@@ -7442,10 +7442,10 @@ react-magic-dropzone@^1.0.1:
   resolved "https://registry.npmjs.org/react-magic-dropzone/-/react-magic-dropzone-1.0.1.tgz"
   integrity sha512-0BIROPARmXHpk4AS3eWBOsewxoM5ndk2psYP/JmbCq8tz3uR2LIV1XiroZ9PKrmDRMctpW+TvsBCtWasuS8vFA==
 
-react-player@^2.12.0:
-  version "2.12.0"
-  resolved "https://registry.npmjs.org/react-player/-/react-player-2.12.0.tgz"
-  integrity sha512-rymLRz/2GJJD+Wc01S7S+i9pGMFYnNmQibR2gVE3KmHJCBNN8BhPAlOPTGZtn1uKpJ6p4RPLlzPQ1OLreXd8gw==
+react-player@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.npmmirror.com/react-player/-/react-player-2.15.0.tgz#e7ed486de971f5a9643ccceefddefba9d923d78a"
+  integrity sha512-wo7LM3CwxkjW9WdvGrQ3I0PhIl5xY1h+9EdpSnCRaQhE4dRMGmfH60RITPaauUhd2uJkGpzAj27kWYHT1j/dBw==
   dependencies:
     deepmerge "^4.0.0"
     load-script "^1.0.0"
