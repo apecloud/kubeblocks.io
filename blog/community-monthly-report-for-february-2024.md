@@ -29,7 +29,7 @@ In the past month, the community has merged 76 PRs and resolved 57 issues. A tot
 
 ## Bug Fixes
 
-- Fixes the issue of exposing SVC with an empty componentName (#6712).
+- Fixed the issue of exposing SVC with an empty componentName (#6712).
 - Adjusted the OceanBase switchover feature to accommodate Oracle tenant mode (#6710).
 - Resolved backup and restore failures when using the host network (#6715).
 - Fixed the issue of parameter reconfiguration failures(#6664 #6665).
