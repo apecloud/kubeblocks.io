@@ -9,9 +9,8 @@ const TypeWriterInput = () => {
   const [chatReady, setChatReady] = useState<boolean>(false);
   const [currentTips, setTips] = useState<string>('');
 
-
-
   useEffect(() => {
+    document.getElementById('btn').style.display = 'none'
     const chatTips = () => {
       const tips1 = "how to install kubeblocks".split(/\s/);
       const tips2 = "how to create a mysql cluster".split(/\s/);
@@ -56,6 +55,10 @@ const TypeWriterInput = () => {
     chatTips();
   }, []);
 
+  useEffect(() => {
+    document.getElementById('btn').style.display = 'inline-flex'
+  }, [chatReady]);
+
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -65,7 +68,7 @@ const TypeWriterInput = () => {
   };
 
   return <span className='chat-box'>
-    <a href="#" onClick={handleClick} className="chat-btn">How to create a MySQL cluster </a>
+    <a id='btn' href="#" onClick={handleClick} className="chat-btn">How to create a MySQL cluster </a>
     <span className='chat-span' id='chat'>
       <span
         className={classNames({
