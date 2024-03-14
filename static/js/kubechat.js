@@ -25,6 +25,14 @@ class kubechatComponent extends HTMLElement {
         bubbles: true, cancelable: false, composed: true
     });
 
+    questionEvent = new CustomEvent("question", {
+        bubbles: true, cancelable: false, composed: true, question: {}
+    });
+
+    messageEvent = new CustomEvent("message", {
+        bubbles: true, cancelable: false, composed: true, message: {}
+    });
+
     warningMessage = [];
 
     caption = 'Kubechat';
@@ -521,6 +529,51 @@ class kubechatComponent extends HTMLElement {
             z-index: 20;
         }
 
+        .ft .speech {
+            display:none;
+            width: 32px;
+            height: 100%;
+            position: absolute;
+            right: 20px;
+            top: 0;
+            z-index: 9;
+            cursor: pointer;
+        }
+
+        .ft .speech:has(+.talking, +.ask input:valid) {
+            right: 50px;
+        }
+
+        .speech .ft .speech {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ft .speech.speaking svg {
+            border-radius: 50%;
+            background: #fff;
+            color: #f00;
+        }
+
+        .ft .speech svg {
+            width: 22px;
+            height: 22px;
+            pointer-events: none;
+        }
+
+        .ft .speech path {
+            color: #7C48FF;
+            fill: #7C48FF;
+        }
+
+        .ft .speech.speaking path {
+            color: #f00;
+            fill: #f00;
+            scale: 80%;
+            translate: 10% 10%;
+        }
+
         .ask {
             display: flex;
             width: 100%;
@@ -531,7 +584,7 @@ class kubechatComponent extends HTMLElement {
 
         .ask input {
             box-sizing: border-box;
-            padding: 1rem 3.5rem 1rem 1rem;
+            padding: 1rem 6.5rem 1rem 1rem;
             width: 100%;
         }
 
@@ -552,11 +605,32 @@ class kubechatComponent extends HTMLElement {
         }
 
         .ask.tips1:has(:not(input:valid, input:focus))::before {
-            content: "Type /clear to clear chat history";
+            content: "Type /clear clear chat history";
         }
 
         .ask.tips2:has(:not(input:valid, input:focus))::before {
             content: "Ask me something ;)";
+        }
+
+        .ask.tips3:has(:not(input:valid, input:focus))::before {
+            content: "Talk to me use microphone ->";
+        }
+
+        .ask:has(input:valid)::after {
+            display: inline-flex;
+        }
+
+        .ask.talking::after {
+            content: "◼";
+            display: inline-flex;
+            place-content: center;
+            background: #7C48FF;
+            font-size: 14px;
+            line-height: 20px;
+            width: 22px;
+            height: 22px;
+            border-radius:50%;
+            top: 0.8rem;
         }
 
         .ask::after {
@@ -567,6 +641,7 @@ class kubechatComponent extends HTMLElement {
             width: 32px;
             height: 100%;
             background: url(${this.sendMsgIcon}) center center/80% no-repeat;
+            display: none;
         }
 
         .flying .ask::after {
@@ -627,6 +702,12 @@ class kubechatComponent extends HTMLElement {
         }
 
         @media (max-width:650px){
+            .bot {
+                height: calc(70vh - 10px);
+            }
+            .bot.full-screen {
+                height: calc(100vh - 75px);
+            }
             .full-screen .ext,.ext {
                 width: 80vw;
             }
@@ -984,6 +1065,55 @@ class kubechatComponent extends HTMLElement {
     }
 
     // Util
+    initSpeechRecognition = () => {
+        const input = this.input || this.bot.getElementsByClassName('input')[0];
+        const that = this;
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'zh-CN'; // 设置语言
+        recognition.continuous = true; // 设置是否连续识别
+        recognition.interimResults = true; // 设置是否返回临时结果
+        recognition.go = function(speechDom){
+            this.speechDom = speechDom;
+            this.speechDom.classList.add('speaking');
+            this.start();
+        }
+        recognition.onstart = function() {
+            // console.log('语音识别已开始');
+        };
+        recognition.onerror = function(event) {
+            // console.error('语音识别错误:', event.error);
+            if(this.speechDom){
+                this.speechDom.classList.remove('speaking')
+            }
+        };
+        recognition.onresult = function(event) {
+            if (event.results[0].isFinal) {
+                const result = event.results[0][0].transcript;
+                switch(result){
+                    case '清空聊天记录':
+                    case '删除聊天记录':
+                    case 'clear chat history':
+                        that.askQuestion('/clear');
+                        break;
+                    default:
+                        // that.askQuestion(event.results[0][0].transcript);
+                        input.value = event.results[0][0].transcript;
+                        break;
+                }
+                this.stop();
+            }else{
+                input.value = event.results[0][0].transcript; // 将识别结果显示在输入框中
+            }
+        };
+        recognition.onend = function() {
+            // console.log('语音识别已结束');
+            if(this.speechDom){
+                this.speechDom.classList.remove('speaking')
+            }
+        };
+        return recognition;
+    }
+
     tagFree = (str) => {
         return str.replace(/&/g,'&amp;')
         .replace(/(<)|>/g, (m,a)=>a?'&lt;':'&gt;');
@@ -1126,6 +1256,109 @@ class kubechatComponent extends HTMLElement {
             return result;
         };
         return new machine(rules);
+    }
+
+    // YAML Machine
+    yamlMachine = () => {
+        const tagFree = this.tagFree, trim = this.trim;
+        const Rules = {
+            STATE_NORMAL: {
+                transitions: [
+                    {
+                    condition: (o) => o.char === '-' && /\s/.test(o.next),
+                    toState: 'STATE_BRANCH',
+                    },
+                    {
+                    condition: (o) => o.char === '-' && /\s/.test(o.pre) && /[a-zA-Z]/.test(o.next),
+                    toState: 'STATE_VALUE',
+                    charProcessor: (char)=>`<span class="es-value">${char}</span>`,
+                    },
+                    {
+                    condition: (o) => o.char === ':',
+                    toState: 'STATE_VALUE',
+                    },
+                    {
+                    condition: (o) => o.char === '#',
+                    toState: 'STATE_COMMENT',
+                    charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
+                    },
+                ],
+                entryToken: `<span class="css-selecter ">`,
+                exitToken: `</span>`,
+                charProcessor: tagFree,
+            },
+            STATE_BRANCH: {
+                transitions: [
+                    {
+                    condition: (o) => o.char===':' && /\s/.test(o.next),
+                    tokenProcessor: (token)=>`<span class="css-selecter">${token}</span>`,
+                    toState: 'STATE_VALUE',
+                    },
+                    {
+                    condition: (o) => o.char==='\n',
+                    tokenProcessor: (token)=>`<span class="es-value">${token}</span>`,
+                    toState: 'STATE_NORMAL',
+                    },
+                    {
+                    condition: (o) => o.char === '#',
+                    toState: 'STATE_COMMENT',
+                    nestState: true,
+                    charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
+                    },
+                ],
+                entryToken: `<span class="es-value">`,
+                exitToken: `</span>`,
+                charProcessor: tagFree,
+            },
+            STATE_VALUE: {
+                transitions: [
+                    {
+                    condition: (o) => o.char==='\n' && o.pre!=='|',
+                    toState: 'STATE_NORMAL',
+                    },
+                    {
+                    condition: (o) => o.char === '"' || o.char === "'" || o.char=== "`",
+                    toState: 'STATE_QUOTE',
+                    nestState: true,
+                    charProcessor:(char)=> `<span class="es-value">${char}</span>`,
+                    },
+                    {
+                    condition: (o) => o.char === '#',
+                    toState: 'STATE_COMMENT',
+                    nestState: true,
+                    charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
+                    },
+                ],
+                entryToken: `<span class="es-value">`,
+                exitToken: `</span>`,
+                charProcessor: tagFree,
+            },
+            STATE_QUOTE: {
+                transitions: [
+                    {
+                    condition: (o) => o.char===o.pairChar && o.pre!=='\\',
+                    toState: -1,
+                    charProcessor:(char)=> `<span class="es-value">${char}</span>`,
+                    },
+                ],
+                entryToken: `<span class="es-value">`,
+                exitToken: `</span>`,
+                charProcessor: (char)=>tagFree(char),
+            },
+            STATE_COMMENT: {
+                transitions: [
+                    {
+                    condition: (o) => o.char === '\n',
+                    toState: -1,
+                    },
+                ],
+                entryToken: `<span class="es-comment">`,
+                exitToken: `</span>`,
+                charProcessor: tagFree,
+            },
+        }
+        const yamlMachine = this.StateMachine(Rules);
+        return yamlMachine;
     }
 
     // SQL Machine
@@ -1313,20 +1546,62 @@ class kubechatComponent extends HTMLElement {
         return cssMachine;
     }
     
-    // ES Machine (+Python)
-    esMachine = () => {
+    // ES Machine (common language)
+    esMachine = (language) => {
         const tagFree = this.tagFree, trim = this.trim;
-        const KEYWORDS = new Set([//es keywords
+        const KEYWORDS = new Set([
+            //es keywords
             'instanceof', 'implements', 'interface', 'protected', 'continue', 'debugger', 'function', 
             'default', 'extends', 'finally', 'package', 'private', 'delete', 'export', 'import', 'return', 
             'switch', 'typeof', 'public', 'static', 'break', 'catch', 'class', 'const', 'super', 'throw', 
             'while', 'yield', 'await', 'false', 'case', 'else', 'this', 'void', 'with', 'enum', 'null', 
-            'true', 'for', 'let', 'new', 'try', 'var', 'do', 'if', 'in'
-            ].concat([//python keywords
+            'true', 'for', 'let', 'new', 'try', 'var', 'do', 'if', 'in',
+            //python keywords
             'continue', 'nonlocal', 'finally', 'assert', 'except', 'global', 'import', 'lambda', 'return', 'False', 
             'async', 'await', 'break', 'class', 'raise', 'while', 'yield', 'None', 'True', 'elif', 'else', 'from', 
-            'pass', 'with', 'and', 'def', 'del', 'for', 'not', 'try', 'as', 'if', 'in', 'is', 'or'
-            ]));
+            'pass', 'with', 'and', 'def', 'del', 'for', 'not', 'try', 'as', 'if', 'in', 'is', 'or',
+            //go keywords
+            'fallthrough', 'interface', 'continue', 'default', 'package', 'select', 'struct', 'switch', 'import', 
+            'return', 'break', 'defer', 'const', 'range', 'func', 'case', 'chan', 'else', 'goto', 'type', 'map', 
+            'for', 'var', 'go', 'if',
+            //java keywords
+            'synchronized', 'implements', 'instanceof', 'interface', 'protected', 'transient', 'abstract', 'continue', 
+            'strictfp', 'volatile', 'boolean', 'default', 'extends', 'finally', 'package', 'private', 'assert', 'double', 
+            'import', 'native', 'public', 'return', 'static', 'switch', 'throws', 'break', 'catch', 'class', 'const', 
+            'final', 'float', 'short', 'super', 'throw', 'while', 'byte', 'case', 'char', 'else', 'enum', 'goto', 'long', 
+            'this', 'void', 'for', 'int', 'new', 'try', 'do', 'if',
+            //c keywords
+            'continue', 'register', 'volatile', 'restrict', 'unsigned', 'typedef', 'default', 'sizeof', 'static', 
+            'extern', 'return', 'struct', 'switch', 'double', 'inline', 'const', 'float', 'short', 'union', 'while', 
+            'break', 'else', 'long', 'case', 'enum', 'goto', 'void', 'char', 'auto', 'int', 'for', 'do', 'if',
+            //c# keywords
+            'stackalloc', 'interface', 'namespace', 'protected', 'unchecked', 'abstract', 'continue', 'delegate', 
+            'explicit', 'implicit', 'internal', 'operator', 'override', 'readonly', 'volatile', 'checked', 'decimal', 
+            'default', 'finally', 'foreach', 'private', 'virtual', 'double', 'extern', 'object', 'params', 'public', 
+            'return', 'sealed', 'sizeof', 'static', 'string', 'struct', 'switch', 'typeof', 'unsafe', 'ushort', 'break', 
+            'catch', 'class', 'const', 'event', 'false', 'fixed', 'float', 'sbyte', 'short', 'throw', 'ulong', 'using', 
+            'while', 'base', 'bool', 'byte', 'case', 'char', 'else', 'enum', 'goto', 'lock', 'long', 'null', 'this', 
+            'true', 'uint', 'void', 'for', 'int', 'new', 'out', 'ref', 'try', 'as', 'do', 'if', 'in', 'is',
+            //php keywords
+            'include_once', 'require_once', 'enddeclare', 'endforeach', 'implements', 'instanceof', 'endswitch', 'insteadof', 
+            'interface', 'namespace', 'protected', 'abstract', 'callable', 'continue', 'endwhile', 'function', 'declare', 
+            'default', 'extends', 'finally', 'foreach', 'include', 'private', 'require', 'elseif', 'endfor', 'global', 'public', 
+            'return', 'static', 'switch', 'array', 'break', 'catch', 'class', 'clone', 'const', 'empty', 'endif', 'final', 'isset', 
+            'print', 'throw', 'trait', 'unset', 'while', 'yield', 'case', 'echo', 'else', 'eval', 'exit', 'goto', 'list', 'and', 
+            'die', 'for', 'new', 'try', 'use', 'var', 'xor', 'as', 'do', 'if', 'or',
+            //asp, vb keywords
+            'GetXMLNamespace','NotInheritable','NotOverridable','RemoveHandler','MustOverride','MustInherit','Overridable','AddHandler',
+            'DirectCast','Implements','ParamArray','RaiseEvent','WithEvents','AddressOf','Interface','Namespace','Narrowing','Overloads',
+            'Overrides','Protected','Structure','WriteOnly','Continue','Delegate','Function','Inherits','Operator','Optional','Property',
+            'ReadOnly','SyncLock','UInteger','Widening','#ElseIf','AndAlso','Boolean','CUShort','Decimal','Declare','Default','Finally',
+            'GetType','Handles','Imports','Integer','MyClass','Nothing','Partial','Private','Shadows','TryCast','Variant','#Const','CSByte',
+            'CShort','Double','ElseIf','Friend','Global','Module','MyBase','Object','Option','OrElse','Public','Resume','Return','Select',
+            'Shared','Single','Static','String','TypeOf','UShort','#Else','Alias','ByRef','ByVal','Catch','CBool','CByte','CChar','CDate',
+            'Class','Const','CType','CUInt','CULng','Erase','Error','Event','False','GoSub','IsNot','ReDim','SByte','Short','Throw','ULong',
+            'Using','While','#End','Byte','Call','Case','CDbl','CDec','Char','CInt','CLng','CObj','CSng','CStr','Date','Each','Else','Enum',
+            'Exit','GoTo','Like','Long','Loop','Next','Step','Stop','Then','True','Wend','When','With','#If','And','Dim','End','For','Get',
+            'Let','Lib','Mod','New','Not','REM','Set','Sub','Try','Xor','As','Do','If','In','Is','Me','Of','On','Or','To'
+        ]);
         const isKeyword = (s)=>KEYWORDS.has(trim(s));
         const isVariable = (s)=>(/^[\$_A-Za-z][\$_A-Za-z0-9]*$/.test(s));
         const K = (token)=>{
@@ -1361,16 +1636,12 @@ class kubechatComponent extends HTMLElement {
                     condition: (o) => o.char === ':' && o.next!=='\n',
                     tokenProcessor: (token)=>KP(token),
                     },
-                    {// for python
-                    condition: (o) => o.char === ':' && o.next==='\n',
-                    tokenProcessor: (token)=>K(token),
-                    },
                     {
-                    condition: (o) => o.char !=='$' && ![':','.','"',"'","`",'/','#'].includes(o.char) && /\W/.test(o.char),
+                    condition: (o) => !['$',':','.','"',"'","`",'/','#'].includes(o.char) && /\W/.test(o.char),
                     tokenProcessor: (token)=>KV(token),
                     },
                     {
-                    condition: (o) => o.char === '.' && o.pre!=='\\',
+                    condition: (o) => o.char === '.' && !/[\d\\]/.test(o.pre),
                     toState: 'STATE_ES_PROPERTY',
                     },
                     {
@@ -1384,12 +1655,6 @@ class kubechatComponent extends HTMLElement {
                     },
                     {
                     condition: (o) => o.char === '/'  && (o.next === '/' || o.next === '*'),
-                    toState: 'STATE_ES_COMMENT',
-                    pairChar: (o) => o.next,
-                    charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
-                    },
-                    {// for python
-                    condition: (o) => o.char === '#',
                     toState: 'STATE_ES_COMMENT',
                     pairChar: (o) => o.next,
                     charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
@@ -1440,8 +1705,15 @@ class kubechatComponent extends HTMLElement {
             STATE_ES_REGEXP: {
                 transitions: [
                     {
-                    condition: (o) => o.char==='/' && o.pre!=='\\',
+                    condition: (o) => o.char==='/' && o.pre!=='\\' && o.next!=='/',
                     toState: -1,
+                    },
+                    {
+                    condition: (o) => o.char==='/' && o.pre!=='\\' && o.next=='/',
+                    toState: -1,
+                    charStep: -1,
+                    charProcessor: (char)=>``,
+                    tokenProcessor: (token)=>`</span>${token}`,
                     },
                     {
                     condition: (o) => o.char==='\n',
@@ -1469,6 +1741,42 @@ class kubechatComponent extends HTMLElement {
                 exitToken: `</span>`,
                 charProcessor: (char)=>tagFree(char),
             },
+        }
+        if(language){
+            const languageRule = {};
+            languageRule['python'] = {
+                STATE_NORMAL:{
+                    transitions:[
+                        {
+                        condition: (o) => o.char === ':' && o.next==='\n',
+                        tokenProcessor: (token)=>K(token),
+                        },
+                        {
+                        condition: (o) => o.char === '/'  && (o.pre === '/'||o.next === '/'),
+                        toState: -1,
+                        },
+                        {
+                        condition: (o) => o.char === '#',
+                        toState: 'STATE_ES_COMMENT',
+                        pairChar: (o) => o.next,
+                        charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
+                        },
+                    ]
+                }
+            }
+            languageRule['vb'] = {
+                STATE_NORMAL:{
+                    transitions:[
+                        {
+                        condition: (o) => o.char === "'",
+                        toState: 'STATE_ES_COMMENT',
+                        pairChar: (o) => o.next,
+                        charProcessor: (char)=>`<span class="es-comment">${char}</span>`,
+                        },
+                    ]
+                }
+            }
+            Rules.STATE_NORMAL.transitions = [...(languageRule[language]?.STATE_NORMAL.transitions||[]), ...Rules.STATE_NORMAL.transitions];
         }
         const esMachine = this.StateMachine(Rules);
         return esMachine;
@@ -1588,16 +1896,36 @@ class kubechatComponent extends HTMLElement {
     markdownMachine = (option) => {
         const tagFree = this.tagFree, trim = this.trim;
         const { highlightCode=false } = option||{};
+        const HTMLMachine = this.htmlMachine();
         const ESMachine = this.esMachine();
+        const PythonMachine = this.esMachine('python');
+        const VBMachine = this.esMachine('vb');
         const highlights = {
-            sql: this.sqlMachine(),
-            html: this.htmlMachine(),
+            html: HTMLMachine,
+            xml: HTMLMachine,
+            vue: HTMLMachine,
             css: this.cssMachine(),
+            sql: this.sqlMachine(),
+            yaml: this.yamlMachine(),
             javascript: ESMachine,
+            java: ESMachine,
             json: ESMachine,
+            toml: ESMachine,
             jsx: ESMachine,
-            ts: ESMachine,
-            python: ESMachine,
+            typescript: ESMachine,
+            coffeescript: ESMachine,
+            pseudocode: ESMachine,
+            dart: ESMachine,
+            livescript: ESMachine,
+            go: ESMachine,
+            c: ESMachine,
+            csharp: ESMachine,
+            cpp: ESMachine,
+            php: ESMachine,
+            python: PythonMachine,
+            vbscript: VBMachine,
+            asp: VBMachine,
+            vb: VBMachine,
         }
         const inlineRules = {
             STATE_NORMAL:{
@@ -1620,7 +1948,7 @@ class kubechatComponent extends HTMLElement {
                     charStep: 1,
                     },
                     {
-                    condition: (o)=> (o.char === '*' || o.char === '_'),
+                    condition: (o)=> (o.char === '*' && o.pre!=='(' && o.next!==')' || o.char === '_' && o.pre!=='(' && o.next!==')' && /[a-zA-Z0-9]/.test(o.next) && /[^a-zA-Z0-9]/.test(o.pre)),
                     toState: 'STATE_EM',
                     charProcessor: (char)=>'',
                     },
@@ -1794,7 +2122,7 @@ class kubechatComponent extends HTMLElement {
                     }else if(/^\>\s+(.+)$/.test(token)){
                         data = `<blockquote>${mdInline.gothrough(RegExp.$1)}</blockquote>`;
                     }else if(/^[\*\-_]{3,}$/.test(token)){
-                        data = `<hr/>`;
+                        data = `<hr noshade size="1px" />`;
                     }else{
                         data = `${mdInline.gothrough(token)}`.replace(/\!\[([^\]]+?)\]\(([^\)]+?)\)/g, '<img src="$2" alt="$1">')
                         .replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, (a,b,c)=>`<a href="${c.replace(/<em>/ig,'_')}" target="_blank">${b}</a>`);
@@ -1868,8 +2196,21 @@ class kubechatComponent extends HTMLElement {
     }
 
     formatMarkdown = (code, typing, highlight) => {
-        const mdMachine = this.markdownMachine({highlightCode:highlight});
-        let htmlStr = mdMachine.gothrough(code);
+        let mdMachine = window.mdMachine, mdMachineHLight = window.mdMachineHLight;
+        let htmlStr;
+        if(highlight){
+            if(!mdMachineHLight){
+                mdMachineHLight = this.markdownMachine({highlightCode:true});
+                window.mdMachineHLight = mdMachineHLight;
+            }
+            htmlStr = mdMachineHLight.gothrough(code);
+        }else{
+            if(!mdMachine){
+                mdMachine = this.markdownMachine({highlightCode:false});
+                window.mdMachine = mdMachine;
+            }
+            htmlStr = mdMachine.gothrough(code);
+        }
         if(typing){
             htmlStr = htmlStr.replace(/\n*$/g,'').replace(/(?:<br>)*$/g,'') + `<span class="thinking"></span>`;
         }
@@ -1961,12 +2302,20 @@ class kubechatComponent extends HTMLElement {
             // 监听连接关闭事件
             socket.addEventListener("close", (event) => {
                 this.socket = null;
-                this.setChatWaiting(false);
+                // const wdDoms = this.chatDom.getElementsByClassName('word');
+                // const wdDom = wdDoms[wdDoms.length-1];
+                // if(wdDom){
+                //     wdDom.innerHTML = this.typingWords;
+                // }
                 const tpDom = this.chatDom.getElementsByClassName('thinking')[0];
                 if(tpDom){
-                    tpDom.insertAdjacentText('beforebegin', '(WebSocket closed!)');
                     tpDom.remove();
                 }
+                if(this.input){
+                    this.input.parentNode.classList.remove('talking');
+                }
+                this.typingWords = '';
+                this.typing = false;
                 console.log("WebSocket 连接已关闭");
             });
 
@@ -2081,6 +2430,10 @@ class kubechatComponent extends HTMLElement {
                     dom.textContent = this.isFullScreen ? '⇲' : '⇱';
                 }else if(cls.contains('dismiss')){
                     this.showReference(false);
+                }else if(cls.contains('speech') && !cls.contains('speaking')){
+                    this.recognition.go(dom);
+                }else if(cls.contains('speaking')){
+                    this.recognition.stop();
                 }
                 break;
             case 'i':
@@ -2089,7 +2442,11 @@ class kubechatComponent extends HTMLElement {
                 }
                 break;
             case 'label':
-                this.askQuestion();
+                if(cls.contains('talking')){
+                    this.stopAnswer();
+                }else{
+                    this.askQuestion();
+                }
                 break;
             case 'button':
                 if(cls.contains('like')){
@@ -2143,16 +2500,20 @@ class kubechatComponent extends HTMLElement {
     // Ask question
     askQuestion = async (question) => {
         const input = this.input || this.bot.getElementsByClassName('input')[0];
-        if(!input){return;}
+        if(!input || this.waiting){return;}
         this.input = input;
         const msg = question || input?.value;
-        if(this.waiting || !msg || msg.replace(/[\s]/g,'')===''){return;}
+        if(!msg || msg.replace(/[\s]/g,'')===''){return;}
+        if(this.typing){
+            this.stopAnswer();
+            return;
+        }
         this.setChatWaiting(true);
+        input.value = '';
         if(msg.toLowerCase()==='/clear'){
             const result = await this.clearHistory();
             if(result.code==='200'){
                 this.renderChats([],true);
-                input.value = '';
             }
             this.sayWelcome();
             this.setChatWaiting(false);
@@ -2181,6 +2542,11 @@ class kubechatComponent extends HTMLElement {
         if(this.socket){
             this.socket.send(formatMsg);
         }
+        this.questionEvent.question = {
+            "session": this.sessionId,
+            "content": msg
+        }
+        this.dispatchEvent(this.questionEvent);
     }
 
     // Sync context
@@ -2203,6 +2569,13 @@ class kubechatComponent extends HTMLElement {
         if(!welcome){return;}
         welcome[0].timestamp = new Date().getTime();
         this.renderChats(welcome);
+    }
+
+    // Stop answer
+    stopAnswer = ()=> {
+        if(this.socket){
+            this.socket.close(1000, 'Stoped by user');
+        }
     }
 
     // Answer typing
@@ -2233,12 +2606,21 @@ class kubechatComponent extends HTMLElement {
                 break;
             case 'start':
                 this.typingWords = '';
+                this.typing = true;
+                if(this.input){
+                    this.input.parentNode.classList.add('talking');
+                }
                 break;
             case 'error':
                 if(this.waiting){
                     this.setChatWaiting(false);
                 }
+                this.typing = false;
+                if(this.input){
+                    this.input.parentNode.classList.remove('talking');
+                }
                 if(!wdDom){return;}
+                this.typingWords = data;
                 wdDom.innerHTML = data;
                 break;
             case 'message':
@@ -2246,11 +2628,10 @@ class kubechatComponent extends HTMLElement {
                     this.setChatWaiting(false);
                     if(this.input){this.input.value = '';}
                 }
+                this.typing = true;
                 if(!wdDom){return;}
                 this.typingWords += data;
-
                 wdDom.innerHTML = this.formatMarkdown(this.typingWords, true, false);
-
                 break;
             case 'stop':
                 if(!wdDom){return;}
@@ -2260,27 +2641,39 @@ class kubechatComponent extends HTMLElement {
                 if(related_question && related_question.length){
                     relatedQuestion = `<div class="related"><p class="tips">${tips}</p><p><i class="faq">${related_question.join('</i><i class="faq">')}</i></p></div>`
                 }
-                wdDom.innerHTML = this.formatMarkdown(this.typingWords, true, true) + relatedQuestion;
+                const formatedMessage = this.formatMarkdown(this.typingWords, false, true);
+                wdDom.innerHTML = formatedMessage + relatedQuestion;
                 const tpDom = wdDom.getElementsByClassName('thinking')[0];
                 if(tpDom){tpDom.remove();}
+                this.messageEvent.message = {
+                    "session": this.sessionId,
+                    "raw": this.typingWords,
+                    "html": formatedMessage
+                };
+                this.dispatchEvent(this.messageEvent);
                 this.typingWords = '';
+                this.typing = false;
                 const infoDom = wdDom.parentNode.getElementsByClassName('info')[0];
                 if(infoDom){
                     const respTime = infoDom.getElementsByClassName('time')[0];
                     if(respTime){
                         respTime.textContent = this.timestampToTime(timestamp);
                     }
-                    if(data && data.length>0){
+                    if(!this.disableReference && data && data.length>0){
                         infoDom.insertAdjacentHTML('beforeend', this.stringifyRef(data));
                     }
                     const actionDom = infoDom.parentNode?.parentNode?.getElementsByClassName('action')[0];
-                    if(actionDom){
+                    if(!this.disableFeedback && actionDom){
                         actionDom.innerHTML = this.stringifyVote(id);
                     }
+                }
+                if(this.input){
+                    this.input.parentNode.classList.remove('talking');
                 }
                 break;
             default:
                 this.typingWords = '';
+                this.typing = false;
                 break;
         }
         const workspace = this.chatDom.parentNode;
@@ -2367,7 +2760,7 @@ class kubechatComponent extends HTMLElement {
         if(type === 'thinking'){
             data = '<div class="thinking"><i></i><i></i><i></i><i></i><i></i></div>';
         }
-        if(references && references.length>0){
+        if(!this.disableReference && references && references.length>0){
             ref = this.stringifyRef(references);
         }
         return `
@@ -2383,7 +2776,7 @@ class kubechatComponent extends HTMLElement {
                     </div>
                 </div>
                 <div class="action">
-                    ${type!=='welcome'?this.stringifyVote(id, upvote, downvote):''}
+                    ${!this.disableFeedback && type!=='welcome' ? this.stringifyVote(id, upvote, downvote) : ''}
                 </div>
             </div>
         `;
@@ -2401,6 +2794,9 @@ class kubechatComponent extends HTMLElement {
         <div class="bd chat">
         </div>
         <div class="ft">
+            <span class="speech">
+                <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M841.142857 402.285714v73.142857c0 169.142857-128 308.553143-292.571428 326.838858V877.714286h146.285714c20.004571 0 36.571429 16.566857 36.571428 36.571428s-16.566857 36.571429-36.571428 36.571429H329.142857c-20.004571 0-36.571429-16.566857-36.571428-36.571429s16.566857-36.571429 36.571428-36.571428h146.285714v-75.446857c-164.571429-18.285714-292.571429-157.696-292.571428-326.838858v-73.142857c0-20.004571 16.566857-36.571429 36.571428-36.571428s36.571429 16.566857 36.571429 36.571428v73.142857c0 141.129143 114.870857 256 256 256s256-114.870857 256-256v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571428s36.571429 16.566857 36.571428 36.571428z m-146.285714-219.428571v292.571428c0 100.571429-82.285714 182.857143-182.857143 182.857143s-182.857143-82.285714-182.857143-182.857143V182.857143c0-100.571429 82.285714-182.857143 182.857143-182.857143s182.857143 82.285714 182.857143 182.857143z" fill="currentColor"></path></svg>
+            </span>
             <label class="ask">
                 <input type="text" class="input" required="required" title="" />
             </label>
@@ -2459,7 +2855,7 @@ class kubechatComponent extends HTMLElement {
     showTips = () => {
         const askDom = this.bot.getElementsByClassName('ask')[0];
         if(!askDom){return;}
-        let idx = 0, len = 2, tips = ['tips1', 'tips2'];
+        let idx = 0, tips = ['tips1', 'tips2', 'tips3'], len = tips.length;
         setInterval(()=>{
             askDom.classList.remove(tips[idx]);
             if(idx+1>=len){idx=0;}else{idx += 1;}
@@ -2505,6 +2901,12 @@ class kubechatComponent extends HTMLElement {
         }
         this.setCookie('kubechat-session', session);
         this.sessionId = session;
+
+        // Check reference config
+        this.disableReference = this.getAttribute("disablereference");
+
+        // Check feedback config
+        this.disableFeedback = this.getAttribute("disablefeedback");
     
         // Create elements
         const wrapper = document.createElement("div");
@@ -2563,6 +2965,12 @@ class kubechatComponent extends HTMLElement {
         shadow.appendChild(wrapper);
         wrapper.appendChild(icon);
         wrapper.appendChild(bot);
+
+        // init speech
+        if('webkitSpeechRecognition' in window){
+            this.bot.classList.add('speech');
+            this.recognition = this.initSpeechRecognition();
+        }
 
         // init position
         this.updateBotPosition();
