@@ -30,6 +30,22 @@
       animation: typing 1s linear infinite;
     }
   }
+  .kubechat {
+    position: fixed;
+    right: -25px;
+    bottom: -25px;
+    z-index: 10000;
+    transition: 0.3s;
+    display: none;
+    &.kubechat-ready {
+      display: block;
+    }
+    &:hover,
+    &.kubechat-open {
+      right: 0;
+      bottom: 0;
+    }
+  }
 }
 
 @keyframes typing {
