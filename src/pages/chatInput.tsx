@@ -56,7 +56,7 @@ const TypeWriterInput = () => {
   }, []);
 
   useEffect(() => {
-    document.getElementById('btn').style.display = 'inline-flex'
+    document.getElementById('btn').style.display = chatReady ? 'inline-flex' : 'none'
   }, [chatReady]);
 
 
