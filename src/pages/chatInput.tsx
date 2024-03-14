@@ -7,6 +7,7 @@ import styles from './index.module.less';
 const TypeWriterInput = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [chatReady, setChatReady] = useState<boolean>(false);
+  const [currentTips, setTips] = useState <string>('');
 
   useEffect(() => {
     document.getElementsByTagName('kube-chat')[0].logo.style.opacity = 0
@@ -25,6 +26,7 @@ const TypeWriterInput = () => {
             }, 3000);
           }
           dom.textContent = tips.slice(0, i).join(' ');
+          setTips(tips.join(' '))
           i++;
         }, 200);
       };
@@ -57,11 +59,12 @@ const TypeWriterInput = () => {
   const handleClick = (event) => {
     event.preventDefault();
     document.getElementsByTagName('kube-chat')[0].setBotExpand(true);
+    document.getElementsByTagName('kube-chat')[0].askQuestion(currentTips)
   };
 
-  return <div className='chat-box'>
+  return <span className='chat-box'>
     <a href="#" onClick={handleClick} className="chat-btn">How to create a MySQL cluster </a>
-    <div
+    <span
       className={classNames({
         [styles.kubechat]: true,
         [styles.kubechatOpen]: open,
@@ -79,8 +82,8 @@ const TypeWriterInput = () => {
           setChatReady(true);
         }}
       />
-    </div>
-  </div>
+    </span>
+  </span>
 };
 
 export default TypeWriterInput;
