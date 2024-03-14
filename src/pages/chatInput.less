@@ -32,7 +32,20 @@
   }
 }
 
-@media (max-width: 1360px){
+@keyframes typing {
+
+  0%,
+  50% {
+    visibility: hidden;
+  }
+
+  51%,
+  100% {
+    visibility: visible;
+  }
+}
+
+@media (max-width: 1360px) {
   .chat-box {
     .chat-btn {
       width: 480px;
@@ -40,7 +53,7 @@
   }
 }
 
-@media (max-width: 576px){
+@media (max-width: 576px) {
   .chat-box {
     .chat-btn {
       width: 300px;
