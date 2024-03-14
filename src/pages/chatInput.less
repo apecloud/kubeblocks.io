@@ -1,0 +1,33 @@
+.chat-box {
+  .chat-btn {
+    display: inline-flex;
+    width: 545px;
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 26px;
+    border: 1px solid #323D4D;
+    background: #fff;
+    color: #746CED;
+    font-size: 20px;
+    box-shadow: 0 -2px 5px inset #00000050;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: #746CED;
+    }
+
+    &:before {
+      content: "Ask KubeChat: ";
+      color: #323D4D;
+      margin-right: 2px;
+    }
+
+    &:after {
+      content: "I";
+      font-family: sans-serif;
+      margin: 1px 0 0 2px;
+      animation: typing 1s linear infinite;
+    }
+  }
+}

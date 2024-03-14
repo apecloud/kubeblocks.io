@@ -6,6 +6,9 @@ import styles from './index.module.less';
 import Translate, { translate } from '@docusaurus/Translate';
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import TypeWriter from './typeWriter';
+import TypeWriterInput from './chatInput';
+import classNames from 'classnames';
+
 
 type IntroductionItem = {
   title: string;
@@ -129,7 +132,8 @@ export default function Home(): JSX.Element {
               <div className={styles.text}>
                 <h1 key='p1'>The cloud native </h1>
                 <h1 key='p2'>database control plane</h1>
-                <p key='p3'>Any Database. Anywhere.</p>
+                <p key='p3'>Any Database. Anywhere.  <br/> <TypeWriterInput /></p>
+               
                 <div key='p7' className={styles.actions}>
                   <Link
                     className={styles.actionItem}
