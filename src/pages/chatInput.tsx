@@ -12,8 +12,6 @@ const TypeWriterInput = () => {
 
 
   useEffect(() => {
-    document.getElementById('chat').style.display = 'none'
-    document.getElementsByTagName('kube-chat')[0].style.display = 'none'
     const chatTips = () => {
       const tips1 = "how to install kubeblocks".split(/\s/);
       const tips2 = "how to create a mysql cluster".split(/\s/);
@@ -62,34 +60,35 @@ const TypeWriterInput = () => {
   const handleClick = (event) => {
     event.preventDefault();
     document.getElementById('chat').style.display = 'block'
-    document.getElementsByTagName('kube-chat')[0].style.display = 'block'
     document.getElementsByTagName('kube-chat')[0].setBotExpand(true);
     document.getElementsByTagName('kube-chat')[0].askQuestion(currentTips)
   };
 
   return <span className='chat-box'>
     <a href="#" onClick={handleClick} className="chat-btn">How to create a MySQL cluster </a>
-    <span
-      id='chat'
-      className={classNames({
-        [styles.kubechat]: true,
-        [styles.kubechatOpen]: open,
-        [styles.kubechatReady]: chatReady,
-      })}
-    >
-      <KubeChat
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-          document.getElementsByTagName('kube-chat')[0].style.display = 'none'
-        }}
-        onReady={() => {
-          setChatReady(true);
-        }}
-      />
+    <span className='chat-span' id='chat'>
+      <span
+        className={classNames({
+          [styles.kubechat]: true,
+          [styles.kubechatOpen]: open,
+          [styles.kubechatReady]: chatReady,
+        })}
+      >
+        <KubeChat
+          onOpen={() => {
+            setOpen(true);
+          }}
+          onClose={() => {
+            setOpen(false);
+            document.getElementById('chat').style.display = 'none'
+          }}
+          onReady={() => {
+            setChatReady(true);
+          }}
+        />
+      </span>
     </span>
+
   </span>
 };
 
