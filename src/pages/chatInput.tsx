@@ -71,7 +71,7 @@ const TypeWriterInput = () => {
       className={classNames({
         [styles.kubechat]: true,
         [styles.kubechatOpen]: open,
-        [styles.kubechatReady]: chatReady
+        [styles.kubechatReady]: chatReady,
       })}
     >
       <KubeChat
