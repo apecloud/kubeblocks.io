@@ -27,7 +27,7 @@ const Kubechat = (options={}) => {
     
     return (
         <>
-            <kube-chat customstyle={customStyle} ref={ref} botid='bot49ffa0425f54383c' title='KB Little Assistant' />
+            <kube-chat customstyle={customStyle} ref={ref} botid='bot49ffa0425f54383c' title='KubeBlocks Assistant' disablereference={true} />
         </>
     );
 };

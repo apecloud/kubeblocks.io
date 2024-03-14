@@ -409,11 +409,7 @@ class kubechatComponent extends HTMLElement {
         }
 
         .question .avatar div {
-            display: flex;
-            place-content: center;
-            font-size: 2rem;
-            background: var(--bg-color-human);
-            cursor: default;
+            background: url(${this.avatar}) center center/100% no-repeat, var(--bg-color-human);
         }
 
         .answer .avatar div {
@@ -2576,6 +2572,7 @@ class kubechatComponent extends HTMLElement {
         if(this.socket){
             this.socket.close(1000, 'Stoped by user');
         }
+        this.setChatWaiting(false);
     }
 
     // Answer typing
@@ -2716,7 +2713,7 @@ class kubechatComponent extends HTMLElement {
     getTemplateQ = (question) => {
         return `
         <div class="topic question">
-            <div class="avatar"><div>😄</div></div>
+            <div class="avatar"><div></div></div>
             <div class="content">
                 <div class="word">
                     ${question.replace(/\&/g,'&amp;').replace(/(\<)|\>/g, (a,b)=>b?'&lt;':'&gt;')}
@@ -2891,7 +2888,7 @@ class kubechatComponent extends HTMLElement {
         // Check title
         let title = this.getAttribute('title');
         if(title && title.replace(/\s/g,'')!==''){
-            this.caption = title;            
+            this.caption = title;
         }
 
         // Check sessionid
@@ -2920,6 +2917,7 @@ class kubechatComponent extends HTMLElement {
         const bot = document.createElement("div");
         this.bot = bot;
         bot.setAttribute("class", "bot");
+        bot.setAttribute("title", "");
         
         bot.innerHTML = this.getTemplate();
         bot.addEventListener('click', this.handleClick);
@@ -2947,6 +2945,10 @@ class kubechatComponent extends HTMLElement {
             this.setBotExpand(!this.botExpand);
         });
         icon.appendChild(logo);
+
+        // Check human avatar
+        const avatar = this.getAttribute('avatar');
+        this.avatar = avatar||`'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-size="32px">😄</text></svg>'`;
     
         // Create some CSS to apply to the shadow dom
         const style = document.createElement("style");
@@ -2988,6 +2990,7 @@ class kubechatComponent extends HTMLElement {
         }
     }
 }
+
 if (!window.customElements.get('kube-chat')){
     window.customElements.define('kube-chat', kubechatComponent);
 };
