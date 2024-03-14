@@ -9,8 +9,10 @@ const TypeWriterInput = () => {
   const [chatReady, setChatReady] = useState<boolean>(false);
   const [currentTips, setTips] = useState <string>('');
 
+  
+
   useEffect(() => {
-    document.getElementsByTagName('kube-chat')[0].logo.style.opacity = 0
+    document.getElementsByTagName('kube-chat')[0].style.display= 'none'
     const chatTips = () => {
       const tips1 = "how to install kubeblocks".split(/\s/);
       const tips2 = "how to create a mysql cluster".split(/\s/);
@@ -58,6 +60,7 @@ const TypeWriterInput = () => {
  
   const handleClick = (event) => {
     event.preventDefault();
+    document.getElementsByTagName('kube-chat')[0].style.display= 'block'
     document.getElementsByTagName('kube-chat')[0].setBotExpand(true);
     document.getElementsByTagName('kube-chat')[0].askQuestion(currentTips)
   };
@@ -77,6 +80,7 @@ const TypeWriterInput = () => {
         }}
         onClose={() => {
           setOpen(false);
+          document.getElementsByTagName('kube-chat')[0].style.display= 'none'
         }}
         onReady={() => {
           setChatReady(true);
