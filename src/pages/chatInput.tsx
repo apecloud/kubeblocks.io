@@ -7,12 +7,13 @@ import styles from './index.module.less';
 const TypeWriterInput = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [chatReady, setChatReady] = useState<boolean>(false);
-  const [currentTips, setTips] = useState <string>('');
+  const [currentTips, setTips] = useState<string>('');
 
-  
+
 
   useEffect(() => {
-    document.getElementsByTagName('kube-chat')[0].style.display= 'none'
+    document.getElementById('chat').style.display = 'none'
+    document.getElementsByTagName('kube-chat')[0].style.display = 'none'
     const chatTips = () => {
       const tips1 = "how to install kubeblocks".split(/\s/);
       const tips2 = "how to create a mysql cluster".split(/\s/);
@@ -57,10 +58,11 @@ const TypeWriterInput = () => {
     chatTips();
   }, []);
 
- 
+
   const handleClick = (event) => {
     event.preventDefault();
-    document.getElementsByTagName('kube-chat')[0].style.display= 'block'
+    document.getElementById('chat').style.display = 'block'
+    document.getElementsByTagName('kube-chat')[0].style.display = 'block'
     document.getElementsByTagName('kube-chat')[0].setBotExpand(true);
     document.getElementsByTagName('kube-chat')[0].askQuestion(currentTips)
   };
@@ -68,6 +70,7 @@ const TypeWriterInput = () => {
   return <span className='chat-box'>
     <a href="#" onClick={handleClick} className="chat-btn">How to create a MySQL cluster </a>
     <span
+      id='chat'
       className={classNames({
         [styles.kubechat]: true,
         [styles.kubechatOpen]: open,
@@ -80,7 +83,7 @@ const TypeWriterInput = () => {
         }}
         onClose={() => {
           setOpen(false);
-          document.getElementsByTagName('kube-chat')[0].style.display= 'none'
+          document.getElementsByTagName('kube-chat')[0].style.display = 'none'
         }}
         onReady={() => {
           setChatReady(true);
