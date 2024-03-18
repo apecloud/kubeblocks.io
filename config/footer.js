@@ -68,7 +68,7 @@ module.exports = {
         {
           html: `
               <span class="contact-span">
-                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-29tx52d8n-vli24S6gtD5ODJlNUqLqbQ" target="_blank" rel="noreferrer noopener">
+                <a href="https://join.slack.com/t/kubeblocks/shared_invite/zt-2f9hztwcg-hcos~WYoDqXjitobfGMTgQ" target="_blank" rel="noreferrer noopener">
                   Slack
                 </a>
               </span>
