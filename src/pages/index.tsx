@@ -132,7 +132,7 @@ export default function Home(): JSX.Element {
               <div className={styles.text}>
                 <h1 key='p1'>The cloud native </h1>
                 <h1 key='p2'>database control plane</h1>
-                <p key='p3'>Any Database. Anywhere.  <br/> <TypeWriterInput /></p>
+                <p key='p3'>Run Any Database Anywhere  <br/> <TypeWriterInput /></p>
                
                 <div key='p7' className={styles.actions}>
                   <Link
