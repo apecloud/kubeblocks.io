@@ -12,46 +12,53 @@ const TypeWriterInput = () => {
   useEffect(() => {
     document.getElementById('btn').style.display = 'none'
     const chatTips = () => {
-      const tips1 = "how to install kubeblocks".split(/\s/);
-      const tips2 = "how to create a mysql cluster".split(/\s/);
-      const tips3 = "how to start a LLM in my laptop".split(/\s/);
       const dom = document.getElementsByClassName('chat-btn')[0];
-      const typing = (tips) => {
+      const Tips = [
+        "how to install kubeblocks",
+        "how to create a mysql cluster",
+        "how to create a postgresql cluster",
+        "how to create a redis cluster",
+        "how to create a mongodb cluster"
+      ];
+      const getTips = (idx) => {
+        return Tips[idx]?.split(/\s/);
+      }
+      const typing = (idx) => {
+        const tips = getTips(idx);
         let i = 0;
         let clock = setInterval(() => {
           if (i >= tips.length) {
             clearInterval(clock);
             setTimeout(() => {
-              clearInput(tips);
+              clearInput(idx);
             }, 3000);
           }
           dom.textContent = tips.slice(0, i).join(' ');
           setTips(tips.join(' '))
           i++;
         }, 200);
-      };
-      const clearInput = (tips) => {
+      }
+      const clearInput = (idx) => {
+        const tips = getTips(idx);
         let i = tips.length;
         let clock = setInterval(() => {
           if (i <= 0) {
             clearInterval(clock);
             setTimeout(() => {
-              if (tips === tips1) {
-                tips = tips2;
-              } else if (tips === tips2) {
-                tips = tips3;
+              if (idx < Tips.length - 1) {
+                idx += 1;
               } else {
-                tips = tips1;
+                idx = 0;
               }
-              typing(tips);
+              typing(idx);
             }, 500);
           }
           dom.textContent = tips.slice(0, i).join(' ');
           i--;
         }, 100);
-      };
-      typing(tips1);
-    };
+      }
+      typing(0);
+    }
     chatTips();
   }, []);
 
