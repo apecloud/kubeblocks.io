@@ -33,6 +33,10 @@ class kubechatComponent extends HTMLElement {
         bubbles: true, cancelable: false, composed: true, message: {}
     });
 
+    beforeSpeakEvent = new CustomEvent("beforeSpeak", {
+        bubbles: true, cancelable: true, composed: true, message: {}
+    });
+
     warningMessage = [];
 
     caption = 'Kubechat';
@@ -469,9 +473,26 @@ class kubechatComponent extends HTMLElement {
             gap: 5px;
         }
 
-        .topic :where(.time, .reference) {
+        .topic :where(.time, .speaker, .stop-speak, .reference) {
             font-size: 0.6rem;
             padding: 0.5rem;
+        }
+
+        .speaker::before{
+            content: "🔈";
+            color: #fff;
+        }
+
+        .stop-speak::before{
+            content: "🔇";
+            color: #fff;
+        }
+
+        .speaker, .stop-speak {
+            cursor: pointer;
+        }
+        .topic .speaker.invisible {
+            display:none;
         }
 
         .topic .reference {
@@ -915,30 +936,35 @@ class kubechatComponent extends HTMLElement {
             }
         }
 
-        /* fit mode */
-        .fit .icon {
+        /* offstage mode */
+        .offstage {
             display: none;
         }
 
-        .fit .action .close {
+        /* adaptive mode */
+        .adaptive .icon {
             display: none;
         }
 
-        .fit .ext .hd .action .close {
+        .adaptive .action .close {
+            display: none;
+        }
+
+        .adaptive .ext .hd .action .close {
             display: inline-block;
         }
 
-        .fit .bot {
+        .adaptive .bot {
             display: block;
             width: 100%;
         }
 
-        .fit .warning::before {
+        .adaptive .warning::before {
             background: none;
             border-radius: none;
         }
 
-        .fit .warning::after {
+        .adaptive .warning::after {
             content: attr(title);
             border: none;
             animation: none;
@@ -1040,11 +1066,23 @@ class kubechatComponent extends HTMLElement {
     }
 
     // Toggle fullscreen
-    toggleFullScreen = ()=>{
+    toggleFullScreen = () => {
         this.bot.classList.toggle('full-screen');
         this.isFullScreen = this.bot.classList.contains('full-screen');
         if(this.isFullScreen){
             this.dispatchEvent(this.fullscreenEvent);
+        }
+    }
+
+    // Update Caption
+    updateCaption = (caption) => {
+        const title = caption || this.getAttribute("caption");
+        if(title){
+            this.caption = title
+            const domHeader = this.bot.getElementsByClassName('title')[0];
+            if(domHeader){
+                domHeader.textContent = title;
+            }
         }
     }
 
@@ -1061,6 +1099,40 @@ class kubechatComponent extends HTMLElement {
     }
 
     // Util
+    getLang = (text) => {
+        const len = (s, r) => {
+          return s.match(r)?.length||0;
+        }
+        const langs = {
+          "en": (x)=>len(x, /([a-zA-Z])/g),
+          "zh": (x)=>len(x, /([a-zA-Z\u4e00-\u9fa5])/g),
+          "ja": (x)=>len(x, /([\u3040-\u309f\u30a0-\u30ff\u31f0-\u31ff])/g),
+          "ko": (x)=>len(x, /([\uac00-\ud7af])/g),
+          "ru": (x)=>len(x, /([а-яА-Я])/g),
+        };
+        const lang = Object.entries(langs).reduce((pre, cur)=>{
+            return (cur[1](text) > pre[1](text)) ? cur : pre;
+        });
+        const langDefault = window.navigator.language || window.navigator.userLanguage;
+        return lang[0]||langDefault;
+    }
+      
+    speak = (text, fnOnEnd) => {
+        const utterance = new SpeechSynthesisUtterance();
+        utterance.onend = () => {
+            if(typeof fnOnEnd === 'function'){
+                fnOnEnd();
+            }
+        }
+        utterance.text = text;
+        utterance.lang = this.getLang(text);
+        window.speechSynthesis.speak(utterance);
+    }
+
+    stopSpeak = () => {
+        window.speechSynthesis.cancel();
+    }
+
     initSpeechRecognition = () => {
         const input = this.input || this.bot.getElementsByClassName('input')[0];
         const that = this;
@@ -2312,6 +2384,7 @@ class kubechatComponent extends HTMLElement {
                 }
                 this.typingWords = '';
                 this.typing = false;
+                this.setChatWaiting(false);
                 console.log("WebSocket 连接已关闭");
             });
 
@@ -2416,7 +2489,6 @@ class kubechatComponent extends HTMLElement {
     // Handle click event
     handleClick = (e) => {
         const dom = e.target, tag = dom.tagName.toLowerCase(), cls = dom.classList;
-
         switch(tag){
             case 'span':
                 if(cls.contains('close')){
@@ -2426,10 +2498,10 @@ class kubechatComponent extends HTMLElement {
                     dom.textContent = this.isFullScreen ? '⇲' : '⇱';
                 }else if(cls.contains('dismiss')){
                     this.showReference(false);
-                }else if(cls.contains('speech') && !cls.contains('speaking')){
-                    this.recognition.go(dom);
                 }else if(cls.contains('speaking')){
                     this.recognition.stop();
+                }else if(cls.contains('speech')){
+                    this.recognition.go(dom);
                 }
                 break;
             case 'i':
@@ -2467,6 +2539,22 @@ class kubechatComponent extends HTMLElement {
                 if(cls.contains('reference')){
                     const ref = dom.getElementsByClassName('ref-detail')[0]?.innerHTML;
                     this.showReference(ref);
+                }else if(cls.contains('stop-speak')){
+                    cls.replace('stop-speak', 'speaker');
+                    this.stopSpeak();
+                }else if(cls.contains('speaker')){
+                    const answerDom = dom.parentNode.parentNode.getElementsByClassName('word')[0];
+                    const answerText = answerDom?.innerText;
+                    if(answerText){
+                        cls.replace('speaker', 'stop-speak');
+                        this.beforeSpeakEvent.message = {
+                            "text": answerText
+                        };
+                        if(!this.dispatchEvent(this.beforeSpeakEvent)){
+                            return;
+                        }
+                        this.speak(answerText, ()=>{cls.replace('stop-speak', 'speaker');});
+                    }
                 }
                 break;
             case 'pre':
@@ -2509,9 +2597,16 @@ class kubechatComponent extends HTMLElement {
         if(msg.toLowerCase()==='/clear'){
             const result = await this.clearHistory();
             if(result.code==='200'){
+                this.messageEvent.message = {
+                    "session": this.sessionId,
+                    "raw": '',
+                };
+                this.dispatchEvent(this.messageEvent);
                 this.renderChats([],true);
             }
-            this.sayWelcome();
+            if(this.mode!=='offstage'){
+                this.sayWelcome();
+            }
             this.setChatWaiting(false);
             return;
         }
@@ -2530,7 +2625,9 @@ class kubechatComponent extends HTMLElement {
                 "timestamp": ""
             }
         ];
-        this.renderChats(list);
+        if(this.mode!=='offstage'){
+            this.renderChats(list);
+        }
         const formatMsg = JSON.stringify(list[0]);
         if(!this.socket){
             await this.initWS();
@@ -2579,23 +2676,21 @@ class kubechatComponent extends HTMLElement {
     answerTyping = async (options={}) => {
         const { type, id, data, timestamp } = options;
         if(!type){return;}
+        const mode = this.mode;
         const wdDoms = this.chatDom.getElementsByClassName('word');
         const wdDom = wdDoms[wdDoms.length-1];
         switch(type){
             case 'welcome':
                 const hello = data.hello;
                 const faq = data.faq;
-                if(hello==='' && faq.length<1){
-                    return;
-                }
-                const list = [
-                    {
-                        "type": "welcome",
-                        "role": "ai",
-                        "data": this.formatMarkdown(hello) + (faq.length>0 ? `<p><i class="faq">${faq.join('</i><i class="faq">')}</i></p>` : ''),
-                        "timestamp": timestamp
-                    }
-                ];
+                if(hello==='' && faq.length<1){return}
+                if(mode==='offstage'){return}
+                const list = [{
+                    "type": "welcome",
+                    "role": "ai",
+                    "data": this.formatMarkdown(hello) + (faq.length>0 ? `<p><i class="faq">${faq.join('</i><i class="faq">')}</i></p>` : ''),
+                    "timestamp": timestamp
+                }];
                 this.welcomeMessage = list;
                 if(this.chatDom.childElementCount===0){
                     this.renderChats(list);
@@ -2604,6 +2699,7 @@ class kubechatComponent extends HTMLElement {
             case 'start':
                 this.typingWords = '';
                 this.typing = true;
+                if(mode==='offstage'){return}
                 if(this.input){
                     this.input.parentNode.classList.add('talking');
                 }
@@ -2613,11 +2709,12 @@ class kubechatComponent extends HTMLElement {
                     this.setChatWaiting(false);
                 }
                 this.typing = false;
+                this.typingWords = data;
+                if(mode==='offstage'){return}
                 if(this.input){
                     this.input.parentNode.classList.remove('talking');
                 }
                 if(!wdDom){return;}
-                this.typingWords = data;
                 wdDom.innerHTML = data;
                 break;
             case 'message':
@@ -2626,30 +2723,36 @@ class kubechatComponent extends HTMLElement {
                     if(this.input){this.input.value = '';}
                 }
                 this.typing = true;
-                if(!wdDom){return;}
                 this.typingWords += data;
+                if(mode==='offstage'){return}
+                if(!wdDom){return;}
                 wdDom.innerHTML = this.formatMarkdown(this.typingWords, true, false);
                 break;
             case 'stop':
-                if(!wdDom){return;}
-                const { related_question_prompt, related_question } = options;
-                let relatedQuestion = '';
-                let tips = related_question_prompt || 'You can continue to ask me';
-                if(related_question && related_question.length){
-                    relatedQuestion = `<div class="related"><p class="tips">${tips}</p><p><i class="faq">${related_question.join('</i><i class="faq">')}</i></p></div>`
-                }
-                const formatedMessage = this.formatMarkdown(this.typingWords, false, true);
-                wdDom.innerHTML = formatedMessage + relatedQuestion;
-                const tpDom = wdDom.getElementsByClassName('thinking')[0];
-                if(tpDom){tpDom.remove();}
-                this.messageEvent.message = {
-                    "session": this.sessionId,
-                    "raw": this.typingWords,
-                    "html": formatedMessage
-                };
-                this.dispatchEvent(this.messageEvent);
+                const typingWords = this.typingWords;
                 this.typingWords = '';
                 this.typing = false;
+                this.messageEvent.message = {
+                    "session": this.sessionId,
+                    "raw": typingWords,
+                };
+                this.dispatchEvent(this.messageEvent);
+                if(mode==='offstage'){return}
+                if(!wdDom){return}
+                let extraInfo ='';
+                const {urls} = options;
+                if(urls && urls.length){
+                    extraInfo += `<div class="related"><p class="tips">Resources</p>${urls.map((item,index)=>`<p>${index+1}. <a href="${item}" target="_blank">${item}</a></p>`).join('')}</div>`;
+                }
+                const { related_question_prompt, related_question } = options;
+                let tips = related_question_prompt || 'You can continue to ask me';
+                if(related_question && related_question.length){
+                    extraInfo += `<div class="related"><p class="tips">${tips}</p><p><i class="faq">${related_question.join('</i><i class="faq">')}</i></p></div>`
+                }
+                const formatedMessage = this.formatMarkdown(typingWords, false, true);
+                wdDom.innerHTML = formatedMessage + extraInfo;
+                const tpDom = wdDom.getElementsByClassName('thinking')[0];
+                if(tpDom){tpDom.remove();}
                 const infoDom = wdDom.parentNode.getElementsByClassName('info')[0];
                 if(infoDom){
                     const respTime = infoDom.getElementsByClassName('time')[0];
@@ -2658,6 +2761,10 @@ class kubechatComponent extends HTMLElement {
                     }
                     if(!this.disableReference && data && data.length>0){
                         infoDom.insertAdjacentHTML('beforeend', this.stringifyRef(data));
+                    }
+                    const speaker = infoDom.getElementsByClassName('speaker')[0];
+                    if(speaker){
+                        speaker.classList.remove('invisible');
                     }
                     const actionDom = infoDom.parentNode?.parentNode?.getElementsByClassName('action')[0];
                     if(!this.disableFeedback && actionDom){
@@ -2673,6 +2780,7 @@ class kubechatComponent extends HTMLElement {
                 this.typing = false;
                 break;
         }
+        if(mode==='offstage'){return}
         const workspace = this.chatDom.parentNode;
         workspace.scrollTop = workspace.scrollHeight;
     }
@@ -2753,23 +2861,27 @@ class kubechatComponent extends HTMLElement {
     }
 
     getTemplateA = (options={}) => {
-        let { type, id, data, timestamp, references, ref='', upvote, downvote } = options;
+        let { type, id, data, timestamp, references, ref='', urls, url='', upvote, downvote } = options;
         if(type === 'thinking'){
             data = '<div class="thinking"><i></i><i></i><i></i><i></i><i></i></div>';
         }
         if(!this.disableReference && references && references.length>0){
             ref = this.stringifyRef(references);
         }
+        if(urls && urls.length){
+            url = `<div class="related"><p class="tips">Resources</p>${urls.map((item,index)=>`<p>${index+1}. <a href="${item}" target="_blank">${item}</a></p>`).join('')}</div>`;
+        }
         return `
             <div class="topic answer">
                 <div class="avatar"><div></div></div>
                 <div class="content">
                     <div class="word">
-                        ${['thinking','welcome'].includes(type) ? data : this.formatMarkdown(data, false, true)}
+                        ${['thinking','welcome'].includes(type) ? data : this.formatMarkdown(data, false, true) + url}
                     </div>
                     <div class="info">
                         <div class="time">${this.timestampToTime(timestamp)}</div>
                         ${ref}
+                        <div class="${timestamp?'speaker':'speaker invisible'}" title="Voice Listening"></div>
                     </div>
                 </div>
                 <div class="action">
@@ -2868,7 +2980,7 @@ class kubechatComponent extends HTMLElement {
         this.endpoint = this.getAttribute("endpoint") || 'https://chat.kubeblocks.io';
         this.wServer = this.getAttribute("wserver") || 'wss://chat.kubeblocks.io';
         // Check bot mode
-        this.mode = this.getAttribute("mode")||'icon';
+        this.mode = this.getAttribute("mode");
         // Check customized style
         this.customStyle = this.getAttribute("customstyle")||'';
 
@@ -2885,10 +2997,10 @@ class kubechatComponent extends HTMLElement {
         this.botId = botid;
         this.integrationId = integrationid;
 
-        // Check title
-        let title = this.getAttribute('title');
-        if(title && title.replace(/\s/g,'')!==''){
-            this.caption = title;
+        // Check caption
+        let caption = this.getAttribute('caption');
+        if(caption && caption.replace(/\s/g,'')!==''){
+            this.caption = caption;
         }
 
         // Check sessionid
@@ -2907,7 +3019,7 @@ class kubechatComponent extends HTMLElement {
     
         // Create elements
         const wrapper = document.createElement("div");
-        const wrappercls = this.mode==='fit' ? 'wrapper fit' : 'wrapper';
+        const wrappercls = this.mode ? `wrapper ${this.mode}` : 'wrapper';
         wrapper.setAttribute("class", wrappercls);
     
         const icon = document.createElement("div");
@@ -2917,7 +3029,6 @@ class kubechatComponent extends HTMLElement {
         const bot = document.createElement("div");
         this.bot = bot;
         bot.setAttribute("class", "bot");
-        bot.setAttribute("title", "");
         
         bot.innerHTML = this.getTemplate();
         bot.addEventListener('click', this.handleClick);
@@ -2948,14 +3059,14 @@ class kubechatComponent extends HTMLElement {
 
         // Check human avatar
         const avatar = this.getAttribute('avatar');
-        this.avatar = avatar||`'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><text x="0" y="28" font-size="32px">😄</text></svg>'`;
+        this.avatar = avatar||`'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><text x="50%" y="17.5" dominant-baseline="central" text-anchor="middle" font-size="32">😄</text></svg>'`;
     
         // Create some CSS to apply to the shadow dom
         const style = document.createElement("style");
         style.textContent = this.getDefaultStyle();
 
         // Set loading spin
-        if(this.mode === 'fit'){
+        if(this.mode === 'adaptive'){
             this.spin = bot;
         }else{
             this.spin = icon;
