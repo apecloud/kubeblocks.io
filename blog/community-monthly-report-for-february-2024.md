@@ -45,7 +45,7 @@ In the past month, the community has merged 76 PRs and resolved 57 issues. A tot
 
 for joining the KubeBlocks community! Shuimo03 has successfully merged a PR last month (#6603).
 
-We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and everyone of you！
+We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and every one of you！
 
 ![2024-02-good-first-issues](./../static/images/2024-02-good-first-issues.png)
 
