@@ -35,7 +35,7 @@ So far, a total of 1607 GitHub users have starred KubeBlocks. We do appreciate y
 - Resolved the problem of ConfigMap not found during cluster deletion and code optimization (#6793).
 - Fixed the issue of ineffective custom endpoints when creating OSS backup repositories (#6819).
 - Resolved the issue of etcd role probe failure during the upgrade process (#6839).
-- Fixed the issue of invalid reconcile workers (#6805).
+- Fixed the issue of invalid reconcile worker nodes (#6805).
 
 ## New Contributors
 
@@ -45,7 +45,7 @@ So far, a total of 1607 GitHub users have starred KubeBlocks. We do appreciate y
 
 for joining the KubeBlocks community! They successfully merged PRs last month.
 
-We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and everyone of you！
+We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and every one of you！
 
 ![2024-03-good-first-issues](./../static/images/2024-03-good-first-issues.jpg)
 
