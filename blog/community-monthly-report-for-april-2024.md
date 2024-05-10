@@ -64,8 +64,8 @@ We call for more developers to participate in the collaborative development of K
 
 Related links:
 - [Good first issue](https://github.com/apecloud/kubeblocks/contribute)
-- [Contribution guide](https://github.com/apecloud/kubeblocks/blob/main/docs/CONTRIBUTING.md)
-- [Developing guide](https://github.com/apecloud/kubeblocks/blob/main/docs/00%20-%20index.md)
+- [Contributing to KubeBlocks](https://github.com/apecloud/kubeblocks/blob/main/docs/CONTRIBUTING.md)
+- [Developing KubeBlocks](https://github.com/apecloud/kubeblocks/blob/main/docs/00%20-%20index.md)
 
 Feel free to join the GitHub Discussion or the [KubeBlocks Slack group](https://join.slack.com/t/kubeblocks/shared_invite/zt-29tx52d8n-vli24S6gtD5ODJlNUqLqbQ)!
 
