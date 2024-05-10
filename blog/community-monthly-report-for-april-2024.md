@@ -11,9 +11,9 @@ image: /img/blog-2024-04-monthly-report.png
 
 ## Overview
 
-In April, KubeBlocks continued the development of v0.9.0. The new version is expected to be released in May, so please stay tuned 🌟.
+In April, KubeBlocks continued the development of v0.9.0. The new version is expected to be released in May, so stay tuned 🌟.
 
-Over the past month, the community has participated in six offline events, merged 157 PRs, and resolved 133 issues, with contributions from 27 developers. What's more, the KubeBlocks and WeScale community has announced their participation in OSPP 2024 (Open Source Promotion Plan) and are now open for student registration. For more details, refer to:
+Over the past month, the community has participated in six offline events, merged 157 PRs, and resolved 133 issues, with contributions from 27 developers. What's more, KubeBlocks and WeScale have announced their participation in OSPP 2024 (Open Source Promotion Plan) and the projects are now open for student registration. For more details, refer to:
 
 - [KubeBlocks Community Homepage](https://summer-ospp.ac.cn/org/orgdetail/833ca537-91a2-44a8-9965-5eee8f34aceb?lang=en)
 - [WeScale Community Homepage](https://summer-ospp.ac.cn/org/orgdetail/5d8efb0a-7f0d-4705-b253-00bb162ef507?lang=en)
