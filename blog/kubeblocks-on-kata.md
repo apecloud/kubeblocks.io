@@ -10,6 +10,7 @@ authors:
 tags: [containerization, database performance, runtime, kata]
 image: /img/kata.png
 ---
+
 # Securing Your Workloads with Kata Containers: Running KubeBlocks on Kata
 
 Traditional containers run on the same operating system kernel, which may have some security vulnerabilities, such as privilege escalation and kernel vulnerabilities. If you are concerned about container security, run KubeBlocks on Kata Containers might be a solution. We have built a Kata Containers environment and performed some basic functional verification.
