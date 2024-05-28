@@ -8,7 +8,7 @@ authors:
   url: https://github.com/realzyy
   image_url: https://avatars.githubusercontent.com/u/1814084?v=4
 tags: [redis, containerization]
-image: /img/blog-redis-containerization-discuss.png
+image: /img/blog-redis-containerization.png
 ---
 
 # Is Redis Containerization an easy target?
