@@ -1,6 +1,6 @@
 ---
 slug: kubeblocks-on-kata
-title: KubeBlocks on Kata
+title: Securing Your Workloads with Kata Containers: Running KubeBlocks on Kata
 description: How do you increase your container security with Kata.
 date: 2024-05-28
 authors:
@@ -8,9 +8,9 @@ authors:
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
 tags: [containerization, database performance, runtime, kata]
-image: /img/blog-containerization.png
+image: /img/kata.png
 ---
-# KubeBlocks on Kata
+# Securing Your Workloads with Kata Containers: Running KubeBlocks on Kata
 
 Traditional containers run on the same operating system kernel, which may have some security vulnerabilities, such as privilege escalation and kernel vulnerabilities. If you are concerned about container security, run KubeBlocks on Kata Containers might be a solution. We have built a Kata Containers environment and performed some basic functional verification.
 Kata Containers (Kata for short) is an open-source project that provides a secure and high-performance container runtime environment. The goal of Kata Containers is to combine virtualization technology with container technology, providing a user experience similar to lightweight containers while offering higher isolation and security.
