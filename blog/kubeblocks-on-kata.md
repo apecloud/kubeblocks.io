@@ -1,8 +1,8 @@
 ---
 slug: kubeblocks-on-kata
 title: KubeBlocks on Kata
-description: How do you increase your 
-date: 2024-01-26
+description: How do you increase your container security with Kata.
+date: 2024-05-28
 authors:
   name: dullboy
   url: https://github.com/nayutah
