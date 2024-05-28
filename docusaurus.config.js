@@ -95,6 +95,7 @@ const config = {
         blog: {
           editUrl: ({ locale, blogDirPath, blogPath, permalink }) =>
             `${websiteRepos}/${blogDirPath}/${blogPath}`,
+            postsPerPage: 'ALL', 
         },
         theme: {
           customCss: require.resolve("./src/style/custom.less"),
@@ -116,7 +117,7 @@ const config = {
   ],
   scripts: [
     {
-      src: '/js/kubechat.js',
+      src: "/js/kubechat.js",
       defer: true,
     },
   ],

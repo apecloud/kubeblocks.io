@@ -1,6 +1,28 @@
 .search{
   margin-bottom: 30px;
 }
+
+.tabs {
+  margin-bottom: 20px;
+  border-bottom: none;
+}
+.tab {
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.1s, color 0.1s, box-shadow 0.1s;
+}
+.tab.active {
+  background-color: var(--ifm-color-primary);
+  border: 1px solid var(--ifm-color-primary);
+  color: white;
+  box-shadow: 0 4px 6px rgba(56, 170, 246, 0.1);
+}
+
 .cards{
   a {
     text-decoration: none;
@@ -77,9 +99,11 @@
   }
 }
 .button{
-  font-size: 18px;
+  padding: 8px 30px;
+  font-weight: 600;
   border: 1px solid var(--ifm-color-primary);
   color: var(--ifm-color-primary);
+  margin-bottom: 20px;
   &:hover{
     background-color: var(--ifm-color-primary);
     color: #fff;
