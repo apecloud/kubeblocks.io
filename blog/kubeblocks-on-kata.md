@@ -1,6 +1,6 @@
 ---
 slug: kubeblocks-on-kata
-title: Securing Your Workloads with Kata Containers: Running KubeBlocks on Kata
+title: Securing Your Workloads with Kata Containers "Running KubeBlocks on Kata"
 description: How do you increase your container security with Kata.
 date: 2024-05-28
 authors:
