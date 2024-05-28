@@ -2,7 +2,7 @@
 slug: is-redis-containerization-an-easy-target
 title: Is Redis Containerization an easy target?
 description: Is Redis Containerization an easy target?
-date: 2024-05-24
+date: 2024-05-28
 authors:
   name: Thomas
   url: https://github.com/realzyy
