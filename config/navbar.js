@@ -5,10 +5,16 @@ module.exports = {
   },
   items: [
     {
-      label: 'User Docs',
+      label: 'CLI Docs',
       type: 'doc',
       position: 'left',
-      docId: 'user_docs/overview/introduction',
+      docId: 'cli_docs/overview/introduction',
+    },
+    {
+      label: 'API Docs',
+      type: 'doc',
+      position: 'left',
+      docId: 'api_docs/overview/introduction',
     },
     {
       label: 'Developer Docs',
