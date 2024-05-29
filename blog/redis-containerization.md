@@ -17,7 +17,7 @@ In the era of Kubernetes dominance, database containerization presents an extrem
 
 Open-source databases like MySQL and PostgreSQL were born in the PC server era and are often used to store critical business data. Migrating them to Kubernetes might require more effort and courage. However, when it comes to Redis, a database born in the same era as container technology and mostly used as a cache, does containerizing it become easier? **Many cloud-native teams indeed think so, but practice reveals that Redis isn’t as easy to handle as it seems.**
 
-## Too Easy, Right? Well...
+## Too easy, right? Well...
 
 Getting started with Redis containerization is indeed a breeze. You can pull up a Redis service in just a few seconds using the official Redis Docker image. Deploying applications and Redis in the same Kubernetes cluster significantly simplifies the onboarding process, but there are two "minor" problems:
 
