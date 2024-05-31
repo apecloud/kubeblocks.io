@@ -8,7 +8,7 @@ authors:
   url: https://github.com/iziang
   image_url: https://avatars.githubusercontent.com/u/1765402?v=4
 tags: [KubeBlocks, AIGC, Amazon EKS]
-image: /img/redis-on-kb.png
+image: /img/blog-aigc.png
 ---
 
 # Use KubeBlocks to build your AIGC infrastructure on Amazon EKS

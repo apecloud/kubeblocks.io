@@ -8,7 +8,7 @@ authors:
   url: https://github.com/nayutah
   image_url: https://avatars.githubusercontent.com/u/111858489?v=4
 tags: [containerization, database performance, network compatibility, redis]
-image: /img/redis-on-kb.png
+image: /img/blog-redis-on-kb.png
 ---
 
 # Streamlining Redis Cluster for Kubernetes with KubeBlocks and Solving Network Compatibility Problems
