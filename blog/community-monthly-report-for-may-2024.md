@@ -40,9 +40,9 @@ Over the past month, the community merged 170 PRs, and resolved 133 issues, with
 Nice to have you here in the KubeBlocks family. All of them merged a PR to KubeBlocks last month.
 
 <div style="width:100px;overflow-x:auto">
-![d976045024](./../static/img/2024-05-certificate-d976045024.png)
-![duiniwukenaihe](./../static/img/2024-05-certificate-duiniwukenaihe.png)
-![starnop](./../static/img/2024-05-certificate-starnop.png)
+![d976045024](./../static/images/2024-05-certificate-d976045024.png)
+![duiniwukenaihe](./../static/images/2024-05-certificate-duiniwukenaihe.png)
+![starnop](./../static/images/2024-05-certificate-starnop.png)
 </div>
 
 ## Good First Issues
