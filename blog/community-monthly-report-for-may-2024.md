@@ -17,19 +17,19 @@ Over the past month, the community merged 170 PRs, and resolved 133 issues, with
 
 ## Highlights
 
-- [#7153 Supported to reference config across clusters](https://github.com/apecloud/kubeblocks/pull/7153).
-- [#7258 Supported NodeCountScaler](https://github.com/apecloud/kubeblocks/pull/7258).
+- [#7153](https://github.com/apecloud/kubeblocks/pull/7153) Supported to reference config across clusters.
+- [#7258](https://github.com/apecloud/kubeblocks/pull/7258) Supported NodeCountScaler.
 
 ## Bug Fixes
 
-- [#7475 Fixed the crash issue after executing a switchover for MongoDB](https://github.com/apecloud/kubeblocks/pull/7475).
-- [#7447 Adapted rolecheck to accommodate cluster initialization for some database engines](https://github.com/apecloud/kubeblocks/pull/7447).
-- [#7365 Supported PVC to create idempotent](https://github.com/apecloud/kubeblocks/pull/7365).
-- [#7352 Added labels to distinguish KubeBlocks from dataprotection](https://github.com/apecloud/kubeblocks/pull/7352).
-- [#7323 Fixed the issue that the configmap 'xxx-rsm-env' was not found](https://github.com/apecloud/kubeblocks/pull/7323).
-- [#7299 Added lorry ports to the host network](https://github.com/apecloud/kubeblocks/pull/7299).
-- [#7256 Removed the validation for the cluster component spec in webhook](https://github.com/apecloud/kubeblocks/pull/7256).
-- [#7266 Fixed the issue that there were duplicate volume mounts in the config-manager container](https://github.com/apecloud/kubeblocks/pull/7267).
+- [#7475](https://github.com/apecloud/kubeblocks/pull/7475) Fixed the crash issue after executing a switchover for MongoDB.
+- [#7447](https://github.com/apecloud/kubeblocks/pull/7447) Adapted rolecheck to accommodate cluster initialization for some database engines.
+- [#7365](https://github.com/apecloud/kubeblocks/pull/7365) Supported PVC to create idempotent.
+- [#7352](https://github.com/apecloud/kubeblocks/pull/7352) Added labels to distinguish KubeBlocks from dataprotection.
+- [#7323](https://github.com/apecloud/kubeblocks/pull/7323) Fixed the issue that the configmap 'xxx-rsm-env' was not found.
+- [#7299](https://github.com/apecloud/kubeblocks/pull/7299) Added lorry ports to the host network.
+- [#7256](https://github.com/apecloud/kubeblocks/pull/7256) Removed the validation for the cluster component spec in webhook.
+- [#7266](https://github.com/apecloud/kubeblocks/pull/7267) Fixed the issue that there were duplicate volume mounts in the config-manager container.
 
 ## New Contributors
 
