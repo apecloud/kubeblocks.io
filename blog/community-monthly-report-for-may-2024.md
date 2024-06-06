@@ -37,17 +37,11 @@ Over the past month, the community merged 170 PRs, and resolved 133 issues, with
 
 💙 @d976045024, duiniwukenaihe, starnop 💙!
 
-Nice to have you here in the KubeBlocks family. All of them merged a PR to KubeBlocks last month.
-
-<div style="width:100px;overflow-x:auto">
-![d976045024](./../static/images/2024-05-certificate-d976045024.png)
-![duiniwukenaihe](./../static/images/2024-05-certificate-duiniwukenaihe.png)
-![starnop](./../static/images/2024-05-certificate-starnop.png)
-</div>
+Nice to have you here in the KubeBlocks community. All of them merged their first PR to KubeBlocks last month. Thanks for the contributions!
 
 ## Good First Issues
 
-We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and every one of you！Claim now 👇
+We call for more developers to participate in the collaborative development of KubeBlocks. Starting with [good first issues](https://github.com/apecloud/kubeblocks/contribute), we hope to build the next-generation database management platform with each and every one of you! Claim now 👇
 
 - [#7229 [Improvement] Specify backup/restore PORT by name](https://github.com/apecloud/kubeblocks/issues/7229)
 - [#7031 [Improvement] doc API `opsrequest.spec.restoreSpec.restoreTimeStr`](https://github.com/apecloud/kubeblocks/issues/7031)
