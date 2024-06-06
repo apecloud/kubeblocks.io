@@ -61,4 +61,4 @@ Related links:
 
 Feel free to join the GitHub Discussion or the [KubeBlocks Slack group](https://join.slack.com/t/kubeblocks/shared_invite/zt-29tx52d8n-vli24S6gtD5ODJlNUqLqbQ)!
 
-![2024-05-overview](./../static/images/2024-05-overview.jpg)
+![2024-05-overview](./../static/images/2024-05-overview.png)
