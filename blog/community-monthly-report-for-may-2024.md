@@ -24,18 +24,18 @@ Over the past month, the community merged 170 PRs, and resolved 133 issues, with
 
 - [#7475 Fixed the crash issue after executing a switchover for MongoDB](https://github.com/apecloud/kubeblocks/pull/7475).
 - [#7447 Adapted rolecheck to accommodate cluster initialization for some database engines](https://github.com/apecloud/kubeblocks/pull/7447).
-- [#7365 Supprted PVC to create idempotent](https://github.com/apecloud/kubeblocks/pull/7365).
+- [#7365 Supported PVC to create idempotent](https://github.com/apecloud/kubeblocks/pull/7365).
 - [#7352 Added labels to distinguish KubeBlocks from dataprotection](https://github.com/apecloud/kubeblocks/pull/7352).
 - [#7323 Fixed the issue that the configmap 'xxx-rsm-env' was not found](https://github.com/apecloud/kubeblocks/pull/7323).
-- [#7299 Added lorry ports to hostnetwork](https://github.com/apecloud/kubeblocks/pull/7299).
+- [#7299 Added lorry ports to the host network](https://github.com/apecloud/kubeblocks/pull/7299).
 - [#7256 Removed the validation for the cluster component spec in webhook](https://github.com/apecloud/kubeblocks/pull/7256).
-- [#7266 Fixed the issue that there were duplicate volumeMounts in the config-manager container](https://github.com/apecloud/kubeblocks/pull/7267).
+- [#7266 Fixed the issue that there were duplicate volume mounts in the config-manager container](https://github.com/apecloud/kubeblocks/pull/7267).
 
 ## New Contributors
 
 👏 Let's welcome
 
-💙 @d976045024, duiniwukenaihe, starnop 💙!
+💙 @[d976045024](https://github.com/d976045024), [duiniwukenaihe](https://github.com/duiniwukenaihe), [starnop](https://github.com/starnop) 💙!
 
 Nice to have you here in the KubeBlocks community. All of them merged their first PR to KubeBlocks last month. Thanks for the contributions!
 
