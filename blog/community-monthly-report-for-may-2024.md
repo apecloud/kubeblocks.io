@@ -7,7 +7,7 @@ tags: [Monthly Report, Community]
 image: /img/blog-2024-05-monthly-report.png
 ---
 
-# Community Monthly Report for April 2024
+# Community Monthly Report for May 2024
 
 ## Overview
 
@@ -44,7 +44,6 @@ Nice to have you here in the KubeBlocks family. All of them merged a PR to KubeB
 ![duiniwukenaihe](./../static/img/2024-05-certificate-duiniwukenaihe.png)
 ![starnop](./../static/img/2024-05-certificate-starnop.png)
 </div>
-
 
 ## Good First Issues
 
