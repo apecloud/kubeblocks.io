@@ -1,10 +1,10 @@
 ---
-slug: Community-Monthly-Report-for-April-2024
-title: Community Monthly Report for April 2024
-description: OSPP 2024, the upcoming v0.9.0, find out what's happening in the KubeBlocks community.
-date: 2024-05-08
-tags: [Monthly Report, v0.9.0, Community]
-image: /img/blog-2024-04-monthly-report.png
+slug: Community-Monthly-Report-for-May-2024
+title: Community Monthly Report for May 2024
+description: Find out what's happening in the KubeBlocks community.
+date: 2024-06-06
+tags: [Monthly Report, Community]
+image: /img/blog-2024-05-monthly-report.png
 ---
 
 # Community Monthly Report for April 2024
