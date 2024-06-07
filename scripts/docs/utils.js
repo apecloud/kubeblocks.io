@@ -51,7 +51,14 @@ const createKubeBlocksDocsVersion = (version) => {
   if(version === "main") {
     fs.cpSync(sourceDir, docs_dir, { recursive: true });
   } else {
-    fs.cpSync(sourceDir, `${versioned_docs_dir}/version-${version}`, { recursive: true });
+    const p = `${versioned_docs_dir}/version-${version}`
+    fs.cpSync(sourceDir, p, { recursive: true });
+
+    if(version === 'release-0.8') {
+      fs.cpSync(path.join(p, 'user_docs'), path.join(p, 'api_docs'), { recursive: true });
+      fs.cpSync(path.join(p, 'user_docs'), path.join(p, 'cli_docs'), { recursive: true });
+    }
+
     fs.writeFileSync(sidebarConfigPathname, JSON.stringify(sidebar));
   }
 }

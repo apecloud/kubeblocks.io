@@ -5,7 +5,7 @@ module.exports = {
   },
   items: [
     {
-      label: 'CLI Docs',
+      label: 'User Docs',
       type: 'doc',
       position: 'left',
       docId: 'cli_docs/overview/introduction',
