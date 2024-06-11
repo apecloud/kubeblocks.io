@@ -8,7 +8,7 @@ module.exports = {
       label: 'User Docs',
       type: 'doc',
       position: 'left',
-      docId: 'cli_docs/overview/introduction',
+      docId: 'user_docs/overview/introduction',
     },
     {
       label: 'API Docs',
