@@ -1,0 +1,31 @@
+apiVersion: apps.kubeblocks.io/v1alpha1
+kind: Cluster
+metadata:
+  name: qdrant
+spec:
+  affinity:
+    podAntiAffinity: Preferred
+    tenancy: SharedNode
+  clusterDefinitionRef: qdrant
+  clusterVersionRef: qdrant-1.8.4
+  componentSpecs:
+  - componentDefRef: qdrant
+    name: qdrant
+    replicas: 3
+    resources:
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: "2"
+        memory: 2Gi
+    serviceAccountName: kb-qdrant
+    volumeClaimTemplates:
+    - name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+  terminationPolicy: Delete
