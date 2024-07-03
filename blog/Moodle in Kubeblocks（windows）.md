@@ -1,4 +1,15 @@
-# Moodle in Kubeblocks（windows）
+---
+slug: moodle in kubeblocks
+title: moodle in kubeblocks
+description: a how-to blog post about how to deploy Moodle using the database on Kubeblocks on Windows
+date: 2024-07-03
+authors:
+  name: DWJ-Squirtle
+  url: https://github.com/DWJ-Squirtle
+tags: [KubeBlocks, moodle]
+---
+
+# Moodle in Kubeblocks(Windows)
 
 Moodle is a free online learning management system that allows educators to create their own private websites, populate them with dynamic course content, and thereby enable learning anytime, anywhere.
 
@@ -16,7 +27,7 @@ This document will guide you to quickly get started with installing and using Mo
 
 ### Steps
 
-### 1. Ensure the ApeCloud MySQL Engine is Enabled
+### 1. Ensure the ApeCloud MySQL addon is Enabled
 
 ```shell
 kbcli addon list
@@ -29,7 +40,7 @@ apecloud-mysql                 Helm   Enabled                   true
 
 ### 2. Create a MySQL Cluster
 
-This is a single-node demonstration. For a cluster deployment, please refer to:[Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster)
+This is a Standalone demonstration. For a cluster deployment, please refer to:[Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster)
 
 ```shell
 kbcli cluster create mysql <clustername>
@@ -49,7 +60,13 @@ kbcli cluster connect --show-example --show-password ${cluster-name}
 
 ### 4. Service Forwarding
 
-Perform a `port-forward` to provide the MySQL service to the host. **Note that since you will need to start the MySQL service on the local machine later, you need to modify the local port number to avoid conflicts. Here we have changed it to 3307.**
+Perform a `port-forward` to provide the MySQL service to the host. 
+
+:::note
+
+Note that since you will need to start the MySQL service on the local machine later, you need to modify the local port number to avoid conflicts. Here we have changed it to 3307.
+
+:::
 
 ```shell
 kubectl port-forward service/mycluster-mysql 3307:3306
@@ -156,7 +173,7 @@ For more detailed installation steps, please visit[Install Moodle - MoodleDocs](
 
 ### Steps
 
-### 1. Ensure the Redis engine is enabled
+### 1. Ensure the Redis addon is enabled
 
 ```shell
 kbcli addon list
@@ -166,9 +183,9 @@ redis                     Helm   Enabled                   true
 ...
 ```
 
-### 2. Create the Redis
+### 2. Create a Redis Cluster
 
-This example only demonstrates the standalone version of Redis. For more information, please refer to the documentation[Create and connect to a Redis Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-redis/cluster-management/create-and-connect-a-redis-cluster)
+This example only demonstrates the Standalone version of Redis. For more information, please refer to the documentation[Create and connect to a Redis Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-redis/cluster-management/create-and-connect-a-redis-cluster)
 
 ```shell
 kbcli cluster create redis --mode standalone <clustername>
