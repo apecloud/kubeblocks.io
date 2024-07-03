@@ -7,6 +7,7 @@ authors:
   name: DWJ-Squirtle
   url: https://avatars.githubusercontent.com/u/130666881?v=4
 tags: [KubeBlocks, moodle, Windows]
+image: /img/blog-moodle.png
 ---
 
 # Moodle in Kubeblocks (Windows)
