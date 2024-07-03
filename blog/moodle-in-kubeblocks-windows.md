@@ -5,7 +5,7 @@ description: A how-to blog post about how to deploy Moodle using the database on
 date: 2024-07-03
 authors:
   name: DWJ-Squirtle
-  url: https://avatars.githubusercontent.com/u/130666881?v=4
+  url: https://github.com/DWJ-Squirtle
 tags: [KubeBlocks, moodle, Windows]
 image: /img/blog-moodle.png
 ---
