@@ -55,11 +55,7 @@ Execute the following commands to retrieve the network information of the target
 kbcli cluster connect --show-example --show-password ${cluster-name}
 ```
 
-<<<<<<< HEAD:blog/Moodle in Kubeblocks（windows）.md
 ![](../static/images/obtain-cluster-basic-information.png)
-=======
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/moodle%E5%9B%BE1.png)
->>>>>>> upstream/master:blog/moodle-in-kubeblocks-windows.md
 
 ### 4. Service forwarding
 
@@ -92,11 +88,7 @@ Go to the official website to download and install XAMPP. Here is the website ad
 
 ### 2. Open XAMPP and start the Apache and MySQL services
 
-<<<<<<< HEAD:blog/Moodle in Kubeblocks（windows）.md
 ![](../static/images/xmapp-start.png)
-=======
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B09.png)
->>>>>>> upstream/master:blog/moodle-in-kubeblocks-windows.md
 
 ### 3. Download Moodle
 
