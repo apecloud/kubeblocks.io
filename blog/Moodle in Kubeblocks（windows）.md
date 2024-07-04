@@ -111,7 +111,7 @@ Open a browser and enter the address localhost/moodle, then follow the steps bel
 
 Default configuration is fine, just click next
 
-![](../static/images/moodle-confirm%20paths.png)
+![](../static/images/moodle-confirm-paths.png)
 
 #### 3.Choose database driver
 
