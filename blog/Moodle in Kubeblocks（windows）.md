@@ -105,7 +105,7 @@ Open a browser and enter the address localhost/moodle, then follow the steps bel
 
 #### 1.choose language
 
-![](../static/images/moodle-choose_language.png)
+![](../static/images/moodle-choose-language.png)
 
 #### 2.confirm paths
 
