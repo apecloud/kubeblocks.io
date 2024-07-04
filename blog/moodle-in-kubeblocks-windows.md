@@ -1,17 +1,18 @@
 ---
-slug: moodle in kubeblocks
-title: moodle in kubeblocks
-description: a how-to blog post about how to deploy Moodle using the database on Kubeblocks on Windows
+slug: moodle-in-kubeblocks
+title: Moodle in KubeBlocks
+description: A how-to blog post about how to deploy Moodle using the database on Kubeblocks on Windows
 date: 2024-07-03
 authors:
   name: DWJ-Squirtle
   url: https://github.com/DWJ-Squirtle
-tags: [KubeBlocks, moodle]
+tags: [KubeBlocks, moodle, Windows]
+image: /img/blog-moodle.png
 ---
 
-# Moodle in Kubeblocks(Windows)
+# Moodle in Kubeblocks (Windows)
 
-Moodle is a free online learning management system that allows educators to create their own private websites, populate them with dynamic course content, and thereby enable learning anytime, anywhere.
+Moodle is a free online learning management system that allows educators to create their private websites, populate them with dynamic course content, and thereby enable people to learn anytime, anywhere.
 
 ## Introduction
 
@@ -19,15 +20,15 @@ This document will guide you to quickly get started with installing and using Mo
 
 ## Necessary Preparations
 
-- [Docker](https://docs.docker.com/get-docker/)：v20.10.5 (runc ≥ v1.0.0-rc93) or higher version;
-- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)：For interacting with the Kubernetes cluster;
-- [kbcli](https://cn.kubeblocks.io/docs/preview/user-docs/installation/install-with-kbcli/install-kbcli)：For interaction between Playground and KubeBlocks.
+- [Docker](https://docs.docker.com/get-docker/)：v20.10.5 (runC ≥ v1.0.0-rc93) or higher version;
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl): For interacting with the Kubernetes cluster;
+- [kbcli](https://cn.kubeblocks.io/docs/preview/user-docs/installation/install-with-kbcli/install-kbcli): For interaction between Playground and KubeBlocks.
 
-## Database Preparation
+## Prepare a Database
 
 ### Steps
 
-### 1. Ensure the ApeCloud MySQL addon is Enabled
+### 1. Ensure the ApeCloud MySQL addon is enabled
 
 ```shell
 kbcli addon list
@@ -38,15 +39,15 @@ apecloud-mysql                 Helm   Enabled                   true
 ...
 ```
 
-### 2. Create a MySQL Cluster
+### 2. Create a MySQL cluster
 
-This is a Standalone demonstration. For a cluster deployment, please refer to:[Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster)
+This is a Standalone demonstration. For a RaftGroupt Cluster deployment, please refer to: [Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster).
 
 ```shell
 kbcli cluster create mysql <clustername>
 ```
 
-### 3. Obtain Cluster Basic Information
+### 3. Obtain cluster basic information
 
 Execute the following commands to retrieve the network information of the target database, particularly note the password that will be needed later.
 
@@ -54,13 +55,15 @@ Execute the following commands to retrieve the network information of the target
 kbcli cluster connect --show-example --show-password ${cluster-name}
 ```
 
+<<<<<<< HEAD:blog/Moodle in Kubeblocks（windows）.md
 ![](../static/images/obtain-cluster-basic-information.png)
+=======
+![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/moodle%E5%9B%BE1.png)
+>>>>>>> upstream/master:blog/moodle-in-kubeblocks-windows.md
 
+### 4. Service forwarding
 
-
-### 4. Service Forwarding
-
-Perform a `port-forward` to provide the MySQL service to the host. 
+Perform a `port-forward` to provide the MySQL service to the host.
 
 :::note
 
@@ -75,9 +78,9 @@ Forwarding from 127.0.0.1:3307 -> 3306
 Forwarding from [::1]:3307 -> 3306
 ```
 
-For detailed guidance on connecting to the database, please refer to:[Connect database from anywhere | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/connect_database/overview-of-database-connection)
+For detailed guidance on connecting to the database, please refer to: [Connect database from anywhere | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/connect_database/overview-of-database-connection).
 
-## Installing Moodle
+## Install Moodle
 
 For Windows, it is recommended to use XAMPP to install Moodle.
 
@@ -85,53 +88,57 @@ For Windows, it is recommended to use XAMPP to install Moodle.
 
 ### 1. Download and install XAMPP
 
-Go to the official website to download and install XAMPP. Here is the website address:[XAMPP Installers and Downloads for Apache Friends](https://www.apachefriends.org/zh_cn/index.html)
+Go to the official website to download and install XAMPP. Here is the website address: [XAMPP Installers and Downloads for Apache Friends](https://www.apachefriends.org/zh_cn/index.html)
 
 ### 2. Open XAMPP and start the Apache and MySQL services
 
+<<<<<<< HEAD:blog/Moodle in Kubeblocks（windows）.md
 ![](../static/images/xmapp-start.png)
+=======
+![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B09.png)
+>>>>>>> upstream/master:blog/moodle-in-kubeblocks-windows.md
 
 ### 3. Download Moodle
 
-Go to the Moodle official website and download the appropriate file. Here is the website address:[Latest release | Moodle downloads](https://download.moodle.org/releases/latest/)
+Go to the Moodle official website and download the appropriate file. Here is the website address: [Latest release | Moodle downloads](https://download.moodle.org/releases/latest/)
 
 ![](../static/images/moodle-release.png)
 
-After the download is complete, extract the compressed package to the download directory under the htdocs folder of your XAMPP installation. If the configuration is all default, it will be in `C:/xampp/htdocs`
+After the download is complete, extract the compressed package to the download directory under the `htdocs` folder of your XAMPP installation. If the configuration is all default, it will be in `C:/xampp/htdocs`
 
 ### 4. Install Moodle
 
 Open a browser and enter the address localhost/moodle, then follow the steps below to install Moodle.
 
-#### 1.choose language
+#### 1. Choose a language
 
 ![](../static/images/moodle-choose-language.png)
 
-#### 2.confirm paths
+#### 2. Confirm paths
 
-Default configuration is fine, just click next
+The default configuration is fine, just click <kbd>Next</kbd>.
 
 ![](../static/images/moodle-confirm-paths.png)
 
-#### 3.Choose database driver
+#### 3. Choose a database driver
 
-select mysqli here
+Select `mysqli` here.
 
 ![](../static/images/moodle-choose-database-diver.png)
 
-#### 4.Database settings
+#### 4. Database settings
 
-need to use the previous KubeBlocks settings
+Use the previous KubeBlocks settings.
 
 ![](../static/images/moodle-database-setting.png)
 
 #### 5. Server Check
 
-**Downloading PHP extensions, some server component check errors may occur in this step**
+**When downloading PHP extensions, some server component check errors may occur in this step.**
 
-The steps to fix are as follows:
+The steps to fix this are as follows:
 
-1. Use a text editor to open the `php.ini` file, which is located in the `xampp/` directory, and search for and uncomment the following extension lines::
+1. Use a text editor to open the `php.ini` file, which is located in the `xampp/` directory, and search for and uncomment the following extension lines:
 
    `extension=zip`
 
@@ -145,17 +152,17 @@ The steps to fix are as follows:
 
 2. After uncovering `max_input_vars`, modify it to `max_input_vars=5000`
 
-3. Copy the `xampp/php/libsodium.dll` library to the `xampp/apache/bin/` directory
+3. Copy the `xampp/php/libsodium.dll` library to the `xampp/apache/bin/` directory.
 
 ![](../static/images/moodle-check-php.png)
 
-#### 6. Waiting for Download
+#### 6. Wait for Download
 
 After that, there will be some downloads, just wait.
 
 ![](../static/images/moodle-installation.png)
 
-#### 7. Moodle Basic Settings
+#### 7. Basic Settings of Moodle
 
 Set the name and email, and the installation will soon be complete.
 
@@ -163,13 +170,13 @@ Set the name and email, and the installation will soon be complete.
 
 #### 8. Mission Accomplished
 
-At this step, the entire installation is complete, and you can now freely use Moodle!!
+In this step, the entire installation is complete, and you can now freely use Moodle!!
 
 ![](../static/images/moodle-hello.png)
 
-For more detailed installation steps, please visit[Install Moodle - MoodleDocs](https://docs.moodle.org/404/en/Installing_Moodle)
+For more detailed installation steps, please visit [Install Moodle - MoodleDocs](https://docs.moodle.org/404/en/Installing_Moodle).
 
-## Preparing the Redis Database
+## Prepare the Redis Database
 
 ### Steps
 
@@ -185,7 +192,7 @@ redis                     Helm   Enabled                   true
 
 ### 2. Create a Redis Cluster
 
-This example only demonstrates the Standalone version of Redis. For more information, please refer to the documentation[Create and connect to a Redis Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-redis/cluster-management/create-and-connect-a-redis-cluster)
+This example only demonstrates the Standalone version of Redis. For more information, please refer to the documentation [Create and connect to a Redis Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-redis/cluster-management/create-and-connect-a-redis-cluster).
 
 ```shell
 kbcli cluster create redis --mode standalone <clustername>
@@ -201,7 +208,7 @@ kbcli cluster connect --show-example --show-password --client=cli <clustername>
 
 ![](../static/images/moodle-redis-connection.png)
 
-### 4. Service Forwarding
+### 4. Service forwarding
 
 Execute `port-forward` to provide the Redis service to the host. Note that I have named my Redis instance as 'myredis', you will need to change it to the name you have chosen.
 
@@ -212,7 +219,7 @@ Forwarding from 127.0.0.1:3306 -> 3306
 Forwarding from [::1]:3306 -> 3306
 ```
 
-## Installing the Redis PHP Driver
+## Install the Redis PHP Driver
 
 ### Steps
 
@@ -228,13 +235,13 @@ Check your PHP version, CPU (64-bit or x86), and thread safety value (refer to S
 - Add the DLL file `php_redis.dll` to the `xampp/php/ext` directory
 - Add `extension=php_redis.dll` to the php.ini and restart the web server.
 
-## Connecting to the Redis Server
+## Connect to the Redis Server
 
 ### Steps
 
 ### 1. Service Check
 
-Check Site admin > Plugins > Caching > Configuration, if successful, you should see a green checkmark next to "Redis" under "Installed cache stores", as well as a link to add an instance.
+Check Site admin > Plugins > Caching > Configuration. If the service is successful, you should see a green checkmark next to "Redis" under "Installed cache stores", as well as a link to add an instance.
 
 ![](../static/images/moodle-redis-service-check.png)
 
@@ -244,6 +251,6 @@ After clicking `Add instance`, fill in the basic settings. In this example, the 
 
 ![](../static/images/moodle-redis-add-instance.png)
 
-After clicking `Save changes`, you will see `Handling connection` when you return to Kubeblocks. At this point, you can use Moodle more smoothly!
+After clicking `Save changes`, you will see `Handling connection` when you return to KubeBlocks. At this point, you can use Moodle more smoothly!
 
 ![image-20240703144539430](../static/images/moodle-handling-check.png)
