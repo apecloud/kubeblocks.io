@@ -34,11 +34,19 @@ jobs:
           ref: release-0.8
           path: ".temp/release-0.8"
           token: ${{ env.GITHUB_TOKEN }}
+  
+      - name: Checkout Kubeblocks Docs release-0.9
+        uses: actions/checkout@v3
+        with: 
+          repository: apecloud/kubeblocks
+          ref: release-0.9
+          path: ".temp/release-0.9"
+          token: ${{ env.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: Reset Docs
         run: yarn docs:reset
