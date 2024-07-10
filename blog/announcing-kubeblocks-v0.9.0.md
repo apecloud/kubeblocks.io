@@ -143,4 +143,4 @@ KubeBlocks Release 0.9 still maintains the compatibility with API marked as depr
 
 ## Upgrade to v0.9
 
-Refer to Upgrade to KubeBlocks v0.9.
+Refer to [Upgrade to KubeBlocks v0.9](https://kubeblocks.io/docs/release-0.9/user_docs/installation/upgrade/upgrade-kubeblocks-to-0.9).
