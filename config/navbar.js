@@ -14,7 +14,7 @@ module.exports = {
       label: 'API Docs',
       type: 'doc',
       position: 'left',
-      docId: 'api_docs/overview/introduction',
+      docId: 'api_docs/overview/about-this-manual',
     },
     {
       label: 'Developer Docs',

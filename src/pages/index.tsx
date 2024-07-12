@@ -137,7 +137,7 @@ export default function Home(): JSX.Element {
                 <div key='p7' className={styles.actions}>
                   <Link
                     className={styles.actionItem}
-                    to="/docs/preview/api_docs/overview/introduction">
+                    to="/docs/preview/api_docs/overview/about-this-manual">
                     <span className={styles.btnText}>View documentation</span>
                   </Link>
                   <a
