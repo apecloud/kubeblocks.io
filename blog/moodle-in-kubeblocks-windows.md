@@ -55,7 +55,7 @@ Execute the following commands to retrieve the network information of the target
 kbcli cluster connect --show-example --show-password ${cluster-name}
 ```
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/moodle%E5%9B%BE1.png)
+![](../static/images/obtain-cluster-basic-information.png)
 
 ### 4. Service forwarding
 
@@ -88,13 +88,13 @@ Go to the official website to download and install XAMPP. Here is the website ad
 
 ### 2. Open XAMPP and start the Apache and MySQL services
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B09.png)
+![](../static/images/xmapp-start.png)
 
 ### 3. Download Moodle
 
 Go to the Moodle official website and download the appropriate file. Here is the website address: [Latest release | Moodle downloads](https://download.moodle.org/releases/latest/)
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B010.png)
+![](../static/images/moodle-release.png)
 
 After the download is complete, extract the compressed package to the download directory under the `htdocs` folder of your XAMPP installation. If the configuration is all default, it will be in `C:/xampp/htdocs`
 
@@ -104,25 +104,25 @@ Open a browser and enter the address localhost/moodle, then follow the steps bel
 
 #### 1. Choose a language
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/choose_language.png)
+![](../static/images/moodle-choose-language.png)
 
 #### 2. Confirm paths
 
 The default configuration is fine, just click <kbd>Next</kbd>.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/confirm%20paths.png)
+![](../static/images/moodle-confirm-paths.png)
 
 #### 3. Choose a database driver
 
 Select `mysqli` here.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/choose%20database%20diver(1).png)
+![](../static/images/moodle-choose-database-diver.png)
 
 #### 4. Database settings
 
 Use the previous KubeBlocks settings.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/database%20setting(1).png)
+![](../static/images/moodle-database-setting.png)
 
 #### 5. Server Check
 
@@ -146,25 +146,25 @@ The steps to fix this are as follows:
 
 3. Copy the `xampp/php/libsodium.dll` library to the `xampp/apache/bin/` directory.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B04.png)
+![](../static/images/moodle-check-php.png)
 
 #### 6. Wait for Download
 
 After that, there will be some downloads, just wait.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B05.png)
+![](../static/images/moodle-installation.png)
 
 #### 7. Basic Settings of Moodle
 
 Set the name and email, and the installation will soon be complete.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B07.png)
+![](../static/images/moodle-setting.png)
 
 #### 8. Mission Accomplished
 
 In this step, the entire installation is complete, and you can now freely use Moodle!!
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B08.png)
+![](../static/images/moodle-hello.png)
 
 For more detailed installation steps, please visit [Install Moodle - MoodleDocs](https://docs.moodle.org/404/en/Installing_Moodle).
 
@@ -198,7 +198,7 @@ Execute the following commands to obtain the basic information of the target dat
 kbcli cluster connect --show-example --show-password --client=cli <clustername>
 ```
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B013.png)
+![](../static/images/moodle-redis-connection.png)
 
 ### 4. Service forwarding
 
@@ -219,7 +219,7 @@ Forwarding from [::1]:3306 -> 3306
 
 Check your PHP version, CPU (64-bit or x86), and thread safety value (refer to Site Admin > Server > PHP Info) to get the correct version.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/14.png)
+![](../static/images/moodle-site-administration.png)
 
 ### 2. Download the compatible PHP extension file and enable it
 
@@ -235,14 +235,14 @@ Check your PHP version, CPU (64-bit or x86), and thread safety value (refer to S
 
 Check Site admin > Plugins > Caching > Configuration. If the service is successful, you should see a green checkmark next to "Redis" under "Installed cache stores", as well as a link to add an instance.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B016.png)
+![](../static/images/moodle-redis-service-check.png)
 
 ### 2. Add Instance
 
 After clicking `Add instance`, fill in the basic settings. In this example, the name is 'redis' and the server is 127.0.0.1:6379.
 
-![](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/%E6%9C%80%E6%96%B018.png)
+![](../static/images/moodle-redis-add-instance.png)
 
 After clicking `Save changes`, you will see `Handling connection` when you return to KubeBlocks. At this point, you can use Moodle more smoothly!
 
-![image-20240703144539430](https://raw.githubusercontent.com/DWJ-Squirtle/blogimage/main/image-20240703144539430.png)
+![image-20240703144539430](../static/images/moodle-handling-check.png)
