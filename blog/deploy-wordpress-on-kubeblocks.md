@@ -1,6 +1,6 @@
 ---
 slug: deploy-wordpress-on-kubeblocks
-title: How to deploy a high-availability WordPress site on Kubernetes with KubeBlocks MySQL operator
+title: Deploy a High-Availability WordPress Site on Kubernetes with KubeBlocks MySQL Operator
 description: This blog introduces how to deploy a high-availability WordPress site on K8s with KubeBlocks MySQL operator.
 date: 2024-07-16
 authors:
@@ -109,7 +109,7 @@ Before deploying WordPress, you need to create a database cluster to manage the 
 
 ### Install WordPress
 
-1. Configure the database cluster
+1. Configure the database cluster.
 
    You can create users in the database for role management in WordPress. Here, we create a user named myadmin to serve as the primary user when installing WordPress.
 
@@ -128,13 +128,13 @@ Before deploying WordPress, you need to create a database cluster to manage the 
       create database wordpress;
       ```
 
-   3. Run the following command to create mysql-secret and set the key mariadb-password=password. During the installation, WordPress will use this password key value as the database password. Note that the key name for the password must be mariadb-password. The username will not be read from this secret.
+   3. Run the following command to create `mysql-secret` and set the key `mariadb-password=password`. During the installation, WordPress will use this password key value as the database password. Note that the key name for the password must be mariadb-password. The username will not be read from this secret.
 
       ```bash
       kubectl create secret generic mysql-secret --from-literal=mariadb-password=password
       ```
 
-:::warning
+:::caution
 
 You can create a secret to be referenced later during the WordPress installation to avoid transmitting the password in plaintext.
 
@@ -157,11 +157,11 @@ You can create a secret to be referenced later during the WordPress installation
 
       Parameter description:
 
-      - `mariadb.enabled`: Set this to false to disable the installation of MariaDB and to use an external database service instead.
-      - `host`: Use the MySQL service address obtained earlier to access MySQL service, e.g. apecloud-mysql.default.svc.cluster.local.
+      - `mariadb.enabled`: Set this to `false` to disable the installation of MariaDB and use an external database service instead.
+      - `host`: Use the MySQL service address obtained earlier to access MySQL service, e.g. `apecloud-mysql.default.svc.cluster.local`.
       - `user`, `database`, `port`: Set these parameters according to your actual needs.
       - `existingSecret`: This is the recommended method for securely transmitting passwords. You can reference the previously created secret to transmit passwords to avoid transmitting them in plaintext. Note that the secret must include the connection password. After existingSecret is set, the password field will be ignored.
-      - `password`: This is an optional parameter since existingSecret is recommended in this article to avoid plaintext transmission. Additionally, when existingSecret is set, the password field will be ignored.
+      - `password`: This is an optional parameter since `existingSecret` is recommended in this article to avoid plaintext transmission. Additionally, when `existingSecret` is set, the password field will be ignored.
       - `replicaCount`: This represents the number of WordPress instance pods to start.
 
    2. Check the Pod status and make sure all Pods are ready and running.
