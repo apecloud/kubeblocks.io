@@ -1,6 +1,6 @@
 ---
 slug: deploy-harbor-on-kubeblocks
-title: Deploy High Availability Harbor Cluster on Kubernetes with KubeBlocks (Operator for PostgreSQL and Redis ) in 5 Minutes
+title: Deploy a High Availability Harbor Cluster on Kubernetes with KubeBlocks (Operator for PostgreSQL and Redis ) in 5 Minutes
 description: This blog introduces how to deploy a high-availability Harbor Cluster on K8s with KubeBlocks in 5 minutes.
 date: 2024-07-15
 authors:
