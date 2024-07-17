@@ -71,7 +71,7 @@ You can refer to the official documentation for detailed operations.
 
 ### Create a HA Cluster
 
-Before deploying WordPress, you need to create a database cluster to manage the backend data for WordPress. You can create this cluster using either [kbcli](https://kubeblocks.io/docs/preview/user_docs/kubeblocks-for-apecloud-mysql/cluster-management/create-and-connect-an-apecloud-mysql-cluster) or [Helm](https://kubeblocks.io/docs/preview/api_docs/kubeblocks-for-apecloud-mysql/cluster-management/create-and-connect-an-apecloud-mysql-cluster).
+Before deploying WordPress, you need to create a database cluster to manage the backend data for WordPress. You can create this cluster using either [kbcli](https://kubeblocks.io/docs/preview/user_docs/kubeblocks-for-apecloud-mysql/cluster-management/create-and-connect-an-apecloud-mysql-cluster) or [kubectl](https://kubeblocks.io/docs/preview/api_docs/kubeblocks-for-apecloud-mysql/cluster-management/create-and-connect-an-apecloud-mysql-cluster).
 
 1. Create a HA cluster.
 
@@ -160,7 +160,7 @@ You can create a secret to be referenced later during the WordPress installation
       - `mariadb.enabled`: Set this to `false` to disable the installation of MariaDB and use an external database service instead.
       - `host`: Use the MySQL service address obtained earlier to access MySQL service, e.g. `apecloud-mysql.default.svc.cluster.local`.
       - `user`, `database`, `port`: Set these parameters according to your actual needs.
-      - `existingSecret`: This is the recommended method for securely transmitting passwords. You can reference the previously created secret to transmit passwords to avoid transmitting them in plaintext. Note that the secret must include the connection password. After existingSecret is set, the password field will be ignored.
+      - `existingSecret`: This is the recommended method for securely transmitting passwords. You can reference the previously created secret here to transmit passwords to avoid transmitting them in plaintext. Note that the secret must include the connection password. After `existingSecret` is set, the password field will be ignored.
       - `password`: This is an optional parameter since `existingSecret` is recommended in this article to avoid plaintext transmission. Additionally, when `existingSecret` is set, the password field will be ignored.
       - `replicaCount`: This represents the number of WordPress instance pods to start.
 
