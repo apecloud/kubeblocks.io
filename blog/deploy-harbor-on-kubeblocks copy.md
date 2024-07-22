@@ -83,7 +83,7 @@ Before you start, make sure your environment meets the requirements of [KubeBloc
 
 ## Connect to clusters
 
-You can also connect to the cluster following [the detailed guidelines here](https://kubeblocks.io/docs/preview/api_docs/connect_database/overview-of-database-connection) based on different scenarios. For convenience, we will use the test environment for demostration.
+You can also connect to the cluster following [the detailed guidelines here](https://kubeblocks.io/docs/preview/api_docs/connect_database/overview-of-database-connection) based on different scenarios. For convenience, we will use the test environment for demonstration.
 
 ### Connect to PostgreSQL cluster
 
