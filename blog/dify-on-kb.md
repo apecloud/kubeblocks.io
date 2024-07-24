@@ -99,7 +99,7 @@ By combining Dify's rapid application development and iteration capabilities wit
    By default, the Qdrant addon in KubeBlocks uses the official Docker Hub image docker.io/qdrant/qdrant. If you encounter issues pulling the image from the official Docker Hub, you can instead use the image synchronized from the KubeBlocks official repository when enabling the addon.
 
    ```bash
-   kbcli addon enable qdrant --set image.registry=infracreate-registry.cn-zhangjiakou.cr.aliyuncs.com --set image.repository=apecloud/qdrant
+   kbcli addon enable qdrant --set image.registry=apecloud-registry.cn-zhangjiakou.cr.aliyuncs.com --set image.repository=apecloud/qdrant
    ```
 
 In addition to installing KubeBlocks, kbcli also provides a rich set of database cluster operation features. You can easily create database clusters, check cluster status, perform horizontal and vertical scaling, expand storage volumes, and start, stop, or restart clusters - all through simple commands. This significantly reduces the learning curve for users. For users who want to quickly deploy and test KubeBlocks, kbcli provides [Playground](https://kubeblocks.io/docs/preview/user_docs/try-out-on-playground/try-kubeblocks-on-your-laptop), making it ideal for learning and experimental scenarios.
