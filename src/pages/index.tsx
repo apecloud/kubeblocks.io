@@ -18,59 +18,108 @@ type IntroductionItem = {
   description: string[];
 };
 
+type CardItem = {
+  title: string;
+  img: string;
+  alt: string,
+  description: string[];
+};
+
+const Cards: CardItem[] = [
+  {
+    title: translate({
+      id: 'homepage.cards.card0.title',
+      message: 'Beyond StatefulSet'
+    }),
+    img: 'img/rocket-launch.png',
+    alt: 'Beyond StatefulSet',
+    description: [
+      translate({
+        id: 'homepage.cards.card0.description0',
+        message: 'KubeBlocks introduces InstanceSet, an improved StatefulSet that manages databases in a specific role order to enhance availability. Besdies, InstanceSet supports heterogeneous replicas with varied resources and configurations, allows in-place Pod updates, and takes individual database instance offline for proactive maintenance.',
+      }),
+    ],
+  },
+  {
+    title: translate({
+      id: 'homepage.cards.card1.title',
+      message: 'Unified API'
+    }),
+    img: 'img/box-check.png',
+    alt: 'Unified API',
+    description: [
+      translate({
+        id: 'homepage.cards.card1.description1',
+        message: 'KubeBlocks provides a unified API for operating and managing different types of databases, significantly reducing the complexity and learning curve associated with database management. This standardized approach ensures that administrators can efficiently interact with various database systems in the same way, streamlining operations and improving productivity.',
+      }),
+    ],
+  },
+  {
+    title: translate({
+      id: 'homepage.cards.card2.title',
+      message: 'Extensible Addon'
+    }),
+    img: 'img/puzzle.png',
+    alt: 'Extensible Addon',
+    description: [
+      translate({
+        id: 'homepage.cards.card2.description2',
+        message: `KubeBlocks' standardized API design provides robust extensibility, enabling low-code integration for both in-house and open-source databases. This approach eliminates the need for extensive custom Golang coding, turns your database knowledge into productivity efficiently, and significantly speeds up development times.
+KubeBlocks currently supports over 40 database engines. Welcome to join our community.`,
+      }),
+    ],
+  },
+]
+
 const IntroductionList: IntroductionItem[] = [
   {
     title: translate({
       id: 'homepage.features.feature0.title',
-      message: 'Enhanced stateful workloads'
+      message: 'High Availability'
     }),
     img: 'img/one.webp',
-    alt: 'Enhanced stateful workloads',
+    alt: 'High Availability',
     connect: 'img/connect1.webp',
     description: [
       translate({
         id: 'homepage.features.feature0.description0',
-        message: 'KubeBlocks extends K8s StatefulSet capability with ReplicationSet and ConsensusSet workloads. They are aware of different roles in a database cluster, and choose the best update strategy with minimal impact on business continuity, monitoring data replication status and automatically fixing errors and lags.',
+        message: 'KubeBlocks provides a decentralized, Kubernetes-native high availability architecture, perfect for managing large-scale database clusters, particularly MySQL and Redis primary-replica clusters. Its design enhances fault tolerance. Additionally, its lightweight nature reduces resource strain, boosting overall efficiency. This makes KubeBlocks highly effective for handling extensive database clusters.',
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature1.title',
-      message: 'Rich day 2 operations'
+      message: 'Flexible Cluster Topology'
     }),
     img: 'img/three.webp',
-    alt: 'Rich day 2 operations',
+    alt: 'Flexible Cluster Topology',
     connect: 'img/connect2.webp',
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
-        message: 'KubeBlocks handles the complexity and provides state-of-the-art management experience for MySQL, PostgreSQL, Redis, and MongoDB. It provides on-demand provisioning, scaling, monitoring, backup, and recovery, reducing the risk of database management and the time required to go from development to production.',
+        message: `KubeBlocks' modular design allows users to customize cluster topologies according to their needs. This flexibility enables the creation of database clusters tailored to specific requirements, enhancing system adaptability and functionality. For instance, Redis users can choose from single-node, primary-replica, and Redis Cluster topologies, configuring them with preferred proxy components.`,
       }),
     ],
   },
   {
     title: translate({
       id: 'homepage.features.feature2.title',
-      message: 'Powerful and intuitive CLI',
+      message: 'Versatile Network Modes',
     }),
     img: 'img/four.webp',
-    alt: 'Powerful and intuitive CLI',
+    alt: 'Versatile Network Modes',
     connect: undefined,
     description: [
       translate({
         id: 'homepage.features.feature2.description0',
-        message: 'ClickOps is known for being time-consuming and error-prone. KubeBlocks offers kbcli for productivity. You can install KubeBlocks and launch a playground environment on a desktop or cloud with a single command. kbcli simplifies the learning curve of using data infra in Kubernetes.',
+        message: 'KubeBlocks offers multiple network modes, allowing users to select network configurations when creating database clusters. For example, MongoDB can be launched using host or container network modes. This flexibility ensures efficient communication and performance optimization across various environments, adapting to complex network architectures and requirements.',
       }),
     ]
   },
 ];
 
 const FeatureList = [{
-  icon: 'img/icon-03.png'
-}, {
-  icon: 'img/icon-04.png'
-}, {
   icon: 'img/icon-05.png'
 }, {
   icon: 'img/icon-06.png'
@@ -82,12 +131,6 @@ const FeatureList = [{
   icon: 'img/icon-09.png'
 }, {
   icon: 'img/icon-10.png'
-}, {
-  icon: 'img/icon-11.png'
-}, {
-  icon: 'img/icon-12.png'
-}, {
-  icon: 'img/icon-13.png'
 }, {
   icon: 'img/icon-14.png'
 }, {
@@ -105,7 +148,7 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     const handleResize = () => {
       setShow(document.body.clientWidth > 992);
-      setMedium(document.body.clientWidth > 880);
+      setMedium(document.body.clientWidth > 992);
     };
 
     handleResize();
@@ -130,10 +173,10 @@ export default function Home(): JSX.Element {
           <div className={styles.banner}>
             <QueueAnim duration={500} type={['left', 'right']}>
               <div className={styles.text}>
-                <h1 key='p1'>The cloud native </h1>
-                <h1 key='p2'>database control plane</h1>
-                <p key='p3'>Run Any Database Anywhere  <br/> <TypeWriterInput /></p>
-               
+                <h1 key='p1'>Run Any Database </h1>
+                <h1 key='p2'>on Kubernetes</h1>
+                <p key='p3'><TypeWriterInput /></p>
+
                 <div key='p7' className={styles.actions}>
                   <Link
                     className={styles.actionItem}
@@ -156,17 +199,14 @@ export default function Home(): JSX.Element {
         <div className={styles.description}>
           <div className={styles.content}>
             <h1>Why you need KubeBlocks</h1>
+            <h2>Run Databases on Kubernetes? Run with Kubeblocks.</h2>
             {isMedium ? <div className={styles.context}>
-              <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are</p>
-              <p>the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning</p>
-              <p>curve of K8s. KubeBlocks offers an open-source option that helps application developers and platform</p>
-              <p>engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems.</p>
-              <p>No need to be a K8s professional, anyone can set up a full-stack, </p>
-              <p>production-ready data infrastructure in minutes.</p>
+              <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.</p>
+              <p>It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.</p>
+              <p>By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database </p>
+              <p>management easier in cloud-native environment.</p>
             </div> : <div className={styles.context}>
-              <p>Building data infrastructure on K8s becomes increasingly popular. However, the most prominent obstacles are the difficulties of integrating with cloud providers, the lack of reliable operators, and the steep learning curve of K8s.
-                KubeBlocks offers an open-source option that helps application developers and platform engineers set up feature-rich services for RDBMS, NoSQL, streaming and analytical systems. </p>
-              <p>No need to be a K8s professional, anyone can set up a full-stack, production-ready data infrastructure in minutes.</p>
+              <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database management easier in cloud-native environment.</p>
             </div>}
             <div className={styles.text}>Created by <span>ApeCloud</span></div>
           </div>
@@ -185,10 +225,24 @@ export default function Home(): JSX.Element {
             </div>
           ))}
         </div>
+        <div className={styles.cards}>
+          {Cards.map(({ title, img, description, alt }, index) => (
+            <div className={styles.item} key={`card_${index}`}>
+              <div className={styles.card} >
+                <img src={img} alt={alt} />
+                <div className={styles.content}>
+                  <h1>{title}</h1>
+                  {description.map((item, index) => <p key={`des_${index}`}>{item}</p>)}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div>
+
+      {/* <div>
         <TypeWriter />
-      </div>
+      </div> */}
       <div className={styles.features}>
         <div className="container">
           <h1>Features</h1>
@@ -212,3 +266,4 @@ export default function Home(): JSX.Element {
     </Layout>
   )
 }
+
