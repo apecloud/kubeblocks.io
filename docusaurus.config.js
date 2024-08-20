@@ -34,7 +34,7 @@ const versions = (() => {
 
 const config = {
   title: "KubeBlocks",
-  tagline: "The control plane for your cloud-native data infrastructure",
+  tagline: "Run Any Database on Kubernetes",
   url: "https://kubeblocks.io",
   baseUrl: "/",
   baseUrlIssueBanner: false,

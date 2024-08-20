@@ -98,7 +98,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
-        message: `KubeBlocks' modular design allows users to customize cluster topologies according to their needs. This flexibility enables the creation of database clusters tailored to specific requirements, enhancing system adaptability and functionality. For instance, Redis users can choose from single-node, primary-replica, and Redis Cluster topologies, configuring them with preferred proxy components.`,
+        message: `KubeBlocks' modular design allows you to customize cluster topologies to according to your needs. This flexibility lets you create database clusters tailored to specific requirements, enhancing system adaptability and functionality. For instance, when creating a Redis cluster, you can choose from single-node, primary-replica, and Redis Cluster topologies, and configure them with your preferred proxy components.`,
       }),
     ],
   },
@@ -113,7 +113,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature2.description0',
-        message: 'KubeBlocks offers multiple network modes, allowing users to select network configurations when creating database clusters. For example, MongoDB can be launched using host or container network modes. This flexibility ensures efficient communication and performance optimization across various environments, adapting to complex network architectures and requirements.',
+        message: 'KubeBlocks offers multiple network modes, allowing you to select network configurations when creating database clusters. For example, MongoDB can be launched using host or container network modes. This flexibility ensures efficient communication and performance optimization across various environments, adapting to complex network architectures and requirements.',
       }),
     ]
   },
@@ -204,7 +204,7 @@ export default function Home(): JSX.Element {
               <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.</p>
               <p>It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.</p>
               <p>By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database </p>
-              <p>management easier in cloud-native environment.</p>
+              <p>management easier in cloud-native environments.</p>
             </div> : <div className={styles.context}>
               <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database management easier in cloud-native environment.</p>
             </div>}
