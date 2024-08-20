@@ -98,7 +98,7 @@ const IntroductionList: IntroductionItem[] = [
     description: [
       translate({
         id: 'homepage.features.feature1.description0',
-        message: `KubeBlocks' modular design allows you to customize cluster topologies to according to your needs. This flexibility lets you create database clusters tailored to specific requirements, enhancing system adaptability and functionality. For instance, when creating a Redis cluster, you can choose from single-node, primary-replica, and Redis Cluster topologies, and configure them with your preferred proxy components.`,
+        message: `KubeBlocks' modular design allows you to customize cluster topologies according to your needs. This flexibility lets you create database clusters tailored to specific requirements, enhancing system adaptability and functionality. For instance, when creating a Redis cluster, you can choose from single-node, primary-replica, and Redis Cluster topologies, and configure them with your preferred proxy components.`,
       }),
     ],
   },
