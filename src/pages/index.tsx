@@ -36,7 +36,7 @@ const Cards: CardItem[] = [
     description: [
       translate({
         id: 'homepage.cards.card0.description0',
-        message: 'KubeBlocks introduces InstanceSet, an improved StatefulSet that manages databases in a specific role order to enhance availability. Besdies, InstanceSet supports heterogeneous replicas with varied resources and configurations, allows in-place Pod updates, and takes individual database instance offline for proactive maintenance.',
+        message: 'KubeBlocks introduces InstanceSet, an improved StatefulSet that manages databases in a specific role order to enhance availability. Besides, InstanceSet supports heterogeneous replicas with varied resources and configurations, allows in-place Pod updates, and takes individual database instances offline for proactive maintenance.',
       }),
     ],
   },
@@ -199,14 +199,14 @@ export default function Home(): JSX.Element {
         <div className={styles.description}>
           <div className={styles.content}>
             <h1>Why you need KubeBlocks</h1>
-            <h2>Run Databases on Kubernetes? Run with Kubeblocks.</h2>
+            <h2>Run Databases on Kubernetes? Run with KubeBlocks.</h2>
             {isMedium ? <div className={styles.context}>
-              <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.</p>
+              <p>KubeBlocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.</p>
               <p>It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.</p>
               <p>By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database </p>
               <p>management easier in cloud-native environments.</p>
             </div> : <div className={styles.context}>
-              <p>Kubeblocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience.It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues.By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database management easier in cloud-native environment.</p>
+              <p>KubeBlocks is crafted for managing databases on Kubernetes, designed by domain experts with decades of experience. It supports a wide range of stateful workloads, including relational databases, NoSQL, message queues. By streamlining operations, enhancing flexibility, and offering extensions, KubeBlocks makes database management easier in cloud-native environments.</p>
             </div>}
             <div className={styles.text}>Created by <span>ApeCloud</span></div>
           </div>
