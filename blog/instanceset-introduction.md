@@ -1,7 +1,7 @@
 ---
 slug: instanceset-introduction
-title: kubeblocks-instanceset
-description: KubeBlocks introduces InstanceSet in v0.9.0.
+title: What is InstanceSet?
+description: KubeBlocks introduces InstanceSet in v0.9.0. This blog introduces what InstanceSet is and the features related to it.
 date: 2024-08-28
 authors:
   name: free6om
