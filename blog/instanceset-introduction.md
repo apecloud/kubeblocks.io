@@ -1,14 +1,14 @@
 ---
 slug: instanceset-introduction
-title: How to Fix Pods Stuck in Terminating Status in Kubernetes?
-description: Pods stuck in Terminating status is a common challenge for K8s users. This blog reproduces how the problem occurs, reveals why this problem happens, and how to solve it.
+title: kubeblocks-instanceset
+description: KubeBlocks introduces InstanceSet in v0.9.0.
 date: 2024-08-28
 authors:
   name: free6om
   url: https://github.com/free6om
   image_url: https://avatars.githubusercontent.com/u/28781141?v=4
 tags: [pod, pods stuck in terminating, K8s]
-image: /img/blog-pod-terminating.png
+image: /img/blog-instanceset.png
 ---
 
 # InstanceSet
