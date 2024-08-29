@@ -316,7 +316,11 @@ InstanceSet can manage up to **10,000 instances**. When managing a large number 
 ## References
 
 [1]  Instance template: https://kubeblocks.io/docs/preview/api_docs/instance-template/introduction
+
 [2]  DNS Label: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
+
 [3]  Offload specified instance: https://kubeblocks.io/docs/preview/api_docs/maintenance/scale/scale-for-specified-instance
+
 [4]  Kubernetes Pod API for in-place update: https://kubernetes.io/docs/concepts/workloads/pods/#pod-update-and-replacement
+
 [5]  In-place update: https://kubeblocks.io/docs/preview/api_docs/maintenance/in-place-update/overview
