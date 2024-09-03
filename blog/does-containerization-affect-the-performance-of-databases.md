@@ -132,7 +132,7 @@ However, the combination of K8s and containerization brings forth numerous chall
 
 1. Databases are intricate applications with multiple roles.
 
-   A fully-fledged database consists of multiple roles, each with a specific function. For example, in a MySQL primary-secondary architechture, there are two MySQL containers, one serving as the primary and the other as the secondary. The primary offers the Read-Write ability while the secondary is Read-Only and serves as a hot standby. These roles are distinct and expressing their unequal relationship accurately is vital. Additionally, it's critical to manage these roles correctly during operations such as creation, restart, deletion, backup, and high availability. At the core of this is how to manage the data dependencies across containers, and both containers and K8s currently lack a well-abstracted and resolved solution for handling such interdependencies.
+   A fully-fledged database consists of multiple roles, each with a specific function. For example, in a MySQL primary-secondary architecture, there are two MySQL containers, one serving as the primary and the other as the secondary. The primary offers the Read-Write ability while the secondary is Read-Only and serves as a hot standby. These roles are distinct and expressing their unequal relationship accurately is vital. Additionally, it's critical to manage these roles correctly during operations such as creation, restart, deletion, backup, and high availability. At the core of this is how to manage the data dependencies across containers, and both containers and K8s currently lack a well-abstracted and resolved solution for handling such interdependencies.
 
 2. Databases demand robust data persistence and consistency.
 

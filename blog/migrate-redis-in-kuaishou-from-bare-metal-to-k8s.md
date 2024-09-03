@@ -87,7 +87,7 @@ The second feature is called "**instance rebuild**". Many databases still operat
 
 After discussing the high availability related topics, let's move on to the last part - the Operator P10K problem.
 
-In our use case at Kuaishou, we encounted an extremely challenging scenario where a single Redis cluster can contain nearly 10,000 Pods. That meant a single InstanceSet Custom Resource (CR) would have over 10,000 secondary objects, which causing a huge impact on the Controller reconciliation process.
+In our use case at Kuaishou, we encountered an extremely challenging scenario where a single Redis cluster can contain nearly 10,000 Pods. That meant a single InstanceSet Custom Resource (CR) would have over 10,000 secondary objects, which causing a huge impact on the Controller reconciliation process.
 
 To address this, we made some parameter tunings and design changes to the InstanceSet Controller.
 

@@ -26,7 +26,7 @@ Our team is a group of people with strong database background and K8s background
 
 The interesting part about our team is that we work on different database types, for instance, MySQL, PostgreSQL, Redis, MongoDB, which are widely used open source databases. When we exchange our ideas on how to manage a specific database, we find these databases actually share many things in common. If we can improve the management of one database, can others benefit from it? Besides, databases are in an era of rapid growth, with new data products emerging continuously. These new databaes, to some extent, still inherit those common characteristics.
 
-So the challenge we face is: is it possibile to design a unified platform, to manage not only one, but a batch of widely-used databases, or even more, to manage those emerging databases as well? What's more, if there is such a platform, we hope the platform can be deployed on either cloud or on-premises infrastructures.
+So the challenge we face is: is it possible to design a unified platform, to manage not only one, but a batch of widely-used databases, or even more, to manage those emerging databases as well? What's more, if there is such a platform, we hope the platform can be deployed on either cloud or on-premises infrastructures.
 
 Then, Kubernetes stands out as the natural choice because Kubernetes has become the de facto standard of container orchestration, and it can bring the platform wherever this is Kubernetes, such as public cloud, private cloud, edge cloud etc. So the challenge is how to manage various databases on Kubernetes.
 
@@ -39,7 +39,7 @@ To develop a dedicated operator covering all these features, one needs a team of
 
 Compared to the thriving Kubernetes, the database field seems relatively niche to me. Can we find a way to rapidly transform database experts' knowledge into productivity, which means translating it into code? So that more and more databases will run on Kubernetes easily.
 
-Here we take bacup and restore as an example. Backup and restore are crucial to disaster recovery. Let's recap the classical backup and restore procedure.
+Here we take backup and restore as an example. Backup and restore are crucial to disaster recovery. Let's recap the classical backup and restore procedure.
 
 1. Backup methods: This procedure usually has one or more backup methods, for example regular full backups and continuous archive logs. To take regular full backups, one may adopt some widely-used database-specific backup tools, or simply take a volume snapshot.
 2. Backup scheduler: Then it has a backup scheduler to trigger the backup periodically, say, hourly, or daily or weekly or at user-specified time.
@@ -60,7 +60,7 @@ And other tasks listed here can be left to cloud-native experts. The cloud-nativ
 
 With these ideas in mind, here comes KubeBlocks. KubeBlocks is an open source and cloud neutral project. It was open-sourced last June and has 2k stars to date. KubeBlocks is a database-type agnostic operator, designed to be extensible, flexible, and pluggable.
 
-Its extensiblility comes from its unified APIs. KubeBlocks provides an addon mechanism for integrating database engines, which also is the key to how Chind Mobile Cloud can integrate their in-house and open source databases into KubeBlocks within 2 months. We have about 30 addons so far, most of them are contribued by the community for their own needs.
+Its extensiblility comes from its unified APIs. KubeBlocks provides an addon mechanism for integrating database engines, which also is the key to how Chind Mobile Cloud can integrate their in-house and open source databases into KubeBlocks within 2 months. We have about 30 addons so far, most of them are contributed by the community for their own needs.
 
 It is flexible, which means it has a very flexible cluster topology. Users can customize their own cluster topology and each component comes from the addon market.
 
@@ -91,8 +91,8 @@ Step 2. Separate the cluster template API and the cluster API.
 We notice that it is still too complex for a database user, who simply wants to create a cluster.
 Apart from the four layer modeling, we further divide each layer into two parts: one for database experts, and the other part for database users.
 
-Database experts handle the cluster definition for topology, component definition to describe engine-specific behaviors, and component version to describe engine images and enusre compatibilities.
-Database users only need to know the cluster and components they need, and for each component, they only need to care about resoruce configurations, such as CPU, memory, volume size, and replicas.
+Database experts handle the cluster definition for topology, component definition to describe engine-specific behaviors, and component version to describe engine images and ensure compatibilities.
+Database users only need to know the cluster and components they need, and for each component, they only need to care about resource configurations, such as CPU, memory, volume size, and replicas.
 
 ![Step 2. Separate the cluster template API and the cluster API](./../static/images/dedicated-operator-3.png)
 
@@ -124,7 +124,7 @@ Good afternoon, everyone. This is Shun from China Mobile Cloud. I'm a senior sys
 
 ### Challenges faced by the DBaaS system of China Mobile Cloud
 
-Before we jump in, let me share with you an overview about China Mobile Cloud DBaaS system, which manges all of our cloud databases. The DBaaS system in China Mobile Cloud covers a comprehensive product line, including transactional databases, analytical and search databases, NoSQL databases, and more. Not only do we provide the DB services for some most populuar open source databases and 3rd party databases, we are also developing our in-house DB engines and provide services on top of them. Currently we are serving for more than 35k customers across 9 major industries, such as goverment, telecom, finance, health care, education, etc.
+Before we jump in, let me share with you an overview about China Mobile Cloud DBaaS system, which manges all of our cloud databases. The DBaaS system in China Mobile Cloud covers a comprehensive product line, including transactional databases, analytical and search databases, NoSQL databases, and more. Not only do we provide the DB services for some most populuar open source databases and 3rd party databases, we are also developing our in-house DB engines and provide services on top of them. Currently we are serving for more than 35k customers across 9 major industries, such as government, telecom, finance, health care, education, etc.
 
 And more than 130k database cluster instances are running on our 15 Level-1 regions and 31 Level-2 regions.  Besides database provisioning, we also build a solid eco-system to help our customers manage their databases more efficiently.  We've build so many helpful management tools and systems like data migration, DB management console, and some tools with AIOps capabilities. China Mobile Cloud DBaaS platform runs in a cloud-native way, which means most of our DB instances are running inside the K8s clusters.
 
@@ -181,11 +181,11 @@ In terms of developer resources, the KubeBlocks addon requires only 2 person-mon
 
 The H-DB case is a great starting point, demonstrating how we can address the current issues faced by the DBaaS system using KubeBlocks.
 
-### About feature coorperation
+### About feature cooperation
 
 Our next step is to further integrate more engines through KubeBlocks for further evaluation and to upgrade to a new version of KubeBlocks, evaluating new features we are interested in.
 
-In China Mobile Cloud, our ideal goal is to build a unified cloud-native DBaaS platform. On this platform, we aim to achieve unified multi-cloud architecture, unified interfaces at the API and operator layers, supporting database clusters with different architectures, and the databse instances can be deployed on serverless Kubernetes clusters on demand. This will form a unified database orchestration and general management platform that supports different infrastructures such as public cloud, private cloud, dedicated cloud, edge cloud, etc.
+In China Mobile Cloud, our ideal goal is to build a unified cloud-native DBaaS platform. On this platform, we aim to achieve unified multi-cloud architecture, unified interfaces at the API and operator layers, supporting database clusters with different architectures, and the database instances can be deployed on serverless Kubernetes clusters on demand. This will form a unified database orchestration and general management platform that supports different infrastructures such as public cloud, private cloud, dedicated cloud, edge cloud, etc.
 
 ![Cooperation](./../static/images/dedicated-operator-9.png)
 
