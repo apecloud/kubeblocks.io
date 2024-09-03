@@ -122,7 +122,7 @@ We are thrilled to announce the release of KubeBlocks v0.9.0, which brings us on
 - Cluster API
   - Scheduling: `tenancy` and `availabilityPolicy` will be removed in Release 1.0.
   - API simplification: `replicas`, `resources`, `storage`, and `network` will be removed in Release 1.0.
-- ComponentDefintion  API
+- ComponentDefinition  API
   - switchPolicy will be removed in Release 1.0. The same capability can be achieved using the `componentDefinition.spec.lifecycleActions.switchover` API.
 - ServiceRef API
   - `cluster` will be removed in Release 1.0. The same capability can be achieved using `serviceRef.clusterServiceSelector`.

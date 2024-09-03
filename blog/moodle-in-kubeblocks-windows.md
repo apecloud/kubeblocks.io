@@ -41,7 +41,7 @@ apecloud-mysql                 Helm   Enabled                   true
 
 ### 2. Create a MySQL cluster
 
-This is a Standalone demonstration. For a RaftGroupt Cluster deployment, please refer to: [Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster).
+This is a Standalone demonstration. For a RaftGroup Cluster deployment, please refer to: [Create and connect to a MySQL Cluster | KubeBlocks](https://kubeblocks.io/docs/release-0.8/user_docs/kubeblocks-for-mysql/cluster-management/create-and-connect-a-mysql-cluster).
 
 ```shell
 kbcli cluster create mysql <clustername>

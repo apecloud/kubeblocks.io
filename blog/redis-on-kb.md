@@ -70,7 +70,7 @@ redisc-shard-5g8-0                             3/3     Running   0          14m
 redisc-shard-5g8-1                             3/3     Running   0          14m
 ```
 We can see clearly that 3 primary-secondary pods are created, but the relationship between nodes is not built.
-Annouce ip/port/bus-port
+Announce ip/port/bus-port
 
 ```
 redisc-shard-5g8-0
@@ -155,7 +155,7 @@ Waiting for the cluster to join
 >>> Configure node as replica of 172.18.0.2:30039.
 [OK] New node added correctly.
 ```
-172.18.0.2:30039  is the annouced ip/port of the primary pod.
+172.18.0.2:30039  is the announced ip/port of the primary pod.
 
 Check connection:
 ```
@@ -170,7 +170,7 @@ tcp        0      0 10.42.0.237:58576       172.18.0.2:30105        ESTABLISHED 
 tcp6       0      0 :::16379                :::*                    LISTEN      1/redis-server *:63  off (0.00/0/0)
 tcp6       0      0 :::6379                 :::*                    LISTEN      1/redis-server *:63  off (0.00/0/0)
 ```
-The secondary pod and other 3 primary pods are connected on annouced bus port, and also the secondary pod is connected to its primary pod.
+The secondary pod and other 3 primary pods are connected on announced bus port, and also the secondary pod is connected to its primary pod.
 Check the cluster topology on the secondary pod.
 
 ```
@@ -377,7 +377,7 @@ Those three links are actually the primary pod connecting successfully through t
 
 2. Secondary-2 announce & meet
 
-Annouce ip/port/bus-port
+Announce ip/port/bus-port
 
 ```
 slc@slcmac redis % kubectl exec -it redisc-shard-hxx-1 -c redis-cluster -- redis-cli -a O3605v7HsS config set cluster-announce-ip 172.18.0.2
@@ -411,9 +411,9 @@ a54e8fa9474c620154f4c1abc9628116deb3dc7e 172.18.0.2:30182@31879 myself,master - 
 3a136cd50eb3f2c0dcc3844a0de63d5e44b462d7 172.18.0.2:31309@31153 slave ff935854b7626a7e4374598857d5fbe998297799 0 1713335448794 0 connected
 ```
 
-3.Seconday-3 announce & meet
+3.Secondary-3 announce & meet
 
-Annouce ip/port/bus-port and then add node.
+Announce ip/port/bus-port and then add node.
 
 ```
 slc@slcmac redis % kubectl exec -it redisc-shard-xwz-1 -c redis-cluster -- redis-cli -a O3605v7HsS config set cluster-announce-ip 172.18.0.2
