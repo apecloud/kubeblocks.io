@@ -98,5 +98,5 @@ In the Cluster API, both `OfflineInstances` and `Replicas` need to be modified s
 
 ## References
 
-[1] [Discussions on Pod in the K8s community](https://github.com/kubernetes/kubernetes/issues/83224)
-[2] [Horizontal scale of KubeBlocks](https://kubeblocks.io/docs/release-0.9/api_docs/maintenance/scale/horizontal-scale)
+- [Discussions on Pod in the K8s community](https://github.com/kubernetes/kubernetes/issues/83224)
+- [Horizontal scale of KubeBlocks](https://kubeblocks.io/docs/release-0.9/api_docs/maintenance/scale/horizontal-scale)
