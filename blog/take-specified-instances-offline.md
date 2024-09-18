@@ -1,7 +1,7 @@
 ---
 slug: take-specified-instances-offline
 title: How to Take Specified Instances Offline?
-description: This blog introduces how KubeBlocks realizes taking specified instances offline using InstanceSet
+description: This blog introduces how KubeBlocks takes specified instances offline using InstanceSet
 date: 2024-09-19
 authors:
   name: free6om
@@ -84,7 +84,7 @@ componentName: bar
 
 During the execution process, the OpsRequest Controller will merge `onlineInstancesToOffline` into the corresponding `offlineInstances` in the Cluster object. Ultimately, the Cluster Controller will handle the task of offloading the instance named `foo-bar-1`.
 
-By editting the cluster YAML or creating an OpsRequest operation task, the offloading of a specified instance like `foo-bar-1` is achieved, breaking the limitations of StatefulSet and better supporting business needs. For more examples of specified instance horizontal scaling, refer to the [official documentation](https://kubeblocks.io/docs/preview/api_docs/maintenance/scale/horizontal-scale).
+By editing the cluster YAML or creating an OpsRequest operation task, the offloading of a specified instance like `foo-bar-1` is achieved, breaking the limitations of StatefulSet and better supporting business needs. For more examples of specified instance horizontal scaling, refer to the [official documentation](https://kubeblocks.io/docs/preview/api_docs/maintenance/scale/horizontal-scale).
 
 ## Notes
 
