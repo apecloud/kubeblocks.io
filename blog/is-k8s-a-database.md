@@ -1,7 +1,7 @@
 ---
 slug: is-k8s-a-database
 title: Is Kubernetes a Database?
-description: 
+description: Using the question "Is Kubernetes a Database?" as a starting point, this blog unveils the core concepts behind K8s, such as declarative application management and Infrastructure as Data (IaD). 
 date: 2024-09-26
 authors:
   name: Lei Zhang
