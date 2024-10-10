@@ -11,12 +11,6 @@ module.exports = {
       docId: 'user_docs/overview/introduction',
     },
     {
-      label: 'API Docs',
-      type: 'doc',
-      position: 'left',
-      docId: 'api_docs/overview/about-this-manual',
-    },
-    {
       label: 'Developer Docs',
       type: 'doc',
       position: 'left',
