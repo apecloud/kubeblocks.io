@@ -11,7 +11,7 @@ image: /img/blog-release-0.9.1.png
 
 We're thrilled to announce that KubeBlocks v0.9.1 now is released!
 
-In this release, KubeBlocks further optimizes its APIs and Addons to bring you new features and better user experience. This release includes new features like stopping/starting a cluster by Cluster API, instance rebuild capability in OpsRequest, PITR and key-based recovery for Redis. We also fixed some bugs and introduced several improvements to enhance the overall funtionality.
+In this release, KubeBlocks further optimizes its APIs and Addons to bring you new features and better user experience. This release includes new features like stopping/starting a cluster by Cluster API, instance rebuild capability in OpsRequest, PITR and key-based recovery for Redis. We also fixed some bugs and introduced several improvements to enhance the overall functionality.
 
 Read the full release note and [upgrade to KubeBlocks v0.9.1](https://kubeblocks.io/docs/preview/user_docs/upgrade/upgrade-with-kbcli/upgrade-kubeblocks-to-0.9.1) to explore more features!
 
@@ -37,7 +37,7 @@ Read the full release note and [upgrade to KubeBlocks v0.9.1](https://kubeblocks
 
    Supports backup.
 
-- New Versions
+- New versions
 
    MySQL and PostgreSQL Addons support more versions. For the latest versions of Addons, refer to the [Addon List](https://github.com/apecloud/kubeblocks-addons?tab=readme-ov-file#supported-add-ons).
 
@@ -76,9 +76,9 @@ Read the full release note and [upgrade to KubeBlocks v0.9.1](https://kubeblocks
 - Redis Addon
   - PITR for Standalone Replicas [#7998](https://github.com/apecloud/kubeblocks/pull/7998)
   - Key-based recovery for Redis [#8129](https://github.com/apecloud/kubeblocks/pull/8129)
-- Supports Loki Addon [#707](https://github.com/apecloud/kubeblocks-addons/pull/707)
-- Supports Minio Addon [#926](https://github.com/apecloud/kubeblocks-addons/pull/926)
-- Supports RabbitMQ Addon [#746](https://github.com/apecloud/kubeblocks-addons/pull/746)
+- Supports Loki [#707](https://github.com/apecloud/kubeblocks-addons/pull/707)
+- Supports MinIO [#926](https://github.com/apecloud/kubeblocks-addons/pull/926)
+- Supports RabbitMQ [#746](https://github.com/apecloud/kubeblocks-addons/pull/746)
 - Supports MySQL 8.4 [#987](https://github.com/apecloud/kubeblocks-addons/pull/987)
 - Supports PostgreSQL 16 [#973](https://github.com/apecloud/kubeblocks-addons/pull/973)
 - ZooKeeper Addon
@@ -91,6 +91,6 @@ Read the full release note and [upgrade to KubeBlocks v0.9.1](https://kubeblocks
 
    KubeBlocks adds a default immutability check for ComponentDefinition to avoid accidental changes, enhancing system stability.
 
-- Removal of the Application Addon (#7866)
+- Remove the Application Addon (#7866)
 
    The Application Addon has been removed from the codebase and is no longer installed by default. However, you can still install it manually if needed.
