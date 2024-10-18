@@ -2,7 +2,7 @@
 slug: announcing-kubeblocks-v0-9-1
 title: Announcing KubeBlocks v0.9.1
 description: This blog introduces major changes in KubeBlocks v0.9.1.
-date: 2024-10-11
+date: 2024-10-18
 tags: [KubeBlocks v0.9.1, release notes]
 image: /img/blog-release-0.9.1.png
 ---
