@@ -32,7 +32,7 @@
     "clsx": "^1.2.1",
     "docusaurus-plugin-less": "^2.0.2",
     "docusaurus-plugin-openapi": "^0.6.4",
-    "docusaurus-plugin-proxy": "^0.6.3",
+    "docusaurus-plugin-proxy": "^0.7.5",
     "docusaurus-preset-openapi": "^0.6.4",
     "docusaurus-theme-openapi": "^0.6.4",
     "less": "^4.1.3",
