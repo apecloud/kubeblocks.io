@@ -6,128 +6,127 @@
 </head>
 <body><hr />
 <p><br></p>
-<h1><center><span style="font-size: 72px; line-height: 2; letter-spacing: 2px; text-align: center;">Database High Availability (HA) Test Report</span></center></h1>
+<h1><center><span style="font-size: 72px; line-height: 2; letter-spacing: 2px; text-align: center;">数据库高可用性 (HA) 测试报告</span></center></h1>
 <p><br></p>
-<h2><center><span style="font-size: 48px; line-height: 2; letter-spacing: 2px; text-align: center;">Produced by Hangzhou ApeCloud Co., Ltd</span></center></h2>
+<h2><center><span style="font-size: 48px; line-height: 2; letter-spacing: 2px; text-align: center;">杭州云猿生数据有限公司出品</span></center></h2>
 <p><br><br><br><br>
 <img src="https://cn.kubeblocks.io/img/logo.png" alt="KubeBlocks" style="width:500px; max-width:100%; height:auto; display: block; margin: 0 auto;">
 <br><br><br><br></p>
-<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">Prepared by</span></center></h3>
-<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">Test Engineer: Huang Zhangshu</span></center></h4>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">准备人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">测试工程师: 黄章书</span></center></h4>
 <p><br><br><br></p>
-<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">Reviewed by</span></center></h3>
-<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">Test Manager: Zhang Mingjing</span></center></h4>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">审核人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">测试经理: 张明晶</span></center></h4>
 <p><br><br><br></p>
-<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">Approved by</span></center></h3>
-<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">Product Owner: Wang Ruijun</span></center></h4>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">批准人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">产品负责人: 汪瑞军</span></center></h4>
 <p><br><br><br><br>
-<center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">Test Period: Spe 15, 2024 - Spe 30, 2024</span></center></p><div class="page-break"></div><h1 style="page-break-before: always;">ChaosMesh Introduction</h1>
+<center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">测试时间: 2024年9月15日 - 2024年9月30日</span></center></p><div class="page-break"></div><h1 style="page-break-before: always;">ChaosMesh 介绍</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>ChaosMesh is a chaos engineering experimentation platform targeting Kubernetes environments, aimed at helping users test system stability and fault tolerance by simulating various failure scenarios.</p>
-<p>Chaos engineering is an advanced system testing methodology that intentionally injects various faults into distributed systems, such as network errors, disk failures, CPU load, etc., to verify the system's behavior and recovery capabilities when encountering failures. This proactive testing approach helps improve system reliability and resilience.</p>
-<p>ChaosMesh provides a set of fault injection toolkits based on Kubernetes, including various failure scenarios such as network, kernel, disk, and container, capable of simulating various abnormal situations that may occur in real environments. Users can define the types of faults to be injected, scope, duration, and other parameters through YAML configuration files or a Web UI, and then ChaosMesh will execute the corresponding fault operations on the target Pods or nodes.</p>
-<p>During the chaos experiment, ChaosMesh continuously monitors the system status and records various metrics and log information during the system recovery process. After the experiment is completed, the collected data can be analyzed to evaluate the system's resilience and fault tolerance capabilities, thereby optimizing system design and fixing potential vulnerabilities. Furthermore, ChaosMesh supports extending new fault scenarios to meet customized requirements in different scenarios.</p>
-<p>The emergence of ChaosMesh has lowered the barrier to chaos experiments and can help development and operation teams more efficiently and systematically test and improve the reliability of distributed systems. Through the various chaos experiment scenarios provided by ChaosMesh, it becomes easier to identify the weaknesses in the system and enhance application reliability.</p>
-<p>In summary, as an open-source chaos engineering platform, ChaosMesh brings better system reliability assurance for Kubernetes applications. In the increasingly complex cloud-native environment, continuously conducting chaos experiments is crucial for ensuring system high availability.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">Delete Pod Introduction</h1>
+<p>ChaosMesh 是一个面向 Kubernetes 环境的混沌工程实验平台,旨在帮助用户通过模拟各种故障场景来测试系统的稳定性和容错能力。</p>
+<p>混沌工程是一种先进的系统测试方法,通过有意在分布式系统中注入各种故障,如网络错误、磁盘故障、CPU 负载等,来验证系统在遭遇故障时的行为和恢复能力。这种主动测试有助于提高系统的可靠性和弹性。</p>
+<p>ChaosMesh 提供了一套基于 Kubernetes 的故障注入工具集,包括网络、内核、磁盘、容器等多种故障场景,能够模拟各种真实环境中可能遇到的异常情况。用户可以通过 YAML 配置文件或 Web UI 定义需要注入的故障类型、范围和持续时间等参数,然后 ChaosMesh 会在目标 Pod 或节点上执行相应的故障操作。</p>
+<p>在混沌实验运行期间,ChaosMesh 会持续监控系统状态,记录系统恢复过程中的各项指标和日志信息。实验完成后,可以根据收集的数据分析系统的弹性和容错能力,从而优化系统设计、修复潜在漏洞等。此外,ChaosMesh 还支持扩展新的故障场景,满足不同场景的定制化需求。</p>
+<p>ChaosMesh 的出现降低了混沌实验的门槛,可以帮助开发和运维团队更加高效、系统地测试和提升分布式系统的可靠性。通过 ChaosMesh 提供的各种混沌实验场景,可以更容易地发现系统的薄弱环节,加强应用程序的可靠性。</p>
+<p>总之,ChaosMesh 作为一个开源的混沌工程平台,为 Kubernetes 应用程序带来了更好的系统可靠性保障。在日益复杂的云原生环境中,持续地进行混沌实验对于保证系统高可用至关重要。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Delete Pod 原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>Simulating a database instance failover scenario by deleting a Pod involves the following principles and significance:</p>
-<h3>Principles:</h3>
-<p>In a Kubernetes cluster, stateful database components are typically deployed as StatefulSets, with each Pod corresponding to a database instance.
-When a running database Pod is deleted, Kubernetes automatically recreates a new Pod using the same persistent data volume.
-The newly created Pod needs to perform database recovery operations based on the existing data and rejoin the database cluster. This process simulates a database instance failover.</p>
-<h3>Significance:</h3>
-<h4>-Verifying the high availability of the database cluster</h4>
-<p>By triggering a failover by deleting a Pod, you can check whether the database cluster can automatically recover when an instance fails, and whether the new instance can properly rejoin the cluster and provide services.</p>
-<h4>-Testing the performance of database failover</h4>
-<p>During the failover process, you can observe various metrics of the database cluster, such as failure detection time, new instance rebuilding time, data recovery time, etc., and evaluate whether the failover performance meets the requirements.</p>
-<h4>-Discovering potential issues with database failover</h4>
-<p>Real-world failover scenarios may expose some failures and edge cases, such as data inconsistency, split-brain, etc. Simulation helps to discover and fix these potential issues.</p>
-<h4>-Enhancing the robustness of applications</h4>
-<p>Applications need to have the ability to gracefully handle database failovers. Various failover exceptions discovered during experiments can be used to improve the design and implementation of applications.
-In summary, simulating database failover by leveraging Kubernetes Pods is an efficient and controlled chaos engineering practice that helps to improve the reliability and resilience of distributed systems.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">Kill process 1 Introduction</h1>
+<p>通过删除Pod来模拟数据库实例Failover场景，原理和意义如下:</p>
+<h3>工作原理:</h3>
+<p>在 KubeBlocks 集群中，通常将有状态的数据库组件部署为 InstanceSet，每个Pod对应一个数据库实例。
+当删除一个运行中的数据库 Pod 时，KubeBlocks 会自动重新创建一个新的 Pod，使用同一个持久化数据卷。
+新创建的 Pod 需要根据已有数据进行数据库恢复操作，重新加入数据库集群，这个过程模拟了数据库实例Failover。</p>
+<h3>实际意义:</h3>
+<h4>-验证数据库集群的高可用性</h4>
+<p>通过删除 Pod 触发 Failover，可以检验数据库集群在实例故障时是否能自动恢复，新实例是否能正常重新加入集群并对外提供服务。</p>
+<h4>-测试数据库 Failover 的性能</h4>
+<p>在 Failover 过程中，可以观测数据库集群的各项指标，如故障发现时间、新实例重建时间、数据恢复时间等，评估 Failover 的性能是否符合要求。</p>
+<h4>-发现数据库 Failover 的潜在问题</h4>
+<p>真实的 Failover 场景会暴露一些故障和 Edge Case，如数据不一致、脑裂等，通过模拟有助于发现和修复这些潜在问题。</p>
+<h4>-加强应用程序的健壮性</h4>
+<p>应用程序需要具备优雅处理数据库 Failover 的能力,在实验中发现的各种 Failover 异常情况，可以用于改进应用的设计和实现。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Kill 1号主进程原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>When testing the database failover scenario, we observe whether the database instance in KubeBlocks can switch over normally by killing the number 1 process in the main container of the Pod. The principle and significance are as follows:</p>
-<h3>Principle:</h3>
-<p>In the Linux system, each running process has a unique process ID (PID), and the number 1 process is the initialization process of the entire system.
-The database process is usually not the number 1 process, but rather a child process forked from the number 1 process.
-When the number 1 process is killed, all its child processes, including the database process, will also be terminated.
-As a container orchestration system, KubeBlocks will detect the exit of the main process in the Pod, triggering the Pod rebuild process.
-During the rebuild process, KubeBlocks will start a new database instance Pod and perform data recovery based on the existing data, thereby completing the failover.</p>
-<h3>Significance:</h3>
-<h4>-Simulating actual process crash scenarios</h4>
-<p>In production environments, processes may crash due to code errors, resource depletion, etc. Killing the number 1 process can simulate this extreme situation.</p>
-<h4>-Testing edge cases for instance failover</h4>
-<p>Directly deleting a Pod to trigger failover is a common case, while killing the number 1 process is an edge abnormal case, which can more comprehensively test the robustness of the failover mechanism.</p>
-<h4>-Verifying the automatic recovery capability of the container orchestration system</h4>
-<p>When the main process exits abnormally, KubeBlocks needs to be able to quickly detect and rebuild the Pod, ensuring service continuity. This is a test of its automatic recovery capability.</p>
-<h4>-Discovering potential system vulnerabilities and defects</h4>
-<p>Extreme exceptional situations may expose potential system vulnerabilities and defects, such as resource leaks, deadlocks, etc., which can help discover and fix problems in advance.
-In summary, killing the number 1 process is an extreme approach to inducing database failover, which can subject KubeBlocks' database high availability and reliability to more stringent verification, thereby enhancing the robustness of the system.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">OOM Introduction</h1>
+<p>在测试数据库 failover 场景时,通过 kill Pod 主容器中的 1 号进程来观察 KubeBlocks 中数据库实例是否能正常切换，其原理和意义如下:</p>
+<h3>工作原理:</h3>
+<p>在 Linux 系统中,每个运行的进程都有一个唯一的进程 ID(PID)，1号进程是整个系统的初始化进程。
+数据库进程通常不是1号进程，而是由1号进程fork出来的子进程。
+当kill掉1号进程时，它的所有子进程也会被终止，包括数据库进程。
+KubeBlocks作为容器编排系统，会检测到Pod中的主进程退出，从而触发Pod重建流程。
+在重建流程中，KubeBlocks会启动一个新的数据库实例Pod，并根据已有数据进行数据恢复，从而完成failover。</p>
+<h3>实际意义:</h3>
+<h4>-模拟实际的进程崩溃场景</h4>
+<p>生产环境中的进程有可能由于代码错误、资源耗尽等原因而崩溃。kill掉1号进程可以模拟这种极端情况。</p>
+<h4>-测试实例failover的边缘案例</h4>
+<p>直接删除Pod触发failover是常规案例，而kill 1号进程则属于边缘异常案例，可以更全面地检验failover机制的健壮性。</p>
+<h4>-检验容器编排系统的自动恢复能力</h4>
+<p>当主进程异常退出时,KubeBlocks需要能够迅速发现并重建Pod，确保服务的连续性。这是对其自动恢复能力的考验。</p>
+<h4>-发现潜在的系统漏洞和缺陷</h4>
+<p>极端异常情况下可能会暴露一些潜在的系统漏洞和缺陷，如资源泄漏、死锁等，有助于提前发现和修复问题。
+综上所述，kill 1号进程是一种诱发数据库failover的极端做法，可以对KubeBlocks数据库高可用性和可靠性进行更严苛的验证，从而增强系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">OOM 原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>Testing the Failover operation of database instance Pods under OOM (Out of Memory) situations in Kubernetes is crucial, as it can verify the high availability and fault tolerance capabilities of the database cluster.</p>
-<p>OOM refers to the situation where the system memory is insufficient, causing processes within the Pod to be unable to allocate the required memory resources. In such cases, Kubernetes will select one or more processes based on their OOM Score values within the Pod and perform memory eviction to release memory and ensure the stability of the entire system. You can deterministically trigger OOM for a specific process by setting its OOM Score to -1000, thereby simulating a memory shortage scenario.</p>
-<p>In the Failover test, you will select a specific Replica Pod of the database instance as the OOM object. Since a database instance typically consists of a Primary node and multiple Secondary nodes, where the Primary node is responsible for write operations and the Secondary nodes are responsible for backup and read operations. Therefore, when the Primary Pod encounters OOM, it is necessary to verify whether the entire cluster can correctly execute the Failover operation, promote one of the Secondary Pods to become the new Primary, and adjust the roles and perform data replication for the other Pods to ensure the availability and data consistency of the cluster.</p>
-<p>During the testing process, the test program will trigger OOM and closely monitor the entire Failover process. Once the Failover is detected as completed, it will verify the role labels of each Pod to confirm whether the new Primary node and Secondary nodes have been properly switched. Additionally, it will check whether the new Primary node can provide write services normally, and whether the Secondary nodes can correctly replicate data and provide read services.</p>
-<p>Through this approach, the test system can comprehensively test the fault tolerance capability of the database instance under extreme memory pressure, ensuring that even in the event of node failure, the entire cluster can quickly recover and continue to provide services. This is crucial for ensuring the high availability and data consistency of the database, especially when running critical business in production environments.</p>
-<p>In summary, the role of the OOM mechanism in Failover testing is to simulate extreme resource pressure situations, verify whether the database instance can correctly execute high availability policies in the event of failure, and evaluate the fault tolerance capabilities and reliability of the entire cluster through the verification of Failover results.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">Full CPU Introduction</h1>
+<p>在 Kubernetes 中测试数据库实例 Pod 在 OOM (Out of Memory) 情况下的 Failover 操作非常重要,可以验证数据库集群的高可用性和容错能力。</p>
+<p>OOM 是指系统内存不足导致 Pod 内进程无法分配所需的内存资源。这种情况下，K8s 会根据 Pod 中进程的 OOM Score 值选择一个或多个进程进行内存驱逐，以释放内存并确保整个系统的稳定运行。您可以通过设置 Pod 中进程的 OOM Score 为 -1000 来确定性触发某个进程 OOM，从而模拟内存不足的场景。</p>
+<p>在 Failover 测试中，您会选择一个特定的数据库实例 Replica Pod 作为 OOM 对象。由于数据库实例通常由一个 Primary 节点和多个 Secondary 节点组成，其中 Primary 节点负责写入操作，Secondary 节点负责备份和读取操作。因此，当 Primary Pod 发生 OOM 时，需要验证整个集群是否能够正确执行 Failover 操作，将其中一个 Secondary Pod 提升为新的 Primary，同时其他 Pod 也需要进行角色调整和数据复制，以确保集群的可用性和数据一致性。</p>
+<p>在测试过程中，测试程序会触发 OOM 然后密切监控整个 Failover 过程。一旦检测到 Failover 完成，会验证每个 Pod 的角色标签，确认新的 Primary 节点和 Secondary 节点是否正常切换。同时检查新的 Primary 节点是否能够正常提供写入服务，以及 Secondary 节点是否能够正确复制数据并提供读取服务。</p>
+<p>通过这种方式，测试系统可以全面测试数据库实例在极端内存压力下的容错能力，确保即使发生节点故障，整个集群也能够快速恢复并继续提供服务。这对于确保数据库的高可用性和数据一致性至关重要，尤其是在生产环境中运行关键业务时。</p>
+<p>总之，OOM 机制在 Failover 测试中的作用是模拟极端的资源压力情况，验证数据库实例在发生故障时是否能够正确执行高可用策略，并通过对 Failover 结果的验证来评估整个集群的容错能力和可靠性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Full CPU 原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>ChaosMesh's CPU Stress fault experiment aims to simulate scenarios where the system encounters CPU resource stress. Its working principle and implementation method are as follows:</p>
-<h3>Working Principle:</h3>
-<p>ChaosMesh injects a process that consumes a large amount of CPU resources into the target Pod, thereby reducing the available CPU resources of the Pod and triggering the system's capacity planning or auto-scaling mechanisms.</p>
-<h3>Implementation Method:</h3>
-<p>ChaosMesh utilizes the Kubernetes ChaosContainer mechanism to inject a container named chaos-cpu into the target Pod. This chaos-cpu container runs a stress-ng process that continuously consumes CPU resources using algorithms such as prime number calculation.</p>
-<p>Users can set the following parameters in the configuration file for the CPU Stress experiment:</p>
+<p>ChaosMesh的CPU Stress故障实验旨在模拟系统遇到CPU资源紧张的场景。其工作原理和实现方式如下</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过在目标Pod中注入一个消耗大量CPU资源的进程,从而减少Pod可用的CPU资源,触发系统的容量规划或自动扩缩容等机制。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Kubernetes的ChaosContainer机制,在目标Pod中注入一个名为chaos-cpu容器。这个chaos-cpu容器内运行了一个stress-ng进程,使用一些算法如素数计算等持续消耗CPU资源。</p>
+<p>用户可以在CPU Stress实验的配置文件中设置以下参数:</p>
 <ul>
-<li>workers: Specifies the number of threads consuming CPU resources</li>
-<li>load: Specifies the percentage of CPU resources to be consumed (0-100)</li>
-<li>mode: Specifies the experiment object selection mode (one/all/fixed/fixed-percent, etc.)</li>
-<li>selector: Specifies the label selector for the target Pods</li>
+<li>workers: 指定消耗CPU资源的线程数量</li>
+<li>load: 指定要消耗的CPU资源占比(0-100)</li>
+<li>mode: 指定实验对象选择模式(one/all/fixed/fixed-percent等)</li>
+<li>selector: 指定目标Pod的标签选择器
+在实验运行期间,ChaosMesh会持续监控目标Pod的CPU使用情况。实验结束后,会自动停止chaos-cpu容器,释放占用的CPU资源。</li>
 </ul>
-<p>During the experiment, ChaosMesh continuously monitors the CPU usage of the target Pods. After the experiment ends, ChaosMesh will automatically stop the chaos-cpu container and release the occupied CPU resources.</p>
-<p>Through the CPU Stress fault experiment, users can evaluate the system's response to CPU resource stress scenarios, such as scaling or priority preemption, thereby optimizing resource scheduling and improving system robustness.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">Network Delay Introduction</h1>
+<p>通过CPU压力故障实验,可以评估系统在CPU资源紧张时的响应,如扩缩容、优先级抢占等,从而优化资源调度,提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Delay 原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>ChaosMesh's Network Delay fault experiment aims to simulate network latency scenarios. Its working principle and implementation method are as follows:</p>
-<h3>Working Principle:</h3>
-<p>ChaosMesh configures the corresponding network rules on the node where the target Pod resides, artificially introducing network latency, thereby simulating the situation where network communication between the Pod and other resources experiences delay.</p>
-<h3>Implementation Method:</h3>
-<p>ChaosMesh utilizes the NetEm (Network Emulator) module in the Linux kernel and injects network delay rules on a specific network interface of the node where the target Pod resides. Specifically, it runs the tc (traffic control) command on the node to invoke the delay queue mechanism of NetEm.</p>
-<p>Users can set the following key parameters in the configuration file for the Network Delay experiment:</p>
+<p>ChaosMesh的Network Delay故障实验旨在模拟网络延迟场景。其工作原理和实现方式如下:</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过在目标Pod所在节点上配置相应的网络规则,人为引入网络延迟,从而模拟Pod与其他资源之间的网络通信产生延迟的情况。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Linux内核的NetEm(Network Emulator)模块,在目标Pod所在节点上的特定网络接口上注入网络延迟规则。具体来说,是通过在节点上运行tc(traffic control)命令,调用NetEm的delay队列机制。</p>
+<p>用户可以在Network Delay实验的配置文件中设置以下关键参数:</p>
 <ul>
-<li>latency: Specifies the network delay time to be injected, such as 10ms</li>
-<li>correlation: Specifies the correlation between the current delay and the previous delay (0-100)</li>
-<li>jitter: Specifies the range of delay jitter
-By setting these parameters, ChaosMesh can simulate various complex network delay scenarios, such as fixed delay, random delay, and correlated delay.</li>
+<li>latency: 指定要注入的网络延迟时间,如10ms</li>
+<li>correlation: 指定当前延迟与上次延迟的相关性(0-100)</li>
+<li>jitter: 指定延迟抖动的范围
+通过设置这些参数,ChaosMesh可以模拟各种复杂的网络延迟场景,如固定延迟、随机延迟、相关延迟等。</li>
 </ul>
-<p>During the experiment, ChaosMesh continuously monitors the network status. After the experiment ends, ChaosMesh automatically cleans up the previously injected network rules and restores the normal network.</p>
-<p>Through the Network Delay experiment, users can evaluate the stability and availability of distributed systems under network delay conditions, thereby optimizing network policies and improving system robustness.</p></span>
-<div class="page-break"></div><h1 style="page-break-before: always;">TimeOffset Introduction</h1>
+<p>在实验运行期间,ChaosMesh会持续监控网络状态。实验结束后,会自动清理之前注入的网络规则,恢复正常网络。</p>
+<p>通过Network Delay实验,可以评估分布式系统在网络延迟情况下的稳定性和可用性,从而优化网络策略,提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">TimeOffset 原理</h1>
 <span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
 <hr />
-<p>ChaosMesh's Time Chaos feature aims to simulate time offset scenarios. Its working principle and implementation method are as follows:</p>
-<h3>Working Principle:</h3>
-<p>ChaosMesh modifies the target process's perception of time, causing it to mistakenly believe that the system time has shifted, thereby simulating a time error scenario. Such time errors may cause abnormal process behavior, such as timer triggering errors, inaccurate scheduled task execution times, etc.</p>
-<h3>Implementation Method:</h3>
-<p>ChaosMesh utilizes the time-related system calls (clock_gettime, clock_settime, etc.) provided by the Linux system to control time. When initiating a Time Chaos attack, ChaosMesh attaches to the target process, intercepts its requests for time-related system calls, and returns artificially modified time values, thereby deceiving the process.</p>
-<p>Specifically, ChaosMesh attaches to the target process using the ptrace system call, modifies the system call parameters and return values in its memory, and injects the desired time offset. Users can specify the following in the attack command:</p>
+<p>ChaosMesh的Time Chaos功能旨在模拟时间偏移场景,其工作原理和实现方式如下:</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过修改目标进程对时间的认知,使其误以为系统时间发生了偏移,从而模拟时间错误场景。这种时间错误可能会导致进程的行为异常,如计时器触发错误、定时任务执行时间不准确等。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Linux系统提供的时间相关系统调用( clock_gettime、clock_settime等)来实现对时间的控制。当发起Time Chaos攻击时,ChaosMesh会attach到目标进程,拦截其对时间相关系统调用的请求,并返回人为修改后的时间值,从而欺骗该进程。</p>
+<p>具体来说,ChaosMesh通过使用ptrace系统调用附加到目标进程,修改其内存中的系统调用参数和返回值,注入所需的时间偏移量。用户可以在攻击命令中指定:</p>
 <ul>
-<li>timeOffset: The time offset to be injected, e.g., +30m indicates a 30-minute shift forward</li>
-<li>clockIds: The clock type to be affected, e.g., CLOCK_REALTIME affects the real-time clock</li>
-<li>pid: The ID of the target process to be attacked
-By setting these parameters, ChaosMesh can simulate various time error scenarios, such as time advancing, time lagging, and specific clock type errors.</li>
+<li>timeOffset: 要注入的时间偏移量,如+30m表示往后偏移30分钟</li>
+<li>clockIds: 要影响的时钟类型,如CLOCK_REALTIME表示影响实时时钟</li>
+<li>pid: 要攻击的目标进程ID
+通过设置这些参数,ChaosMesh可以模拟各种时间错误场景,如时间提前、时间滞后、特定时钟类型出错等。</li>
 </ul>
-<p>During the attack process, ChaosMesh continuously modifies the target process's perception of time. After the attack ends, ChaosMesh automatically removes the previously injected time modifications and restores the normal time.</p>
-<p>Through the Time Chaos experiment, users can evaluate the robustness of distributed systems under clock error conditions, identify potential time-related bugs, optimize time handling strategies, and improve system reliability.</p></span>
+<p>在攻击过程中,ChaosMesh会持续修改目标进程的时间认知。攻击结束后,ChaosMesh会自动移除之前注入的时间修改,恢复正常时间。</p>
+<p>通过Time Chaos实验,可以评估分布式系统在时钟错误情况下的健壮性,识别潜在的时间相关Bug,从而优化时间处理策略,提高系统可靠性。</p></span>
 <div class="page-break"></div><h1 style="page-break-before: always;">Postgresql ( Topology = replication ; Replicas = 2 ) failover</h1>
 <table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
 <tr>
