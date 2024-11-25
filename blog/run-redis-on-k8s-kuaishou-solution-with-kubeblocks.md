@@ -1,178 +1,160 @@
 ---
-slug: run-redis-on-k8s
-title: Is Redis on K8s a Good Idea? Kuaishou Made it Happen!
-description:  Drawing from Kuaishou's experience in implementing cloud-native Redis at scale, this blog delves into practical solutions and critical considerations for managing stateful services in Kubernetes environments.
-date: 2024-11-21
+slug: manage-large-scale-redis-on-k8s-with-kubeblocks
+title: Managing Large-Scale Redis Clusters on Kubernetes with an Operator: Kuaishou's Approach
+description: Drawing from Kuaishou's experience in implementing cloud-native Redis at scale, this blog delves into practical solutions and critical considerations for managing stateful services in Kubernetes environments.
+date: 2024-11-25
 authors:
   name: Yuxing Liu
-tags: [Redis, kubernetes, Kuaishou, stateful service]
+tags: [Redis, kubernetes, Kuaishou, stateful service, large-scale Redis, operator, database]
 image: /img/blog-in-place-update.png
 ---
 
-# Is Redis on K8s a Good Idea? Kuaishou Made it Happen!
+# Managing Large-Scale Redis Clusters on Kubernetes with an Operator: Kuaishou's Approach
 
-While containerizing stateless services has become an industry standard, the question of running stateful services, such as databases and Redis, on Kubernetes (K8s) remains a topic of debate. Drawing from Kuaishou's experience in implementing cloud-native Redis at scale, this blog delves into practical solutions and critical considerations for managing stateful services in Kubernetes environments.
+> About Kuaishou
+> Kuaishou Technology, also recognized as Kwai, is a prominent Chinese technology company specializing in short-form video sharing and live streaming. As one of the world’s most popular video-sharing platforms, Kuaishou empowers users to create, share, and explore short videos while engaging in live streaming. The platform has a global reach, with over 600 million monthly active users (MAUs) and more than 300 million daily active users (DAUs), spanning Latin America, Southeast Asia, and the Middle East and North Africa, maintaining its leading position in the industry.
+
+> About Author
+> Yuxing Liu is the senior software engineer from Kuaishou. Yuxing have worked in the cloud-native teams of Alibaba Cloud and Kuaishou, focusing on the cloud-native field and gaining experience in open source, commercialization, and scaling of cloud-native technologies. Yuxing also is one of the maintainers of the CNCF/Dragonfly project and also one of the maintainers of the CNCF/Sealer project. Currently, he focuses on driving the cloud-native transformation of stateful business in Kuaishou.
+
+As a popular short-form video application, Kuaishou relies heavily on Redis to deliver low-latency responses to its users. Operating on private cloud infrastructure, automating the management of large-scale Redis clusters with minimal human intervention presents a significant challenge. A promising solution emerged: running Redis on Kubernetes using an Operator.
+
+While containerizing stateless services like applications and Nginx is now standard, running stateful services like databases and Redis on Kubernetes remains debated. Based on Kuaishou's experience transforming Redis from physical machines to a cloud-native solution, this blog explores solutions and key considerations for managing stateful services on Kubernetes with the KubeBlocks Operator.
 
 ## Background
 
-As technology evolves, Kuaishou's infrastructure is transitioning toward cloud-native architecture. With support from various teams, the container cloud at Kuaishou has become the interface between services and infrastructure. While stateless services at Kuaishou have almost fully adopted Kubernetes, the path toward cloud-native stateful services presents several challenges:
+As technology evolves, Kuaishou's infrastructure is transitioning toward cloud-native technology stack. The infrastructure team delivers containers and Kubernetes to Application and PaaS systems. While stateless services at Kuaishou have almost fully adopted Kubernetes, the path toward cloud-native stateful services presents several challenges.
 
-- **Is Kubernetes suitable for running stateful services?**
-- **How can the cloud-native transformation of stateful services be realized and implemented?**
+Taking Redis as an example, it is one of the most widely used stateful services at Kuaishou, characterized by its massive scale. Even small cost savings at this scale can deliver substantial financial benefits to the company. In its long-term planning,  Kuaishou recognizes the significant potential of running Redis on Kubernetes, particularly in terms of cost optimization through improved resource utilization. This article shares insights from Kuaishou's experience migrating Redis to Kubernetes, covering solutions, challenges encountered, and the corresponding strategies to address them.
 
-Redis serves as a case. As one of Kuaishou's most widely deployed stateful services, its **massive scale** means that **even minor optimizations can bring significant benefits to the organization**. Recognizing the long-term value of cloud-native Redis, Kuaishou has prioritized this transformation to unlock potential cost savings through improved resource utilization. This blog details Kuaishou's journey to cloud-native Redis, providing an in-depth analysis of strategies and considerations for stateful services in a cloud-native environment.
+## How Did Kuaishou Run Redis on Kubernetes?
 
-## Are Stateful Services Suitable for Kubernetes?
+### Redis Deployment Architecture
+
+To meet the need for flexible shard management and support for hotspot migration and isolation, Kuaishou adopts a horizontally sharded, master-slave high-availability Redis architecture consisting of three components: Server, Sentinel, and Proxy.
+
+![Figure 2](./../static/images/blog-redis-kuaishou-2.png)
+
+### Analysis: What does Kuaishou require from a Redis Operator?
+
+**First, Redis Pod management Requires a Layered Approach**
+
+Redis Pod management needs to be handled in two layers: the first layer manages multiple shards, while the second layer manages multiple replicas within a single shard. It must support the dynamic scaling of the number of shards and the number of replicas per shard to adapt to varying workloads and usage scenarios.
+
+This means that, in Operator's implementation, a workload (such as a StatefulSet) is used to manage multiple replicas within each shard. On top of this, an additional layer (some CRD object) should be constructed to enable management of multiple shards within the entire Redis cluster.
+
+**Second, Ensuring Data Consistency and Reliability during Failures and Day-2 Operations**
+
+During shard or replica lifecycle changes, data consistency and reliability must be ensured. For example, shard scaling requires data rebalancing, while instance scaling within a shard may require data backup and restoration.
+
+Thus, the Operator must support lifecycle hooks at both the shard and replica levels, enabling custom data management operations at different lifecycle stages.
+
+**Third, Topology Awareness for Service Discovery and Canary Releases**
+
+The topology among multiple Redis Pods within a shard may dynamically change due to events like high-availability failovers, upgrades, or scaling operations. Service discovery and features like canary releases rely on the real-time topology.
+
+To achieve this, the Operator must support dynamic topology awareness by introducing role detection and role labeling capabilities. This enables service discovery and canary releases based on the dynamic topology.
+
+These requirements go beyond the capabilities of any existing open-source Redis Operator and would typically require developing a highly complex Kubernetes Operator to fulfill them. However, building a stable Operator with well-designed APIs from scratch is daunting for most platform teams, as it demands expertise in both Kubernetes and databases, along with extensive real-world testing.
+
+### The KubeBlocks Solution came into our view
+
+After evaluating several solutions, **KubeBlocks** caught our attention as an open-source Kubernetes database Operator. What makes KubeBlocks unique is its extensibility, offering an **Addon mechanism** that allows you to use its API to describe the Day-1 and Day-2 characteristics and behaviors of a database, enabling its full lifecycle management on Kubernetes. As stated on its website, KubeBlocks' vision is to "Run any database on Kubernetes." This flexibility enables us to customize the KubeBlocks Redis Addon to fit our in-house Redis cluster deployment architecture.
+
+KubeBlocks' API design also aligns well with our requirements for managing Redis clusters:
+
+**1. InstanceSet: A More Powerful Workload Than StatefulSet**
+
+**InstanceSet** is a workload used within KubeBlocks to replace StatefulSet, designed specifically for managing database Pods. Like StatefulSet, InstanceSet supports managing multiple Pods (referred to as Instances). The key difference is that InstanceSet can track the **Role** of each database Pod (e.g., primary, secondary). For different databases (as KubeBlocks supports multiple types), KubeBlocks allows customization of Pod roles, role detection methods, and the upgrade order based on roles during canary upgrades. The InstanceSet controller dynamically detects role changes during runtime and updates the role information as labels in the Pod metadata, enabling role-based Service selector.
+
+StatefulSet assigns each instance a globally ordered, incrementing identifier. This mechanism provides stable network and storage identities, with the topology within the cluster relying on these identifiers. However, as the topology dynamically changes during runtime, the fixed identifiers provided by StatefulSet may fall short of meeting requirements. For example, StatefulSet identifiers cannot have gaps, and deleting an intermediate identifier is not allowed.
+
+Kuaishou's platform team has contributed several PRs to the KubeBlocks community, including enhancements such as allowing Pods within the same InstanceSet to have different configurations, decommissioning Pods with specific ordinals (without first decommissioning Pods with higher ordinals), and controlling upgrade concurrency. These improvements make InstanceSet more adaptable to Kuaishou's requirements for managing large-scale Redis clusters in production environments.
+
+**2. Layered CRD&Controller Design: Component、Cluster Objects**
+
+KubeBlocks leverages a multi-layered CRD structure—**Component**, **Cluster**—to manage the complex topology of database clusters. This design aligns seamlessly with Kuaishou's Redis cluster deployment architecture:
+
+- **Component**: Represents a group of Pods within the Redis cluster. For example, Proxy Pods form one Component, Sentinel Pods form another, and Redis-Server Pods are organized into one or more Components, each corresponding to a Shard. The number of Components dynamically changes based on the number of Shards.
+
+> ⛱️ **Shard**: A specialized Component that defines the sharding behavior of horizontally scalable databases. Each Shard shares the same configuration. In Kuaishou's Redis Cluster, for example, each Shard (Component) consists of a primary Pod and a replica Pod. Scaling out adds a new Shard (Component), while scaling in removes one, enabling shard-level scaling and lifecycle management.
+
+- **Cluster**: Represents the entire Redis cluster, integrating Proxy, Server, and Sentinel Components, while managing their startup topology and relationships.
+
+This hierarchical design simplifies scaling, enhances lifecycle management, and provides the flexibility needed to support complex Redis deployment architecture in production.
+
+Through close collaboration with the KubeBlocks community, we implemented the orchestration of a Redis cluster in the following ways:
+
+![Figure 3](./../static/images/blog-redis-kuaishou-3.png)
+
+There are three Components in a Redis Cluster: `redis-server`, `redis-sentinel`, and `redis-proxy`. Within each Component, Pods are managed using **InstanceSet** instead of **StatefulSet**.
+
+### Using Kubernetes Federation to Manage Ultra-Large-Scale Redis Clusters
+
+At Kuaishou, multiple applications operate in a multi-tenant manner within a single ultra-large-scale Redis cluster. For example, a single cluster may contain over 10,000 Pods, exceeding the capacity of a single Kubernetes cluster. As a result, we had to deploy a Redis cluster across multiple Kubernetes clusters. An important aspect is that we need to hide the complexity of managing multiple clusters from Redis application users.
+
+#### Federated K8s Cluster Architecture
+
+Fortunately, Kuaishou's Kubernetes infrastructure team provides a mature Kubernetes federation service, offering unified scheduling and a unified view:
+
+- **Unified Scheduling**: Federation serves as a centralized resource dispatch entry, enabling resource scheduling across multiple member clusters.
+- **Unified View**: Federation acts as a unified resource access point, allowing seamless retrieval of resources across both the federation and member clusters.
+
+So, the question becomes how can the Redis cluster management solution based on KubeBlocks be integrated into Kuaishou's internal federation cluster architecture? Below is the overall architecture:
+
+![Figure 4](./../static/images/blog-redis-kuaishou-4.png)
+
+The Federation Kubernetes Cluster serves as the central control plane for managing multiple member clusters. It is responsible for cross-cluster orchestration, resource distribution, and lifecycle management of the Redis cluster. Its responsibilities include:
+
+- Cross-Cluster Instance Distribution and Management: Ensures that Redis components (Proxy, Sentinel, Server) are distributed across member clusters based on resource requirements.
+- **Concurrency Control**: Coordinates operations across clusters to ensure consistency and avoid conflicts.
+- **Status Aggregation**: Collects and aggregates the status of all components from member clusters to provide a unified view.
+
+Member K8s Clusters are the individual Kubernetes clusters where Redis Pods (instances) are deployed and managed. Each member cluster is responsible for running a subset of the overall Redis cluster. Its responsibilities include:
+
+- **Instance Management**: Localized management of Redis Pods (Proxy, Sentinel, Server) via InstanceSet.
+
+So, we divided the KubeBlocks Operator into two parts and deployed them in different Kubernetes clusters:
+
+- The **InstanceSet Controller** is deployed in member clusters to manage Pods locally.
+- The **Cluster Controller** and **Component Controller** are deployed in the federation cluster to handle global resource orchestration and coordination.
+
+Once again, the layered CRD and Controller design of KubeBlocks is the key to enabling this deployment. If KubeBlocks had a monolithic CRD and Controller managing everything, splitting and deploying it separately in the Federation Kubernetes Cluster and Member Kubernetes Clusters would not have been possible.
+
+#### Fed-InstanceSet Controller
+
+There may be multiple Member Kubernetes Clusters, requiring the InstanceSet in the Federation Kubernetes Cluster to be partitioned into multiple InstanceSets, with one InstanceSet assigned to each Member Cluster. Additionally, the Instances (Pods) managed by the original InstanceSet need to be distributed across the new InstanceSets in the Member Clusters.
+
+To handle this, **Kuaishou developed the Fed-InstanceSet Controller** to manage interactions between the Federation Cluster and its Member Clusters. Its key responsibilities include:
+
+- **Scheduling Decisions**: Determining how many Instances each Member Cluster should deploy, based on predefined scheduling policies.
+- **InstanceSet Partitioning and Distribution**: Splitting the InstanceSet from the Federation Cluster and distributing the resulting InstanceSets to the appropriate Member Clusters.
+
+To manage instance partitioning and ensure global uniqueness and proper ordering of Redis Instances in member Clusters, Kuaishou contributed a PR to the KubeBlocks community, adding an **Ordinals** field to InstanceSet. This allows precise index assignment to instances.
+
+The **Fed-InstanceSet Controller** uses this field to assign unique index ranges to each Member Cluster, ensuring instance uniqueness and correct ordering across clusters.
+
+![Figure 5](./../static/images/blog-redis-kuaishou-5.png)
+
+## Discussion: Are Stateful Services Fit for Kubernetes?
 
 ### Benefits and Risks of Running Stateful Services on Kubernetes
 
-Running stateful services on Kubernetes comes with notable benefits:
+In our view, running stateful services on Kubernetes comes with notable benefits:
 
-- **Improved resource utilization**: Kubernetes optimizes resource use through merging resource pools, unified scheduling, and colocation, which can significantly reduce costs.
-- **Enhanced operation efficiency**: With its declarative APIs and controller model, Kubernetes simplifies service management and drives technological advancements.
-- **Lower maintenance costs**: A unified infrastructure minimizes maintenance overhead, improving overall management efficiency.
+- **Improved resource utilization**: By merging multiple small resource pools for unified scheduling and enabling colocation of applications with Redis or Redis with other stateful services, resource usage is optimized, significantly reducing costs.
+- **Enhanced operation efficiency**: With Kubernetes's declarative APIs and the Operator pattern, it manages Redis services in an Infrastructure-as-Code (IaC) manner, reducing the need for manual intervention.
+- **Lower maintenance costs**: Previously, Redis ran on physical machines, requiring dedicated personnel to manage the hardware infrastructure. By unifying the infrastructure onto containers and Kubernetes, infrastructure-related maintenance costs are reduced, and overall management efficiency is improved.
 
-However, despite these advantages, running stateful services like databases on Kubernetes introduces risks that must be carefully evaluated due to their critical roles and stringent stability requirements. Key risks include:
+Although running stateful services on Kubernetes offers significant benefits, the potential risks must be carefully evaluated, especially for stateful services like databases and Redis, which demand high levels of importance and stability. The challenges include:
 
-1. **Performance degradation**: Does the additional abstraction layer introduced by containerization impact service performance?
-2. **Stability concerns**:
-
-   - Will building database systems on Kubernetes compromise the stability of stateful services?
-   - Does it increase operational complexity?
-   - When issues occur, would resolving them require expertise in both databases and Kubernetes?
+1. **Performance degradation risk**: Running processes in containers, as opposed to directly on physical machines, introduces an additional layer, particularly due to the latency introduced by the overlay network. This raises concerns about potential service performance degradation.
+2. **Stability concerns**: Building the database platform (DBaaS) on the Kubernetes infrastructure raises concerns about whether the stability (availability and reliability) of databases or Redis might be affected.
+3. **Increased Operational Complexity**: In the event of an issue, would it require experts with both database and K8s technology expertise to effectively identify and resolve the problem?
 
 ![Figure 1](./../static/images/blog-redis-kuaishou-1.png)
 
 The following sections explore these risks in more detail.
-
-### The Viability of Stateful Services on Kubernetes
-
-Before evaluating stateful services, it’s essential to understand what state entails:
-
-**Data State:**
-
-Data unique to each instance, which distinguishes it from others. Instances often serve different roles and store unique data, making them irreplaceable. Managing this data during instance lifecycle events (e.g. backup, recovery, rebalancing) requires extra care.
-
-**Topology State:**
-
-The relationship and state between instances, which are often dynamic during runtime.
-
-In summary, these attributes introduce new challenges for stateful services on Kubernetes compared to stateless ones, such as ensuring data availability, managing data lifecycles, maintaining topology, and enabling topology-based service discovery and gradual rollouts. Kubernetes addresses these challenges through:
-
-#### Approach 1: StatefulSet Workloads
-
-- Kubernetes introduced **StatefulSet Workload** to assign globally unique, incrementally ordered identifiers to instances, ensuring stable network and storage identities while preserving both topology and data states.
-- However, dynamic topology changes during runtime often exceed the capabilities of StatefulSet's fixed numbering system.
-
-#### Approach 2: Custom Workload and Operators
-
-- For complex scenarios like dynamic topology changes that the existing Workloads cannot handle, custom Workloads and Operators provide extensibility. This has led to the creation of stateful Operators such as Redis Operator and MySQL Operator.
-- However, building a custom operator from scratch is resource-intensive, deterring many database teams. Even when reusing existing operators, integrating custom operational logic with existing frameworks remains a challenging task.
-
-Deploying stateful services on Kubernetes demands a higher level of risk management and implementation effort compared to stateless services. The upfront costs and complexity are substantial, but the benefits of cloud-native architecture—such as improved resource efficiency, scalability, and operational agility—are long-term and compounding. Enterprises should carefully weigh these factors to make strategic, future-oriented decisions.
-
-## How Did Kuaishou Run Redis on Kubernetes?
-
-Kuaishou uses a classic master-slave architecture for Redis, comprising three core components: Server, Sentinel, and Proxy.
-
-![Figure 2](./../static/images/blog-redis-kuaishou-2.png)
-
-### Migrate Individual Redis Clusters to Kubernetes
-
-#### The Cloud-native Redis Solution in Kuaishou
-
-Given the challenges discussed earlier, the cloud-native Redis solution at Kuaishou could not be achieved using standard Kubernetes community workloads. Kuaishou faced several key challenges:
-
-- **Expressing multi-shard and multi-instance relationships:**
-
-   A clear definition of multi-shard architecture and the hierarchical relationship within each shard (multiple instances per shard) is essential. The architecture also needed to support dynamic adjustments to shard numbers and instance counts within shards to meet varying workloads.
-- **Data management during lifecycle changes:**
-
-   Managing data effectively during shard or instance lifecycle events posed significant challenges. This included ensuring data consistency and reliability during shard rebalancing or instance addition/removal, and developing robust backup and recovery strategies.
-- **Expressing dynamic topology of multiple instances within one shard:**
-
-   Within one shard, Kuaishou needed to express dynamic topology changes among instances in real-time. This would enable features like service discovery and canary releases based on real-time topology information.
-
-Kuaishou addressed these challenges with the following strategies:
-
-- **Layered architectural design:**
-  
-   This design separates workloads to manage individual shards and instances. Specifically, instances within a shard are managed by a StatefulSet, while a new workload layer manages multiple shards across the Redis Server cluster. This layered approach allowed for unified management of Redis clusters.
-- **Lifecycle hook support:**
-
-   Lifecycle hooks were added at both the shard and instance levels, enabling custom data management actions during various lifecycle phases.
-- **Dynamic topology awareness and service discovery:**
-
-   Role detection and tagging capabilities were introduced to support service discovery and canary releases based on dynamic topology relationships.
-
-#### The KubeBlocks Solution
-
-After evaluating several solutions, Kuaishou chose **KubeBlocks** as a key partner. As an open-source Kubernetes Operator, KubeBlocks abstracts APIs of various databases to support running and managing databases on Kubernetes. As stated on [its website](https://kubeblocks.io/), KubeBlocks' vision is to "Run any database on Kubernetes".
-
-Through close collaboration with the KubeBlocks community, Kuaishou implemented Redis cluster orchestration using the following components:
-
-![Figure 3](./../static/images/blog-redis-kuaishou-3.png)
-
-1. **InstanceSet Workload**
-
-   - Unlike StatefulSet, **InstanceSet** introduces abstractions for role definitions, role detection mechanisms, and role update strategies. The InstanceSet controller dynamically detects role changes during runtime, updating role information as labels on instance metadata to facilitate role-based service discovery.
-   - Kuaishou co-developed several enhancements with the KubeBlocks community, including direct Pod and PVC management, heterogeneous instance configurations, instance-specific scaling down, concurrency control, and multiple update strategies. These features made InstanceSet highly flexible and able to accommodate complex business scenarios.
-
-2. **Component, Shard, and Cluster Workloads**
-
-   - **Component**: Decouples the component definition from its instances. By referencing a component definition, corresponding InstanceSets are generated, allowing for flexible component management and lifecycle handling at the instance level.
-   - **Shard**: Generates a set of identical Component instances, simplifying shard-level management and expansion. Shard-level lifecycle management is also supported.
-   - **Cluster**: Provides a unified definition for the entire stateful service cluster. For Redis, this includes the Proxy, Server, and Sentinel, along with their startup topology relationships.
-
-### Migrate Large-scale Redis Clusters to Kubernetes
-
-As mentioned earlier, Kuaishou's Redis deployment is characterized by its massive scale, with instance counts far exceeding the capacity of a single Kubernetes cluster. This necessitates the use of multiple Kubernetes clusters to support the workload. Unlike traditional setups where resources are pooled across all hosts, Kubernetes' cluster capacity constraints require partitioning the resource pool across multiple clusters. However, exposing the complexity of managing multiple clusters directly to Redis users would significantly increase cloud migration costs.
-
-#### Federated Cluster Architecture
-
-At Kuaishou, a federated cluster approach is adopted to provide unified scheduling and a unified interface to simplify operations, enabling users to focus on their core business. Key features of this architecture include:
-
-- **Unified scheduling**:
-
-   Federation serves as a centralized entry for resource distribution, enabling the placement of Redis instances across multiple member clusters.
-- **Unified view**:
-
-    Federation acts as a centralized entry for resource retrieval, offering a consolidated view of both federated and member cluster resources.
-
-To implement the KubeBlocks-based solution within this federated architecture, the following architecture reveals more details:
-
-![Figure 4](./../static/images/blog-redis-kuaishou-4.png)
-
-1. **Splitting the KubeBlocks Operator**:
-
-   Kuaishou split KubeBlocks into several parts:
-
-   - The **InstanceSet Controller** resides within member clusters.
-   - **Cluster Operator** and Component Operator are deployed in the federated cluster.
-
-2. **Fed-InstanceSet Controller**:
-
-   Kuaishou developed the Fed-InstanceSet Controller to manage interactions between the federated cluster and its members. Its primary responsibilities include:
-
-   - **Scheduling decisions**: Determining the number of instances each member cluster should deploy based on scheduling policies.
-   - **InstanceSet partitioning and distribution**: Splitting InstanceSets and distributing them across member clusters.
-
-#### Fed-InstanceSet Controller
-
-The Fed-InstanceSet Controller addresses two critical challenges in federated deployments:
-
-- Instance partitioning management:
-
-   Ensures the global uniqueness and order of Redis instances under the federated deployment.
-- Control rule partitioning:
-
-   Ensures that the control rules of InstanceSet are globally aligned with expectations in the federated deployment. This includes managing the order of gray changes and controlling concurrency during changes.
-
-To tackle the first issue, Kuaishou collaborated with KubeBlocks community and designed the Ordinals field, allowing the assignment of specific index values to instances.The Fed-InstanceSet Controller leverages this mechanism to assign unique index ranges to each member cluster, **ensuring global uniqueness and maintaining the correct order across clusters**.
-
-![Figure 5](./../static/images/blog-redis-kuaishou-5.png)
-
-For the second issue, Kuaishou implemented a Directed Acyclic Graph (DAG) to model global sequencing, role relationships, gray deployment strategies, concurrency controls, and role change strategies. This DAG ensures that global changes are managed consistently and predictably across multiple Kubernetes clusters, maintaining stability and reliability during updates.
 
 ### Mitigate Risks of Running Redis on Kubernetes
 
@@ -182,20 +164,13 @@ Containerizing Redis within a cloud-native architecture introduces an additional
 
 #### Stability
 
-After migrating stateful services to Kubernetes, the automation capabilities it provides significantly boosted operational efficiency. However, this also made the execution processes more opaque, with even small configuration changes potentially impacting a wide range of business instances. To mitigate the stability risks from unexpected operational actions—such as pod evictions, user errors by cluster admins, or issues with operator logic—Kuaishou has focused on the following efforts:
+Migrating stateful services to Kubernetes has greatly improved operational efficiency through automation. However, this also made the execution processes more opaque, with even small configuration changes potentially impacting many instances. To mitigate the stability risks from unexpected scenarios — such as pod evictions, human error, or Operator bugs— Kuaishou utilizes the **Admission Webhook** mechanism within the Kubernetes API server to intercept and validate change requests. This approach allows Kuaishou to directly reject any unauthorized operations. Given the multi-cluster Kubernetes setup across multiple availability zones (AZs), it's critical to ensure change control across clusters. To achieve this, Kuaishou developed an internal risk mitigation system called **kube-shield**.
 
-1. **How to distinguish expected and unexpected operations?**
-
-   To identify whether an operation is expected, Kuaishou uses the operation administrators' input as the primary criterion. Based on this, a **ServiceAccount certificate** is generated for the Redis team, allowing operations to be distinguished through the user information included in the request.
-2. **How to prevent unexpected changes systematically?**
-  
-   To address this challenge, Kuaishou utilizes the **Admission Webhook mechanism** within the Kubernetes API server to intercept and validate change requests. This approach allows Kuaishou to directly reject any unauthorized operations. Given the multi-cluster Kubernetes setup across multiple availability zones (AZs), it's critical to ensure change control across clusters. To achieve this, Kuaishou developed an internal risk mitigation system called kube-shield.
-
-   Additionally, it’s worth mentioning that Kuaishou has further enhanced business high availability and stability by improving support for fine-grained scheduling distribution and introducing load balancing features based on resource utilization.
+Additionally, it’s worth mentioning that Kuaishou has further enhanced availability and stability by improving support for fine-grained scheduling distribution and introducing load balancing features based on resource utilization.
 
 #### Operation Complexity
 
-Migrating from a host-based system to a Kubernetes-based environment, while ensuring ongoing maintenance, requires deep expertise in both Redis and container cloud technologies. Relying solely on the Redis team or the container cloud team for independent support would be challenging. Proper division of responsibilities not only enhances productivity but also allows each team to fully leverage their expertise in their respective domains.
+Migrating from a host-based system to a Kubernetes-based environment, while ensuring ongoing maintenance, requires deep expertise in both Redis and K8s technologies. Relying solely on the Redis team or the K8s team for independent support would be challenging. Proper division of responsibilities not only enhances productivity but also allows each team to fully leverage their expertise in their respective domains.
 
 For example, in Kuaishou's cloud-native Redis solution:
 
@@ -206,7 +181,7 @@ For example, in Kuaishou's cloud-native Redis solution:
 
 ## Conclusion
 
-Cloud-native transformation for stateful services is a complex journey requiring careful evaluation of its pros and cons, and one filled with challenges. However, for Kuaishou, its value is self-evident. Starting with Redis, Kuaishou has worked closely with the KubeBlocks community to implement a cost-effective, cloud-native solution for Redis.
+Cloud-native transformation for stateful services is a complex journey requiring careful evaluation of its pros and cons, and one filled with challenges. However, for Kuaishou, its value is self-evident. Starting with Redis, Kuaishou has worked closely with the KubeBlocks community to implement a cost-effective, cloud-native solution.
 
 Looking forward, Kuaishou aims to build upon this experience to drive the cloud-native transformation of more stateful services, such as databases and middleware, thus reaping dual benefits in technology and cost efficiency.
 
