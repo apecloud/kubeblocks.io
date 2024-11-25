@@ -6,7 +6,7 @@ date: 2024-11-25
 authors:
   name: Yuxing Liu
 tags: [Redis, kubernetes, Kuaishou, stateful service, large-scale Redis, operator, database]
-image: /img/blog-redis-kuaishou-cover
+image: /img/blog-redis-kuaishou-cover.jpeg
 ---
 
 # Managing Large-Scale Redis Clusters on Kubernetes with an Operator: Kuaishou's Approach
