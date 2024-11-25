@@ -6,7 +6,7 @@ date: 2024-11-25
 authors:
   name: Yuxing Liu
 tags: [Redis, kubernetes, Kuaishou, stateful service, large-scale Redis, operator, database]
-image: /img/blog-in-place-update.png
+image: /img/blog-redis-kuaishou-cover
 ---
 
 # Managing Large-Scale Redis Clusters on Kubernetes with an Operator: Kuaishou's Approach
@@ -15,7 +15,7 @@ image: /img/blog-in-place-update.png
 > Kuaishou Technology, also recognized as Kwai, is a prominent Chinese technology company specializing in short-form video sharing and live streaming. As one of the world’s most popular video-sharing platforms, Kuaishou empowers users to create, share, and explore short videos while engaging in live streaming. The platform has a global reach, with over 600 million monthly active users (MAUs) and more than 300 million daily active users (DAUs), spanning Latin America, Southeast Asia, and the Middle East and North Africa, maintaining its leading position in the industry.
 
 > About Author
-> Yuxing Liu is the senior software engineer from Kuaishou. Yuxing have worked in the cloud-native teams of Alibaba Cloud and Kuaishou, focusing on the cloud-native field and gaining experience in open source, commercialization, and scaling of cloud-native technologies. Yuxing also is one of the maintainers of the CNCF/Dragonfly project and also one of the maintainers of the CNCF/Sealer project. Currently, he focuses on driving the cloud-native transformation of stateful business in Kuaishou.
+> Yuxing Liu is the senior software engineer from Kuaishou. Yuxing have worked in the cloud-native teams of Alibaba Cloud and Kuaishou, focusing on the cloud-native field and gaining experience in open source, commercialization, and scaling of cloud-native technologies. Yuxing is also one of the maintainers of the CNCF/Dragonfly project and also one of the maintainers of the CNCF/Sealer project. Currently, he focuses on driving the cloud-native transformation of stateful business in Kuaishou.
 
 As a popular short-form video application, Kuaishou relies heavily on Redis to deliver low-latency responses to its users. Operating on private cloud infrastructure, automating the management of large-scale Redis clusters with minimal human intervention presents a significant challenge. A promising solution emerged: running Redis on Kubernetes using an Operator.
 
