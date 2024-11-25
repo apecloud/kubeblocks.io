@@ -1,6 +1,6 @@
 ---
 slug: manage-large-scale-redis-on-k8s-with-kubeblocks
-title: Managing Large-Scale Redis Clusters on Kubernetes with an Operator: Kuaishou's Approach
+title: Managing Large-Scale Redis Clusters on Kubernetes with an Operator - Kuaishou's Approach
 description: Drawing from Kuaishou's experience in implementing cloud-native Redis at scale, this blog delves into practical solutions and critical considerations for managing stateful services in Kubernetes environments.
 date: 2024-11-25
 authors:
