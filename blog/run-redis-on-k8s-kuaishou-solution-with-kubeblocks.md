@@ -13,7 +13,7 @@ image: /img/blog-redis-kuaishou-cover.jpeg
 
 > **About Kuaishou**
 >
-> Kuaishou Technology, also recognized as Kwai, is a prominent Chinese technology company specializing in short-form video sharing and live streaming. As one of the world’s most popular video-sharing platforms, Kuaishou empowers users to create, share, and explore short videos while engaging in live streaming. The platform has a global reach, with over 600 million monthly active users (MAUs) and more than 300 million daily active users (DAUs), spanning Latin America, Southeast Asia, and the Middle East and North Africa, maintaining its leading position in the industry.
+> Kuaishou is a leading content community and social platform in China and globally, committed to becoming the most customer-obsessed company in the world. Kuaishou uses its technological backbone, powered by cutting-edge AI technology, to continuously drive innovation and product enhancements that enrich its service offerings and application scenarios, creating exceptional customer value. Through short videos and live streams on Kuaishou's platform, users can share their lives, discover goods and services they need and showcase their talent. By partnering closely with content creators and businesses, Kuaishou provides technologies, products, and services that cater to diverse user needs across a broad spectrum of entertainment, online marketing services, e-commerce, local services, gaming, and much more.
 
 > **About Author**
 >
