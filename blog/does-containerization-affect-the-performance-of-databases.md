@@ -82,7 +82,9 @@ The following paragraphs analyze several mainstream containerization technologie
    Each container gets its own virtual machine, complete with a unique kernel and user space, ensuring that applications are kept in their own secure compartments. This approach ramps up isolation, making it tough for containerized apps to peek into the host's resources. But there's a trade-off: the extra steps of booting up and managing these virtual machines might slow down syscalls and I/O operations a bit when compared to the classic container runtimes.
 
 <img src='https://kubeblocks.io/images/Architecture-of-Kata-Containers.png'  alt="Architecture of Kata Containers"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 4. Architecture of Kata Containers
+
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 4. Architecture of Kata Containers
 </div>
 
 3. gVisor
@@ -92,7 +94,8 @@ The following paragraphs analyze several mainstream containerization technologie
    This clever design ensures that containerized applications are kept separate from the Host Kernel, preventing them from directly meddling with or accessing the host's resources. Although this approach significantly boosts security, it's worth noting that it might also lead to an increase in syscalls and I/O performance overhead when compared to standard container runtimes.
 
 <img src='https://kubeblocks.io/images/Architecture-of-gVisor.png'  alt="Architecture of gVisor"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 5. Architecture of gVisor
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 5. Architecture of gVisor
 </div>
 
 4. Firecracker
@@ -102,7 +105,8 @@ The following paragraphs analyze several mainstream containerization technologie
    At its core, Firecracker uses KVM (Kernel-based Virtual Machine) for virtualization. Every container runs in its own VM, with its own kernel and root filesystem, and it interacts with the host system through separate virtual device emulators. This approach ensures a higher level of security and isolation. However, when compared to conventional container runtimes, Firecracker might result in a higher overhead for syscalls and I/O operations.
 
 <img src='https://kubeblocks.io/images/Architecture-of-Firecracker.png'  alt="Architecture of Firecracker"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 6. Architecture of Firecracker
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 6. Architecture of Firecracker
 </div>
 
 #### Comparing the fundamentals
@@ -187,7 +191,8 @@ Result: The performance of various solutions is similar.
 Analysis: Once memory is allocated and page fault is handled, in theory, containerization should not have a significant impact on memory access. The real factors that affect memory performance are syscalls such as mmap and brk. However, in this test, the proportion of such syscalls is minimal.
 
 <img src='https://kubeblocks.io/images/Memory-access-performance.png'  alt="Memory access performance"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 9. Memory access performance (Xingyu Wang 2022)
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 9. Memory access performance (Xingyu Wang 2022)
 </div>
 
 Case: Redis-Benchmark with sub-scenarios (GET, SET, LPUSH, LPOP, SADD).
@@ -263,7 +268,8 @@ eBPF-based host-routing：
 In the new eBPF-based routing mode, Cilium no longer relies on iptables. Instead, it leverages the extended Berkeley Packet Filter (eBPF) of the Linux kernel for packet filtering and forwarding. eBPF host-routing allows bypassing all iptables and upper stack overhead within the host namespace, as well as reducing some context switch overhead during traversal of virtual network interfaces. Network packets are captured early from the network device facing network and directly delivered into the network namespace of the K8s Pod. For outgoing traffic, packets continue to pass through a veth pair, but are swiftly captured by eBPF and sent straight to the external network interface. eBPF directly consults the routing tables, ensuring that this enhancement is fully transparent and seamlessly integrates with any other routing services operating on the system.
 
 <img src='https://kubeblocks.io/images/Comparison-of-legacy-and-eBPF-container-networking.png'  alt="Comparison of legacy and eBPF container networking"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 16. Comparison of legacy and eBPF container networking<sup>[6]</sup>
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 16. Comparison of legacy and eBPF container networking<sup>[6]</sup>
 </div>
 
 Test environment:
@@ -300,17 +306,20 @@ Legacy host-routing with iptables:
 <div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 17. Redis benchmark under legacy host-routing with iptables</div>
 
 <img src='https://kubeblocks.io/images/Comparison-between-Host-network-and-Pod-network-under-legacy-host-routing.png'  alt="Comparison between Host network and Pod network under legacy host-routing"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 18. Comparison between Host network and Pod network under legacy host-routing
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 18. Comparison between Host network and Pod network under legacy host-routing
 </div>
 
 eBPF-based host-routing:
 
 <img src='https://kubeblocks.io/images/Redis-benchmark-under-eBPF-based-host-routing.png'  alt="Redis benchmark under eBPF-based host-routing"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 19. Redis benchmark under eBPF-based host-routing
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 19. Redis benchmark under eBPF-based host-routing
 </div>
 
 <img src='https://kubeblocks.io/images/Comparison-between-Host-network-and-Pod-network-under-eBPF-based-host-routing.png'  alt="Comparison between Host network and Pod network under eBPF-based host-routing"  width='80%' style={{margin: "0 10%"}} />
-<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>Fig. 20. Comparison between Host network and Pod network under eBPF-based host-routing
+<div style={{ display: "flex", justifyContent: "center", margin: "-6px 0 10px", fontSize: "12px" }}>
+Fig. 20. Comparison between Host network and Pod network under eBPF-based host-routing
 </div>
 
 Analysis: Traditional host-routing methods can drag down network efficiency, creating a substantial 40% performance gap between Pod networks and host networks. However, using eBPF for host-routing can significantly level the playing field, bringing the response times of Pod and host networks much closer together. This improvement holds up no matter how complex the routing rules are, effectively closing the performance rift between the two types of networks. This advancement is a game-changer, especially for applications that rely heavily on network performance, such as Redis.

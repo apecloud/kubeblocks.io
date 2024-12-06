@@ -5,23 +5,19 @@ module.exports = {
   },
   items: [
     {
-      label: 'User Docs',
-      type: 'doc',
+      label: 'User docs',
+      type: 'docSidebar',
       position: 'left',
-      docId: 'user_docs/overview/introduction',
+      sidebarId: 'userDocs',
     },
     {
-      label: 'Developer Docs',
-      type: 'doc',
+      label: 'Developer docs',
+      type: 'docSidebar',
       position: 'left',
-      docId: 'developer_docs/overview',
+      sidebarId: 'developerDocs',
     },
     {to: '/blog', label: 'Blogs', position: 'left'},
     {to: '/demo', label: 'Demo', position: 'left'},
-    // {
-    //   type: 'docsVersionDropdown',
-    //   position: 'right',
-    // },
     {
       type: "localeDropdown",
       className: "header-locale-dropdown",

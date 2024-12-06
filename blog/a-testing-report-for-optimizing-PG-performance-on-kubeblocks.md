@@ -133,13 +133,6 @@ The results were as follows:
 <tbody>
   <tr>
     <td></td>
-    <td colspan="2">KubeBlocks PG</td>
-    <td>ECS PG</td>
-    <td colspan="2">KubeBlocks PG</td>
-    <td>ECS PG</td>
-  </tr>
-  <tr>
-    <td></td>
     <td>Pod IP</td>
     <td>SLB IP</td>
     <td>SLB IP</td>
@@ -167,7 +160,7 @@ Then we continued with the original testing plan and performed qualitative analy
 <img src='https://kubeblocks.io/images/k8s-3.jpeg' alt="CPU busy rate" width='80%' style={{margin: "0 10%"}} />
 
 We can tell from the monitoring graphics that:
-1. The disk read/write bandwidth has reached its bottleneck. ESSD bandwidth is directly correlated with disk capacity, whose formula is min{120+0.5*capacity, 350}. For a 300GB disk, the corresponding bandwidth is 270MB, and the data showed that it has reached the bottleneck.
+1. The disk read/write bandwidth has reached its bottleneck. ESSD bandwidth is directly correlated with disk capacity, whose formula is min`{120+0.5*capacity, 350}`. For a 300GB disk, the corresponding bandwidth is 270MB, and the data showed that it has reached the bottleneck.
    
 2. Upon checking the logs, I discovered that the CPU busy rate dropped when TPS dropped to 0.
 

@@ -14,8 +14,8 @@ module.exports = {
       title: "Resources",
       items: [
         {
-          label: "API Docs",
-          to: "/docs/preview/api_docs/overview/about-this-manual",
+          label: "User Docs",
+          to: "/docs/preview/user_docs/overview/introduction",
         },
         {
           label: "Developer Docs",
