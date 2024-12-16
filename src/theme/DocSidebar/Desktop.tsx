@@ -8,7 +8,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import Dropdown from 'react-dropdown';
-import { useDocsPreferredVersion } from '@docusaurus/theme-common';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useLocation, useHistory } from '@docusaurus/router';
@@ -27,7 +26,6 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: Props) {
       sidebar: { hideable },
     },
   } = useThemeConfig();
-  const { preferredVersion } = useDocsPreferredVersion()
   const history = useHistory();
   const location = useLocation();
   const { globalData } = useDocusaurusContext();
@@ -35,6 +33,8 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: Props) {
   const docVersions = docPluginConfig?.default?.versions || []
   const options = docVersions.map(v => ({ label: <span className="Dropdown-control-label">Version: {v.label}</span>, value: v.name }))
   const defaultPreferredVersion = docVersions.find(v => v.isLast)
+
+  const versionName = localStorage.getItem("docs-preferred-version-default") || defaultPreferredVersion.name;
 
   const onChange = (item) => {
     const version = docVersions.find(v => v.name === item.value);
@@ -59,7 +59,7 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: Props) {
         hideOnScroll && styles.sidebarWithHideableNavbar,
         isHidden && styles.sidebarHidden,
       )}>
-      <Dropdown placeholder="Select version..." options={options} value={preferredVersion?.name || defaultPreferredVersion.name} onChange={onChange} />
+      <Dropdown placeholder="Select version..." options={options} value={versionName} onChange={onChange} />
 
       {hideOnScroll && <Logo tabIndex={-1} className={styles.sidebarLogo} />}
       <Content path={path} sidebar={sidebar} />
