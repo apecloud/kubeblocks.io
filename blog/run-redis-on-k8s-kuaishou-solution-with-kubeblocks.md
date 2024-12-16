@@ -37,15 +37,15 @@ To meet the need for flexible shard management and support for hotspot migration
 
 ![Figure 2](./../static/images/blog-redis-kuaishou-2.png)
 
-### Analysis: What does Kuaishou require from a Redis Operator?
+### Analysis: What Does Kuaishou Require from a Redis Operator?
 
-**First, Redis Pod management Requires a Layered Approach**
+**First, Redis Pod Management Requires a Layered Approach**
 
 Redis Pod management needs to be handled in two layers: the first layer manages multiple shards, while the second layer manages multiple replicas within a single shard. It must support the dynamic scaling of the number of shards and the number of replicas per shard to adapt to varying workloads and usage scenarios.
 
 This means that, in Operator's implementation, a workload (such as a StatefulSet) is used to manage multiple replicas within each shard. On top of this, an additional layer (some CRD object) should be constructed to enable management of multiple shards within the entire Redis cluster.
 
-**Second, Ensuring Data Consistency and Reliability during Failures and Day-2 Operations**
+**Second, Ensuring Data Consistency and Reliability During Failures and Day-2 Operations**
 
 During shard or replica lifecycle changes, data consistency and reliability must be ensured. For example, shard scaling requires data rebalancing, while instance scaling within a shard may require data backup and restoration.
 
@@ -59,7 +59,7 @@ To achieve this, the Operator must support dynamic topology awareness by introdu
 
 These requirements go beyond the capabilities of any existing open-source Redis Operator and would typically require developing a highly complex Kubernetes Operator to fulfill them. However, building a stable Operator with well-designed APIs from scratch is daunting for most platform teams, as it demands expertise in both Kubernetes and databases, along with extensive real-world testing.
 
-### The KubeBlocks Solution came into our view
+### The KubeBlocks Solution Came into Our View
 
 After evaluating several solutions, **KubeBlocks** caught our attention as an open-source Kubernetes database Operator. What makes KubeBlocks unique is its extensibility, offering an **Addon mechanism** that allows you to use its API to describe the Day-1 and Day-2 characteristics and behaviors of a database, enabling its full lifecycle management on Kubernetes. As stated on its website, KubeBlocks' vision is to "Run any database on Kubernetes." This flexibility enables us to customize the KubeBlocks Redis Addon to fit our in-house Redis cluster deployment architecture.
 
@@ -73,7 +73,7 @@ StatefulSet assigns each instance a globally ordered, incrementing identifier. T
 
 Kuaishou's platform team has contributed several PRs to the KubeBlocks community, including enhancements such as allowing Pods within the same InstanceSet to have different configurations, decommissioning Pods with specific ordinals (without first decommissioning Pods with higher ordinals), and controlling upgrade concurrency. These improvements make InstanceSet more adaptable to Kuaishou's requirements for managing large-scale Redis clusters in production environments.
 
-**2. Layered CRD&Controller Design: Component、Cluster Objects**
+**2. Layered CRD & Controller Design: Component, Cluster Objects**
 
 KubeBlocks leverages a multi-layered CRD structure—**Component**, **Cluster**—to manage the complex topology of database clusters. This design aligns seamlessly with Kuaishou's Redis cluster deployment architecture:
 
