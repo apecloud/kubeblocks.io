@@ -1,6 +1,6 @@
 ---
 slug: configure-instance-template
-title: How to configure an instance template in KubeBlocks?
+title: How to Configure Instance Templates in KubeBlocks
 description: This blog introduces how to configure an instance template in KubeBlocks.
 date: 2024-12-17
 authors:
