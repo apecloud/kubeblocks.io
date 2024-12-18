@@ -1,6 +1,6 @@
 ---
 slug: manage-6k-db-instance-with-kubeblocks
-title: Run 6k+ Databases with One DBA - How We Realized It with KubeBlocks
+title: Managing 6000+ Databases as a Single Developer - How KubeBlocks Made It Possible
 description: This blog shares how we successfully manage over 6,000 database instances across four availability zones using Sealos built on KubeBlocks.
 date: 2024-12-20
 authors:
@@ -9,15 +9,19 @@ tags: [Kubernetes, KubeBlocks, database, large scale, database instance]
 image: /img/
 ---
 
-# Run 6k+ Databases with One DBA: How We Realized It with KubeBlocks
+# Managing 6000+ Databases as a Single Developer: How KubeBlocks Made It Possible
 
-Let’s start with a question: **Can a single DBA manage over 6,000 database instances?**
+> About Sealos
+>
+> Sealos is a cloud operating system distribution based on the Kubernetes kernel. It empowers developers to quickly build applications by offering services like application management, function computing, database services, and S3-compatible storage. The platform currently serves thousands of developers.
 
-In today’s world where cloud computing and large-scale distributed systems are the norm, databases have been the cornerstone of business operations. As their scale grows, so does the complexity of managing databases—often exponentially. Therefore, when faced with managing thousands of database instances alone, most would say, "That's impossible!"
+Let’s start with a question: Without being a professional DBA, can a single developer manage over 6,000 database clusters?
 
-However, what seems impossible has already been made a reality on Sealos.
+In today’s era of cloud computing and large-scale distributed systems, databases remain the cornerstone of many business systems. As their scale grows, so does the complexity of managing databases. Therefore, when faced with managing thousands of database instances alone, most would say, "That's impossible!"
 
-In this blog, I'll share how we successfully manage over 6,000 database instances across four availability zones using Sealos built on KubeBlocks, transforming what seemed impossible into an everyday operation.
+However, what seems impossible has already been made a reality inside Sealos.
+
+In this blog, I'll share how we successfully manage over 6,000 database instances across four availability zones using KubeBlocks, transforming what seemed impossible into an everyday operation.
 
 ## Challenges of managing databases at large scale
 
