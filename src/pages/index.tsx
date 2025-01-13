@@ -185,8 +185,8 @@ export default function Home(): JSX.Element {
                   </Link>
                   <a
                     className={styles.actionItem}
-                    href="https://console.kubeblocks.io/" target="" rel="noreferrer noopener" >
-                    <span className={styles.btnText}>KubeBlocks Cloud</span>
+                    href="https://killercoda.com/kubeblocks/" target="_blank" rel="noreferrer noopener" >
+                    <span className={styles.btnText}>Try KubeBlocks Online</span>
                   </a>
                 </div>
               </div>

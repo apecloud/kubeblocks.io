@@ -17,6 +17,7 @@ module.exports = {
       sidebarId: 'developerDocs',
     },
     {to: '/blog', label: 'Blogs', position: 'left'},
+    {to: 'https://console.kubeblocks.io/', label: 'Cloud', position: 'left'},
     {to: '/demo', label: 'Demo', position: 'left'},
     {
       type: "localeDropdown",
