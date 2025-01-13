@@ -27,7 +27,7 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: Props) {
       sidebar: { hideable },
     },
   } = useThemeConfig();
-  const { preferredVersion } = useDocsPreferredVersion()
+  const { preferredVersion, savePreferredVersionName } = useDocsPreferredVersion()
   const history = useHistory();
   const location = useLocation();
   const { globalData } = useDocusaurusContext();
@@ -41,7 +41,7 @@ function DocSidebarDesktop({ path, sidebar, onCollapse, isHidden }: Props) {
     const pathMatch = location.pathname.match(/^\/[^\/]+\/[^\/]+/);
     if (pathMatch) {
       const p = location.pathname.replace(pathMatch[0], version.path);
-      localStorage.setItem("docs-preferred-version-default", version.name)
+      savePreferredVersionName(version.name)
       if (version.name == 'release-0.5' && (p.indexOf('integration') != -1 || p.indexOf('fault_injection') != -1)) {
         history.push(version.sidebars.developer_docs.link.path)
       } else {
