@@ -11,7 +11,9 @@ image: /img/blog-release-0.9.3.png
 
 We are exicted to announce the release of KubeBlocks v0.9.3, packed with new features, improvements, and bug fixes to enhance your database management experience.
 
-Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks.io/docs/release-0.9/user_docs/upgrade-kubeblocks/upgrade-to-latest-version) to explore all the exciting new features!
+KubeBlocks v0.9.3 introduces support for the `memberjoin` action in LifeCycle Actions, incremental backups, and new features for sharding clusters, including instance rebuilding and component switchover. Additionally, this version enhances addons to provide more robust database services.
+
+Read the full release notes and [upgrade to KubeBlocks v0.9.3](https://kubeblocks.io/docs/release-0.9/user_docs/upgrade-kubeblocks/upgrade-to-latest-version) to explore all the exciting new features!
 
 ## KubeBlocks
 
@@ -60,7 +62,7 @@ Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks
 - **Improvements:**
   - Added ClickHouse reconfiguration examples ([#1401](https://github.com/apecloud/kubeblocks-addons/pull/1401)).
   - Fixed ClickHouse sharding bootstrap issues ([#1402](https://github.com/apecloud/kubeblocks-addons/pull/1402)).
-  - Added storage configuration, fixed horizontal scaling failure, and disabled sharding([#1450](https://github.com/apecloud/kubeblocks-addons/pull/1450)).
+  - Added storage configuration, fixed the horizontal scaling failure, and disabled sharding([#1450](https://github.com/apecloud/kubeblocks-addons/pull/1450)).
 - **Fixes:**
   - Resolved an issue where data querying from other shards for distributed tables failed ([#1411](https://github.com/apecloud/kubeblocks-addons/pull/1411)).
 
