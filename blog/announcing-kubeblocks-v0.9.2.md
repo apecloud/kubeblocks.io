@@ -17,10 +17,10 @@ Read the full release note and [upgrade to KubeBlocks v0.9.2](https://kubeblocks
 
 - Added support for rolling updates of container images, enabling seamless updates with minimal downtime. ([#8389](https://github.com/apecloud/kubeblocks/pull/8389))  
 - Introduced component-level stop/start capabilities, allowing fine-grained control over cluster components. ([#8480](https://github.com/apecloud/kubeblocks/pull/8480))  
-- Enhanced  Host Network support for shardings. ([#8517](https://github.com/apecloud/kubeblocks/pull/8517), [#8502](https://github.com/apecloud/kubeblocks/pull/8502))  
+- Enhanced Host Network support for shardings. ([#8517](https://github.com/apecloud/kubeblocks/pull/8517), [#8502](https://github.com/apecloud/kubeblocks/pull/8502))  
 - Improved horizontal scaling OpeRequest for shardings. ([#8530](https://github.com/apecloud/kubeblocks/pull/8530))  
 - Added support for recreate pod update policies to enhance update strategies. ([#8466](https://github.com/apecloud/kubeblocks/pull/8466))  
-- Kubeblocks Installation improvements: Support for defining extra annotations and environment variables. ([#8454](https://github.com/apecloud/kubeblocks/pull/8454))
+- KubeBlocks Installation improvements: Support for defining extra annotations and environment variables. ([#8454](https://github.com/apecloud/kubeblocks/pull/8454))
 
 ## Addons
 

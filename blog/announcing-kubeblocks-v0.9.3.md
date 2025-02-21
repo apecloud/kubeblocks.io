@@ -20,7 +20,7 @@ Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks
 - **Member Join Action**: LifeCycle Actions supported `memberjoin` action.
 - **Incremental Backup**: DataProtection supported incremental backups ([#8757](https://github.com/apecloud/kubeblocks/pull/8757)).
 - **Sharding Cluster Improvement**
-  - Supported rebuilding an instance from backup for sharding clusters in OpsRequest ([#8777](https://github.com/apecloud/kubeblocks/pull/8777)).
+  - Supported rebuilding an instance for sharding clusters from backup ([#8777](https://github.com/apecloud/kubeblocks/pull/8777)).
   - Supported sharding components switchover in OpsRequest ([#8786](https://github.com/apecloud/kubeblocks/pull/8786)).
 
 ## KubeBlocks Addons
@@ -28,27 +28,26 @@ Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks
 ### MySQL
 
 - **Improvements:**
-  - Supported MySQL lower table names ([#1335](https://github.com/apecloud/kubeblocks-addons/pull/1335)).
+  - Supported configuring `lower_case_table_names` for MySQL ([#1335](https://github.com/apecloud/kubeblocks-addons/pull/1335)).
   - Updated MySQL configuration to support `default_time_zone` updates ([#1377](https://github.com/apecloud/kubeblocks-addons/pull/1377)).
 - **Fixes:**
-  - Fixed issue with MySQL backup policy not being applied ([#1310](https://github.com/apecloud/kubeblocks-addons/pull/1310)).
+  - Fixed an issue where the MySQL backup policy wasn't applied. ([#1310](https://github.com/apecloud/kubeblocks-addons/pull/1310)).
 
 ### PostgreSQL
 
 - **Fixes:**
   - Fixed PITR (Point-in-Time Recovery) failures due to missing WAL log backups ([#1280](https://github.com/apecloud/kubeblocks-addons/pull/1280)).
-  - Resolved PITR restore failure issues ([#1290](https://github.com/apecloud/kubeblocks-addons/pull/1290)).
+  - Resolved PITR failures ([#1290](https://github.com/apecloud/kubeblocks-addons/pull/1290)).
   - Improved WAL log archiving.
 
 ### Redis
 
 - **Improvements:**
-  - Optimized Redis addons by picking changes from KubeBlocks Enterprise ([#1378](https://github.com/apecloud/kubeblocks-addons/pull/1378)).
-  - Updated Redis version to address [CVE-2024-46981](https://access.redhat.com/security/cve/cve-2024-46981) ([#1405](https://github.com/apecloud/kubeblocks-addons/pull/1405)).
-  - Supported custom secret password for Redis v.0.9.x ([#1406](https://github.com/apecloud/kubeblocks-addons/pull/1406)).
-  - Added `storageClassName` values for Redis Sentinel ([#1418](https://github.com/apecloud/kubeblocks-addons/pull/1418)).
+  - Updated Redis to address [CVE-2024-46981](https://access.redhat.com/security/cve/cve-2024-46981) ([#1405](https://github.com/apecloud/kubeblocks-addons/pull/1405)).
+  - Supported custom secret password in Redis ([#1406](https://github.com/apecloud/kubeblocks-addons/pull/1406)).
+  - Supported `storageClassName` values for Redis Sentinel ([#1418](https://github.com/apecloud/kubeblocks-addons/pull/1418)).
 - **Fixes:**
-  - Fixed scaling out shard FQDN failures in Redis cluster([#1283](https://github.com/apecloud/kubeblocks-addons/pull/1283)).
+  - Fixed FQDN issues when scaling out shards in Redis Cluster ([#1283](https://github.com/apecloud/kubeblocks-addons/pull/1283)).
 
 ### MongoDB
 
@@ -61,9 +60,9 @@ Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks
 - **Improvements:**
   - Added ClickHouse reconfiguration examples ([#1401](https://github.com/apecloud/kubeblocks-addons/pull/1401)).
   - Fixed ClickHouse sharding bootstrap issues ([#1402](https://github.com/apecloud/kubeblocks-addons/pull/1402)).
-  - Added storage configuration, fixed horizontal scaling, and disabled sharding([#1450](https://github.com/apecloud/kubeblocks-addons/pull/1450)).
+  - Added storage configuration, fixed horizontal scaling failure, and disabled sharding([#1450](https://github.com/apecloud/kubeblocks-addons/pull/1450)).
 - **Fixes:**
-  - Resolved data querying issues from other shards for distributed tables ([#1411](https://github.com/apecloud/kubeblocks-addons/pull/1411)).
+  - Resolved an issue where data querying from other shards for distributed tables failed ([#1411](https://github.com/apecloud/kubeblocks-addons/pull/1411)).
 
 ### Zookeeper
 
@@ -71,9 +70,9 @@ Read the full release note and [upgrade to KubeBlocks v0.9.3](https://kubeblocks
   - Replaced Java with `nc` for Zookeeper probes.
 
 - **Fixes:**
-  - Fixed incorrect backup size.
-  - Resolved restore failure issues.
-  - Fixed snapshot-log mount error.
+  - Fixed the incorrect backup size issue.
+  - Resolved the restore failure.
+  - Fixed the snapshot-log mount error.
 
 ### TiDB
 
