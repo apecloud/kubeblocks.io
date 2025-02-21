@@ -11,7 +11,7 @@ image: /img/blog-release-0.9.2.png
 
 We are delighted to announce the release of KubeBlocks v0.9.2. This release includes several new features, bug fixes, and various improvements.
 
-Read the full release note and [upgrade to KubeBlocks v0.9.2](https://kubeblocks.io/docs/release-0.9/user_docs/upgrade/upgrade-with-kbcli/upgrade-kubeblocks-to-0.9.1) to explore more features! The upgrade process for v0.9.2 is identical to that of v0.9.1. Simply follow the v0.9.1 tutorial, updating the version number as needed to complete the upgrade to v0.9.2.
+Read the full release note and [upgrade to KubeBlocks v0.9.2](https://kubeblocks.io/docs/release-0.9/user_docs/upgrade-kubeblocks/upgrade-to-latest-version) to explore more features! Follow this upgrade tutorial, change the version number as needed to complete the upgrade to v0.9.2.
 
 ## KubeBlocks
 
