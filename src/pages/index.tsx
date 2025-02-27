@@ -185,7 +185,7 @@ export default function Home(): JSX.Element {
                   </Link>
                   <a
                     className={styles.actionItem}
-                    href="https://labs.iximiuz.com/skill-paths/kubeblocks-skill-path-0b16850d" target="_blank" rel="noreferrer noopener" >
+                    href="https://labs.iximiuz.com/skill-paths/kubeblocks-skill-path-1f1a0a29" target="_blank" rel="noreferrer noopener" >
                     <span className={styles.btnText}>Try KubeBlocks Online</span>
                   </a>
                 </div>
