@@ -33,7 +33,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-dropdown": "^1.11.0",
-    "react-lazy-load-image-component": "^1.6.2",
+    "react-lazy-load-image-component": "^1.6.3",
     "react-player": "^2.16.0",
     "react-tabs": "^6.0.2",
     "typewriter-effect": "^2.21.0"
