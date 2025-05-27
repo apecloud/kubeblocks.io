@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database High Availability Test Report</title>
+</head>
+<body><hr />
+<p><br></p>
+<h1><center><span style="font-size: 72px; line-height: 2; letter-spacing: 2px; text-align: center;">数据库高可用性 (HA) 测试报告</span></center></h1>
+<p><br></p>
+<h2><center><span style="font-size: 48px; line-height: 2; letter-spacing: 2px; text-align: center;">杭州云猿生数据有限公司出品</span></center></h2>
+<p><br><br><br><br>
+<img src="https://cn.kubeblocks.io/img/logo.png" alt="KubeBlocks" style="width:500px; max-width:100%; height:auto; display: block; margin: 0 auto;">
+<br><br><br><br></p>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">创建人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">测试工程师: 黄章书</span></center></h4>
+<p><br><br><br></p>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">审核人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">测试经理: 张明晶</span></center></h4>
+<p><br><br><br></p>
+<h3><center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">批准人</span></center></h3>
+<h4><center><span style="font-size: 30px; line-height: 2; letter-spacing: 2px; text-align: center;">产品负责人: 汪瑞军</span></center></h4>
+<p><br><br><br><br>
+<center><span style="font-size: 36px; line-height: 2; letter-spacing: 2px; text-align: center;">测试时间: 2025年05月12日 - 2025年05月27日</span></center></p><div class="page-break"></div><h1 style="page-break-before: always;">测试说明</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<p>KubeBlocks 数据库高可用测试通过ChaosMesh实现</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">ChaosMesh 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh 是一个面向 Kubernetes 环境的混沌工程实验平台,旨在帮助用户通过模拟各种故障场景来测试系统的稳定性和容错能力。</p>
+<p>混沌工程是一种先进的系统测试方法,通过有意在分布式系统中注入各种故障,如网络错误、磁盘故障、CPU 负载等,来验证系统在遭遇故障时的行为和恢复能力。这种主动测试有助于提高系统的可靠性和弹性。</p>
+<p>ChaosMesh 提供了一套基于 Kubernetes 的故障注入工具集,包括网络、内核、磁盘、容器等多种故障场景,能够模拟各种真实环境中可能遇到的异常情况。用户可以通过 YAML 配置文件或 Web UI 定义需要注入的故障类型、范围和持续时间等参数,然后 ChaosMesh 会在目标 Pod 或节点上执行相应的故障操作。</p>
+<p>在混沌实验运行期间,ChaosMesh 会持续监控系统状态,记录系统恢复过程中的各项指标和日志信息。实验完成后,可以根据收集的数据分析系统的弹性和容错能力,从而优化系统设计、修复潜在漏洞等。此外,ChaosMesh 还支持扩展新的故障场景,满足不同场景的定制化需求。</p>
+<p>ChaosMesh 的出现降低了混沌实验的门槛,可以帮助开发和运维团队更加高效、系统地测试和提升分布式系统的可靠性。通过 ChaosMesh 提供的各种混沌实验场景,可以更容易地发现系统的薄弱环节,加强应用程序的可靠性。</p>
+<p>综上所述，ChaosMesh 作为一个开源的混沌工程平台,为 Kubernetes 应用程序带来了更好的系统可靠性保障。在日益复杂的云原生环境中,持续地进行混沌实验对于保证系统高可用至关重要。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Pod Failure 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh 的 Pod Failure 实验旨在模拟 Kubernetes 集群中 Pod 发生故障的场景。这种混沌工程测试对于验证分布式系统的高可用性和容错能力至关重要。</p>
+<h3>工作原理：</h3>
+<p>在 Kubernetes 集群中，Pod 是最小的可部署单元，封装了应用程序容器。当一个 Pod 发生故障时，Kubernetes 会自动检测到故障并采取纠正措施，例如在另一个节点上重新创建 Pod 或在可能的情况下重启它。Pod Failure 实验通过模拟 Pod 的不可用状态来评估系统处理意外中断和从中恢复的能力。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 使用 PodChaos 功能来模拟 Pod 故障。用户可以在 YAML 配置文件中为 Pod Failure 实验设置以下参数：</p>
+<ul>
+<li>mode：指定实验对象选择模式(one/all/fixed/fixed-percent等)</li>
+<li>selector：指定目标Pod的标签选择器</li>
+</ul>
+<h3>实际意义：</h3>
+<h4>- 验证高可用性</h4>
+<p>模拟 Pod 故障有助于验证系统是否能够自动检测并从 Pod 故障中恢复，确保即使在不利条件下服务仍然可用。</p>
+<h4>- 测试故障转移机制</h4>
+<p>该实验测试系统处理 Pod 故障的能力，包括在其他节点上重新调度 Pod 以及确保恢复期间的数据一致性。</p>
+<h4>- 发现潜在问题</h4>
+<p>现实中的 Pod 故障可能会暴露隐藏的问题，如配置错误、资源争用或应用程序代码中的 bug。模拟这些故障有助于提前识别和解决这些问题。</p>
+<h4>- 增强系统健壮性</h4>
+<p>通过让系统暴露于受控的 Pod 故障场景中，开发人员和运维人员可以深入了解系统的运行情况，并改进其健壮性和弹性。</p>
+<p>综上所述，使用 ChaosMesh 模拟 Pod 故障是确保基于 Kubernetes 应用程序可靠性和容错能力的有效方法。它使团队能够在生产环境中出现问题之前识别系统中的弱点并采取纠正措施。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Delete Pod 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>通过删除Pod来模拟数据库实例Failover场景，原理和意义如下:</p>
+<h3>工作原理:</h3>
+<p>在 KubeBlocks 集群中，通常将有状态的数据库组件部署为 InstanceSet，每个Pod对应一个数据库实例。</p>
+<p>当删除一个运行中的数据库 Pod 时，KubeBlocks 会自动重新创建一个新的 Pod，使用同一个持久化数据卷。</p>
+<p>新创建的 Pod 需要根据已有数据进行数据库恢复操作，重新加入数据库集群，这个过程模拟了数据库实例Failover。</p>
+<h3>实际意义:</h3>
+<h4>-验证数据库集群的高可用性</h4>
+<p>通过删除 Pod 触发 Failover，可以检验数据库集群在实例故障时是否能自动恢复，新实例是否能正常重新加入集群并对外提供服务。</p>
+<h4>-测试数据库 Failover 的性能</h4>
+<p>在 Failover 过程中，可以观测数据库集群的各项指标，如故障发现时间、新实例重建时间、数据恢复时间等，评估 Failover 的性能是否符合要求。</p>
+<h4>-发现数据库 Failover 的潜在问题</h4>
+<p>真实的 Failover 场景会暴露一些故障和 Edge Case，如数据不一致、脑裂等，通过模拟有助于发现和修复这些潜在问题。</p>
+<h4>-加强应用程序的健壮性</h4>
+<p>应用程序需要具备优雅处理数据库 Failover 的能力,在实验中发现的各种 Failover 异常情况，可以用于改进应用的设计和实现。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Kill 1号主进程介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>在测试数据库 failover 场景时,通过 kill Pod 主容器中的 1 号进程来观察 KubeBlocks 中数据库实例是否能正常切换，其原理和意义如下:</p>
+<h3>工作原理:</h3>
+<p>在 Linux 系统中,每个运行的进程都有一个唯一的进程 ID(PID)，1号进程是整个系统的初始化进程。</p>
+<p>数据库进程通常不是1号进程，而是由1号进程fork出来的子进程。</p>
+<p>当kill掉1号进程时，它的所有子进程也会被终止，包括数据库进程。</p>
+<p>KubeBlocks作为容器编排系统，会检测到Pod中的主进程退出，从而触发Pod重建流程。</p>
+<p>在重建流程中，KubeBlocks会启动一个新的数据库实例Pod，并根据已有数据进行数据恢复，从而完成failover。</p>
+<h3>实际意义:</h3>
+<h4>-模拟实际的进程崩溃场景</h4>
+<p>生产环境中的进程有可能由于代码错误、资源耗尽等原因而崩溃。kill掉1号进程可以模拟这种极端情况。</p>
+<h4>-测试实例failover的边缘案例</h4>
+<p>直接删除Pod触发failover是常规案例，而kill 1号进程则属于边缘异常案例，可以更全面地检验failover机制的健壮性。</p>
+<h4>-检验容器编排系统的自动恢复能力</h4>
+<p>当主进程异常退出时,KubeBlocks需要能够迅速发现并重建Pod，确保服务的连续性。这是对其自动恢复能力的考验。</p>
+<h4>-发现潜在的系统漏洞和缺陷</h4>
+<p>极端异常情况下可能会暴露一些潜在的系统漏洞和缺陷，如资源泄漏、死锁等，有助于提前发现和修复问题。</p>
+<p>综上所述，kill 1号进程是一种诱发数据库failover的极端做法，可以对KubeBlocks数据库高可用性和可靠性进行更严苛的验证，从而增强系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">OOM 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>在 Kubernetes 中测试数据库实例 Pod 在 OOM (Out of Memory) 情况下的 Failover 操作非常重要,可以验证数据库集群的高可用性和容错能力。</p>
+<p>OOM 是指系统内存不足导致 Pod 内进程无法分配所需的内存资源。这种情况下，K8s 会根据 Pod 中进程的 OOM Score 值选择一个或多个进程进行内存驱逐，以释放内存并确保整个系统的稳定运行。您可以通过设置 Pod 中进程的 OOM Score 为 -1000 来确定性触发某个进程 OOM，从而模拟内存不足的场景。</p>
+<p>在 Failover 测试中，您会选择一个特定的数据库实例 Replica Pod 作为 OOM 对象。由于数据库实例通常由一个 Primary 节点和多个 Secondary 节点组成，其中 Primary 节点负责写入操作，Secondary 节点负责备份和读取操作。因此，当 Primary Pod 发生 OOM 时，需要验证整个集群是否能够正确执行 Failover 操作，将其中一个 Secondary Pod 提升为新的 Primary，同时其他 Pod 也需要进行角色调整和数据复制，以确保集群的可用性和数据一致性。</p>
+<p>在测试过程中，测试程序会触发 OOM 然后密切监控整个 Failover 过程。一旦检测到 Failover 完成，会验证每个 Pod 的角色标签，确认新的 Primary 节点和 Secondary 节点是否正常切换。同时检查新的 Primary 节点是否能够正常提供写入服务，以及 Secondary 节点是否能够正确复制数据并提供读取服务。</p>
+<p>通过这种方式，测试系统可以全面测试数据库实例在极端内存压力下的容错能力，确保即使发生节点故障，整个集群也能够快速恢复并继续提供服务。这对于确保数据库的高可用性和数据一致性至关重要，尤其是在生产环境中运行关键业务时。</p>
+<p>综上所述，OOM 机制在 Failover 测试中的作用是模拟极端的资源压力情况，验证数据库实例在发生故障时是否能够正确执行高可用策略，并通过对 Failover 结果的验证来评估整个集群的容错能力和可靠性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Full CPU 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的CPU Stress故障实验旨在模拟系统遇到CPU资源紧张的场景。其工作原理和实现方式如下</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过在目标Pod中注入一个消耗大量CPU资源的进程,从而减少Pod可用的CPU资源,触发系统的容量规划或自动扩缩容等机制。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Kubernetes的ChaosContainer机制,在目标Pod中注入一个名为chaos-cpu容器。这个chaos-cpu容器内运行了一个stress-ng进程,使用一些算法如素数计算等持续消耗CPU资源。</p>
+<p>用户可以在CPU Stress实验的配置文件中设置以下参数:</p>
+<ul>
+<li>workers: 指定消耗CPU资源的线程数量</li>
+<li>load: 指定要消耗的CPU资源占比(0-100)</li>
+<li>mode: 指定实验对象选择模式(one/all/fixed/fixed-percent等)</li>
+<li>selector: 指定目标Pod的标签选择器
+在实验运行期间,ChaosMesh会持续监控目标Pod的CPU使用情况。实验结束后,会自动停止chaos-cpu容器,释放占用的CPU资源。</li>
+</ul>
+<p>通过CPU压力故障实验,可以评估系统在CPU资源紧张时的响应,如扩缩容、优先级抢占等,从而优化资源调度,提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Delay 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Delay故障实验旨在模拟网络延迟场景。其工作原理和实现方式如下:</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过在目标Pod所在节点上配置相应的网络规则,人为引入网络延迟,从而模拟Pod与其他资源之间的网络通信产生延迟的情况。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Linux内核的NetEm(Network Emulator)模块,在目标Pod所在节点上的特定网络接口上注入网络延迟规则。具体来说,是通过在节点上运行tc(traffic control)命令,调用NetEm的delay队列机制。</p>
+<p>用户可以在Network Delay实验的配置文件中设置以下关键参数:</p>
+<ul>
+<li>latency: 指定要注入的网络延迟时间,如10ms</li>
+<li>correlation: 指定当前延迟与上次延迟的相关性(0-100)</li>
+<li>jitter: 指定延迟抖动的范围
+通过设置这些参数,ChaosMesh可以模拟各种复杂的网络延迟场景,如固定延迟、随机延迟、相关延迟等。</li>
+</ul>
+<p>在实验运行期间,ChaosMesh会持续监控网络状态。实验结束后,会自动清理之前注入的网络规则,恢复正常网络。</p>
+<p>通过Network Delay实验,可以评估分布式系统在网络延迟情况下的稳定性和可用性,从而优化网络策略,提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Loss 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Loss故障实验旨在模拟数据包丢失场景。其工作原理和实现方式如下:</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh通过在目标 Pod 所在的节点上配置相应的网络规则，人为引入数据包丢失，从而模拟 Pod 与其他资源之间的网络通信出现丢包的情况。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核中的 NetEm（网络仿真）模块，在目标 Pod 所在节点的特定网络接口上注入丢包规则。具体来说，它在节点上运行 tc（流量控制）命令来调用 NetEm 的丢包机制。</p>
+<p>用户可以在配置文件中设置以下关键参数进行 Network Loss 实验：</p>
+<ul>
+<li>loss：指定要注入的丢包率（0-100%）</li>
+<li>correlation：指定当前丢包与前一个丢包之间的相关性（0-100）</li>
+</ul>
+<p>通过设置这些参数，ChaosMesh 可以模拟各种复杂的数据包丢失场景，例如固定丢包、随机丢包和相关丢包。</p>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理所有注入的网络规则并恢复正常的网络配置。</p>
+<p>通过 Network Loss 实验，用户可以评估分布式系统在网络丢包条件下的稳定性和可用性，从而优化网络策略并提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Duplicate 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Duplicate故障实验旨在模拟数据包重复传输场景。其工作原理和实现方式如下:</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh通过在目标 Pod 所在的节点上配置相应的网络规则，人为引入数据包重复，从而模拟 Pod 与其他资源之间的网络通信出现重复数据包的情况。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核中的 NetEm 模块，在目标 Pod 所在节点的特定网络接口上注入数据包重复规则。具体来说，它在节点上运行 tc 命令来调用 NetEm 的数据包重复机制。</p>
+<p>用户可以在配置文件中设置以下关键参数进行 Network Duplicate 实验：</p>
+<ul>
+<li>duplicate：指定数据包重复的概率（0-100%）</li>
+<li>correlation：指定连续重复事件之间的相关性（0-100）</li>
+</ul>
+<p>通过设置这些参数，ChaosMesh 可以模拟各种复杂的数据包重复场景。</p>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理所有注入的网络规则并恢复正常的网络配置。</p>
+<p>通过 Network Duplicate 实验，用户可以评估分布式系统在网络数据包重复条件下的稳定性和可用性，从而优化网络策略并提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Corrupt 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Corrupt故障实验旨在模拟数据包损坏场景。其工作原理和实现方式如下:</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh通过在目标 Pod 所在的节点上配置相应的网络规则，人为引入数据包损坏，从而模拟 Pod 与其他资源之间的网络通信出现损坏数据包的情况。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核中的 NetEm 模块，在目标 Pod 所在节点的特定网络接口上注入数据包损坏规则。具体来说，它在节点上运行 tc 命令来调用 NetEm 的数据包损坏机制。</p>
+<p>用户可以在配置文件中设置以下关键参数进行 Network Corrupt 实验：</p>
+<ul>
+<li>corrupt：指定数据包损坏的概率（0-100%）</li>
+<li>correlation：指定连续损坏事件之间的相关性（0-100）</li>
+</ul>
+<p>通过设置这些参数，ChaosMesh 可以模拟各种复杂的数据包损坏场景。</p>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理所有注入的网络规则并恢复正常的网络配置。</p>
+<p>通过 Network Corrupt 实验，用户可以评估分布式系统在网络数据包损坏条件下的稳定性和可用性，从而优化网络策略并提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Partition 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Partition故障实验旨在模拟网络分区场景。其工作原理和实现方式如下:</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh通过将集群中的某些节点隔离，形成独立的网络分区，以测试系统的容错性和一致性。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 使用 iptables 或 nftables 规则在目标节点之间创建网络隔离。这些规则可以阻断到特定 IP 地址或端口的流量。</p>
+<p>用户可以在配置文件中设置以下关键参数进行 Network Partition 实验：</p>
+<ul>
+<li>partitions：定义需要隔离的网络分区范围</li>
+<li>duration：指定分区持续时间</li>
+</ul>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理所有注入的网络规则并恢复正常的网络配置。</p>
+<p>通过 Network Partition 实验，用户可以评估分布式系统在网络分区条件下的稳定性和可用性，从而优化网络策略并提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Network Bandwidth 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Network Bandwidth故障实验旨在模拟带宽限制场景。其工作原理和实现方式如下:</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh通过限制目标 Pod 的网络带宽，从而模拟低带宽网络环境。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核中的 NetEm 模块和 HTB（分层令牌桶）队列纪律，在目标 Pod 所在节点的特定网络接口上注入带宽限制。具体来说，它在节点上运行 tc 命令来调用带宽控制机制。</p>
+<p>用户可以在配置文件中设置以下关键参数进行 Network Bandwidth 实验：</p>
+<ul>
+<li>rate：指定最大带宽限制（如 1Mbps, 10Mbps 等）</li>
+<li>limit：指定队列长度</li>
+<li>buffer：指定缓冲区大小</li>
+</ul>
+<p>通过设置这些参数，ChaosMesh 可以模拟各种复杂的带宽限制场景。</p>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理所有注入的网络规则并恢复正常的网络配置。</p>
+<p>通过 Network Bandwidth 实验，用户可以评估分布式系统在带宽限制条件下的稳定性和可用性，从而优化网络策略并提高系统的健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">TimeOffset 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh的Time Chaos功能旨在模拟时间偏移场景,其工作原理和实现方式如下:</p>
+<h3>工作原理:</h3>
+<p>ChaosMesh通过修改目标进程对时间的认知,使其误以为系统时间发生了偏移,从而模拟时间错误场景。这种时间错误可能会导致进程的行为异常,如计时器触发错误、定时任务执行时间不准确等。</p>
+<h3>实现方式:</h3>
+<p>ChaosMesh利用Linux系统提供的时间相关系统调用( clock_gettime、clock_settime等)来实现对时间的控制。当发起Time Chaos攻击时,ChaosMesh会attach到目标进程,拦截其对时间相关系统调用的请求,并返回人为修改后的时间值,从而欺骗该进程。</p>
+<p>具体来说,ChaosMesh通过使用ptrace系统调用附加到目标进程,修改其内存中的系统调用参数和返回值,注入所需的时间偏移量。用户可以在攻击命令中指定:</p>
+<ul>
+<li>timeOffset: 要注入的时间偏移量,如+30m表示往后偏移30分钟</li>
+<li>clockIds: 要影响的时钟类型,如CLOCK_REALTIME表示影响实时时钟</li>
+<li>pid: 要攻击的目标进程ID
+通过设置这些参数,ChaosMesh可以模拟各种时间错误场景,如时间提前、时间滞后、特定时钟类型出错等。</li>
+</ul>
+<p>在攻击过程中,ChaosMesh会持续修改目标进程的时间认知。攻击结束后,ChaosMesh会自动移除之前注入的时间修改,恢复正常时间。</p>
+<p>通过Time Chaos实验,可以评估分布式系统在时钟错误情况下的健壮性,识别潜在的时间相关Bug,从而优化时间处理策略,提高系统可靠性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Connection Stress 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>Connection Stress 故障实验旨在模拟系统遇到大量连接请求的情况，从而测试系统处理连接压力的能力。这是通过直接向目标服务或 Pod 发起大量并发连接来实现的。</p>
+<h3>工作原理：</h3>
+<p>该实验通过创建大量客户端连接到目标服务，耗尽可用的连接资源并触发系统的容量规划或自动扩展机制。这种方法模拟了现实世界中的流量高峰，评估系统如何应对高连接负载。</p>
+<h3>实现方法：</h3>
+<p>为了生成大量连接，使用一个自定义脚本或工具在独立的机器或专用容器中运行。此工具持续向目标服务建立连接，模拟高连接压力。</p>
+<p>用户可以为 Connection Stress 实验设置以下参数：</p>
+<ul>
+<li>connections：指定要建立的总连接数。</li>
+<li>concurrent：指定要维持的并发连接数。</li>
+<li>duration：指定连接压力测试的持续时间。</li>
+<li>target_service：指定连接的目标端点或服务。</li>
+<li>interval：指定连接尝试之间的间隔（如果适用）。</li>
+</ul>
+<p>在实验过程中，系统持续监控目标 Pod 的连接状态和资源使用情况。实验结束后，连接生成工具停止，系统恢复正常运行。</p>
+<p>通过 Connection Stress 故障实验，用户可以评估系统对高连接负载场景的响应，例如扩展或连接处理限制，从而优化资源调度并提高系统健壮性。</p>
+<h3>实际意义：</h3>
+<h4>- 测试连接处理极限</h4>
+<p>通过注入大量连接，可以验证系统是否能够处理其设计的最大连接数，并识别任何瓶颈或限制。</p>
+<h4>- 评估自动扩展机制</h4>
+<p>在高连接压力下，系统可能会触发自动扩展策略以添加更多资源。此实验有助于评估这些机制的有效性和响应速度。</p>
+<h4>- 识别潜在问题</h4>
+<p>高连接负载可能会暴露诸如连接泄漏、超时或性能下降等问题。提前识别这些问题有助于提高系统稳定性和可靠性。</p>
+<h4>- 优化资源分配</h4>
+<p>了解系统在连接压力下的行为有助于更好地进行资源分配和容量规划，确保即使在高负载下也能保持最佳性能。
+综上所述，Connection Stress 实验是评估系统处理高连接负载能力的重要工具，确保其能够在极端条件下保持性能和可用性。通过直接生成大量连接，此方法提供了高流量场景的真实模拟，帮助提前识别和解决潜在问题。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">DNS Error 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh 中的 DNS 错误实验旨在模拟 DNS 解析失败场景。以下是其工作原理和实现方法：</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh 在目标 Pod 所在节点上配置网络规则，人为引入 DNS 解析失败。这模拟了 Pod 在与外部资源通信时遇到 DNS 解析错误的情况。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核模块（如 Netfilter，例如 iptables 或 nftables）在托管目标 Pod 的节点上注入 DNS 解析失败规则。具体来说，它在节点上运行命令以拦截和篡改 DNS 查询，导致它们返回错误响应或根本没有响应。</p>
+<p>用户可以通过在配置文件中设置以下关键参数来定义一个 DNS 错误实验：</p>
+<ul>
+<li>action: 指定要执行的操作（error 表示注入错误）</li>
+<li>patterns: 选择匹配故障行为的域名模版</li>
+</ul>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理注入的网络规则并恢复正常的网络环境。</p>
+<p>通过进行 DNS 错误实验，用户可以评估分布式系统在 DNS 解析失败条件下的稳定性和可用性，从而优化 DNS 配置并增强系统健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">DNS Random 介绍</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<hr />
+<p>ChaosMesh 中的 DNS 随机化实验旨在模拟 DNS 解析结果随机化的场景。以下是其工作原理和实现方法：</p>
+<h3>工作原理：</h3>
+<p>ChaosMesh 在目标 Pod 所在节点上配置网络规则，人为引入 DNS 解析结果的随机化。这模拟了 Pod 在与外部资源通信时遇到不一致的 DNS 解析结果的情况。</p>
+<h3>实现方法：</h3>
+<p>ChaosMesh 利用 Linux 内核模块（如 Netfilter，例如 iptables 或 nftables）在托管目标 Pod 的节点上注入 DNS 解析随机化规则。具体来说，它在节点上运行命令以拦截和篡改 DNS 查询，导致它们返回随机生成的 IP 地址或其他解析结果。</p>
+<p>用户可以通过在配置文件中设置以下关键参数来定义一个 DNS 随机化实验：</p>
+<ul>
+<li>action: 指定要执行的操作（random 表示随机化解析结果）</li>
+<li>patterns: 选择匹配故障行为的域名模版</li>
+</ul>
+<p>在实验期间，ChaosMesh 持续监控网络状态。实验结束后，ChaosMesh 自动清理注入的网络规则并恢复正常的网络环境。</p>
+<p>通过进行 DNS 随机化实验，用户可以评估分布式系统在 DNS 解析结果随机化条件下的稳定性和可用性，从而优化 DNS 配置并增强系统健壮性。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">测试结果</h1>
+<span style="font-size:24px; line-height: 2; letter-spacing: 2px;">
+<p>故障测试后，数据库状态正常，数据完整，测试通过。</p></span>
+<div class="page-break"></div><h1 style="page-break-before: always;">Mysql ( Topology =  semisync  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="15" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Mysql ( Topology =  semisync  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Mysql Proxysql ( Topology =  semisync-proxysql  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="15" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Mysql Proxysql ( Topology =  semisync-proxysql  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">ApeCloud Mysql ( Topology =  apecloud-mysql  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="15" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">ApeCloud Mysql ( Topology =  apecloud-mysql  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay Failover</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay Failover<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU Failover</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU Failover<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=mysql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Postgresql ( Topology =  replication  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="15" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Postgresql ( Topology =  replication  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Redis ( Topology =  replication  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="14" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Redis ( Topology =  replication  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU Failover</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU Failover<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=redis</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Redis Cluster ( Topology =  redis-cluster  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="14" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Redis Cluster ( Topology =  redis-cluster  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=shard-7z5</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=shard-9ds</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Mongodb ( Topology =  replicaset  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="14" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Mongodb ( Topology =  replicaset  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=mongodb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Clickhouse ( Topology =  cluster  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="15" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Clickhouse ( Topology =  cluster  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Loss</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Loss<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network loss fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to loss network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Error</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Error<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience DNS service errors for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to DNS service errors.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Full CPU</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Full CPU<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience CPU full either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high CPU load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Pod Failure</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Pod Failure<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience failure for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to failure.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Time Offset</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Time Offset<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates a time offset scenario thereby testing the application's resilience to potential slowness/unavailability of some replicas due to time offset.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Corrupt</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Corrupt<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network corrupt fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to corrupt network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Duplicate</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Duplicate<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network duplicate fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to duplicate network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Evicting Pod</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Evicting Pod<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods evicting either due to node drained thereby testing the application's resilience to unavailability of some replicas due to evicting.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Partition</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Partition<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network partition fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to partition network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Bandwidth</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Bandwidth<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network bandwidth fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to bandwidth network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Network Delay</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Network Delay<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates network delay fault thereby testing the application's resilience to potential slowness/unavailability of some replicas due to delay network.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OOM</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=OOM<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience OOM either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Memory load.</td>
+</tr>
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">DNS Random</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=DNS Random<br>Durations=2m<br>ComponentName=clickhouse</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience random IP addresses being returned by the DNS service for a period of time either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to the DNS service returning random IP addresses.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">ElasticSearch ( Topology =  multi-node  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">ElasticSearch ( Topology =  multi-node  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=master</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">OceanBase CE ( Topology =  distribution  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">OceanBase CE ( Topology =  distribution  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=oceanbase</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Starrocks CE ( Topology =  shared-nothing  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Starrocks CE ( Topology =  shared-nothing  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=fe</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Qdrant ( Topology =  cluster  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Qdrant ( Topology =  cluster  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=qdrant</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Minio failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Minio</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=minio</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Influxdb failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Influxdb</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Connection Stress</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Connection Stress<br>ComponentName=influxdb</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where pods experience connection stress either due to expected/undesired processes thereby testing the application's resilience to potential slowness/unavailability of some replicas due to high Connection load.</td>
+</tr>
+</table>
+<div class="page-break"></div><h1 style="page-break-before: always;">Vanilla Postgresql ( Topology =  vanilla-postgresql  ) failover</h1>
+<table width="1400" style="border:3px solid grey; border-collapse: collapse; white-space: normal; word-break: break-all;">
+<tr>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Engine</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">FailoverOps</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">State</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">Parameters</td>
+<td style="font-family: Helvetica-Bold; font-size: 22.0pt;color: #FFFFFF;font-weight: bold;background-color: #FF5000;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Description</td>
+</tr>
+<tr>
+<td rowspan="1" colspan="1" style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Vanilla Postgresql ( Topology =  vanilla-postgresql  )</td>
+<td style="font-family: Helvetica-Bold; font-size: 14.0pt;color: #000000;font-weight: bold;text-align: center;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="15%">Kill 1</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #3CB371;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="10%">PASSED</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="20%">HA=Kill 1<br>ComponentName=postgresql</td>
+<td style="font-family: Helvetica; font-size: 14.0pt;color: #000000;text-align: left;vertical-align: center; border: 2px solid grey; padding: 8px; line-height: 1.3; word-wrap: break-word; word-break: break-all;" width="40%">Simulates conditions where process 1 killed either due to expected/undesired processes thereby testing the application's resilience to unavailability of some replicas due to abnormal termination signals.</td>
+</tr>
+</table>
+<div class="page-break"></div></body></html>
